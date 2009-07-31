@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jul 28, 2009 9:08:25 PM                                                        
+
+	jDataset Build file for creating the distribution.
+                   
+     Andy Gibson
+     ====================================================================== -->
+<project name="jdataset" default="default">
+	<description>
+            Build file to clean and build the jdataset projects and create the distribution  
+    </description>
+
+	<!-- External Setup -->
+	<property name="maven.dir" value="C:\Dev\Tools\apache-maven-2.0.9\" />
+	<property name="version" value="0.1-Alpha" />
+
+	<property name="project.dir" value="." />
+	<property name="project.doc.dir" value="C:\Dev\Projects\datasetWorkSpace\docs\" />
+
+	<property name="release.dir" value="${project.dir}\release\" />
+
+	<property name="staging.dir" value="${release.dir}\staging\" />
+	<property name="staging.dist.dir" value="${staging.dir}\dist\" />
+	<property name="staging.sources.dir" value="${staging.dist.dir}\sources\" />
+	<property name="staging.docs.dir" value="${staging.dir}\docs\" />
+	<property name="staging.docs.api.dir" value="${staging.docs.dir}\api\" />
+	<property name="staging.docs.ref.dir" value="${staging.docs.dir}\reference\" />
+
+	<property name="staging.src.dir" value="${staging.dir}\src\" />
+
+	<property environment="env" />
+	<!--<property name="maven.dir" value="${env.M2_HOME}"/>-->
+
+
+
+	<!-- ================================= 
+          target: clear              
+         ================================= -->
+	<target name="clean">
+		<delete dir="${release.dir}" />
+		<exec executable="${maven.dir}\bin\mvn.bat">
+			<arg value="clean" />
+			<arg value="-q" />
+		</exec>
+	</target>
+
+	<!-- ================================= 
+          target: prepare              
+         ================================= -->
+
+	<target name="prepare" depends="clean">
+		<mkdir dir="${release.dir}" />
+		<mkdir dir="${staging.dir}" />
+		<mkdir dir="${staging.docs.dir}" />
+		<mkdir dir="${staging.docs.api.dir}" />
+		<mkdir dir="${staging.docs.ref.dir}" />
+		<mkdir dir="${staging.src.dir}" />
+	</target>
+
+	<target name="buildIt" depends="prepare">
+		<exec executable="${maven.dir}\bin\mvn.bat">
+			<arg value="package" />
+			<arg value="-Dmaven.test.skip=true" />
+			<arg value="-q" />
+		</exec>
+
+		<exec executable="${maven.dir}\bin\mvn.bat">
+			<arg value="org.apache.maven.plugins:maven-source-plugin:jar" />
+			<arg value="-q" />
+		</exec>
+	</target>
+
+
+	<target name="copySource" depends="prepare">
+		<copy todir="${staging.src.dir}">
+			<fileset dir="${project.dir}">
+				<include name="**/*.java" />
+				<include name="**/pom.xml" />
+				<exclude name="**/target/**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copyAdditionalFiles" depends="prepare">
+		<copy todir="${staging.dir}">
+			<fileset dir="${project.dir}">
+				<include name="/*.txt" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="javadoc" depends="prepare">
+		<javadoc destdir="${staging.docs.api.dir}" classpath="">
+			<fileset dir="${project.dir}">
+				<include name="**/src/main/java/**/*.java" />
+			</fileset>
+		</javadoc>
+	</target>
+
+	<target name="moveReferenceDocs" depends="prepare">
+
+		<copy todir="${staging.docs.ref.dir}">
+			<fileset dir="${project.doc.dir}\target\docbkx\">
+				<include name="**\*.*" />
+				<exclude name="**\*.fo" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="moveBin" depends="buildIt">
+
+		<copy todir="${staging.dist.dir}" flatten="true">
+			<fileset dir="${project.dir}">
+				<include name="**\*.jar" />
+				<exclude name="**\*-sources.jar" />
+			</fileset>
+		</copy>
+
+		<copy todir="${staging.sources.dir}" flatten="true">
+			<fileset dir="${project.dir}">
+				<include name="**\*-sources.jar" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<target name="zipIt">
+		<zip destfile="${release.dir}\jDataset-${version}.zip">
+			<fileset dir="${staging.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</zip>
+
+		<tar destfile="${release.dir}\jDataset-${version}.tar">
+			<fileset dir="${staging.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</tar>
+		<gzip destfile="${release.dir}\jDataset-${version}.tar.gz" src="${release.dir}\jDataset-${version}.tar" />
+		<delete file="${release.dir}\jDataset-${version}.tar" />
+
+	</target>
+
+	<!-- ================================= 
+          target: default              
+         ================================= -->
+	<target name="default" depends="javadoc,copySource,buildIt,moveBin,moveReferenceDocs,zipIt" description="build it all">
+		<delete dir="${staging.dir}" />
+
+	</target>
+
+
+</project>

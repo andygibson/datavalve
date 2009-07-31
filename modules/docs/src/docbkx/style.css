@@ -1,0 +1,63 @@
+body {
+	font-family: verdana;
+	font-size: 12px;
+	margin-left: 45px;
+	margin-right: 45px;
+}
+
+.important {
+	color: blue;
+}
+
+.caution h3 {
+	color: red;
+}
+
+.programListing {
+	font-size: 120%;
+	padding: 4px;
+	padding-left: 16px;
+}
+
+.code {
+	font-size: 14px;
+}
+
+h2.title {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+h3.title {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.figure {
+	margin-left: 10%;
+	margin-right: 10%;
+
+
+}
+
+.example {
+	margin-left: 7%;
+	margin-right: 7%;
+	border: 1px #000000 solid;
+	background: #fafafa;
+}
+
+.figure .title{
+	border-bottom: 1px solid #000000;
+}
+.example .title {
+	padding: 4px;
+	margin: 0px;
+	border-bottom: 1px solid #000000;
+	background: #f0f0f0;
+}
+
+.mediaobject {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}

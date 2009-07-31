@@ -1,0 +1,91 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jdataset</groupId>
+	<artifactId>docs</artifactId>
+	<name>jdataset-documentation</name>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<fdf.version>2.1-SNAPSHOT</fdf.version>
+		<julia.version>2.5.2</julia.version>
+		<docbook.source>${basedir}/src/docbkx</docbook.source>
+		<docbook.target>${basedir}/target/docbkx</docbook.target>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.agilejava.docbkx</groupId>
+				<artifactId>docbkx-maven-plugin</artifactId>
+				<version>2.0.9</version>
+				<executions>
+					<execution>
+						<id>Generate the single Html and move the images</id>
+						<goals>
+							<goal>generate-html</goal>
+						</goals>
+						<phase>pre-site</phase>
+						<configuration>
+							<chunkedOutput>false</chunkedOutput>
+							<preProcess>
+								<mkdir dir="${docbook.target}/img" />
+								<copy todir="${docbook.target}/img">
+									<fileset dir="${docbook.source}/resources/img">
+										<include name="*.png" />
+									</fileset>
+								</copy>
+								<copy todir="${docbook.target}/html">
+									<fileset dir="${docbook.source}">
+										<include name="*.css" />
+									</fileset>
+								</copy>
+							</preProcess>
+							<postProcess>
+								<move file="${docbook.target}/html" tofile="${docbook.target}/html_single" />
+							</postProcess>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Generate the chunked Html and pdf</id>
+						<goals>
+							<goal>generate-html</goal>
+							<goal>generate-pdf</goal>
+						</goals>
+						<phase>pre-site</phase>
+						<configuration>
+							<imgSrcPath>${docbook.source}/resources/img/</imgSrcPath>
+							<chunkedOutput>true</chunkedOutput>
+							<preProcess>
+								<copy todir="${docbook.target}/html">
+									<fileset dir="${docbook.source}">
+										<include name="*.css" />
+									</fileset>
+								</copy>
+							</preProcess>
+
+						</configuration>
+					</execution>
+
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.docbook</groupId>
+						<artifactId>docbook-xml</artifactId>
+						<version>4.4</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<chapterAutolabel>1</chapterAutolabel>
+					<partAutolabel>1</partAutolabel>
+					<sectionAutolabel>1</sectionAutolabel>
+					<sectionLabelIncludes.component.label>1</sectionLabelIncludes.component.label>
+					<chunkFirstSections>0</chunkFirstSections>
+					<chunkSectionDepth>0</chunkSectionDepth>
+					<htmlStylesheet>style.css</htmlStylesheet>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <parent>
+    <artifactId>jdataset</artifactId>
+    <groupId>${jdsGroupId}</groupId>
+    <version>${jdsVersion}</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>${jdsGroupId}</groupId>
+  <artifactId>jdataset-test</artifactId>
+  <name>jdataset-test</name>
+  <version>${jdsVersion}</version>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.jdataset</groupId>
+    	<artifactId>jdataset-api</artifactId>
+    	<version>0.1-Alpha</version>
+    </dependency>
+  </dependencies>
+</project>

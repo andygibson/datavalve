@@ -1,0 +1,122 @@
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+ "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<book>
+	<title>JDataset Reference Guide</title>
+	<titleabbrev>JDataset Ref</titleabbrev>
+	<bookinfo>
+		<author>
+			<personname>
+				<firstname>Andy</firstname>
+				<surname>Gibson</surname>
+			</personname>
+		</author>
+		<copyright>
+			<year>2009</year>
+			<holder>Andy Gibson</holder>
+		</copyright>
+	</bookinfo>
+	<chapter id="Introduction">
+		<title>Introduction</title>
+		<para>
+			The purpose behind this framework is to let developers access
+			diverse sources of data in an easy and consistent manner. It also
+			aims to augment the functionalities of existing data access
+			mechanisms such as JDBC, Hibernate and JPA. In addition, it aims to
+			provide client side interfaces to these interfaces which you can then
+			use or extend to suit your needs. 
+		</para>
+		<figure>
+			<title>Architecture Overview</title>
+			<mediaobject>
+				<imageobject role="fo">
+					<imagedata align="center" fileref="../img/jdataset_arch.png"
+						scalefit="1" />
+				</imageobject>
+				<imageobject role="html">
+					<imagedata align="center" fileref="../img/jdataset_arch.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>By defining a set of common interfaces to access our data
+			we can
+			better provide reusable client components regardless of whether we
+			are using various web frameworks or a Swing application as our
+			client.
+			We can also use those components to access
+			data that does not
+			have a
+			typical access mechanism such as file
+			listings, or uncommon data
+			formats. Regardless, because we are coding
+			to an interface, we are
+			able to treat the data access the same way
+			regardless of the
+			complexity or unusual nature of the underlying
+			data.
+		</para>
+	</chapter>
+
+	<chapter id="Architecture">
+		<title>Architecture Overview</title>
+		<para>This chapter gives an overview of the general architecture of
+			the datasets included in the library. In general, datasets implement
+			different interfaces which gives them different features which can be
+			used by subclassing that implementation.</para>
+		<example>
+			<title>
+				<code>JDataset</code>
+				class hierarchy
+			</title>
+			<programlisting role="XML">
+
+					<![CDATA[
+ObjectDataset
+	|
+	|--ParameterizedDataset
+	|		|
+	|		|-QueryDataset
+	|		|-SqlDataset
+	|		|
+	---BackedDataset
+]]></programlisting>
+		</example>
+
+		<sect1>
+			<title>
+				ObjectDataset
+			</title>
+			<para>
+				The
+				<code>org.jdataset.ObjectDataset</code>
+				interface is the key underlying interface to all the dataset
+				classes. This interface defines functions for getting the result
+				count, the result list and interacting with the pagination and
+				navigation of the dataset.
+			</para>
+			<para>
+				Most of this interface is implemented in the
+				<code>org.jdataset.AbstractDataset</code>
+				class. Most of the code relates to handling pagination and
+				navigation but it also uses a strategy pattern to create two
+				functions for fetching the result count and the actual list of
+				results. The only other method which needs implementing is the
+				<code>isNextAvailable()</code>
+				method since there are a number of different ways this could be
+				implemented.
+			</para>
+			<para>
+				The
+				<code>ParameterizedDataset</code>
+				interface extends the
+				<code>ObjectDataset</code>
+				interface and adds methods to provide parameters to our datasets.
+				The
+				<code>AbstractParameterizedQuery</code>
+				implements these functions which similarly extends the
+				<code>AbstractObjectDataset</code>.
+			</para>
+		</sect1>
+	</chapter>
+</book>
+		
+		

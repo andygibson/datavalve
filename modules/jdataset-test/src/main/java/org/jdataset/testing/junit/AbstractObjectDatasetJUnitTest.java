@@ -1,0 +1,289 @@
+package org.jdataset.testing.junit;
+
+import java.util.List;
+
+import org.jdataset.ObjectDataset;
+
+import junit.framework.TestCase;
+
+/**
+ * This class appears in two different places. First, it appears in the test
+ * code for the main jdataset-core module. It also appears in the main source in
+ * the jdataset-test module where it can be subclassed to create a jdataset test
+ * case with the basic tests for object datasets already built in. However,
+ * because of cyclic dependencies, the jdataset-test module couldn't use the
+ * jdataset-core module if the core module depended on the test module to get
+ * the <code>AbstractObjectDatasetTest</code> class for its unit tests.
+ * <p>
+ * While this is ugly, there is only one published
+ * <code>AbstractObjectDatasetTest</code> class and that is in the jdataset-test
+ * module where other developers can subclass the test case to test their own
+ * dataset implementations. The only other alternative would be to put the test
+ * cases for the jdataset-core into their own module which would then also
+ * depend on the test module which we may do later.
+ * </p>
+ * <p>
+ * This class is an abstract class that implements a set of tests against an
+ * {@link ObjectDataset} interface. You just need to subclass this and provide
+ * an implemenation and a count of the number of records and this will test the
+ * pagination handling and other features of the dataset.
+ * </p>
+ * 
+ * @author Andy Gibson
+ * 
+ * @param <T>
+ */
+public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
+
+	public abstract ObjectDataset<T> buildObjectDataset();
+
+	public abstract int getDataRowCount();
+
+	/**
+	 * Test that the data row count is at least 30 (3 pages * 10);
+	 */
+	public void testRowCount() {
+		boolean hasEnoughRows = getDataRowCount() >= 30;
+		assertTrue(
+				"you must have at least 30 rows of data to use the built-in Object dataset tests",
+				hasEnoughRows);
+	}
+
+	public void testBuilder() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		assertNotNull(ds);
+	}
+
+	/**
+	 * Test isPreviousAvailable as soon as we create a dataset with no paging
+	 */
+	public void testPreviousNoRead() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		assertEquals(false, ds.isPreviousAvailable());
+	}
+
+	/**
+	 * Test isNextAvailable as soon as we create a dataset with no paging
+	 */
+	public void testNextNoRead() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		assertEquals(false, ds.isNextAvailable());
+	}
+
+	/**
+	 * Test isPreviousAvailable after performing a result set read with pagining
+	 */
+	public void testPreviousPagedNoRead() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		assertEquals(false, ds.isPreviousAvailable());
+	}
+
+	/**
+	 * Test isNextAvailable after performing a result set read with pagining
+	 */
+	public void testNextPagedNoRead() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		assertEquals(true, ds.isNextAvailable());
+	}
+
+	/**
+	 * Check the result count matches the data row count provided by the
+	 * developer
+	 */
+	public void testResultCount() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		assertEquals(getDataRowCount(), ds.getResultCount().intValue());
+	}
+
+	/**
+	 * Check the number of results returned matches the data row count provided
+	 * by the developer
+	 */
+	public void testActualResultCount() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		List<T> results = ds.getResults();
+		assertEquals(results.size(), ds.getResultCount().intValue());
+	}
+
+	public void testNextDifferentResults() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		List<T> oldResults = ds.getResults();
+		assertEquals(oldResults.size(), ds.getMaxRows());
+		ds.next();
+		assertEquals(10, ds.getFirstResult());
+		List<T> results = ds.getResults();
+		// check results are not the same and we have a different result set.
+		for (int i = 0; i < 10; i++) {
+			assertNotSame(oldResults.get(i), results.get(i));
+		}
+	}
+
+	/**
+	 * Tests the expected result count by fetching the results till we run out
+	 */
+	public void testResultCountByFetching() {
+		int count = 0;
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		List<T> results = ds.getResults();
+		count += results.size();
+		while (ds.isNextAvailable()) {
+			ds.next();
+			results = ds.getResults();
+			count += results.size();
+		}
+		assertEquals(getDataRowCount(), count);
+		assertEquals(getDataRowCount(), ds.getResultCount().intValue());
+	}
+
+	/**
+	 * Check the isPAged flag is set when getMaxRows <> 0
+	 */
+	public void testIsPagedFlagTrue() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		assertEquals(true, ds.isPaged());
+	}
+
+	/**
+	 * Check the isPAged flag is set when getMaxRows == 0
+	 */
+	public void testIsPagedFlagFalse() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		assertEquals(false, ds.isPaged());
+	}
+
+	/**
+	 * Check the multi page flag is set when we have multiple pages
+	 */
+	public void testIsMultiPageFlagPositive() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10); // we should have 30+ rows
+		assertEquals(true, ds.isMultiPaged());
+	}
+
+	/**
+	 * Check the multi page flag is not set when we don't have multiple pages.
+	 */
+	public void testIsMultiPageFlagNegative() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(ds.getResultCount());
+		assertEquals(false, ds.isMultiPaged());
+	}
+
+	/**
+	 * Check that the page count is correct for different page sizes and also
+	 * when maxResult = 0 and we have no paging (check 1 is returned)
+	 */
+	public void testPageCountSize() {
+		ObjectDataset<T> ds = buildObjectDataset();
+
+		int rowCount = getDataRowCount();
+		for (int i = 1; i < 30; i++) {
+			ds.setMaxRows(i); // we should have 30+ rows
+			int pages = ds.getPageCount();
+			assertTrue(pages * ds.getMaxRows() >= rowCount);
+			assertTrue((pages * ds.getMaxRows()) - ds.getMaxRows() < rowCount);
+		}
+
+	}
+
+	/**
+	 * Check that the page numbers increase when doing next
+	 */
+	public void testGetPageNext() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		assertEquals(1, ds.getPage());
+		ds.next();
+		assertEquals(2,ds.getPage());
+		ds.next();
+		assertEquals(3,ds.getPage());		
+	}
+	
+	/**
+	 * Check that the page numbers decrease when doing previous
+	 */
+	public void testGetPagePrevious() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		ds.setFirstResult(20);
+		assertEquals(3, ds.getPage());
+		ds.previous();
+		assertEquals(2,ds.getPage());
+		ds.previous();
+		assertEquals(1,ds.getPage());		
+	}
+	
+	
+	/**
+	 * Check that the page numbers increase when doing next/previous
+	 */
+	public void testGetPageNoPagination() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		assertEquals(1, ds.getPage());
+		ds.next();
+		assertEquals(2, ds.getPage());
+		ds.next();
+		assertEquals(3, ds.getPage());		
+		ds.previous();
+		assertEquals(2, ds.getPage());
+		ds.previous();
+		assertEquals(1, ds.getPage());
+		ds.previous();
+		assertEquals(1, ds.getPage());				
+	}
+
+	/**
+	 * Tests what happens when firstResult * pageSize > result count. An empty
+	 * list should be returned.
+	 */
+	public void testReadingBeyondResults() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setFirstResult(getDataRowCount()+10);
+		ds.setMaxRows(10);
+		List<T> results = ds.getResults();
+		assertEquals(0, results.size());
+		assertEquals(false, ds.isNextAvailable());
+		assertEquals(true, ds.isPreviousAvailable());
+	}
+
+	/**
+	 * Tests the next flag without reading the results.
+	 */
+	public void testNextFlagsNoRead() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+
+		// assume we have tested page count
+		int pageCount = ds.getPageCount();
+
+		for (int i = 0; i < pageCount-1; i++) {
+			assertEquals(true, ds.isNextAvailable());
+			ds.next();
+		}
+		assertEquals(false, ds.isNextAvailable());
+	}
+
+	/**
+	 * Tests the previous flag without reading the results.
+	 */
+	public void testPreviousFlagsNoRead() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+
+		// assume we have tested page count
+		int pageCount = ds.getPageCount();
+
+		assertEquals(false, ds.isPreviousAvailable());
+		for (int i = 0; i < pageCount; i++) {
+			ds.next();
+			assertEquals(true, ds.isPreviousAvailable());
+		}
+	}
+
+}

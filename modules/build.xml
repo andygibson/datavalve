@@ -6,7 +6,7 @@
                    
      Andy Gibson
      ====================================================================== -->
-<project name="jdataset" default="default">
+<project name="jdataset" default="default" basedir="..\">
 	<description>
             Build file to clean and build the jdataset projects and create the distribution  
     </description>
@@ -15,10 +15,10 @@
 	<property name="maven.dir" value="C:\Dev\Tools\apache-maven-2.0.9\" />
 	<property name="version" value="0.1-Alpha" />
 
-	<property name="project.dir" value="." />
-	<property name="project.doc.dir" value="C:\Dev\Projects\datasetWorkSpace\docs\" />
-
-	<property name="release.dir" value="${project.dir}\release\" />
+	<property name="module.dir" value="modules\" />
+	<property name="doc.dir" value="docs\" />
+	<property name="sample.dir" value="samples\" />
+	<property name="release.dir" value="release\" />
 
 	<property name="staging.dir" value="${release.dir}\staging\" />
 	<property name="staging.dist.dir" value="${staging.dir}\dist\" />
@@ -39,10 +39,6 @@
          ================================= -->
 	<target name="clean">
 		<delete dir="${release.dir}" />
-		<exec executable="${maven.dir}\bin\mvn.bat">
-			<arg value="clean" />
-			<arg value="-q" />
-		</exec>
 	</target>
 
 	<!-- ================================= 
@@ -58,7 +54,7 @@
 		<mkdir dir="${staging.src.dir}" />
 	</target>
 
-	<target name="buildIt" depends="prepare">
+<!--	<target name="buildIt" depends="prepare">
 		<exec executable="${maven.dir}\bin\mvn.bat">
 			<arg value="package" />
 			<arg value="-Dmaven.test.skip=true" />
@@ -69,14 +65,15 @@
 			<arg value="org.apache.maven.plugins:maven-source-plugin:jar" />
 			<arg value="-q" />
 		</exec>
-	</target>
+	</target>-->
 
 
 	<target name="copySource" depends="prepare">
 		<copy todir="${staging.src.dir}">
-			<fileset dir="${project.dir}">
-				<include name="**/*.java" />
-				<include name="**/pom.xml" />
+			<fileset dir="${module.dir}">
+				<include name="**/*.java" />				
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
 				<exclude name="**/target/**/*.*" />
 			</fileset>
 		</copy>
@@ -84,7 +81,7 @@
 
 	<target name="copyAdditionalFiles" depends="prepare">
 		<copy todir="${staging.dir}">
-			<fileset dir="${project.dir}">
+			<fileset dir="${module.dir}">
 				<include name="/*.txt" />
 			</fileset>
 		</copy>
@@ -93,33 +90,42 @@
 
 	<target name="javadoc" depends="prepare">
 		<javadoc destdir="${staging.docs.api.dir}" classpath="">
-			<fileset dir="${project.dir}">
+			<fileset dir="${module.dir}">
 				<include name="**/src/main/java/**/*.java" />
 			</fileset>
 		</javadoc>
 	</target>
 
+	<!--<target  name="buildReferenceDocs">
+		<exec executable="${maven.dir}\bin\mvn.bat">
+			<arg value="${doc.dir}\pom.xml"/>
+			<arg value="clean" />
+			<arg value="-q" />
+		</exec>
+		
+	</target>-->
+	
 	<target name="moveReferenceDocs" depends="prepare">
 
 		<copy todir="${staging.docs.ref.dir}">
-			<fileset dir="${project.doc.dir}\target\docbkx\">
+			<fileset dir="${doc.dir}\target\docbkx\">
 				<include name="**\*.*" />
 				<exclude name="**\*.fo" />
 			</fileset>
 		</copy>
 	</target>
 
-	<target name="moveBin" depends="buildIt">
+	<target name="moveBin">
 
 		<copy todir="${staging.dist.dir}" flatten="true">
-			<fileset dir="${project.dir}">
+			<fileset dir="${module.dir}">
 				<include name="**\*.jar" />
 				<exclude name="**\*-sources.jar" />
 			</fileset>
 		</copy>
 
 		<copy todir="${staging.sources.dir}" flatten="true">
-			<fileset dir="${project.dir}">
+			<fileset dir="${module.dir}">
 				<include name="**\*-sources.jar" />
 			</fileset>
 		</copy>
@@ -146,8 +152,8 @@
 	<!-- ================================= 
           target: default              
          ================================= -->
-	<target name="default" depends="javadoc,copySource,buildIt,moveBin,moveReferenceDocs,zipIt" description="build it all">
-		<delete dir="${staging.dir}" />
+	<target name="default" depends="javadoc,copySource,moveBin,moveReferenceDocs,zipIt" description="build it all">
+		<!--<delete dir="${staging.dir}" />-->
 
 	</target>
 

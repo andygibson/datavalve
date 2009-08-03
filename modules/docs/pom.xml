@@ -1,10 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>jdataset</artifactId>
+		<groupId>${jdsGroupId}</groupId>
+		<version>${jdsVersion}</version>
+	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jdataset</groupId>
 	<artifactId>docs</artifactId>
 	<name>jdataset-documentation</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${jdsVersion}</version>
 
 	<properties>
 		<fdf.version>2.1-SNAPSHOT</fdf.version>
@@ -25,7 +30,7 @@
 						<goals>
 							<goal>generate-html</goal>
 						</goals>
-						<phase>pre-site</phase>
+						<phase>package</phase>
 						<configuration>
 							<chunkedOutput>false</chunkedOutput>
 							<preProcess>
@@ -52,7 +57,7 @@
 							<goal>generate-html</goal>
 							<goal>generate-pdf</goal>
 						</goals>
-						<phase>pre-site</phase>
+						<phase>package</phase>
 						<configuration>
 							<imgSrcPath>${docbook.source}/resources/img/</imgSrcPath>
 							<chunkedOutput>true</chunkedOutput>

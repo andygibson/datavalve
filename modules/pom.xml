@@ -32,5 +32,6 @@
 		<module>jdataset-test</module>
 		<module>jdataset-sql</module>
 		<module>jdataset-api</module>
+		<module>docs</module>
 	</modules>
 </project>

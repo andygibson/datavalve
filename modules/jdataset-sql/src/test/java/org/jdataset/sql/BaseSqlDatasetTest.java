@@ -34,7 +34,6 @@ public abstract class BaseSqlDatasetTest<T> extends AbstractObjectDatasetJUnitTe
 
 	@Override
 	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
 		super.setUp();
 
 		try {
@@ -108,7 +107,6 @@ public abstract class BaseSqlDatasetTest<T> extends AbstractObjectDatasetJUnitTe
 					"select count(1) from TestValues");
 			s.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -11,12 +11,10 @@ public class MappedSqlQueryDataset extends AbstractSqlQueryDataset<TableRow>{
 	
 	public MappedSqlQueryDataset() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public MappedSqlQueryDataset(Connection connection) {
 		super(connection);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

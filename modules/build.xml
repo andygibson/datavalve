@@ -6,7 +6,7 @@
                    
      Andy Gibson
      ====================================================================== -->
-<project name="jdataset" default="default" basedir="..\">
+<project name="jdataset" default="default">
 	<description>
             Build file to clean and build the jdataset projects and create the distribution  
     </description>
@@ -15,9 +15,7 @@
 	<property name="maven.dir" value="C:\Dev\Tools\apache-maven-2.0.9\" />
 	<property name="version" value="0.1-Alpha" />
 
-	<property name="module.dir" value="modules\" />
 	<property name="doc.dir" value="docs\" />
-	<property name="sample.dir" value="samples\" />
 	<property name="release.dir" value="release\" />
 
 	<property name="staging.dir" value="${release.dir}\staging\" />
@@ -46,6 +44,11 @@
          ================================= -->
 
 	<target name="prepare" depends="clean">
+		<exec executable="${maven.dir}\bin\mvn.bat">
+			<arg value="clean" />
+			<arg value="-q" />
+		</exec>
+
 		<mkdir dir="${release.dir}" />
 		<mkdir dir="${staging.dir}" />
 		<mkdir dir="${staging.docs.dir}" />
@@ -54,7 +57,7 @@
 		<mkdir dir="${staging.src.dir}" />
 	</target>
 
-<!--	<target name="buildIt" depends="prepare">
+	<target name="buildIt" depends="prepare">
 		<exec executable="${maven.dir}\bin\mvn.bat">
 			<arg value="package" />
 			<arg value="-Dmaven.test.skip=true" />
@@ -65,24 +68,28 @@
 			<arg value="org.apache.maven.plugins:maven-source-plugin:jar" />
 			<arg value="-q" />
 		</exec>
-	</target>-->
+	</target>
 
 
 	<target name="copySource" depends="prepare">
 		<copy todir="${staging.src.dir}">
-			<fileset dir="${module.dir}">
-				<include name="**/*.java" />				
+			<fileset dir="${basedir}">
+				<include name="**/*.java" />
 				<include name="**/*.xml" />
+				<include name="**/*.css" />
+				<include name="**/*.png" />
 				<include name="**/*.properties" />
 				<exclude name="**/target/**/*.*" />
+				<exclude name="${release.dir}" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="copyAdditionalFiles" depends="prepare">
 		<copy todir="${staging.dir}">
-			<fileset dir="${module.dir}">
+			<fileset dir="${basedir}">
 				<include name="/*.txt" />
+				<exclude name="${release.dir}" />
 			</fileset>
 		</copy>
 
@@ -90,21 +97,13 @@
 
 	<target name="javadoc" depends="prepare">
 		<javadoc destdir="${staging.docs.api.dir}" classpath="">
-			<fileset dir="${module.dir}">
-				<include name="**/src/main/java/**/*.java" />
+			<fileset dir="${basedir}">
+				<include name="**/src/main/java/**/*.java" />				
+				<exclude name="${release.dir}" />
 			</fileset>
 		</javadoc>
 	</target>
 
-	<!--<target  name="buildReferenceDocs">
-		<exec executable="${maven.dir}\bin\mvn.bat">
-			<arg value="${doc.dir}\pom.xml"/>
-			<arg value="clean" />
-			<arg value="-q" />
-		</exec>
-		
-	</target>-->
-	
 	<target name="moveReferenceDocs" depends="prepare">
 
 		<copy todir="${staging.docs.ref.dir}">
@@ -118,15 +117,18 @@
 	<target name="moveBin">
 
 		<copy todir="${staging.dist.dir}" flatten="true">
-			<fileset dir="${module.dir}">
+			<fileset dir="${basedir}">
 				<include name="**\*.jar" />
 				<exclude name="**\*-sources.jar" />
+				<exclude name="docs\*.*" />
+				<exclude name="${release.dir}" />
 			</fileset>
 		</copy>
 
 		<copy todir="${staging.sources.dir}" flatten="true">
-			<fileset dir="${module.dir}">
+			<fileset dir="${basedir}">
 				<include name="**\*-sources.jar" />
+				<exclude name="${release.dir}" />
 			</fileset>
 		</copy>
 
@@ -152,7 +154,7 @@
 	<!-- ================================= 
           target: default              
          ================================= -->
-	<target name="default" depends="javadoc,copySource,moveBin,moveReferenceDocs,zipIt" description="build it all">
+	<target name="default" depends="buildIt,javadoc,copySource,moveBin,moveReferenceDocs,zipIt" description="build it all">
 		<!--<delete dir="${staging.dir}" />-->
 
 	</target>

@@ -1,5 +1,8 @@
 package org.jdataset.testing.junit;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -389,14 +392,14 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 	}
 
 	/**
-	 * Set of tests to verify that when changing the order key through the
-	 * and changeOrderKey methods, the ascending flag is being toggled correctly
+	 * Set of tests to verify that when changing the order key through the and
+	 * changeOrderKey methods, the ascending flag is being toggled correctly
 	 */
 	public void testOrderKeyToggle() {
 		ObjectDataset<T> ds = buildObjectDataset();
 
 		assertNull(ds.getOrderKey());
-		
+
 		ds.changeOrderKey("ABC");
 		ds.changeOrderKey("ABC");
 		assertEquals("ABC", ds.getOrderKey());
@@ -422,7 +425,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		ObjectDataset<T> ds = buildObjectDataset();
 		assertTrue(ds.isOrderAscending());
 	}
-	
+
 	/**
 	 * Test the isAscending flag is unaltered by setting the orderkey
 	 */
@@ -430,7 +433,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setOrderKey("ABC");
 		assertTrue(ds.isOrderAscending());
-		
+
 		ds.setOrderAscending(false);
 		ds.setOrderKey("ABC");
 		assertFalse(ds.isOrderAscending());
@@ -438,14 +441,33 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		ds.setOrderAscending(true);
 		ds.setOrderKey("ABC");
 		assertTrue(ds.isOrderAscending());
-		
+
 		ds.setOrderAscending(false);
 		ds.setOrderKey("DEF");
 		assertFalse(ds.isOrderAscending());
-		
+
 		ds.setOrderAscending(true);
 		ds.setOrderKey("XYZ");
-		assertTrue(ds.isOrderAscending());				
+		assertTrue(ds.isOrderAscending());
 	}
-	
+
+	protected void performSerializationTest(ObjectDataset<T> dataset) {
+		ByteArrayOutputStream bas = new ByteArrayOutputStream(4000);
+		ObjectOutputStream oos;
+
+		try {
+			oos = new ObjectOutputStream(bas);
+			oos.writeObject(dataset);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void testSerialization() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		performSerializationTest(ds);
+	}
+
 }

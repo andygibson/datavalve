@@ -4,15 +4,14 @@ import java.util.List;
 
 /**
  * This is the core interface for the object datsets. It provides methods for
- * accessing the data, record counts, pagination and navigation of
- * the dataset.
+ * accessing the data, record counts, pagination and navigation of the dataset.
  * 
  * @author Andy Gibson
  * 
  * @param <T>
  *            Type of value this dataset returns
  */
-public interface ObjectDataset<T> {
+public interface ObjectDataset<T> extends Iterable<T> {
 
 	/**
 	 * @return The list of results for this query
@@ -119,4 +118,30 @@ public interface ObjectDataset<T> {
 	 */
 	boolean isMultiPaged();
 
+	/**
+	 * @return The key value we are ordering by
+	 */
+	String getOrderKey();
+
+	/**
+	 * Sets the key value used to order the results. The key value can
+	 * optionally be used to sort the dataset when the results are fetched. If
+	 * the value is set to a different value, isOrderAscending is reset to true.
+	 * If the value is set to the same value then the ordering is toggled.
+	 * 
+	 * @param orderKey
+	 *            The key value to order by
+	 */
+	void setOrderKey(String orderKey);
+
+	/**
+	 * @return Whether the order is ascending
+	 */
+	boolean isOrderAscending();
+
+	/**
+	 * @param isAscending
+	 *            Set the order for the ordering
+	 */
+	void setOrderAscending(boolean isAscending);
 }

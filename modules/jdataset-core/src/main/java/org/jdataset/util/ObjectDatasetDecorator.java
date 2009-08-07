@@ -115,4 +115,8 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 	public void setOrderKey(String orderKey) {
 		dataset.setOrderKey(orderKey);
 	}
+
+	public void changeOrderKey(String orderKey) {
+		dataset.changeOrderKey(orderKey);
+	}
 }

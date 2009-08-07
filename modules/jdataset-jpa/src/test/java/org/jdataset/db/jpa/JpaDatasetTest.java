@@ -26,7 +26,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 	@Override
 	protected void setUp() throws Exception {
-		super.setUp();		
+		super.setUp();
 		// start up db
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");
@@ -230,11 +230,68 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		qry.setEntityManager(em);
 		qry.setSelectStatement("select p from Person p");
 		qry.setCountStatement("select count(p) from Person p");
+		qry.getOrderKeyMap().put("id", "p.id");
+		qry.getOrderKeyMap().put("name", "p.lastName,p.firstName");
+		qry.getOrderKeyMap().put("phone", "p.phone");
 		return qry;
 	}
 
 	@Override
 	public int getDataRowCount() {
 		return 30;
+	}
+
+	public void testQueryWithOrdering() {
+		ObjectDataset<Person> qry = buildObjectDataset();
+		qry.setOrderKey("id");
+		// check record count
+		assertEquals(getDataRowCount(), qry.getResultCount().intValue());
+		List<Person> results = qry.getResults();
+		assertNotNull(results);
+		assertEquals(getDataRowCount(), results.size());
+	}
+
+	public void testOrderByAscNonPaged() {
+		ObjectDataset<Person> qry = buildObjectDataset();
+		qry.setOrderKey("id");
+		performOrderChecks(qry,true);
+	}
+
+	public void testOrderByAscPaged() {
+		ObjectDataset<Person> qry = buildObjectDataset();
+		qry.setMaxRows(7);
+		qry.setOrderKey("id");
+		performOrderChecks(qry,true);
+	}
+
+	public void testOrderByDescNonPaged() {
+		ObjectDataset<Person> qry = buildObjectDataset();
+		qry.setOrderKey("id");
+		performOrderChecks(qry,false);
+	}
+
+	public void testOrderByDescPaged() {
+		ObjectDataset<Person> qry = buildObjectDataset();
+		qry.setMaxRows(7);
+		qry.setOrderKey("id");
+		performOrderChecks(qry,false);
+	}
+
+	protected void performOrderChecks(ObjectDataset<Person> qry, boolean isAsc) {
+		Long lastValue = null;
+		do {
+			List<Person> results = qry.getResults();
+			for (int i = 0; i < results.size(); i++) {
+				Person p = results.get(i);
+				if (lastValue != null) {
+					if (isAsc) {
+						assertTrue(p.getId() > lastValue);
+				 	} else {
+				 		assertTrue(p.getId() < lastValue);
+				 	}
+				}
+			}
+			qry.next();
+		} while (qry.isNextAvailable());
 	}
 }

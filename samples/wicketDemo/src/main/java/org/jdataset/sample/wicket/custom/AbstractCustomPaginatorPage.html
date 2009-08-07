@@ -1,0 +1,47 @@
+<html
+	xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
+<head>
+<title>Wicket Quickstart Archetype Homepage</title>
+<LINK REL=StyleSheet HREF="style.css" TYPE="text/css" MEDIA=screen>
+</head>
+<body>
+<div wicket:id="linkPanel">Header</div>
+<br />
+<div wicket:id="infoPanel">Info Panel</div>
+<br />
+
+<div style="width: 500px">
+<table class="dataTable">
+	<thead>
+		<tr>
+			<th style="width: 10%">Id</th>
+			<th style="width: 50%">Name</th>
+			<th style="width: 40%">Phone</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr wicket:id="results">
+			<td wicket:id="id">Id</td>
+			<td wicket:id="displayName">Display Name</td>
+			<td wicket:id="phone">Phone</td>
+		</tr>
+	</tbody>
+</table>
+<form wicket:id="form">
+
+<table class="paginator">
+	<tr>
+		<td><input type="submit" value="First" wicket:id="btnFirst"></td>
+		<td><input type="submit" value="Previous" wicket:id="btnPrevious"></td>
+		<td>Page <span wicket:id="page">#</span> of <span
+			wicket:id="pageCount">count</span></td>
+		<td><input type="submit" value="Next" wicket:id="btnNext"></td>
+		<td><input type="submit" value="Last" wicket:id="btnLast"></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+
+</html>
+

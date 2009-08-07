@@ -1,0 +1,20 @@
+@CHARSET "ISO-8859-1";
+
+BODY {
+	font-family: verdana, arial, sans-serif;
+}
+
+.dataTable {
+	width: 100%;
+	background: #f0f0f0;
+	
+}
+
+.dataTable th {
+	background: #d0d0d0;
+}
+
+.paginator {
+	width: 100%;
+	background: #d0d0d0;
+}

@@ -1,10 +1,11 @@
 package org.jdataset.testing.junit;
 
+import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.ObjectDataset;
-
 import junit.framework.TestCase;
+
+import org.jdataset.ObjectDataset;
 
 /**
  * This class appears in two different places. First, it appears in the test
@@ -105,6 +106,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		ObjectDataset<T> ds = buildObjectDataset();
 		List<T> results = ds.getResults();
 		assertEquals(results.size(), ds.getResultCount().intValue());
+		assertEquals(results.size(), getDataRowCount());
 	}
 
 	public void testNextDifferentResults() {
@@ -199,11 +201,11 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		ds.setMaxRows(10);
 		assertEquals(1, ds.getPage());
 		ds.next();
-		assertEquals(2,ds.getPage());
+		assertEquals(2, ds.getPage());
 		ds.next();
-		assertEquals(3,ds.getPage());		
+		assertEquals(3, ds.getPage());
 	}
-	
+
 	/**
 	 * Check that the page numbers decrease when doing previous
 	 */
@@ -213,12 +215,11 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		ds.setFirstResult(20);
 		assertEquals(3, ds.getPage());
 		ds.previous();
-		assertEquals(2,ds.getPage());
+		assertEquals(2, ds.getPage());
 		ds.previous();
-		assertEquals(1,ds.getPage());		
+		assertEquals(1, ds.getPage());
 	}
-	
-	
+
 	/**
 	 * Check that the page numbers increase when doing next/previous
 	 */
@@ -229,13 +230,13 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		ds.next();
 		assertEquals(2, ds.getPage());
 		ds.next();
-		assertEquals(3, ds.getPage());		
+		assertEquals(3, ds.getPage());
 		ds.previous();
 		assertEquals(2, ds.getPage());
 		ds.previous();
 		assertEquals(1, ds.getPage());
 		ds.previous();
-		assertEquals(1, ds.getPage());				
+		assertEquals(1, ds.getPage());
 	}
 
 	/**
@@ -244,7 +245,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 	 */
 	public void testReadingBeyondResults() {
 		ObjectDataset<T> ds = buildObjectDataset();
-		ds.setFirstResult(getDataRowCount()+10);
+		ds.setFirstResult(getDataRowCount() + 10);
 		ds.setMaxRows(10);
 		List<T> results = ds.getResults();
 		assertEquals(0, results.size());
@@ -262,7 +263,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		// assume we have tested page count
 		int pageCount = ds.getPageCount();
 
-		for (int i = 0; i < pageCount-1; i++) {
+		for (int i = 0; i < pageCount - 1; i++) {
 			assertEquals(true, ds.isNextAvailable());
 			ds.next();
 		}
@@ -286,4 +287,122 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 		}
 	}
 
+	/**
+	 * Test the for each iterator without paging
+	 */
+	public void testForEachIteratorNonPaged() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		int count = 0;
+		Object old = null;
+		for (T object : ds) {
+			assertNotNull(object);
+			assertNotSame(old, object);
+			old = object;
+			count++;
+		}
+		assertEquals(getDataRowCount(), count);
+	}
+
+	/**
+	 * Test the for each iterator with paging
+	 */
+	public void testForEachIteratorPaged() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		int count = 0;
+		Object old = null;
+		for (T object : ds) {
+			assertNotNull(object);
+			assertNotSame(old, object);
+			old = object;
+			count++;
+		}
+		assertEquals(getDataRowCount(), count);
+	}
+
+	/**
+	 * Test the for each iterator without paging and an offset at the start
+	 */
+	public void testForEachIteratorNonPagedStartingOffset() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setFirstResult(22);
+		ds.getResults();
+		int count = 0;
+		Object old = null;
+		for (T object : ds) {
+			assertNotNull(object);
+			assertNotSame(old, object);
+			old = object;
+			count++;
+		}
+		assertEquals(getDataRowCount(), count);
+	}
+
+	/**
+	 * Test the for each iterator with paging and with an offset at the start
+	 */
+	public void testForEachIteratorPagedStartingOffset() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		ds.setFirstResult(22);
+		ds.getResults();
+
+		int count = 0;
+		Object old = null;
+		for (T object : ds) {
+			assertNotNull(object);
+			assertNotSame(old, object);
+			old = object;
+			count++;
+		}
+		assertEquals(getDataRowCount(), count);
+	}
+
+	/**
+	 * Test the iterator manually
+	 */
+	public void testManualIteratorPaged() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		int count = 0;
+		for (Iterator<T> iter = ds.iterator(); iter.hasNext();) {
+			T object = iter.next();
+			assertNotNull(object);
+			count++;
+		}
+		assertEquals(getDataRowCount(), count);
+	}
+
+	/**
+	 * Test that iterator.remove throws an exception
+	 */
+	public void testRemoveException() {
+		ObjectDataset<T> ds = buildObjectDataset();		
+		try {
+			for (Iterator<T> iter = ds.iterator(); iter.hasNext();) {
+				iter.remove();
+				fail("iter.remove failed to throw an exception");
+			}
+		} catch (UnsupportedOperationException ex) {
+			// eat exception, we expected it
+		}
+
+	}
+
+	public void testOrderKeyToggle() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		assertNull(ds.getOrderKey());
+		ds.setOrderKey("ABC");
+		assertEquals("ABC", ds.getOrderKey());
+		assertTrue(ds.isOrderAscending());
+		ds.setOrderKey("ABC");
+		assertFalse(ds.isOrderAscending());
+		ds.setOrderKey("DEF");
+		assertTrue(ds.isOrderAscending());		
+		ds.setOrderKey("XYZ");
+		assertTrue(ds.isOrderAscending());
+		ds.setOrderKey("XYZ");
+		assertFalse(ds.isOrderAscending());		
+		
+		
+	}
 }

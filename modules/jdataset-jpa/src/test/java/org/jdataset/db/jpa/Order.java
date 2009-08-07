@@ -1,5 +1,7 @@
 package org.jdataset.db.jpa;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class Order implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	public static String ORDER_STATUS_PENDING = "PENDING";
 	public static String ORDER_STATUS_CANCELLED = "CANCELLED";

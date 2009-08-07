@@ -3,19 +3,12 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jdataset</groupId>
-	<artifactId>sample-wicket</artifactId>
+	<artifactId>wicketDemo</artifactId>
 	<packaging>war</packaging>
 	<version>1</version>
 	<!-- TODO project name  -->
-	<name>quickstart</name>
+	<name>wicketDemo</name>
 	<description></description>
-
-	<!--
-		TODO <organization> <name>company name</name> <url>company url</url>
-		</organization>
-	-->
-
-
 
 	<licenses>
 		<license>
@@ -38,11 +31,6 @@
 			<artifactId>wicket</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
-		<!--
-			OPTIONAL <dependency> <groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-extensions</artifactId>
-			<version>${wicket.version}</version> </dependency>
-		-->
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 

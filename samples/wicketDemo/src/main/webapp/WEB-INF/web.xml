@@ -4,7 +4,7 @@
 	 xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	 version="2.4">
 
-	<display-name>sample-wicket</display-name>
+	<display-name>wicketDemo</display-name>
 
 	 <!--  
 	      There are three means to configure Wickets configuration mode and they are

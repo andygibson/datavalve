@@ -39,7 +39,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	private Integer resultCount;
 	private List<T> results;
 	private String orderKey;
-	private boolean orderAscending;
+	private boolean orderAscending = true;
 
 	public int getFirstResult() {
 		return firstResult;

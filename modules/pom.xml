@@ -26,13 +26,11 @@
 	</build>
 
 	<modules>
-		<module>jdataset-core</module>
-		<module>jdataset-jpa</module>
-		<module>jdataset-test</module>
-		<module>jdataset-sql</module>
-		<module>jdataset-api</module>
-		
+    <module>jdataset-core</module>
+    <module>jdataset-jpa</module>
+    <module>jdataset-test</module>
+    <module>jdataset-sql</module>
+    <module>jdataset-api</module>
     <module>jdataset-wicket</module>
-    <module>docs</module>
   </modules>
 </project>

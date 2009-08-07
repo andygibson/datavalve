@@ -376,7 +376,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 	 * Test that iterator.remove throws an exception
 	 */
 	public void testRemoveException() {
-		ObjectDataset<T> ds = buildObjectDataset();		
+		ObjectDataset<T> ds = buildObjectDataset();
 		try {
 			for (Iterator<T> iter = ds.iterator(); iter.hasNext();) {
 				iter.remove();
@@ -388,21 +388,64 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 
 	}
 
+	/**
+	 * Set of tests to verify that when changing the order key through the
+	 * and changeOrderKey methods, the ascending flag is being toggled correctly
+	 */
 	public void testOrderKeyToggle() {
 		ObjectDataset<T> ds = buildObjectDataset();
+
 		assertNull(ds.getOrderKey());
-		ds.setOrderKey("ABC");
+		
+		ds.changeOrderKey("ABC");
+		ds.changeOrderKey("ABC");
 		assertEquals("ABC", ds.getOrderKey());
+		assertFalse(ds.isOrderAscending());
+
+		ds.changeOrderKey("ABC");
 		assertTrue(ds.isOrderAscending());
+
+		ds.changeOrderKey("DEF");
+		assertTrue(ds.isOrderAscending());
+
+		ds.changeOrderKey("DEF");
+		assertFalse(ds.isOrderAscending());
+
+		ds.setOrderKey("XYZ");
+		assertFalse(ds.isOrderAscending());
+	}
+
+	/**
+	 * Test the isAscending flag defaults to true when a dataset is created
+	 */
+	public void testAscendingDefault() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		assertTrue(ds.isOrderAscending());
+	}
+	
+	/**
+	 * Test the isAscending flag is unaltered by setting the orderkey
+	 */
+	public void testAscendingTrueAfterSetOrderKey() {
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setOrderKey("ABC");
+		assertTrue(ds.isOrderAscending());
+		
+		ds.setOrderAscending(false);
 		ds.setOrderKey("ABC");
 		assertFalse(ds.isOrderAscending());
-		ds.setOrderKey("DEF");
-		assertTrue(ds.isOrderAscending());		
-		ds.setOrderKey("XYZ");
+
+		ds.setOrderAscending(true);
+		ds.setOrderKey("ABC");
 		assertTrue(ds.isOrderAscending());
+		
+		ds.setOrderAscending(false);
+		ds.setOrderKey("DEF");
+		assertFalse(ds.isOrderAscending());
+		
+		ds.setOrderAscending(true);
 		ds.setOrderKey("XYZ");
-		assertFalse(ds.isOrderAscending());		
-		
-		
+		assertTrue(ds.isOrderAscending());				
 	}
+	
 }

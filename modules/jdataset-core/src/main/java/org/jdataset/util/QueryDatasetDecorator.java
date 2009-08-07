@@ -20,10 +20,6 @@ public class QueryDatasetDecorator<T> extends ParameterizedDatasetDecorator<T> i
 		return dataset.getCountStatement();
 	}
 
-	public String getOrderKey() {
-		return dataset.getOrderKey();
-	}
-
 	public Map<String, String> getOrderKeyMap() {
 		return dataset.getOrderKeyMap();
 	}
@@ -40,10 +36,6 @@ public class QueryDatasetDecorator<T> extends ParameterizedDatasetDecorator<T> i
 		dataset.setCountStatement(countStatement);
 	}
 
-	public void setOrderKey(String orderKey) {
-		dataset.setOrderKey(orderKey);		
-	}
-
 	public void setOrderKeyMap(Map<String, String> orderKeyMap) {
 		dataset.setOrderKeyMap(orderKeyMap);
 	}
@@ -55,5 +47,4 @@ public class QueryDatasetDecorator<T> extends ParameterizedDatasetDecorator<T> i
 	public void setSelectStatement(String selectStatement) {
 		dataset.setSelectStatement(selectStatement);
 	}
-
 }

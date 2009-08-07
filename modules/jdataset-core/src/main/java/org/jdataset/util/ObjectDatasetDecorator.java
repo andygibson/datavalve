@@ -1,6 +1,7 @@
 package org.jdataset.util;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jdataset.ObjectDataset;
@@ -93,5 +94,25 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 	
 	public void setDataset(ObjectDataset<T> dataset) {
 		this.dataset = dataset;
+	}
+
+	public Iterator<T> iterator() {
+		return this.dataset.iterator();
+	}
+
+	public String getOrderKey() {
+		return dataset.getOrderKey();
+	}
+
+	public boolean isOrderAscending() {
+		return dataset.isOrderAscending();
+	}
+
+	public void setOrderAscending(boolean isAscending) {
+		dataset.setOrderAscending(isAscending);
+	}
+
+	public void setOrderKey(String orderKey) {
+		dataset.setOrderKey(orderKey);
 	}
 }

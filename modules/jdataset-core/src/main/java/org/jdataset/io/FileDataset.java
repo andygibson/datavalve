@@ -8,14 +8,15 @@ import java.util.List;
 
 import org.jdataset.BackedDataset;
 
+//TODO Need to create more tests for this class (i.e. setting the path and so on)
 public class FileDataset extends BackedDataset<File> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private File sourceDirectory;
 	private boolean includeDirectories = false;
 
-	private FileFilter fileFilter = new FileFilter() {
+	private final transient FileFilter fileFilter = new FileFilter() {
 
 		public boolean accept(File file) {
 			return file.isFile() || (includeDirectories && file.isDirectory());

@@ -18,19 +18,18 @@ import org.slf4j.LoggerFactory;
  * 
  * @param <T>
  */
-public abstract class AbstractQueryDataset<T> extends AbstractParameterizedDataset<T>
-		implements QueryDataset<T> {
+public abstract class AbstractQueryDataset<T> extends
+		AbstractParameterizedDataset<T> implements QueryDataset<T> {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static Logger log = LoggerFactory.getLogger(AbstractQueryDataset.class);
-	
+
+	private static Logger log = LoggerFactory
+			.getLogger(AbstractQueryDataset.class);
+
 	private String selectStatement;
 	private String countStatement;
 	private Map<String, String> orderKeyMap = new HashMap<String, String>();
 	private List<String> restrictions = new ArrayList<String>();
-	private String orderKey;
-	private boolean orderAscending;
 	private boolean nextAvailable;
 	private Map<String, Object> queryParameters = new HashMap<String, Object>();
 
@@ -86,38 +85,10 @@ public abstract class AbstractQueryDataset<T> extends AbstractParameterizedDatas
 		this.restrictions = restrictions;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jdataset.db.QueryDset#getOrderKey()
-	 */
-	public String getOrderKey() {
-		return orderKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jdataset.db.QueryDset#setOrderKey(java.lang.String)
-	 */
-	public void setOrderKey(String orderKey) {
-
-		if (this.orderKey != null && this.orderKey.equals(orderKey)) {
-			// setting it to the same value, just flip the asc/desc flag
-			this.orderAscending = !this.orderAscending;
-		} else {
-			// set the order and reset the asc/desc order
-			this.orderKey = orderKey;
-			this.orderAscending = true;
-		}
-
-		invalidateResults();
-	}
-
 	public String calculateOrderBy() {
 
 		// get the order fields from the key
-		String order = orderKeyMap.get(orderKey);
+		String order = orderKeyMap.get(getOrderKey());
 		// if not set, then there is no ordering
 		if (order == null) {
 			return null;
@@ -131,7 +102,7 @@ public abstract class AbstractQueryDataset<T> extends AbstractParameterizedDatas
 			if (order.length() != 0) {
 				order = order + ", ";
 			}
-			order = order + field + (orderAscending ? " ASC " : " DESC ");
+			order = order + field + (isOrderAscending() ? " ASC " : " DESC ");
 		}
 		return order;
 	}
@@ -145,19 +116,21 @@ public abstract class AbstractQueryDataset<T> extends AbstractParameterizedDatas
 	}
 
 	protected final String buildStatement(String baseStatement,
-			Map<String, Object> queryParams) {
-		log.debug("Building statement for '{}'",baseStatement);
+			Map<String, Object> queryParams, boolean includeOrderBy) {
+		log.debug("Building statement for '{}'", baseStatement);
 		queryParams.clear();
 		RestrictionBuilder rb = new RestrictionBuilder(this);
-		
+
 		for (Parameter param : rb.getParameterList()) {
 			queryParams.put(param.getName(), param.getValue());
 		}
-		
-		String result = baseStatement + rb.buildWhereClause() + calculateOrderByClause();
-		log.debug("Final statement : '{}'",result);
+
+		String result = baseStatement + rb.buildWhereClause();
+		if (includeOrderBy) {
+			result = result + calculateOrderByClause();
+		}
+		log.debug("Final statement : '{}'", result);
 		return result;
-		
 	}
 
 	@Override

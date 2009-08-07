@@ -23,8 +23,4 @@ public interface QueryDataset<T> extends ParameterizedDataset<T> {
 
 	public abstract void setRestrictions(List<String> restrictions);
 
-	public abstract String getOrderKey();
-
-	public abstract void setOrderKey(String orderKey);	
-
 }

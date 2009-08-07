@@ -42,13 +42,12 @@
 			better provide reusable client components regardless of whether we
 			are using various web frameworks or a Swing application as our
 			client.
-			We can also use those components to access
-			data that does not
+			We can also use those components to access data that does not
 			have a
-			typical access mechanism such as file
-			listings, or uncommon data
-			formats. Regardless, because we are coding
-			to an interface, we are
+			typical access mechanism such as file listings, or uncommon
+			data
+			formats. Regardless, because we are coding to an interface, we
+			are
 			able to treat the data access the same way
 			regardless of the
 			complexity or unusual nature of the underlying
@@ -113,7 +112,8 @@ ObjectDataset
 				The
 				<code>AbstractParameterizedQuery</code>
 				implements these functions which similarly extends the
-				<code>AbstractObjectDataset</code>.
+				<code>AbstractObjectDataset</code>
+				.
 			</para>
 		</sect1>
 	</chapter>

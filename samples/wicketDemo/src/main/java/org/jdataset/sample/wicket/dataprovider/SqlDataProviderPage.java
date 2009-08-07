@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import org.apache.wicket.PageParameters;
 import org.jdataset.ObjectDataset;
 import org.jdataset.QueryDataset;
-import org.jdataset.db.jpa.JpaDataset;
-import org.jdataset.sql.AbstractSqlDataset;
 import org.jdataset.sql.AbstractSqlQueryDataset;
-import org.jdataset.sql.SqlDataset;
 import org.phonelist.model.Person;
 
 public class SqlDataProviderPage extends AbstractDataProviderPage {

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
 import org.jdataset.ObjectDataset;
-import org.jdataset.sample.wicket.dataprovider.AbstractDataProviderPage;
 import org.jdataset.sql.AbstractSqlDataset;
 import org.jdataset.sql.SqlDataset;
 import org.phonelist.model.Person;

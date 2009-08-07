@@ -7,7 +7,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.hibernate.Session;
 import org.jdataset.sample.wicket.dataprovider.JpaDataProviderPage;

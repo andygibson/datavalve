@@ -9,6 +9,11 @@
 	<!-- TODO project name  -->
 	<name>wicketDemo</name>
 	<description></description>
+	<parent>
+		<artifactId>samples</artifactId>
+		<groupId>org.jdataset</groupId>
+		<version>0.1-Alpha</version>
+	</parent>
 
 	<licenses>
 		<license>

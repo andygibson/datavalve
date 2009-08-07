@@ -19,7 +19,7 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 
 	@Override
 	protected List<T> fetchResultsFromDatabase(Integer count) {
-		Query qry = buildQuery(getSelectStatement());
+		Query qry = buildQuery(getSelectStatement(),true);
 		if (count != 0) {
 			qry.setMaxResults(count);
 		}
@@ -30,9 +30,9 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 		return results;
 	}
 
-	protected Query buildQuery(String selectStatement) {
+	protected Query buildQuery(String selectStatement,boolean includeOrderBy) {
 		// build the ejbql statement and parameter list
-		String ql = buildStatement(selectStatement, getQueryParameters());
+		String ql = buildStatement(selectStatement, getQueryParameters(),includeOrderBy);
 		log.debug("Built statement : {}",ql);
 		
 		// create the actual query (native or JPA)
@@ -61,7 +61,7 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 
 	@Override
 	protected Integer fetchResultCount() {
-		Query qry = buildQuery(getCountStatement());
+		Query qry = buildQuery(getCountStatement(),false);
 		Long result = (Long) qry.getSingleResult();
 		return new Integer(result.intValue());
 	}

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>${jdsGroupId}</groupId>
+	<groupId>org.jdataset</groupId>
 	<artifactId>jdataset</artifactId>
 	<packaging>pom</packaging>
 	<name>jdataset</name>
-	<version>${jdsVersion}</version>
+	<version>0.1-Alpha</version>
 	<description>Main project for JDataset containing multiple modules.</description>
 	<properties>
 		<jsdName>jdataset</jsdName>
@@ -32,6 +31,8 @@
 		<module>jdataset-test</module>
 		<module>jdataset-sql</module>
 		<module>jdataset-api</module>
-		<module>docs</module>
-	</modules>
+		
+    <module>jdataset-wicket</module>
+    <module>docs</module>
+  </modules>
 </project>

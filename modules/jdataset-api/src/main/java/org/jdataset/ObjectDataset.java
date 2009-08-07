@@ -135,6 +135,17 @@ public interface ObjectDataset<T> extends Iterable<T> {
 	void setOrderKey(String orderKey);
 
 	/**
+	 * This method is used to set the order key, but does so by checking the
+	 * current value first. If the new value is the same as the old value, then
+	 * the ascending flag is toggled. Otherwise the orderKey is set to the new
+	 * value and the ascending flag is set to true.
+	 * 
+	 * @param orderKey
+	 *            The new key value to order by
+	 */
+	void changeOrderKey(String orderKey);
+
+	/**
 	 * @return Whether the order is ascending
 	 */
 	boolean isOrderAscending();

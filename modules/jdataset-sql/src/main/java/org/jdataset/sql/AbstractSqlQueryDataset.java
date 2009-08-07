@@ -26,7 +26,7 @@ public abstract class AbstractSqlQueryDataset<T> extends AbstractQueryDataset<T>
 
 	private static final long serialVersionUID = 1L;
 	
-	private Connection connection;
+	private transient Connection connection;
 	private ResultSetObjectTransformer<T> objectTransformer = new ResultSetObjectTransformer<T>();
 
 	public AbstractSqlQueryDataset() {
@@ -41,7 +41,7 @@ public abstract class AbstractSqlQueryDataset<T> extends AbstractQueryDataset<T>
 	protected List<T> fetchResultsFromDatabase(Integer count) {
 		PreparedStatement statement = null;
 		try {
-			statement = buildPreparedStatement(getSelectStatement());
+			statement = buildPreparedStatement(getSelectStatement(),true);
 			ResultSet resultSet = statement.executeQuery();
 
 			return objectTransformer.createListFromResultSet(resultSet, this,
@@ -57,7 +57,7 @@ public abstract class AbstractSqlQueryDataset<T> extends AbstractQueryDataset<T>
 	protected Integer fetchResultCount() {
 		PreparedStatement statement = null;
 		try {
-			statement = buildPreparedStatement(getCountStatement());
+			statement = buildPreparedStatement(getCountStatement(),false);
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
@@ -69,12 +69,14 @@ public abstract class AbstractSqlQueryDataset<T> extends AbstractQueryDataset<T>
 		return 0;
 	}
 
-	private PreparedStatement buildPreparedStatement(String selectSql)
+	private PreparedStatement buildPreparedStatement(String selectSql,boolean includeOrderBy)
 			throws SQLException {
 		RestrictionBuilder rb = new RestrictionBuilder(this,
 				ParameterStyle.ORDERED_QUESTION_MARKS);
-		String sql = selectSql + rb.buildWhereClause()
-				+ calculateOrderByClause();
+		String sql = selectSql + rb.buildWhereClause();
+		if (includeOrderBy) {
+			sql = sql + calculateOrderByClause();
+		}
 		PreparedStatement statement = connection.prepareStatement(sql);
 		return statement;
 	}

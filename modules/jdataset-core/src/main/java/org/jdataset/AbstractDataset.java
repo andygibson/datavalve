@@ -178,13 +178,24 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	}
 
 	public void setOrderKey(String orderKey) {
-		// if not setting it to null check whether the current version matches
-		// and set order ascending flag accordingly
+		this.orderKey = orderKey;
+	}
+
+	/**
+	 * This method sets the orderKey value, but also compares the existing value
+	 * and if they are the same, then the ascending flag is toggled. 
+	 * 
+	 * @param orderKey
+	 *            new key value to order by
+	 */
+	public void changeOrderKey(String orderKey) {
+		// if not setting it to null check whether the current value matches the
+		// new value and set order ascending flag accordingly
 		if (orderKey != null) {
 			if (orderKey.equals(this.orderKey)) {
 				setOrderAscending(!isOrderAscending());
 			} else {
-				this.orderKey = orderKey;
+				setOrderKey(orderKey);
 				setOrderAscending(true);
 			}
 		} else {

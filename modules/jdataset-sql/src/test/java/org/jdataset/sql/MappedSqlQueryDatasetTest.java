@@ -9,6 +9,8 @@ public class MappedSqlQueryDatasetTest extends BaseSqlDatasetTest<TableRow> {
 		QueryDataset<TableRow> result = new MappedSqlQueryDataset(getConnection());
 		result.setSelectStatement("select * from TestValues");
 		result.setCountStatement("select count(1) from TestValues");
+		result.getOrderKeyMap().put("id", "id");
+		result.getOrderKeyMap().put("value", "value");		
 		return result;		
 	}
 	
@@ -18,4 +20,9 @@ public class MappedSqlQueryDatasetTest extends BaseSqlDatasetTest<TableRow> {
 		return buildDataset();
 	}
 
+	public void testQueryWithOrdering() {
+		ObjectDataset<TableRow> ds= buildDataset();
+		ds.setOrderKey("id");		
+		assertEquals(getDataRowCount(),ds.getResultCount().intValue());
+	}
 }

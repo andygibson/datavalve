@@ -1,7 +1,10 @@
 package org.jdataset;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
+
+import org.jdataset.util.DatasetIterator;
 
 /**
  * This is an abstract dataset that provides common implementation for most of
@@ -26,14 +29,17 @@ import java.util.List;
  * @param <T>
  *            Type of object this dataset contains.
  */
-public abstract class AbstractDataset<T> implements ObjectDataset<T>,Serializable {
+public abstract class AbstractDataset<T> implements ObjectDataset<T>,
+		Serializable, Iterable<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private int firstResult;
 	private int maxRows;
 	private Integer resultCount;
 	private List<T> results;
+	private String orderKey;
+	private boolean orderAscending;
 
 	public int getFirstResult() {
 		return firstResult;
@@ -161,5 +167,37 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,Serializabl
 
 	public boolean isMultiPaged() {
 		return isNextAvailable() || isPreviousAvailable();
+	}
+
+	public Iterator<T> iterator() {
+		return new DatasetIterator<T>(this);
+	}
+
+	public String getOrderKey() {
+		return orderKey;
+	}
+
+	public void setOrderKey(String orderKey) {
+		// if not setting it to null check whether the current version matches
+		// and set order ascending flag accordingly
+		if (orderKey != null) {
+			if (orderKey.equals(this.orderKey)) {
+				setOrderAscending(!isOrderAscending());
+			} else {
+				this.orderKey = orderKey;
+				setOrderAscending(true);
+			}
+		} else {
+			// otherwise we are just setting the order to null
+			this.orderKey = null;
+		}
+	}
+
+	public boolean isOrderAscending() {
+		return orderAscending;
+	}
+
+	public void setOrderAscending(boolean isAscending) {
+		this.orderAscending = isAscending;
 	}
 }

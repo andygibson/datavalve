@@ -1,13 +1,23 @@
 package org.jdataset.text;
 
-public class PhoneEntry {
+import java.io.Serializable;
 
+import org.jdataset.testing.TestDataFactory;
+
+public class PhoneEntry implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private String firstName;
 	private String lastName;
 	private String phone;
 
-	
+	public PhoneEntry(int id) {
+		this(id, TestDataFactory.getFirstName(), TestDataFactory.getLastName(),
+				TestDataFactory.getNumberText(10));
+	}
+
 	public PhoneEntry(int id, String firstName, String lastName, String phone) {
 		super();
 		this.id = id;

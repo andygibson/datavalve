@@ -92,10 +92,6 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 		return dataset;
 	}
 	
-	public void setDataset(ObjectDataset<T> dataset) {
-		this.dataset = dataset;
-	}
-
 	public Iterator<T> iterator() {
 		return this.dataset.iterator();
 	}
@@ -118,5 +114,17 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 
 	public void changeOrderKey(String orderKey) {
 		dataset.changeOrderKey(orderKey);
+	}
+
+	public Class<?> getEntityClass() {
+		return dataset.getEntityClass();
+	}
+
+	public void refresh() {
+		dataset.refresh();
+	}
+	
+	public void setDataset(ObjectDataset<T> dataset) {
+		this.dataset = dataset;
 	}
 }

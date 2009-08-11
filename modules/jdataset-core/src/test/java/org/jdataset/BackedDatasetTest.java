@@ -63,8 +63,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> {
     public void testLast() {
     	ObjectDataset<Integer> ds = buildTestDataset();
         ds.setMaxRows(10);
-        ds.last();
-        assertEquals(true, ds.isPaged());
+        ds.last();        
         assertEquals(10, ds.getPageCount());
         int firstResult = ds.getFirstResult();
         log.fine("First result = "+firstResult);        

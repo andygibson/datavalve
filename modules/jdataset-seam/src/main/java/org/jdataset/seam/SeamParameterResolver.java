@@ -6,17 +6,27 @@ import org.jdataset.ParameterResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A JDataset parameter resolver that determines the parameter value by treating
+ * the parameter as an EL expression. It uses Seams Expression instance to
+ * evaluate the expression.
+ * 
+ * @author Andy Gibson
+ * 
+ */
 public class SeamParameterResolver implements ParameterResolver {
-	
+
 	private static Logger log = LoggerFactory
 			.getLogger(SeamParameterResolver.class);
 
 	public boolean resolveParameter(Parameter parameter) {
 		log.debug("Resolving Seam Parameter : {}", parameter);
+		// TODO - we don't want to treat all parameters as EL expressions need
+		// to re-think the parameter splitting
 		String elName = "#{" + parameter.getName() + "}";
 		Object result = Expressions.instance().createValueExpression(elName)
 				.getValue();
-		log.debug("Expression {} evaluated to {}", parameter.getName(), result);		
+		log.debug("Expression {} evaluated to {}", parameter.getName(), result);
 
 		if (result != null) {
 			log.debug("Result type is {}", result.getClass().getName());

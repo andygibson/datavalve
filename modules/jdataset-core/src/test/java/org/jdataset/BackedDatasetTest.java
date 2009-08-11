@@ -1,12 +1,13 @@
 package org.jdataset;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 
-public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> {
+public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> implements Serializable {
 
     private static Logger log = Logger.getLogger(BackedDatasetTest.class.getName());
 

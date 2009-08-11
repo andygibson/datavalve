@@ -43,6 +43,7 @@
 			<groupId>org.jdataset</groupId>
 			<artifactId>jdataset-test</artifactId>
 			<version>0.1-Alpha</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

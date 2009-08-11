@@ -76,7 +76,7 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 		dataset.previous();
 	}
 
-	public void setFirstResult(Integer firstResult) {
+	public void setFirstResult(int firstResult) {
 		dataset.setFirstResult(firstResult);
 	}
 

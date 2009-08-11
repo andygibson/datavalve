@@ -73,7 +73,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		return results;
 	}
 
-	public void setFirstResult(Integer firstResult) {
+	public void setFirstResult(int firstResult) {
 		this.firstResult = firstResult;
 		invalidateResults();
 

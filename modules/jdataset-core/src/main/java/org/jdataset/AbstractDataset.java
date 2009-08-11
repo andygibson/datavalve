@@ -163,11 +163,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	}
 
-	public boolean isPaged() {
-		return getMaxRows() != 0;
-	}
-
-	public boolean isMultiPaged() {
+	public boolean isMultiPage() {
 		return isNextAvailable() || isPreviousAvailable();
 	}
 

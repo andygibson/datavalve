@@ -155,4 +155,12 @@ public interface ObjectDataset<T> extends Iterable<T> {
 	 *            Set the order for the ordering
 	 */
 	void setOrderAscending(boolean isAscending);
+	
+		
+	/**
+	 * @return Return the class type this dataset returns.
+	 */
+	Class<?> getEntityClass();
+	
+	void refresh();
 }

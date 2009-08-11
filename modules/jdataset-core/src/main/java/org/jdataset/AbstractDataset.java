@@ -1,6 +1,7 @@
 package org.jdataset;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	private List<T> results;
 	private String orderKey;
 	private boolean orderAscending = true;
+	private Class<?> entityClass;
 
 	public int getFirstResult() {
 		return firstResult;
@@ -183,7 +185,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	/**
 	 * This method sets the orderKey value, but also compares the existing value
-	 * and if they are the same, then the ascending flag is toggled. 
+	 * and if they are the same, then the ascending flag is toggled.
 	 * 
 	 * @param orderKey
 	 *            new key value to order by
@@ -210,5 +212,18 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	public void setOrderAscending(boolean isAscending) {
 		this.orderAscending = isAscending;
+	}
+
+	public Class<?> getEntityClass() {
+		if (entityClass == null) {
+			
+			ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+			entityClass = (Class<?>) type.getActualTypeArguments()[0];		
+		}
+		return entityClass;
+	}
+	
+	public void refresh() {
+		invalidateResults();
 	}
 }

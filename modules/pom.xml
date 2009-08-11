@@ -32,5 +32,6 @@
     <module>jdataset-sql</module>
     <module>jdataset-api</module>
     <module>jdataset-wicket</module>
+    <module>jdataset-seam</module>
   </modules>
 </project>

@@ -1,5 +1,6 @@
 package org.jdataset.db;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +10,14 @@ import org.jdataset.ParameterResolver;
 import org.jdataset.QueryDataset;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 
-public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> {
+public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
+		implements Serializable {
 
 	protected QueryDataset<Integer> buildQuery(final int objectCount) {
 		QueryDataset<Integer> result = new AbstractQueryDataset<Integer>() {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public String getSelectStatement() {
 				return "Select o from Object o";
@@ -44,35 +46,14 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> {
 
 		};
 
-		
-		
-		
 		result.getRestrictions().add("id = #{id}");
 		result.getRestrictions().add("firstName = #{person.firstName}");
 		result.getOrderKeyMap().put("id", "o.id");
 		result.getOrderKeyMap().put("first", "o.firstName");
 
-		
-		
-		result.addParameterResolver(new ParameterResolver() {
-
-			public boolean resolveParameter(Parameter parameter) {
-				if (parameter.getName().equals("id")) {
-					parameter.setValue("value_id");
-					return true;
-				}
-
-				if (parameter.getName().equals("person.firstName")) {
-					parameter.setValue("value_firstName");
-					return true;
-				}
-
-				return false;
-			}
-		});
+		result.addParameterResolver(new TestingParameterResolver());
 		return result;
 	}
-
 
 	public void testPaginationWithReads() {
 		QueryDataset<Integer> qry = buildQuery(100);
@@ -197,18 +178,18 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> {
 		assertEquals(false, qry.isPreviousAvailable());
 		assertEquals(false, qry.isNextAvailable());
 
-		qry.setMaxRows(10);		
+		qry.setMaxRows(10);
 		assertEquals(1, qry.getPage());
 		assertEquals(false, qry.isPreviousAvailable());
 		assertEquals(true, qry.isNextAvailable());
-		
+
 		qry.next();
 		assertEquals(2, qry.getPage());
 		qry.next();
 		assertEquals(3, qry.getPage());
 		qry.next();
 		assertEquals(4, qry.getPage());
-		qry.next(); //first result = 40
+		qry.next(); // first result = 40
 		assertEquals(5, qry.getPage());
 		qry.setMaxRows(80);
 		assertEquals(1, qry.getPage());
@@ -222,69 +203,66 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> {
 		assertEquals(1, qry.getPage());
 		qry.next();
 		assertEquals(2, qry.getPage());
-		
+
 	}
-	
+
 	public void testPaginationInitNoReadIsPrev() {
 		QueryDataset<Integer> qry = buildQuery(100);
-		assertEquals(false, qry.isPreviousAvailable());			
+		assertEquals(false, qry.isPreviousAvailable());
 	}
-	
+
 	public void testPaginationInitNoReadIsNext() {
 		QueryDataset<Integer> qry = buildQuery(100);
-		assertEquals(false, qry.isNextAvailable());			
+		assertEquals(false, qry.isNextAvailable());
 	}
 
 	public void testPaginationNoRead_Last_IsPrev() {
 		QueryDataset<Integer> qry = buildQuery(100);
 		qry.last();
-		assertEquals(false, qry.isPreviousAvailable());			
+		assertEquals(false, qry.isPreviousAvailable());
 	}
-	
+
 	public void testPaginationNoRead_Last_IsNext() {
 		QueryDataset<Integer> qry = buildQuery(100);
 		qry.last();
-		assertEquals(false, qry.isNextAvailable());			
+		assertEquals(false, qry.isNextAvailable());
 	}
-	
+
 	public void testPaginationPaged_NoReadIsPrev() {
 		QueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
-		assertEquals(false, qry.isPreviousAvailable());			
+		assertEquals(false, qry.isPreviousAvailable());
 	}
-	
+
 	public void testPaginationPaged_NoReadIsNext() {
 		QueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
-		assertEquals(true, qry.isNextAvailable());			
+		assertEquals(true, qry.isNextAvailable());
 	}
 
 	public void testPaginationPaged_NoRead_Last_IsPrev() {
 		QueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
 		qry.last();
-		assertEquals(true, qry.isPreviousAvailable());			
+		assertEquals(true, qry.isPreviousAvailable());
 	}
-	
+
 	public void testPaginationPaged_NoRead_Last_IsNext() {
 		QueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
 		qry.last();
 		assertEquals(10, qry.getPage());
-		assertEquals(false, qry.isNextAvailable());			
+		assertEquals(false, qry.isNextAvailable());
 	}
-
 
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {
 		return buildQuery(100);
 	}
 
-
 	@Override
 	public int getDataRowCount() {
 		return 100;
 	}
-	
-	
+
 }

@@ -52,16 +52,12 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 		dataset.invalidateResults();
 	}
 
-	public boolean isMultiPaged() {
-		return dataset.isMultiPaged();
+	public boolean isMultiPage() {
+		return dataset.isMultiPage();
 	}
 
 	public boolean isNextAvailable() {
 		return dataset.isNextAvailable();
-	}
-
-	public boolean isPaged() {
-		return dataset.isPaged();
 	}
 
 	public boolean isPreviousAvailable() {

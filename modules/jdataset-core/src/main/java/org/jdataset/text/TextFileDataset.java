@@ -13,8 +13,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Andy Gibson
- *
- * @param <T> type of object this dataset contains
+ * 
+ * @param <T>
+ *            type of object this dataset contains
  */
 public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 
@@ -36,10 +37,10 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 					"File '%s' does not exist", fileName));
 		}
 
-		lineCount = calculateNumberOfLines(file);
+		lineCount = countNumberOfLines(file);
 	}
 
-	private int calculateNumberOfLines(File file) {
+	private int countNumberOfLines(File file) {
 		int count = 0;
 		BufferedReader reader;
 		try {
@@ -74,10 +75,9 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 			reader = new BufferedReader(new FileReader(file));
 
 			// Put this 'if' in as an extra measure, we don't want to use a
-			// readline
-			// if firstresult = 0 since we want to start at the begnining. Put
-			// this check in because we don't want to rely on fail fast checks
-			// in the while statement.
+			// readline if firstresult = 0 since we want to start at the
+			// beginning. Put this check in because we don't want to rely on
+			// fail fast checks in the while statement.
 			if (firstResult != 0) {
 				while (firstResult != 0 && reader.readLine() != null) {
 					firstResult--;
@@ -104,7 +104,7 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 	public boolean isNextAvailable() {
 		return getFirstResult() + getResults().size() < getResultCount();
 	}
-	
+
 	public String getFileName() {
 		return fileName;
 	}

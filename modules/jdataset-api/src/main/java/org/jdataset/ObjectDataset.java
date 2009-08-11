@@ -106,17 +106,11 @@ public interface ObjectDataset<T> extends Iterable<T> {
 	void previous();
 
 	/**
-	 * @return Indicates whether this dataset is paged, or whether it will
-	 *         return all results based on whether the max rows property is set.
-	 */
-	boolean isPaged();
-
-	/**
 	 * @return Indicates whether this dataset has more than one page. Can be
 	 *         used to indicate whether paging is needed. This value is based on
 	 *         the actual results as opposed to the dataset settings.
 	 */
-	boolean isMultiPaged();
+	boolean isMultiPage();
 
 	/**
 	 * @return The key value we are ordering by

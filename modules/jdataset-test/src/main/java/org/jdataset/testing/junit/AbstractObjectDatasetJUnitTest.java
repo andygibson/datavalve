@@ -145,29 +145,12 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 	}
 
 	/**
-	 * Check the isPAged flag is set when getMaxRows <> 0
-	 */
-	public void testIsPagedFlagTrue() {
-		ObjectDataset<T> ds = buildObjectDataset();
-		ds.setMaxRows(10);
-		assertEquals(true, ds.isPaged());
-	}
-
-	/**
-	 * Check the isPAged flag is set when getMaxRows == 0
-	 */
-	public void testIsPagedFlagFalse() {
-		ObjectDataset<T> ds = buildObjectDataset();
-		assertEquals(false, ds.isPaged());
-	}
-
-	/**
 	 * Check the multi page flag is set when we have multiple pages
 	 */
 	public void testIsMultiPageFlagPositive() {
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10); // we should have 30+ rows
-		assertEquals(true, ds.isMultiPaged());
+		assertEquals(true, ds.isMultiPage());
 	}
 
 	/**
@@ -176,7 +159,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
 	public void testIsMultiPageFlagNegative() {
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(ds.getResultCount());
-		assertEquals(false, ds.isMultiPaged());
+		assertEquals(false, ds.isMultiPage());
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package org.jdataset.util;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 import org.jdataset.text.PhoneEntry;
 
 public class SourcedDatasetTest extends
-		AbstractObjectDatasetJUnitTest<PhoneEntry> {
+		AbstractObjectDatasetJUnitTest<PhoneEntry> implements Serializable {
 	
 	private BackedDataset<PhoneEntry> dataset;
 	

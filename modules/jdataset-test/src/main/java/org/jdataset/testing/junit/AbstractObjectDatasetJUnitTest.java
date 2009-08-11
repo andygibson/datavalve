@@ -3,6 +3,7 @@ package org.jdataset.testing.junit;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import org.jdataset.ObjectDataset;
  * 
  * @param <T>
  */
-public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase {
+public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase implements Serializable {
 
 	public abstract ObjectDataset<T> buildObjectDataset();
 

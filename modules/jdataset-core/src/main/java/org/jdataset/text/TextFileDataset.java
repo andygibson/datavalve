@@ -61,7 +61,7 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 
 	@Override
 	protected List<T> fetchResults() {
-		int rowCount = isPaged() ? getMaxRows() : getResultCount();
+		int rowCount = getMaxRows() == 0 ? getResultCount() : getMaxRows();
 		return generateResults(getFirstResult(), rowCount);
 	}
 

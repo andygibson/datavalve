@@ -32,7 +32,7 @@ public interface ObjectDataset<T> extends Iterable<T> {
 	 * @param firstResult
 	 *            the index to use for the first result
 	 */
-	void setFirstResult(Integer firstResult);
+	void setFirstResult(int firstResult);
 
 	/**
 	 * @return the maximum number of rows to return

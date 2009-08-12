@@ -12,7 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class for Database Query driven datasets. This class handles
+ * Abstract class for Query driven datasets that implements most of the methods
+ * in the {@link QueryDataset} interface. It adds features for defining
+ * select/count statements, and translating orderKey values into other
+ * representations. It also defines common methods for defining an order clause
+ * and building statements based on the Sql/Ejbql structure.
  * 
  * @author Andy Gibson
  * 

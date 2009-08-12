@@ -3,11 +3,24 @@ package org.jdataset;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-
-public class ReflectionParameterResolver implements ParameterResolver,Serializable {
+/**
+ * Implementation of a {@link ParameterResolver} that looks up values in the
+ * referenced object based on run time reflection. The resolver expects a
+ * parameter to be named as per the JavaBean specification for a particular
+ * property on the object.
+ * <p>
+ * For example, a parameter called name should be specified as
+ * <code>:name</code> and the property on the object be called
+ * <code>getName()</code>.
+ * 
+ * @author Andy Gibson
+ * 
+ */
+public class ReflectionParameterResolver implements ParameterResolver,
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Object object;
 
 	public ReflectionParameterResolver(Object object) {
@@ -39,7 +52,8 @@ public class ReflectionParameterResolver implements ParameterResolver,Serializab
 
 	public Object resolveProperty(Object base, String property) {
 		try {
-			return org.apache.commons.beanutils.PropertyUtils.getProperty(base, property);
+			return org.apache.commons.beanutils.PropertyUtils.getProperty(base,
+					property);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
@@ -48,6 +62,6 @@ public class ReflectionParameterResolver implements ParameterResolver,Serializab
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 }

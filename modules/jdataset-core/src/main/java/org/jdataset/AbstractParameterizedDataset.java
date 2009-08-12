@@ -8,22 +8,24 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- * Extends the {@link AbstractDataset} to include the parameterization
- * functions. 
+ * Extends the {@link AbstractDataset} to implement the
+ * {@link ParameterizedDataset} methods. This class adds handling for parameter
+ * resolvers, holding a fixed parameter map, resolving parameters, extracting
+ * parameters from the text and resolving parameters.
  * 
  * @author Andy Gibson
  * 
  * @param <T>
  */
-public abstract class AbstractParameterizedDataset<T> extends AbstractDataset<T> implements
-		ParameterizedDataset<T> {
+public abstract class AbstractParameterizedDataset<T> extends
+		AbstractDataset<T> implements ParameterizedDataset<T> {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static Logger log = LoggerFactory.getLogger(AbstractParameterizedDataset.class);
-	
+
+	private static Logger log = LoggerFactory
+			.getLogger(AbstractParameterizedDataset.class);
+
 	private Map<String, Object> parameters = new HashMap<String, Object>();
 	private List<ParameterResolver> parameterResolvers = new ArrayList<ParameterResolver>();
 
@@ -45,14 +47,14 @@ public abstract class AbstractParameterizedDataset<T> extends AbstractDataset<T>
 
 	public Object resolveParameter(String name) {
 
-		log.debug("Attempting to resolve parameter : '{}'",name);
+		log.debug("Attempting to resolve parameter : '{}'", name);
 		// try to find locally first
 		if (getParameters().containsKey(name)) {
 			// return this value since it is contained in the parameters
 			// we return this even if it is zero because that is what it is
 			// defined as
 			Object value = getParameters().get(name);
-			log.debug("Resolved parameter as : '{}'",value);
+			log.debug("Resolved parameter as : '{}'", value);
 			return value;
 		}
 
@@ -60,8 +62,8 @@ public abstract class AbstractParameterizedDataset<T> extends AbstractDataset<T>
 		Parameter param = new Parameter(name);
 		for (ParameterResolver resolver : parameterResolvers) {
 			if (resolver.resolveParameter(param)) {
-				log.debug("Resolved using resolver : '{}'",resolver);
-				log.debug("Resolved value as : '{}'",param.getValue());
+				log.debug("Resolved using resolver : '{}'", resolver);
+				log.debug("Resolved value as : '{}'", param.getValue());
 				return param.getValue();
 			}
 		}

@@ -7,8 +7,8 @@ import org.jdataset.util.LazyList;
 
 /**
  * <p>
- * Implementation of an ObjectDataset that holds its own data list that is used
- * to back the dataset. Introduces a new abstract method to be overriden that
+ * Implementation of an {@link ObjectDataset} that holds its own data list that is used
+ * to back the dataset. Introduces a new abstract method to be overridden that
  * allows subclasses to return the <code>List</code> that backs this dataset.
  * </p>
  * <p>

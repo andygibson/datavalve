@@ -4,7 +4,7 @@ import java.util.Map;
 
 
 /**
- * Extension of the object dataset that includes parameterization of the
+ * Extends the {@link ObjectDataset} interface to include parameterization of the
  * dataset. This introduces methods that allows you to define parameters and
  * also reference parameter resolvers to extend the parameter resolution beyond
  * key-value pairs.

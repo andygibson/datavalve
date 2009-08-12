@@ -1,10 +1,10 @@
 package org.jdataset;
 
 /**
- * Class used to provide values for resolved parameters. 
+ * A value class used to store resolve parameters. 
  *  
  * @author Andy Gibson
- *
+ * 
  */
 public class Parameter {
 

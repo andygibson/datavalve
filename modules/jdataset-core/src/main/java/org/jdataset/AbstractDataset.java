@@ -9,9 +9,9 @@ import org.jdataset.util.DatasetIterator;
 
 /**
  * This is an abstract dataset that provides common implementation for most of
- * the {@link ObjectDataset} interface methods. It uses a strategy pattern for
- * implementing the fetching of information as defined by subclass
- * implementations.
+ * the {@link ObjectDataset} methods. It uses a strategy pattern for
+ * implementing the fetching of information as using mechanisms defined by
+ * subclass implementations.
  * <p>
  * The <code>fetchResultCount()</code> and <code>fetchResults()</code> methods
  * should be overridden in subclasses to implement the fetching of data and the
@@ -22,7 +22,8 @@ import org.jdataset.util.DatasetIterator;
  * The record count mechanism is implemented such that it is lazy loaded, and
  * not called until absolutely needed such as the user calls
  * <code>getRecordCount()</code>, <code>getPageCount()</code> or the
- * <code>last()</code> method.
+ * <code>last()</code> method. This is so we do not have to run this expensive
+ * query unless we absolutely have to.
  * <p>
  * 
  * @author Andy Gibson
@@ -212,13 +213,14 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	public Class<?> getEntityClass() {
 		if (entityClass == null) {
-			
-			ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
-			entityClass = (Class<?>) type.getActualTypeArguments()[0];		
+
+			ParameterizedType type = (ParameterizedType) getClass()
+					.getGenericSuperclass();
+			entityClass = (Class<?>) type.getActualTypeArguments()[0];
 		}
 		return entityClass;
 	}
-	
+
 	public void refresh() {
 		invalidateResults();
 	}

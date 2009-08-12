@@ -3,8 +3,17 @@ package org.jdataset;
 import java.util.List;
 
 /**
- * This is the core interface for the object datsets. It provides methods for
+ * This is the base interface for the object datasets. It provides methods for
  * accessing the data, record counts, pagination and navigation of the dataset.
+ * It inherits from {@link Iterable} so we can iterate over instances of the
+ * interface.
+ * <p>
+ * When writing code to interface with a dataset, you should code to this
+ * interface as much as possible. This interface specifies how you access the
+ * information without any methods as to how to determine what information the
+ * dataset should contain. The {@link QueryDataset} just adds query aspects such
+ * as having a count and select statement to determine what objects to put in
+ * the result set.
  * 
  * @author Andy Gibson
  * 
@@ -53,7 +62,9 @@ public interface ObjectDataset<T> extends Iterable<T> {
 	void invalidateResults();
 
 	/**
-	 * Called when both the result list and the result count are invalid.
+	 * Called when both the result list and the result count are invalid. This
+	 * method is called when the data this dataset provides has changed and
+	 * therefore the count might have changed. 
 	 */
 	void invalidateResultInfo();
 
@@ -149,12 +160,11 @@ public interface ObjectDataset<T> extends Iterable<T> {
 	 *            Set the order for the ordering
 	 */
 	void setOrderAscending(boolean isAscending);
-	
-		
+
 	/**
 	 * @return Return the class type this dataset returns.
 	 */
 	Class<?> getEntityClass();
-	
+
 	void refresh();
 }

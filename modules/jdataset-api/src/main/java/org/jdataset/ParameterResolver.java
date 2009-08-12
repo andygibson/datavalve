@@ -1,7 +1,9 @@
 package org.jdataset;
 
 /**
- * Interface that provides a mechanism to allow the resolution of a parameter.
+ * Interface that can be used to define components that are used to provide
+ * parameter values in response to parameters in {@link QueryDataset}
+ * restrictions.
  * 
  * @author Andy Gibson
  * 

@@ -16,8 +16,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author Andy Gibson
  * 
  */
-public class ReflectionParameterResolver implements ParameterResolver,
-		Serializable {
+public class ReflectionParameterResolver extends ParameterResolver {
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +61,9 @@ public class ReflectionParameterResolver implements ParameterResolver,
 			e.printStackTrace();
 		}
 		return null;
+	}
 
+	public boolean acceptParameter(String parameter) {
+		return parameter.startsWith(":");
 	}
 }

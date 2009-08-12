@@ -1,15 +1,18 @@
 package org.jdataset;
 
+import java.io.Serializable;
+
 /**
- * Interface that can be used to define components that are used to provide
+ * Class that can be used to define components that are used to provide
  * parameter values in response to parameters in {@link QueryDataset}
  * restrictions.
  * 
  * @author Andy Gibson
  * 
  */
-public interface ParameterResolver {
+public abstract class ParameterResolver implements Serializable {
 
-	boolean resolveParameter(Parameter parameter);
+	public abstract boolean resolveParameter(Parameter parameter);
+	public abstract boolean acceptParameter(String parameter);
 
 }

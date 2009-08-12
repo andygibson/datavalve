@@ -118,7 +118,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		qry.setSelectStatement("select p from Person p");
 		qry.setCountStatement("select count(p) from Person p");
 
-		qry.getRestrictions().add("p.id = #{personId}");
+		qry.getRestrictions().add("p.id = :personId");
 		qry.getParameters().put("personId", 4l);
 		List<Person> result = qry.getResults();
 
@@ -197,6 +197,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testParameterResolverRepeatsEval() {
+		System.out.println("Resolving ");
 		log.debug("Entering : resolver repeats eval test");
 		JpaDataset<Person> qry = new JpaDataset<Person>();
 		qry.setEntityManager(em);
@@ -210,12 +211,21 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 			long id = 20;
 
 			public boolean resolveParameter(Parameter parameter) {
-				if (parameter.getName().equals("id")) {
+				System.out.println("Resolving "+parameter);
+				if (parameter.getName().equals("#{id}")) {
 					parameter.setValue(id++);
 					return true;
 				}
 				return false;
 			}
+
+			public boolean acceptParameter(String parameter) {
+				
+				boolean val = parameter.startsWith("#{") && parameter.endsWith("}");
+				System.out.println("Do we accept param "+parameter+ " - "+val);
+				return val;
+			}
+			
 		});
 		List<Person> results = qry.getResults();
 		assertNotNull(results);

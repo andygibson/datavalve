@@ -61,13 +61,13 @@ public abstract class AbstractSqlDataset<T> extends
 		log.debug("Building Statement with sql = {}", sql);
 
 		try {
-			String[] params = extractExpressions(sql);
+			String[] params = extractParameters(sql);
 			List<Object> paramValues = new ArrayList<Object>();
 
 			// first replace the params in the sql expression
 			for (String param : params) {
 				log.debug("Evaluating param : {}", param);
-				sql = sql.replace("#{" + param + "}", "?");
+				sql = sql.replace(param, "?");
 				Object value = resolveParameter(param);
 				log.debug("Resolved to  : {}", value);
 				paramValues.add(resolveParameter(param));

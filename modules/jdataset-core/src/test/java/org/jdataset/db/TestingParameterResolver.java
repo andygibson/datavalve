@@ -1,11 +1,9 @@
 package org.jdataset.db;
 
-import java.io.Serializable;
-
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
 
-public class TestingParameterResolver implements ParameterResolver, Serializable{
+public class TestingParameterResolver extends ParameterResolver {
 
 	public boolean resolveParameter(Parameter parameter) {
 
@@ -21,6 +19,10 @@ public class TestingParameterResolver implements ParameterResolver, Serializable
 
 		return false;
 
+	}
+
+	public boolean acceptParameter(String parameter) {
+		return true;
 	}
 
 }

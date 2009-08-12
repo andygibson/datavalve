@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author Andy Gibson
  * 
  */
-public class SeamParameterResolver implements ParameterResolver {
+public class SeamParameterResolver extends ParameterResolver {
 
 	private static Logger log = LoggerFactory
 			.getLogger(SeamParameterResolver.class);
@@ -22,9 +22,8 @@ public class SeamParameterResolver implements ParameterResolver {
 	public boolean resolveParameter(Parameter parameter) {
 		log.debug("Resolving Seam Parameter : {}", parameter);
 		// TODO - we don't want to treat all parameters as EL expressions need
-		// to re-think the parameter splitting
-		String elName = "#{" + parameter.getName() + "}";
-		Object result = Expressions.instance().createValueExpression(elName)
+		// to re-think the parameter splitting		
+		Object result = Expressions.instance().createValueExpression(parameter.getName())
 				.getValue();
 		log.debug("Expression {} evaluated to {}", parameter.getName(), result);
 
@@ -34,6 +33,10 @@ public class SeamParameterResolver implements ParameterResolver {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean acceptParameter(String parameter) {
+		return parameter.startsWith("#{") && parameter.endsWith("}");		
 	}
 
 }

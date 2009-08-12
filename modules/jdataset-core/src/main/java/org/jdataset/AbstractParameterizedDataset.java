@@ -22,6 +22,7 @@ public abstract class AbstractParameterizedDataset<T> extends
 		AbstractDataset<T> implements ParameterizedDataset<T> {
 
 	private static final long serialVersionUID = 1L;
+	private ParameterParser parameterParser = new RegexParameterParser();
 
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractParameterizedDataset.class);
@@ -47,52 +48,74 @@ public abstract class AbstractParameterizedDataset<T> extends
 
 	public Object resolveParameter(String name) {
 
-		log.debug("Attempting to resolve parameter : '{}'", name);
+		if (name == null) {
+			return null;
+		}
+
+	/*	log.debug("Attempting to resolve parameter : '{}'", name);
 		// try to find locally first
+		
+			
 		if (getParameters().containsKey(name)) {
 			// return this value since it is contained in the parameters
 			// we return this even if it is zero because that is what it is
 			// defined as
 			Object value = getParameters().get(name);
-			log.debug("Resolved parameter as : '{}'", value);
+			log.debug("Resolved parameter locally as : '{}'", value);
 			return value;
 		}
 
-		log.debug("Checking parameter resolvers");
+		log.debug("Checking parameter resolvers");*/
 		Parameter param = new Parameter(name);
+
 		for (ParameterResolver resolver : parameterResolvers) {
-			if (resolver.resolveParameter(param)) {
-				log.debug("Resolved using resolver : '{}'", resolver);
-				log.debug("Resolved value as : '{}'", param.getValue());
-				return param.getValue();
+
+			if (resolver.acceptParameter(name)) {
+				if (resolver.resolveParameter(param)) {
+					log.debug("Resolved using resolver : '{}'", resolver);
+					log.debug("Resolved value as : '{}'", param.getValue());
+					return param.getValue();
+				}
 			}
 		}
 		return null;
 	}
 
-	protected String[] extractExpressions(String restriction) {
-		if (restriction == null || restriction.length() == 0) {
-			return new String[0];
+	protected String[] extractParameters(String restriction) {
+		if (parameterParser == null) {
+			throw new IllegalStateException(
+					"Parameter parser is null for parameterized dataset");
 
 		}
-		List<String> list = new ArrayList<String>();
+		return parameterParser.extractParameters(restriction);
+	}
 
-		int startIndex = restriction.indexOf("#{");
-		while (startIndex != -1) {
-			int endIndex = restriction.indexOf("}", startIndex);
-			if (endIndex == -1) {
-				throw new RuntimeException(
-						"Expression does not have ending '}' in restriction '"
-								+ restriction + "'");
+
+
+	public ParameterParser getParameterParser() {
+		return parameterParser;
+	}
+
+	public void setParameterParser(ParameterParser parameterParser) {
+		this.parameterParser = parameterParser;
+	}
+	
+	public AbstractParameterizedDataset() {
+		addParameterResolver(new ParameterResolver() {
+			
+			public boolean resolveParameter(Parameter parameter) {
+				String paramName = parameter.getName().substring(1);				
+				if (parameters.containsKey(paramName)) {
+					parameter.setValue(parameters.get(paramName));
+					return true;
+				}
+				return false;
 			}
-
-			String exp = restriction.substring(startIndex + 2, endIndex);
-			list.add(exp);
-			startIndex = restriction.indexOf("#{", endIndex);
-		}
-
-		String[] results = new String[list.size()];
-		return list.toArray(results);
+			
+			public boolean acceptParameter(String parameter) {
+				return parameter.startsWith(":");
+			}
+		});
 	}
 
 }

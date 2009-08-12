@@ -81,7 +81,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 	public void testSetParameters() {
 		MappedSqlDataset qry = createDataset();
 		qry.setMaxRows(10);
-		qry.setSelectStatement("select * from TestValues where id = #{id}");
+		qry.setSelectStatement("select * from TestValues where id = :id");
 		qry.addParameter("id", 4);
 		List<TableRow> results = qry.getResults();
 
@@ -96,11 +96,15 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 		qry.addParameterResolver(new ParameterResolver() {
 
 			public boolean resolveParameter(Parameter parameter) {
-				if ("myId".equals(parameter.getName())) {
+				if ("#{myId}".equals(parameter.getName())) {
 					parameter.setValue(27);
 					return true;
 				}
 				return false;
+			}
+
+			public boolean acceptParameter(String parameter) {
+				return parameter.startsWith("#{") && parameter.endsWith("}");
 			}
 		});
 		qry.setSelectStatement("select * from TestValues where id = #{myId}");
@@ -121,6 +125,10 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 					return true;
 				}
 				return false;
+			}
+
+			public boolean acceptParameter(String parameter) {
+				return true;
 			}
 		});
 		qry

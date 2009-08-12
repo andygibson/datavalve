@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultBoundedRangeModel;
+
 import org.jdataset.Parameter;
+import org.jdataset.ParameterParser;
 import org.jdataset.QueryDataset;
+import org.jdataset.RegexParameterParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +45,8 @@ import org.slf4j.LoggerFactory;
 public class RestrictionBuilder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	public static String EXPRESSION_PREFIX = "#{";
-	public static String EXPRESSION_SUFFIX = "}";
+
+	private ParameterParser parameterParser = new RegexParameterParser();
 
 	private static Logger log = LoggerFactory
 			.getLogger(RestrictionBuilder.class);
@@ -228,18 +231,16 @@ public class RestrictionBuilder implements Serializable {
 		for (Parameter param : params) {
 			log.debug("Processing parameter : {}", param);
 			// calculate the new name
-			String newName = getReplacementParameterName();
-			// calculate expression to replace "#{exp}" with prefix and suffix
-			String expressionName = EXPRESSION_PREFIX + param.getName()
-					+ EXPRESSION_SUFFIX;
+			String newName = getReplacementParameterName(); 
+			
 			// calculate the replacement Name - ':paramName' or '?'
 			String replacementName = getReplacementParameterPrefix() + newName;
 
 			log.debug("Replacing expression '{}' with parameter '{}'",
-					expressionName, replacementName);
+					param.getName(), replacementName);
 
 			// replace the param in the restriction with the new name
-			restriction = restriction.replace(expressionName, replacementName);
+			restriction = restriction.replace(param.getName(), replacementName);
 			log.debug("Restriction has evolved to : '{}'", restriction);
 			// set the new name of the parameter in the parameter info
 			param.setName(newName);
@@ -287,40 +288,11 @@ public class RestrictionBuilder implements Serializable {
 		return paramValues;
 	}
 
-	/**
-	 * Parses the passed in restriction and returns a list of the parameter
-	 * expressions. Expressions are determined as text prefixed with '#{' and
-	 * ended with '}'.
-	 * 
-	 * @param restriction
-	 *            Restriction to parse
-	 * @return an array of the parameter expressions
-	 */
 	protected String[] extractExpressions(String restriction) {
-		if (restriction == null || restriction.length() == 0) {
-			return new String[0];
-
+		if (parameterParser == null) {
+			throw new IllegalStateException("Parameter parser is null in restriction builder");
 		}
-		List<String> list = new ArrayList<String>();
-
-		int startIndex = restriction.indexOf(EXPRESSION_PREFIX);
-		while (startIndex != -1) {
-			int endIndex = restriction.indexOf(EXPRESSION_SUFFIX, startIndex);
-			if (endIndex == -1) {
-				throw new IllegalArgumentException(
-						String
-								.format(
-										"Expression does not have ending '%s' in restriction '%s'",
-										EXPRESSION_SUFFIX, restriction));
-			}
-
-			String exp = restriction.substring(startIndex + 2, endIndex);
-			list.add(exp);
-			startIndex = restriction.indexOf("#{", endIndex);
-		}
-
-		String[] results = new String[list.size()];
-		return list.toArray(results);
+		return parameterParser.extractParameters(restriction);
 	}
 
 	/**
@@ -345,5 +317,13 @@ public class RestrictionBuilder implements Serializable {
 		}
 
 		return sb.toString();
+	}
+	
+	public ParameterParser getParameterParser() {
+		return parameterParser;
+	}
+	
+	public void setParameterParser(ParameterParser parameterParser) {
+		this.parameterParser = parameterParser;
 	}
 }

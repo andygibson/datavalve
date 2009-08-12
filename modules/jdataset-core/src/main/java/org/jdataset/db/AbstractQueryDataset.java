@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Andy Gibson
  * 
- * @param <T>
+ * @param <T> Type of object this dataset contains.
  */
 public abstract class AbstractQueryDataset<T> extends
 		AbstractParameterizedDataset<T> implements QueryDataset<T> {

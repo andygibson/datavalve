@@ -7,9 +7,10 @@ import org.jdataset.util.LazyList;
 
 /**
  * <p>
- * Implementation of an {@link ObjectDataset} that holds its own data list that is used
- * to back the dataset. Introduces a new abstract method to be overridden that
- * allows subclasses to return the <code>List</code> that backs this dataset.
+ * Implementation of an {@link ObjectDataset} that holds its own data list that
+ * is used to back the dataset. Introduces a new abstract method to be
+ * overridden that allows subclasses to return the <code>List</code> that backs
+ * this dataset.
  * </p>
  * <p>
  * This class can be used to provide an {@link ObjectDataset} interface to any
@@ -33,7 +34,7 @@ import org.jdataset.util.LazyList;
 public abstract class BackedDataset<T> extends AbstractDataset<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private List<T> backingData;
 
 	/**
@@ -68,20 +69,16 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 	}
 
 	/**
-	 * <p>
 	 * Method that the user must override to return the backing data for this
 	 * dataset. This is the strategy method for implementing this in-memory
 	 * dataset and providing the dataset with all the results that back this
 	 * dataset.
-	 * </p>
 	 * <p>
 	 * Subclasses should override this method and return the complete list of
 	 * data that this dataset contains
-	 * </p>
 	 * <p>
 	 * If there is too much data to load at once, consider using a
 	 * {@link LazyList} to back the dataset.
-	 * </p>
 	 * 
 	 * @return The list of type <code>List&ltT&gt</code> containing all the data
 	 *         that is used to provide data to the dataset.
@@ -116,6 +113,13 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 		return backingData.subList(startPos, endPos);
 	}
 
+	/**
+	 * Overridden to also invalidate the backing data values used to back this
+	 * list. We do it on the invalidate info since this is called when the
+	 * underlying structure may have changed.
+	 * 
+	 * @see org.jdataset.AbstractDataset#invalidateResultInfo()
+	 */
 	@Override
 	public void invalidateResultInfo() {
 		super.invalidateResultInfo();

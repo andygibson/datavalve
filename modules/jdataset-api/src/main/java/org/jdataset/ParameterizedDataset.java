@@ -2,12 +2,11 @@ package org.jdataset;
 
 import java.util.Map;
 
-
 /**
- * Extends the {@link ObjectDataset} interface to include parameterization of the
- * dataset. This introduces methods that allows you to define parameters and
- * also reference parameter resolvers to extend the parameter resolution beyond
- * key-value pairs.
+ * Extends the {@link ObjectDataset} interface to include parameterization of
+ * the dataset. This introduces methods that allows you to define parameters and
+ * also attach {@link ParameterResolver} instances to extend the parameter
+ * resolution beyond key-value pairs.
  * 
  * @author Andy Gibson
  * 

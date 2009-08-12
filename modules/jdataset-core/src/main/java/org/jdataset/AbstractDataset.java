@@ -89,6 +89,9 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		invalidateResults();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jdataset.ObjectDataset#invalidateResultInfo()
+	 */
 	public void invalidateResultInfo() {
 
 		resultCount = null;

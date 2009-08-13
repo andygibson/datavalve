@@ -22,7 +22,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 	private EntityManagerFactory emf;
 	private EntityManager em;
-	private Connection connection;
+	private transient Connection connection;
 
 	@Override
 	protected void setUp() throws Exception {

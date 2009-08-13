@@ -10,6 +10,8 @@ import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.hibernate.Session;
 import org.jdataset.sample.wicket.dataprovider.JpaDataProviderPage;
+import org.jdataset.sample.wicket.search.JpaSearchPage;
+import org.jdataset.sample.wicket.search.SqlSearchPage;
 import org.phonelist.model.ModelBuilder;
 
 /**
@@ -56,6 +58,6 @@ public class WicketApplication extends WebApplication {
 	
 	@Override
 	public Class<? extends Page> getHomePage() {
-		return JpaDataProviderPage.class;
+		return SqlSearchPage.class;
 	}
 }

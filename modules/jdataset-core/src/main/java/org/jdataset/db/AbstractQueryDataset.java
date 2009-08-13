@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.jdataset.AbstractParameterizedDataset;
 import org.jdataset.Parameter;
@@ -29,6 +30,8 @@ public abstract class AbstractQueryDataset<T> extends
 
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractQueryDataset.class);
+	
+	private static Pattern commaSplitter = Pattern.compile(",");
 
 	private String selectStatement;
 	private String countStatement;
@@ -90,16 +93,23 @@ public abstract class AbstractQueryDataset<T> extends
 	}
 
 	public String calculateOrderBy() {
-
-		// get the order fields from the key
-		String order = orderKeyMap.get(getOrderKey());
-		// if not set, then there is no ordering
-		if (order == null) {
+		String orderKey = getOrderKey();		
+		//fail quickly if we don't have an order
+		if (orderKey == null || orderKey.length() == 0) {
+			return null;
+		}				
+		if (orderKeyMap.size() == 0) {
+			log.warn("orderKey property is set but there are no values in the orderKeyMap.");
 			return null;
 		}
-
+		String order = getOrderKeyMap().get(orderKey);
+		if (order == null) {
+			log.warn("orderKey value '{}' not found in orderKeyMap",orderKey);
+			return null;
+		}
+		
 		// parse out fields and add order
-		String[] fields = order.split(",");
+		String[] fields = commaSplitter.split(order);
 		order = "";
 		// concatenate the fields with the direction, put commas in between
 		for (String field : fields) {
@@ -108,6 +118,7 @@ public abstract class AbstractQueryDataset<T> extends
 			}
 			order = order + field + (isOrderAscending() ? " ASC " : " DESC ");
 		}
+		log.debug("Order key = {}, order by = {}",getOrderKey(),order );
 		return order;
 	}
 

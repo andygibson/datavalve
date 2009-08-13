@@ -30,7 +30,7 @@ public abstract class BaseSqlDatasetTest<T> extends AbstractObjectDatasetJUnitTe
 		int value;
 	}
 
-	private Connection connection;
+	private  transient Connection connection;
 
 	@Override
 	protected void setUp() throws Exception {

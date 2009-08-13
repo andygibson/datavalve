@@ -3,6 +3,9 @@ package org.jdataset;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Implementation of a {@link ParameterResolver} that looks up values in the
  * referenced object based on run time reflection. The resolver expects a
@@ -18,6 +21,8 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class ReflectionParameterResolver extends ParameterResolver {
 
+	private static Logger log = LoggerFactory.getLogger(ReflectionParameterResolver.class);
+	
 	private static final long serialVersionUID = 1L;
 
 	private Object object;
@@ -35,14 +40,18 @@ public class ReflectionParameterResolver extends ParameterResolver {
 	}
 
 	public boolean resolveParameter(Parameter parameter) {
-		String[] properties = parameter.getName().split("\\.");
+		String name=parameter.getName().substring(1);//remove the starting ':'
+		
+		String[] properties = name.split("\\.");
 		int index = 0;
 		Object base = object;
 		while (index < properties.length && base != null) {
+			//log.debug("Resolving property {} on base of {}",properties[index],base);
 			base = resolveProperty(base, properties[index]);
 			index++;
 		}
-		if (base != null) {
+		log.debug("{} resolved to '{}'",parameter.getName(),base);
+		if (base != null) {			
 			parameter.setValue(base);
 			return true;
 		}

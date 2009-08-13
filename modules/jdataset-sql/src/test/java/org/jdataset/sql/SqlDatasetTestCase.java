@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 
 public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 
-
-	
 	private static Logger log = LoggerFactory
 			.getLogger(SqlDatasetTestCase.class);
 
@@ -23,8 +21,6 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 		result.setCountStatement("select count(1) from TestValues");
 		return result;
 	}
-
-
 
 	public void testRecordCount() {
 		MappedSqlDataset qry = createDataset();
@@ -222,7 +218,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 				getConnection()) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public TestValue createObjectFromResultSet(ResultSet resultSet)
 					throws SQLException {
@@ -253,10 +249,8 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 		}
 	}
 
-
-
 	@Override
-	public ObjectDataset<TableRow> buildObjectDataset() {		
+	public ObjectDataset<TableRow> buildObjectDataset() {
 		return createDataset();
 	}
 }

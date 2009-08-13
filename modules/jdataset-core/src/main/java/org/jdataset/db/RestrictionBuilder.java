@@ -182,7 +182,6 @@ public class RestrictionBuilder implements Serializable {
 		for (String restriction : dataset.getRestrictions()) {
 			processRestriction(restriction);
 		}
-
 	}
 
 	/**
@@ -211,43 +210,31 @@ public class RestrictionBuilder implements Serializable {
 			restrictions.add(restriction);
 		}
 
-		log.debug("Building parameter list");
 		// build the parameters for this restriction line
 		ParameterValues params = buildParameterList(expressions);
 		boolean hasNullParameters = params.hasNullParameters();
-		log.debug("Params Count : {}, containsNull = {}", params.size(),
-				hasNullParameters);
 
 		// are we missing some parameter values? If so we are done if we are not
 		// including missing parameters
 		if (hasNullParameters && !includeMissingParameters) {
-			log
-					.debug("Contains null, and we are not including missing parameters, so I'm leaving");
 			return;
 		}
 
 		// Process each parameter
-		log.debug("Processing parameters for restriction");
-		for (Parameter param : params) {
-			log.debug("Processing parameter : {}", param);
+		for (Parameter param : params) {		
 			// calculate the new name
 			String newName = getReplacementParameterName(); 
 			
 			// calculate the replacement Name - ':paramName' or '?'
 			String replacementName = getReplacementParameterPrefix() + newName;
 
-			log.debug("Replacing expression '{}' with parameter '{}'",
-					param.getName(), replacementName);
-
 			// replace the param in the restriction with the new name
 			restriction = restriction.replace(param.getName(), replacementName);
-			log.debug("Restriction has evolved to : '{}'", restriction);
 			// set the new name of the parameter in the parameter info
 			param.setName(newName);
 			// add the parameter to the final list
 			parameterList.add(param);
-		}
-		log.debug("Final Restriction = '{}'", restriction);
+		}		
 		// finally, add the restriction to the list
 		restrictions.add(restriction);
 	}

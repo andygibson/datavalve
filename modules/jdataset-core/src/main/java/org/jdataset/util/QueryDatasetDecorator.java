@@ -47,4 +47,8 @@ public class QueryDatasetDecorator<T> extends ParameterizedDatasetDecorator<T> i
 	public void setSelectStatement(String selectStatement) {
 		dataset.setSelectStatement(selectStatement);
 	}
+
+	public void addRestriction(String restriction) {
+		dataset.addRestriction(restriction);		
+	}
 }

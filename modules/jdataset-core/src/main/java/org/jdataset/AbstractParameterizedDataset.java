@@ -72,7 +72,7 @@ public abstract class AbstractParameterizedDataset<T> extends
 		for (ParameterResolver resolver : parameterResolvers) {
 
 			if (resolver.acceptParameter(name)) {
-				if (resolver.resolveParameter(param)) {
+				if (resolver.resolveParameter(this,param)) {
 					log.debug("Resolved using resolver : '{}'", resolver);
 					log.debug("Resolved value as : '{}'", param.getValue());
 					return param.getValue();
@@ -104,7 +104,7 @@ public abstract class AbstractParameterizedDataset<T> extends
 	public AbstractParameterizedDataset() {
 		addParameterResolver(new AbstractParameterResolver() {
 			
-			public boolean resolveParameter(Parameter parameter) {
+			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
 				String paramName = parameter.getName().substring(1);				
 				if (parameters.containsKey(paramName)) {
 					parameter.setValue(parameters.get(paramName));

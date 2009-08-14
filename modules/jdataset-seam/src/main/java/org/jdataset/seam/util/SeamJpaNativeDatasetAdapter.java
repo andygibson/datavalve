@@ -2,7 +2,6 @@ package org.jdataset.seam.util;
 
 import java.util.List;
 
-import org.jdataset.seam.SeamJpaDataset;
 import org.jdataset.seam.SeamJpaNativeDataset;
 
 /**

@@ -39,7 +39,7 @@ public class ReflectionParameterResolver implements ParameterResolver,Serializab
 		return object;
 	}
 
-	public boolean resolveParameter(Parameter parameter) {
+	public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
 		String name=parameter.getName().substring(1);//remove the starting ':'
 		
 		String[] properties = name.split("\\.");

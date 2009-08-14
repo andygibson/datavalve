@@ -458,7 +458,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	}
 
 	public boolean isSerializable() {
-		return false;
+		return true;
 	}
 
 }

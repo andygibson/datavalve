@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Andy Gibson
  * 
  */
-public class ReflectionParameterResolver extends ParameterResolver {
+public class ReflectionParameterResolver implements ParameterResolver,Serializable {
 
 	private static Logger log = LoggerFactory.getLogger(ReflectionParameterResolver.class);
 	

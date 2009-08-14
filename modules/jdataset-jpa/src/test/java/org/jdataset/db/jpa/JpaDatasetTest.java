@@ -210,7 +210,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 			long id = 20;
 
-			public boolean resolveParameter(Parameter parameter) {
+			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
 				System.out.println("Resolving "+parameter);
 				if (parameter.getName().equals("#{id}")) {
 					parameter.setValue(id++);

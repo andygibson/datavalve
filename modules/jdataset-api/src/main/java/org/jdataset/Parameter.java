@@ -1,12 +1,12 @@
 package org.jdataset;
 
 /**
- * A value class used to store resolve parameters. 
+ * A value holder used to store resolved parameters. 
  *  
  * @author Andy Gibson
  * 
  */
-public class Parameter {
+public final class Parameter {
 
 	private Object value;
 	private String name;
@@ -36,12 +36,12 @@ public class Parameter {
 		return value != null;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public void setValue(Object value) {
 		this.value = value;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

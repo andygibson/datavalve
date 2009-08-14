@@ -22,6 +22,7 @@ public abstract class AbstractParameterizedDataset<T> extends
 		AbstractDataset<T> implements ParameterizedDataset<T> {
 
 	private static final long serialVersionUID = 1L;
+	
 	private ParameterParser parameterParser = new RegexParameterParser();
 
 	private static Logger log = LoggerFactory
@@ -101,7 +102,7 @@ public abstract class AbstractParameterizedDataset<T> extends
 	}
 	
 	public AbstractParameterizedDataset() {
-		addParameterResolver(new ParameterResolver() {
+		addParameterResolver(new AbstractParameterResolver() {
 			
 			public boolean resolveParameter(Parameter parameter) {
 				String paramName = parameter.getName().substring(1);				

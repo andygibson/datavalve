@@ -1,6 +1,5 @@
 package org.jdataset;
 
-import java.io.Serializable;
 
 /**
  * Class that can be used to define components that are used to provide
@@ -10,9 +9,9 @@ import java.io.Serializable;
  * @author Andy Gibson
  * 
  */
-public abstract class ParameterResolver implements Serializable {
+public interface ParameterResolver {
 
-	public abstract boolean resolveParameter(Parameter parameter);
-	public abstract boolean acceptParameter(String parameter);
+	boolean resolveParameter(Parameter parameter);
+	boolean acceptParameter(String parameter);
 
 }

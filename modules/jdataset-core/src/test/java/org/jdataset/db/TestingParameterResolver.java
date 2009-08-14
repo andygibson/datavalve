@@ -2,12 +2,13 @@ package org.jdataset.db;
 
 import java.io.Serializable;
 
+import org.jdataset.ObjectDataset;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
 
 public class TestingParameterResolver implements ParameterResolver,Serializable {
 
-	public boolean resolveParameter(Parameter parameter) {
+	public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
 
 		if (parameter.getName().equals("id")) {
 			parameter.setValue("value_id");

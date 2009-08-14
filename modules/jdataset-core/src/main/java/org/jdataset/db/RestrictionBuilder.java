@@ -122,10 +122,10 @@ public class RestrictionBuilder implements Serializable {
 	 * 
 	 * @return the new parameter name
 	 */
-	public String getReplacementParameterName() {
+	protected String getReplacementParameterName() {
 		switch (parameterStyle) {
 		case NAMED_PARAMETERS:
-			return getNewParamName();
+			return ":" + getNewParamName();
 		case ORDERED_QUESTION_MARKS:
 			return "?";
 		default:
@@ -210,51 +210,35 @@ public class RestrictionBuilder implements Serializable {
 
 		// build the parameters for this restriction line
 		ParameterValues params = buildParameterList(expressions);
-		boolean hasNullParameters = params.hasNullParameters();
 
 		// are we missing some parameter values? If so we are done if we are not
 		// including missing parameters
-		if (hasNullParameters && !includeMissingParameters) {
+		if (params.hasNullParameters() && !includeMissingParameters) {
 			return;
 		}
 
 		// Process each parameter
-		for (Parameter param : params) {		
-			// calculate the new name
-			String newName = getReplacementParameterName(); 
-			
+		for (Parameter param : params) {
+
 			// calculate the replacement Name - ':paramName' or '?'
-			String replacementName = getReplacementParameterPrefix() + newName;
+			String replacementName = getReplacementParameterName();
 
 			// replace the param in the restriction with the new name
 			restriction = restriction.replace(param.getName(), replacementName);
+
 			// set the new name of the parameter in the parameter info
-			param.setName(newName);
+			param.setName(replacementName);
+
 			// add the parameter to the final list
 			parameterList.add(param);
-		}		
+		}
 		// finally, add the restriction to the list
 		restrictions.add(restriction);
 	}
 
 	/**
-	 * Returns a prefix that is prepended to the new parameter name prior to
-	 * replacement. This is used for prefixing the colon ':' to the parameter
-	 * name for named parameters. For ordered params that use '?' as the
-	 * paramter marker, we don't use a prefix so we return an empty string;
-	 * 
-	 * @return Prefix that is prepended to the new parameter name
-	 */
-	protected String getReplacementParameterPrefix() {
-		if (parameterStyle == ParameterStyle.NAMED_PARAMETERS) {
-			return ":";
-		}
-		return "";
-	}
-
-	/**
 	 * Takes a list of string parameter expressions and resolves them, storing
-	 * the results in the <code>ParameterValues</code> list.
+	 * the results in the {@link ParameterValues} list.
 	 * 
 	 * @param expressions
 	 *            List of expressions to resolve
@@ -262,20 +246,29 @@ public class RestrictionBuilder implements Serializable {
 	 */
 	private ParameterValues buildParameterList(String[] expressions) {
 
-		// for each expression, get the values
-		ParameterValues paramValues = new ParameterValues();
+		ParameterValues results = new ParameterValues();
 
 		for (String expression : expressions) {
 			// resolve the value
 			Object value = dataset.resolveParameter(expression);
-			paramValues.add(expression, value);
+			results.add(expression, value);
 		}
-		return paramValues;
+		return results;
 	}
 
+	/**
+	 * Extracts the parameter expressions contained in a query restriction into
+	 * a string array. The parameters are extracted using a parameterParser
+	 * which can be changed at run time.
+	 * 
+	 * @param restriction
+	 *            the query restriction we want to extract expressions from
+	 * @return a string array holding the expressions.
+	 */
 	protected String[] extractExpressions(String restriction) {
 		if (parameterParser == null) {
-			throw new IllegalStateException("Parameter parser is null in restriction builder");
+			throw new IllegalStateException(
+					"Parameter parser is null in restriction builder");
 		}
 		return parameterParser.extractParameters(restriction);
 	}
@@ -303,11 +296,11 @@ public class RestrictionBuilder implements Serializable {
 
 		return sb.toString();
 	}
-	
+
 	public ParameterParser getParameterParser() {
 		return parameterParser;
 	}
-	
+
 	public void setParameterParser(ParameterParser parameterParser) {
 		this.parameterParser = parameterParser;
 	}

@@ -13,7 +13,7 @@ import org.jdataset.Parameter;
  * @author Andy Gibson
  * 
  */
-public class ParameterValues  implements Iterable<Parameter>,Serializable {
+public final class ParameterValues  implements Iterable<Parameter>,Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

@@ -38,7 +38,8 @@ import org.jdataset.ObjectDataset;
  * 
  * @param <T>
  */
-public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase implements Serializable {
+public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
+		implements Serializable {
 
 	public abstract ObjectDataset<T> buildObjectDataset();
 
@@ -450,8 +451,14 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase impleme
 	}
 
 	public void testSerialization() {
-		ObjectDataset<T> ds = buildObjectDataset();
-		performSerializationTest(ds);
+		if (isSerializable()) {
+			ObjectDataset<T> ds = buildObjectDataset();
+			performSerializationTest(ds);
+		}
+	}
+
+	public boolean isSerializable() {
+		return false;
 	}
 
 }

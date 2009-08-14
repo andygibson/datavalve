@@ -91,7 +91,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 		MappedSqlDataset qry = createDataset();
 		qry.addParameterResolver(new ParameterResolver() {
 
-			public boolean resolveParameter(Parameter parameter) {
+			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
 				if ("#{myId}".equals(parameter.getName())) {
 					parameter.setValue(27);
 					return true;
@@ -115,7 +115,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 		MappedSqlDataset qry = createDataset();
 		qry.addParameterResolver(new ParameterResolver() {
 
-			public boolean resolveParameter(Parameter parameter) {
+			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
 				if ("myId".equals(parameter.getName())) {
 					parameter.setValue(27);
 					return true;

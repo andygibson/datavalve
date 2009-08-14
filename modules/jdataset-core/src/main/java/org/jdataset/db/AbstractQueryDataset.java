@@ -1,5 +1,6 @@
 package org.jdataset.db;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @param <T> Type of object this dataset contains.
  */
 public abstract class AbstractQueryDataset<T> extends
-		AbstractParameterizedDataset<T> implements QueryDataset<T> {
+		AbstractParameterizedDataset<T> implements QueryDataset<T>,Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -131,8 +132,7 @@ public abstract class AbstractQueryDataset<T> extends
 	}
 
 	protected final String buildStatement(String baseStatement,
-			Map<String, Object> queryParams, boolean includeOrderBy) {
-		log.debug("Building statement for '{}'", baseStatement);
+			Map<String, Object> queryParams, boolean includeOrderBy) {		
 		queryParams.clear();
 		RestrictionBuilder rb = new RestrictionBuilder(this);
 
@@ -144,7 +144,7 @@ public abstract class AbstractQueryDataset<T> extends
 		if (includeOrderBy) {
 			result = result + calculateOrderByClause();
 		}
-		log.debug("Final statement : '{}'", result);
+		log.debug("Built statement : '{}'", result);
 		return result;
 	}
 

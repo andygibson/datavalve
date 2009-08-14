@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.jdataset.AbstractParameterizedDataset;
+import org.jdataset.ObjectDataset;
 import org.jdataset.Parameter;
 import org.jdataset.QueryDataset;
 import org.slf4j.Logger;
@@ -22,16 +23,18 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Andy Gibson
  * 
- * @param <T> Type of object this dataset contains.
+ * @param <T>
+ *            Type of object this dataset contains.
  */
 public abstract class AbstractQueryDataset<T> extends
-		AbstractParameterizedDataset<T> implements QueryDataset<T>,Serializable {
+		AbstractParameterizedDataset<T> implements QueryDataset<T>,
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractQueryDataset.class);
-	
+
 	private static Pattern commaSplitter = Pattern.compile(",");
 
 	private String selectStatement;
@@ -39,7 +42,6 @@ public abstract class AbstractQueryDataset<T> extends
 	private Map<String, String> orderKeyMap = new HashMap<String, String>();
 	private List<String> restrictions = new ArrayList<String>();
 	private boolean nextAvailable;
-	private Map<String, Object> queryParameters = new HashMap<String, Object>();
 
 	public String getSelectStatement() {
 		return selectStatement;
@@ -93,22 +95,35 @@ public abstract class AbstractQueryDataset<T> extends
 		this.restrictions = restrictions;
 	}
 
-	public String calculateOrderBy() {
-		String orderKey = getOrderKey();		
-		//fail quickly if we don't have an order
+	/**
+	 * Determines the order by clause based on the values of
+	 * {@link ObjectDataset#getOrderKey()},
+	 * {@link QueryDataset#getOrderKeyMap()} and
+	 * {@link QueryDataset#isOrderAscending()}. If no order is specified then
+	 * <code>null</code> is returned.
+	 * 
+	 * @see #calculateOrderByClause()
+	 * 
+	 * @return The order by statements or null of there is no order by
+	 *         specified.
+	 */
+	public final String calculateOrderBy() {
+		String orderKey = getOrderKey();
+		// fail quickly if we don't have an order
 		if (orderKey == null || orderKey.length() == 0) {
 			return null;
-		}				
+		}
 		if (orderKeyMap.size() == 0) {
-			log.warn("orderKey property is set but there are no values in the orderKeyMap.");
+			log
+					.warn("orderKey property is set but there are no values in the orderKeyMap.");
 			return null;
 		}
 		String order = getOrderKeyMap().get(orderKey);
 		if (order == null) {
-			log.warn("orderKey value '{}' not found in orderKeyMap",orderKey);
+			log.warn("orderKey value '{}' not found in orderKeyMap", orderKey);
 			return null;
 		}
-		
+
 		// parse out fields and add order
 		String[] fields = commaSplitter.split(order);
 		order = "";
@@ -119,11 +134,20 @@ public abstract class AbstractQueryDataset<T> extends
 			}
 			order = order + field + (isOrderAscending() ? " ASC " : " DESC ");
 		}
-		log.debug("Order key = {}, order by = {}",getOrderKey(),order );
+		log.debug("Order key = {}, order by = {}", getOrderKey(), order);
 		return order;
 	}
 
-	public String calculateOrderByClause() {
+	/**
+	 * Helper method that calculates the order expression and if not null,
+	 * prefixes it with ORDER BY. If there is no order clause, it returns an
+	 * empty string (not null). The result of this method can be appended to any
+	 * textual query.
+	 * 
+	 * @return Empty string if there is no order by, otherwise, the clause
+	 *         prefixed with " ORDER BY "
+	 */
+	public final String calculateOrderByClause() {
 		String order = calculateOrderBy();
 		if (order == null) {
 			return "";
@@ -131,8 +155,25 @@ public abstract class AbstractQueryDataset<T> extends
 		return " ORDER BY " + order;
 	}
 
+	/**
+	 * Constructs a query statement based on the <code>baseStatement</code>, the
+	 * restrictions, and the order values (optional). The restrictions are
+	 * processed and added to the final statement if accepted and the parameters
+	 * are added to the parameter list. 
+	 * 
+	 * @see RestrictionBuilder
+	 * @see #calculateOrderByClause()
+	 * 
+	 * @param baseStatement
+	 *            The base select statement (select x from y)
+	 * @param queryParams
+	 *            a map to push the parameter values into
+	 * @param includeOrderBy
+	 *            indicates on whether to include the order clause
+	 * @return
+	 */
 	protected final String buildStatement(String baseStatement,
-			Map<String, Object> queryParams, boolean includeOrderBy) {		
+			Map<String, Object> queryParams, boolean includeOrderBy) {
 		queryParams.clear();
 		RestrictionBuilder rb = new RestrictionBuilder(this);
 
@@ -149,7 +190,7 @@ public abstract class AbstractQueryDataset<T> extends
 	}
 
 	@Override
-	protected List<T> fetchResults() {
+	protected final List<T> fetchResults() {
 
 		// fetch maxrows+1 so we can see if we have more results to fetch
 		Integer count = includeAllResults() ? 0 : getMaxRows() + 1;
@@ -171,6 +212,10 @@ public abstract class AbstractQueryDataset<T> extends
 		return nextAvailable;
 	}
 
+	/**
+	 * Method to check that the results are loaded, usually just fetches the
+	 * results, but may in future require more processing.
+	 */
 	protected void checkResultsLoaded() {
 		// just call getResults to load them if they aren't already loaded.
 		getResults();
@@ -184,8 +229,8 @@ public abstract class AbstractQueryDataset<T> extends
 	 */
 	protected abstract List<T> fetchResultsFromDatabase(Integer count);
 
-	protected Map<String, Object> getQueryParameters() {
-		return queryParameters;
+	public void addRestriction(String restriction) {
+		getRestrictions().add(restriction);
 	}
 
 }

@@ -1,6 +1,5 @@
 package org.jdataset.text;
 
-import java.util.List;
 
 public class PhoneTextFile extends CommaDelimitedDataset<PhoneEntry> {
 

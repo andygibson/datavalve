@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultBoundedRangeModel;
-
 import org.jdataset.Parameter;
 import org.jdataset.ParameterParser;
 import org.jdataset.QueryDataset;

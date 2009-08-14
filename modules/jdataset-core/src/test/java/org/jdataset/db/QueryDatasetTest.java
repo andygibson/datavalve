@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jdataset.ObjectDataset;
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
 import org.jdataset.QueryDataset;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 

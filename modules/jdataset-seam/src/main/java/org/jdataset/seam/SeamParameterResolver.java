@@ -1,5 +1,7 @@
 package org.jdataset.seam;
 
+import java.io.Serializable;
+
 import org.jboss.seam.core.Expressions;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
@@ -14,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Andy Gibson
  * 
  */
-public class SeamParameterResolver extends ParameterResolver {
+public class SeamParameterResolver implements ParameterResolver,Serializable {
 
 	private static Logger log = LoggerFactory
 			.getLogger(SeamParameterResolver.class);

@@ -2,11 +2,9 @@ package org.jdataset.sql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.jdataset.ObjectDataset;
 import org.jdataset.QueryDataset;
-import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 
 public class SqlQueryDatasetTest extends BaseSqlDatasetTest<Person> {
 
@@ -79,10 +77,7 @@ public class SqlQueryDatasetTest extends BaseSqlDatasetTest<Person> {
 		QueryDataset<Person> ds = createDataset();
 		ds.getRestrictions().add("FIRST_NAME like :param");
 		assertEquals(getDataRowCount(), ds.getResultCount().intValue());
-		int count = 0;
-		for (Person p : ds) {			
-			count++;
-		}		
+		int count = ds.getResultCount();
 		assertEquals(getDataRowCount(), count);	
 	}
 	

@@ -121,6 +121,9 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		qry.getRestrictions().add("p.id = :personId");
 		qry.getParameters().put("personId", 4l);
 		List<Person> result = qry.getResults();
+		Long val = (Long)qry.resolveParameter(":personId");
+		assertNotNull(val);
+		assertEquals(4, val.intValue());
 
 		assertNotNull(result);
 

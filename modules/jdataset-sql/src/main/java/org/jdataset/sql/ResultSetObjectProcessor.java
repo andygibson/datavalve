@@ -15,10 +15,10 @@ import java.util.List;
  * to objects in different <code>java.sql</code> driven datasets.
  * </p>
  * <p>
- * This transformer takes a result set, skips the first N rows as defined by the
+ * This processor takes a result set, skips the first N rows as defined by the
  * first row parameter and returns X number of rows based on the maximum number
  * of rows to return and the number of rows available. For each row it returns,
- * it calls the <@link ResultSetObjectFactoryMethod> passed in. This method is
+ * it calls the <@link {@link ResultSetObjectMapper}> passed in. This method is
  * typically defined in the calling dataset as abstract and needs to be
  * implemented by the developer to handle the particular <code>ResultSet</code>
  * to <code>Object</code> mapping.
@@ -34,14 +34,14 @@ public class ResultSetObjectProcessor<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Iterate over the given result set calling the object factory for each row
+	 * Iterate over the given result set calling the object mapper for each row
 	 * in the result set. Each created object is added to the result list which
 	 * is then returned to the user.
 	 * 
 	 * @param resultSet
 	 *            list of records we are converting to objects.
-	 * @param objectFactory
-	 *            factory that will create an object based on the current row of
+	 * @param objectMapper
+	 *            mapper that will create an object based on the current row of
 	 *            the result set we pass to it.
 	 * @param firstRow
 	 *            number of the row we start processing from
@@ -53,7 +53,7 @@ public class ResultSetObjectProcessor<T> implements Serializable {
 	 * @throws SQLException
 	 */
 	public List<T> createListFromResultSet(ResultSet resultSet,
-			ResultSetObjectFactory<T> objectFactory, int firstRow, int maxRows)
+			ResultSetObjectMapper<T> objectMapper, int firstRow, int maxRows)
 			throws SQLException {
 		List<T> results = new ArrayList<T>();
 
@@ -62,8 +62,8 @@ public class ResultSetObjectProcessor<T> implements Serializable {
 		}
 
 		while (true) {
-			// call the object factory for this row and add to the results
-			results.add(objectFactory.createObjectFromResultSet(resultSet));
+			// call the object mapper for this row and add to the results
+			results.add(objectMapper.createObjectFromResultSet(resultSet));
 
 			// if this is paged, limit the number of rows loaded
 			if (maxRows != 0 && results.size() == maxRows) {

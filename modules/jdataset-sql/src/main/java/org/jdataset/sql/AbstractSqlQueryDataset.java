@@ -25,13 +25,13 @@ import org.slf4j.LoggerFactory;
  *            The type of object that will be returned in the dataset.
  */
 public abstract class AbstractSqlQueryDataset<T> extends AbstractQueryDataset<T>
-		implements ResultSetObjectFactory<T> {
+		implements ResultSetObjectMapper<T> {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory.getLogger(AbstractSqlQueryDataset.class);
 	
 	private transient Connection connection;
-	private ResultSetObjectTransformer<T> objectTransformer = new ResultSetObjectTransformer<T>();
+	private ResultSetObjectProcessor<T> resultSetObjectProcessor = new ResultSetObjectProcessor<T>();
 
 	public AbstractSqlQueryDataset() {
 		this(null);
@@ -50,9 +50,9 @@ public abstract class AbstractSqlQueryDataset<T> extends AbstractQueryDataset<T>
 			
 			ResultSet resultSet = statement.executeQuery();
 
-			List<T> results =  objectTransformer.createListFromResultSet(resultSet, this,
+			List<T> results =  resultSetObjectProcessor.createListFromResultSet(resultSet, this,
 					getFirstResult(), count);
-			log.debug("Results transformer returned {} results",results.size());
+			log.debug("Results processor returned {} results",results.size());
 			return results;
 
 		} catch (SQLException ex) {

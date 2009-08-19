@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * This interface is used to define an object factory that will take a
+ * This interface is used to define an object mapper that will take a
  * <code>java.sql.ResultSet</code> and return an object representing that row.
  * It is primarily used to generate a list of objects in a <code>java.sql</code>
  * based Dataset.
@@ -12,9 +12,9 @@ import java.sql.SQLException;
  * @author Andy Gibson
  * 
  * @param <T>
- *            Type of object this factory creates
+ *            Type of object this mapper creates
  */
-public interface ResultSetObjectFactory<T> {
+public interface ResultSetObjectMapper<T> {
 
 	/**
 	 * This method accepts a <code>java.sql.ResultSet</code> and returns an

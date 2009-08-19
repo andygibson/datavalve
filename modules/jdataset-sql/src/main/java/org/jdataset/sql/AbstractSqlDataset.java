@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * </p>
  * <p>
  * Once the JDBC result set has been fetched, this class uses the
- * {@link ResultSetObjectTransformer} to convert the {@link ResultSet} to a list
+ * {@link ResultSetObjectProcessor} to convert the {@link ResultSet} to a list
  * of objects.
  * </p>
  * 
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractSqlDataset<T> extends
 		AbstractParameterizedDataset<T> implements SqlDataset<T>,
-		ResultSetObjectFactory<T> {
+		ResultSetObjectMapper<T> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -43,7 +43,7 @@ public abstract class AbstractSqlDataset<T> extends
 	private transient Connection connection;
 	private String countStatement;
 	private String selectStatement;
-	private ResultSetObjectTransformer<T> resultSetTransformer = new ResultSetObjectTransformer<T>();
+	private ResultSetObjectProcessor<T> resultSetObjectProcessor = new ResultSetObjectProcessor<T>();
 
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractSqlDataset.class);
@@ -109,7 +109,7 @@ public abstract class AbstractSqlDataset<T> extends
 		try {
 			PreparedStatement statement = buildStatement(getSelectStatement());
 			ResultSet resultSet = statement.executeQuery();
-			List<T> results = resultSetTransformer.createListFromResultSet(
+			List<T> results = resultSetObjectProcessor.createListFromResultSet(
 					resultSet, this, getFirstResult(), getMaxRows()); // createListFromResultSet(resultSet);
 			nextAvailable = resultSet.next();
 			return results;

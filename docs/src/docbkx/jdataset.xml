@@ -17,109 +17,122 @@
 	</bookinfo>
 	<chapter id="Introduction">
 		<title>Introduction</title>
-		<para>
-			The purpose behind this framework is to let developers access
-			diverse sources of data in an easy and consistent manner. It also
-			aims to augment the functionalities of existing data access
-			mechanisms such as JDBC, Hibernate and JPA. 
+		<sect1>
+			<title>Introduction</title>
+			<para>
+				The purpose behind this framework is to let developers access
+				diverse sources of data in an easy and consistent manner. It also
+				aims to augment the functionalities of existing data access
+				mechanisms such as JDBC, Hibernate and JPA. 
 		</para>
-		<figure>
-			<title>Architecture Overview</title>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata align="center" fileref="../img/jdataset_arch.png"
-						scalefit="1" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata align="center" fileref="../img/jdataset_arch.png" />
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>By defining a set of common interfaces to access our data
-			we can
-			better provide reusable client components regardless of whether we
-			are using various web frameworks or a Swing application as our
-			client.
-			We can also use those components to access data that does not
-			have a
-			typical access mechanism such as file listings, or uncommon
-			data
-			formats. Regardless, because we are coding to an interface, we
-			are
-			able to treat the data access the same way
-			regardless of the
-			complexity or unusual nature of the underlying
-			data.
+			<para>By defining a set of common interfaces to access our data
+				we can
+				better provide reusable client components regardless of whether we
+				are using various web frameworks or a Swing application as our
+				client.
+				We can also use those components to access data that does not
+				have a
+				typical access mechanism such as file listings, or uncommon
+				data
+				formats. Regardless, because we are coding to an interface, we
+				are
+				able to treat the data access the same way
+				regardless of the
+				complexity or unusual nature of the underlying
+				data.
 		</para>
-		<para>Typically, we think of data access as a many to one
-			relationship. Many elements of our projects use a single type of data
-			access mechanism. For the most part this works just fine, we create
-			pieces that are designed to work with that data access type. In some
-			cases however, we need to access more diverse datasources that just a
-			database. We might need to import or display something from a text
-			file, or a set of data that is purely calculated. At that point, our
-			visual interfaces to our data access type are no use because we are
-			no longer using the same data access library, and we have to either
-			duplicate the client code to deal with the new data access mechanism,
-			or modify it to accept both data access types. </para>
-		<figure>
-			<title>Projects without using JDatasets</title>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata align="center" fileref="../img/app_without_jds.png"
-						scalefit="1" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata align="center" fileref="../img/app_without_jds.png" />
-				</imageobject>
-			</mediaobject>
-		</figure>
+		</sect1>
+		<sect1>
+			<title>Uses</title>
+			<para>Typically, we think of data access as a many to one
+				relationship. Many elements of our projects use a single type of
+				data
+				access mechanism. For the most part this works just fine, we
+				create
+				pieces that are designed to work with that data access type.
+				In some
+				cases however, we need to access more diverse datasources
+				that just a
+				database. We might need to import or display something
+				from a text
+				file, or a set of data that is purely calculated. At that
+				point, our
+				visual interfaces to our data access type are no use
+				because we are
+				no longer using the same data access library, and we
+				have to either
+				duplicate the client code to deal with the new data
+				access
+				mechanism,
+				or modify it to accept both data access types.
+			</para>
+			<figure>
+				<title>Projects without using JDatasets</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata align="center" fileref="../img/app_without_jds.png"
+							scalefit="1" />
+					</imageobject>
+					<imageobject role="html">
+						<imagedata align="center" fileref="../img/app_without_jds.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
 
-		<para>What JDatasets does is sit between the client side, or the
-			visual pieces of your application, and act as a facade to the various
-			different types of data sources you might need. This way you only
-			need to write one interface to fetch the data you need and you can
-			keep re-using the same code, in multiple projects regardless of
-			whether you are using JPA, hibernate or even text files as the
-			datasource. You could for example create a JSF pagination facelet, or
-			a Data provider class in Wicket that wraps a dataset. Both of these
-			pieces of code can be re-used anywhere you use datasets.</para>
-		<figure>
-			<title>Projects using JDatasets</title>
-			<mediaobject>
-				<imageobject role="fo">
-					<imagedata align="center" fileref="../img/app_with_jds.png"
-						scalefit="1" />
-				</imageobject>
-				<imageobject role="html">
-					<imagedata align="center" fileref="../img/app_with_jds.png" />
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para>
-			Even if you use only one kind of data access, there are still
-			advantages to using JDataset. By coding to the JDataset API, you can
-			easily switch implementation later, from JPA to hibernate or plain
-			JDBC queries. Also, if you later need to introduce some new kind of
-			data access mechanism into the project, you can do so while using
-			your existing code to interface with the data. Even if you can never
-			imagine switching data access methods, or having to access diverse
-			data stores, you may want to switch to a more efficient method of
-			accessing data by using a straight SQL query instead of an ORM based
-			query, but still want to interface with the data the same way you do
-			with your ORM queries</para>
-		<para>Also, JDatasets makes it easier to query for the data you need.
-			It features flexible parameter specification, either set the value
-			manually, use EL expressions, or extract the parameter values from an
-			object using reflection. Parameters that don't have a value assigned
-			can optionally be left out of the query. This can be really useful
-			when you are writing search pages where you need to exclude the
-			comparisons if there is no value to compare.</para>
-		<example>
-			<title>
-				Coding search queries the hard way.
+			<para>What JDatasets does is sit between the client side, or the
+				visual pieces of your application, and act as a facade to the
+				various
+				different types of data sources you might need. This way you
+				only
+				need to write one interface to fetch the data you need and you
+				can
+				keep re-using the same code, in multiple projects regardless of
+				whether you are using JPA, hibernate or even text files as the
+				datasource. You could for example create a JSF pagination facelet,
+				or
+				a Data provider class in Wicket that wraps a dataset. Both of
+				these
+				pieces of code can be re-used anywhere you use datasets.</para>
+			<figure>
+				<title>Projects using JDatasets</title>
+				<mediaobject>
+					<imageobject role="fo">
+						<imagedata align="center" fileref="../img/app_with_jds.png"
+							scalefit="1" />
+					</imageobject>
+					<imageobject role="html">
+						<imagedata align="center" fileref="../img/app_with_jds.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				Even if you use only one kind of data access, there are still
+				advantages to using JDataset. By coding to the JDataset API, you can
+				easily switch implementation later, from JPA to hibernate or plain
+				JDBC queries. Also, if you later need to introduce some new kind of
+				data access mechanism into the project, you can do so while using
+				your existing code to interface with the data. Even if you can never
+				imagine switching data access methods, or having to access diverse
+				data stores, you may want to switch to a more efficient method of
+				accessing data by using a straight SQL query instead of an ORM based
+				query, but still want to interface with the data the same way you do
+				with your ORM queries</para>
+			<para>Also, JDatasets makes it easier to query for the data you need.
+				It features flexible parameter specification, either set the value
+				manually, use EL expressions, or extract the parameter values from
+				an
+				object using reflection. Parameters that don't have a value
+				assigned
+				can optionally be left out of the query. This can be really
+				useful
+				when you are writing search pages where you need to exclude
+				the
+				comparisons if there is no value to compare.</para>
+			<example>
+				<title>
+					Coding search queries the hard way.
 			</title>
-			<programlisting role="XML">
+				<programlisting role="XML">
 				<![CDATA[
 
 
@@ -157,17 +170,17 @@ List<Person> results = qry.resultList();
 ]]>
 			</programlisting>
 
-		</example>
-		<para>Eh, kind of yucky. With JDataset, you can simply define the
-			query once, specify how the parameters are resolved and the query
-			will take care of generating the right query so that the only
-			restrictions included in the query are ones with parameter values
-			assigned.</para>
-		<example>
-			<title>
-				Coding search queries the hard way.
+			</example>
+			<para>Eh, kind of yucky. With JDataset, you can simply define the
+				query once, specify how the parameters are resolved and the query
+				will take care of generating the right query so that the only
+				restrictions included in the query are ones with parameter values
+				assigned.</para>
+			<example>
+				<title>
+					Coding search queries the hard way.
 			</title>
-			<programlisting role="XML">
+				<programlisting role="XML">
 				<![CDATA[
 				
 				qry.addRestriction("p.id = :id");
@@ -178,10 +191,11 @@ List<Person> results = qry.resultList();
 				
 ]]>
 			</programlisting>
-		</example>
-		<para>26 Lines of code reduced to 5, and you get pagination thrown in
-			for free and you can change datastores without needing to alter this
-			code. </para>
+			</example>
+			<para>26 Lines of code reduced to 5, and you get pagination thrown in
+				for free and you can change datastores without needing to alter this
+				code. </para>
+		</sect1>
 	</chapter>
 
 	<chapter id="Architecture">
@@ -191,73 +205,107 @@ List<Person> results = qry.resultList();
 			that are defined as part of JDatasets. Different query classes
 			implement different interfaces to provide those features. </para>
 		<sect1>
-			<title>
-				ObjectDataset
+			<title>Key Interfaces</title>
+			<para>This section lists the key interfaces in the framework. These
+				interfaces are the ones that should be coded to when you create new
+				JDataset implementation.</para>
+
+			<sect2>
+				<title>
+					ObjectDataset
 			</title>
-			<para>
-				The
-				<code>org.jdataset.ObjectDataset</code>
-				interface is the key interface to all the dataset
-				classes. This
-				interface defines functions for getting the result
-				count, the result
-				list and interacting with the pagination and
-				navigation of the
-				dataset.
-			</para>
-			<para>
-				Most of this interface is implemented in the
-				<code>org.jdataset.AbstractDataset</code>
-				class. Most of the code relates to handling pagination and
-				navigation but it also uses a strategy pattern to create two
-				functions for fetching the result count and the actual list of
-				results. The only other method which needs implementing is the
-				<code>isNextAvailable()</code>
-				method since there are a number of different ways this could be
-				implemented.
-			</para>
-		</sect1>
-		<sect1>
-			<title>
-				ParameterizedDataset
+				<para>
+					The
+					<code>org.jdataset.ObjectDataset</code>
+					interface is the key interface to all the dataset
+					classes. This
+					interface defines functions for getting the result
+					count, the result
+					list and interacting with the pagination and
+					navigation of the
+					dataset.
+				</para>
+				<para>
+					Most of this interface is implemented in the
+					<code>org.jdataset.AbstractDataset</code>
+					class. Most of the code relates to handling pagination and
+					navigation but it also uses a strategy pattern to create two
+					functions for fetching the result count and the actual list of
+					results. The only other method which needs implementing is the
+					<code>isNextAvailable()</code>
+					method since there are a number of different ways this could be
+					implemented.
+				</para>
+			</sect2>
+			<sect2>
+				<title>
+					ParameterizedDataset
 			</title>
 
-			<para>
-				The
-				<code>ParameterizedDataset</code>
-				interface extends the
-				<code>ObjectDataset</code>
-				interface and adds methods to provide parameters to our datasets.
-				The
-				<code>AbstractParameterizedQuery</code>
-				implements these functions which similarly extends the
-				<code>AbstractObjectDataset</code>
-				. This interface adds methods to add parameter resolvers to the
-				dataset and to resolve a parameter. It also lets you add parameter
-				values to the dataset. For the most part, these parameters will end
-				up in some kind of query language (QL - either Sql, Ejbql or Hql),
-				but parameters may also be used in other places. For example, a
-				directory listing dataset might have a file type parameter which you
-				can set to limit the file types displayed.
-			</para>
-		</sect1>
-		<sect1>
-			<title>
-				QueryDataset
+				<para>
+					The
+					<code>ParameterizedDataset</code>
+					interface extends the
+					<code>ObjectDataset</code>
+					interface and adds methods to provide parameters to our datasets.
+					The
+					<code>AbstractParameterizedQuery</code>
+					implements these functions which similarly extends the
+					<code>AbstractObjectDataset</code>
+					. This interface adds methods to add parameter resolvers to the
+					dataset and to resolve a parameter. It also lets you add parameter
+					values to the dataset. For the most part, these parameters will end
+					up in some kind of query language (QL - either Sql, Ejbql or Hql),
+					but parameters may also be used in other places. For example, a
+					directory listing dataset might have a file type parameter which
+					you
+					can set to limit the file types displayed.
+				</para>
+			</sect2>
+			<sect2>
+				<title>
+					QueryDataset
 			</title>
-			<para>
-				Query datasets extends the
-				<code>ParameterizedDataset</code>
-				and add functions for having structured queries. This means we
-				define the restrictions in the query, and provide parameters needed
-				and when we request the result set, the query is built as defined
-				by
-				the restrictions and the parameter values. Typically, these are
-				likely to be subclassed for database oriented
-				datasets as they are
-				driven by a query language.
-			</para>
+				<para>
+					Query datasets extends the
+					<code>ParameterizedDataset</code>
+					and add functions for having structured queries. This means we
+					define the restrictions in the query, and provide parameters needed
+					and when we request the result set, the query is built as defined
+					by
+					the restrictions and the parameter values. Typically, these are
+					likely to be subclassed for database oriented
+					datasets as they are
+					driven by a query language.
+				</para>
+			</sect2>
+			<sect2>
+				<title>
+					StatementDataset
+			</title>
+				<para>
+					The
+					<code>StatementDataset</code>
+					interface extends the
+					<code>ParameterizedDataset</code>
+					interface and adds methods for getting and setting SQL statements.
+					Unlike the
+					<code>QueryDataset</code>
+					interface, the SQL specified here is fixed
+					and doesn't change. Only
+					the parameters can change the results once
+					the
+					SQL has been set. Any
+					order clause would also be fixed as it is
+					embedded in the SQL
+					statement. If you want to 
+				</para>
+			</sect2>
+			<para>Different data stores might have different needs from a dataset. For example, we can easily query and order a SQL, JPA, or Hibernate based dataset, but if we have a dataset that reads from a text file, we don't want to code a query engine to access the data. If we want to access the data as </para>
 		</sect1>
+	</chapter>
+	<chapter>
+	<title>Getting Started</title>
 	</chapter>
 </book>
 		

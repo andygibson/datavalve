@@ -217,8 +217,8 @@ public abstract class AbstractQueryDataset<T> extends
 	 * results, but may in future require more processing.
 	 */
 	protected void checkResultsLoaded() {
-		// just call getResults to load them if they aren't already loaded.
-		getResults();
+		// just call getResultList to load them if they aren't already loaded.
+		getResultList();
 	}
 
 	/**

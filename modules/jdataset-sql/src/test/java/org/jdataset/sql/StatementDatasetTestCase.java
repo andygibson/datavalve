@@ -32,7 +32,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		ObjectDataset<TableRow> qry = createDataset();
 		qry.setMaxRows(10);
 		assertEquals(100, qry.getResultCount().intValue());
-		List<TableRow> results = qry.getResults();
+		List<TableRow> results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(10, results.size());
 		// check values
@@ -51,7 +51,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		// check values
 
 		for (int p = 0; p < 10; p++) {
-			List<TableRow> results = qry.getResults();
+			List<TableRow> results = qry.getResultList();
 			assertNotNull(results);
 			assertEquals(10, results.size());
 
@@ -69,7 +69,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		MappedJdbcDataset qry = createDataset();
 		qry.setMaxRows(10);
 		qry.setSelectStatement("select * from TestValues where id = #{id}");
-		List<TableRow> results = qry.getResults();
+		List<TableRow> results = qry.getResultList();
 
 		assertNotNull(results);
 		assertEquals(0, results.size());
@@ -80,7 +80,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		qry.setMaxRows(10);
 		qry.setSelectStatement("select * from TestValues where id = :id");
 		qry.addParameter("id", 4);
-		List<TableRow> results = qry.getResults();
+		List<TableRow> results = qry.getResultList();
 
 		assertNotNull(results);
 		assertEquals(1, results.size());
@@ -105,7 +105,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 			}
 		});
 		qry.setSelectStatement("select * from TestValues where id = #{myId}");
-		List<TableRow> results = qry.getResults();
+		List<TableRow> results = qry.getResultList();
 
 		assertNotNull(results);
 		assertEquals(1, results.size());
@@ -130,7 +130,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		});
 		qry
 				.setSelectStatement("select * from TestValues where id = #{myId_unknown}");
-		List<TableRow> results = qry.getResults();
+		List<TableRow> results = qry.getResultList();
 
 		assertNotNull(results);
 		assertEquals(0, results.size());
@@ -138,7 +138,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testInvalidColumnName() {
 		MappedJdbcDataset qry = createDataset();
-		List<TableRow> results = qry.getResults();
+		List<TableRow> results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(100, results.size());
 		try {
@@ -157,7 +157,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 		assertEquals(21, qry.getResultCount().intValue());
 
-		assertEquals(21, qry.getResults().size());
+		assertEquals(21, qry.getResultList().size());
 
 		qry.setMaxRows(10);
 		assertEquals(false, qry.isPreviousAvailable());
@@ -165,21 +165,21 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 		assertEquals(3, qry.getPageCount());
 
-		List<TableRow> results = qry.getResults();
+		List<TableRow> results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(10, results.size());
 		assertEquals(false, qry.isPreviousAvailable());
 		assertEquals(true, qry.isNextAvailable());
 
 		qry.next();
-		results = qry.getResults();
+		results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(10, results.size());
 		assertEquals(true, qry.isPreviousAvailable());
 		assertEquals(true, qry.isNextAvailable());
 
 		qry.next();
-		results = qry.getResults();
+		results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(1, results.size());
 		assertEquals(true, qry.isPreviousAvailable());
@@ -194,19 +194,19 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		qry.setCountStatement("select count(1) from TestValues where id < 19");
 
 		assertEquals(19, qry.getResultCount().intValue());
-		assertEquals(19, qry.getResults().size());
+		assertEquals(19, qry.getResultList().size());
 
 		qry.setMaxRows(10);
 		assertEquals(2, qry.getPageCount());
 
-		List<TableRow> results = qry.getResults();
+		List<TableRow> results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(10, results.size());
 		assertEquals(false, qry.isPreviousAvailable());
 		assertEquals(true, qry.isNextAvailable());
 
 		qry.next();
-		results = qry.getResults();
+		results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(9, results.size());
 		assertEquals(true, qry.isPreviousAvailable());
@@ -235,11 +235,11 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		assertEquals(100, qry.getResultCount().intValue());
 		assertEquals(true, qry.isNextAvailable());
 		assertEquals(false, qry.isPreviousAvailable());
-		List<TestValue> results = qry.getResults();
+		List<TestValue> results = qry.getResultList();
 		assertEquals(10, results.size());
 
 		for (int p = 0; p < 10; p++) {
-			results = qry.getResults();
+			results = qry.getResultList();
 			for (int i = 0; i < 10; i++) {
 				TestValue val = results.get(i);
 				int expected = (p * 10) + i;

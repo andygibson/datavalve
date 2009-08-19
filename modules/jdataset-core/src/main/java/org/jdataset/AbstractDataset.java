@@ -67,7 +67,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	protected abstract List<T> fetchResults();
 
-	public List<T> getResults() {
+	public List<T> getResultList() {
 		if (results == null) {
 			results = fetchResults();
 		}

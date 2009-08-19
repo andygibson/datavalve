@@ -40,6 +40,6 @@ public class DatasetDataProvider<T> extends SortableDataProvider<T> {
 		} else {
 			dataset.setOrderKey(null);
 		}
-		return dataset.getResults().iterator();
+		return dataset.getResultList().iterator();
 	}
 }

@@ -20,7 +20,7 @@ import org.jdataset.seam.SeamJpaNativeDataset;
 public class SeamJpaNativeDatasetAdapter<T> extends SeamJpaNativeDataset<T> {
 
 	public List<T> getResultList() {
-		return super.getResults();
+		return super.getResultList();
 	}
 
 	public int getActivePage() {

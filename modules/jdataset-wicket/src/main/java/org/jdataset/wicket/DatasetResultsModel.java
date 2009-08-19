@@ -17,7 +17,7 @@ public class DatasetResultsModel<T> implements IModel<List<T>> {
 	}
 
 	public List<T> getObject() {
-		return dataset.getResults();
+		return dataset.getResultList();
 	}
 
 	public void setObject(List<T> object) {

@@ -40,7 +40,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
 
     public void testGetResultsUnbound() {
     	ObjectDataset<Integer> ds = buildTestDataset();
-        List<Integer> res = ds.getResults();
+        List<Integer> res = ds.getResultList();
         
         assertNotNull(res);
         assertEquals(100, res.size());
@@ -52,7 +52,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     public void testGetResultsBound() {
     	ObjectDataset<Integer> ds = buildTestDataset();
         ds.setMaxRows(12);
-        List<Integer> res = ds.getResults();
+        List<Integer> res = ds.getResultList();
 
         assertNotNull(res);
         assertEquals(12, res.size());

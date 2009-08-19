@@ -109,7 +109,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 */
 	public void testActualResultCount() {
 		ObjectDataset<T> ds = buildObjectDataset();
-		List<T> results = ds.getResults();
+		List<T> results = ds.getResultList();
 		assertEquals(results.size(), ds.getResultCount().intValue());
 		assertEquals(results.size(), getDataRowCount());
 	}
@@ -117,11 +117,11 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	public void testNextDifferentResults() {
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
-		List<T> oldResults = ds.getResults();
+		List<T> oldResults = ds.getResultList();
 		assertEquals(oldResults.size(), ds.getMaxRows());
 		ds.next();
 		assertEquals(10, ds.getFirstResult());
-		List<T> results = ds.getResults();
+		List<T> results = ds.getResultList();
 		// check results are not the same and we have a different result set.
 		for (int i = 0; i < 10; i++) {
 			assertNotSame(oldResults.get(i), results.get(i));
@@ -135,11 +135,11 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 		int count = 0;
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
-		List<T> results = ds.getResults();
+		List<T> results = ds.getResultList();
 		count += results.size();
 		while (ds.isNextAvailable()) {
 			ds.next();
-			results = ds.getResults();
+			results = ds.getResultList();
 			count += results.size();
 		}
 		assertEquals(getDataRowCount(), count);
@@ -235,7 +235,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setFirstResult(getDataRowCount() + 10);
 		ds.setMaxRows(10);
-		List<T> results = ds.getResults();
+		List<T> results = ds.getResultList();
 		assertEquals(0, results.size());
 		assertEquals(false, ds.isNextAvailable());
 		assertEquals(true, ds.isPreviousAvailable());
@@ -314,7 +314,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	public void testForEachIteratorNonPagedStartingOffset() {
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setFirstResult(22);
-		ds.getResults();
+		ds.getResultList();
 		int count = 0;
 		Object old = null;
 		for (T object : ds) {
@@ -333,7 +333,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		ds.setFirstResult(22);
-		ds.getResults();
+		ds.getResultList();
 
 		int count = 0;
 		Object old = null;

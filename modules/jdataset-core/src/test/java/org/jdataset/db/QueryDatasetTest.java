@@ -55,10 +55,10 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 
 	public void testPaginationWithReads() {
 		QueryDataset<Integer> qry = buildQuery(100);
-		List<Integer> res = qry.getResults();
+		List<Integer> res = qry.getResultList();
 		assertEquals(100, res.size());
 		qry.setMaxRows(10);
-		res = qry.getResults();
+		res = qry.getResultList();
 		assertEquals(10, res.size());
 		for (int i = 0; i < 10; i++) {
 			assertEquals(i, res.get(i).intValue());
@@ -68,12 +68,12 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		assertEquals(false, qry.isPreviousAvailable());
 
 		qry.next();
-		res = qry.getResults();
+		res = qry.getResultList();
 		for (int i = 0; i < 10; i++) {
 			assertEquals(i + 10, res.get(i).intValue());
 		}
 		qry.last();
-		res = qry.getResults();
+		res = qry.getResultList();
 		for (int i = 0; i < 10; i++) {
 			assertEquals(i + 90, res.get(i).intValue());
 		}
@@ -81,7 +81,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		assertEquals(true, qry.isPreviousAvailable());
 
 		qry.previous();
-		res = qry.getResults();
+		res = qry.getResultList();
 		for (int i = 0; i < 10; i++) {
 			assertEquals(i + 80, res.get(i).intValue());
 		}
@@ -90,7 +90,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		assertEquals(true, qry.isPreviousAvailable());
 
 		qry.first();
-		res = qry.getResults();
+		res = qry.getResultList();
 		for (int i = 0; i < 10; i++) {
 			assertEquals(i, res.get(i).intValue());
 		}

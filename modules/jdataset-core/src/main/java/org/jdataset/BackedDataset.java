@@ -130,7 +130,7 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 	public final boolean isNextAvailable() {
 		// since we are using an in-memory list, we can just examine that to see
 		// if there are more results available.
-		return getFirstResult() + getResults().size() < fetchResultCount();
+		return getFirstResult() + getResultList().size() < fetchResultCount();
 	}
 
 }

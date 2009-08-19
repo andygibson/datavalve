@@ -102,7 +102,7 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 	protected abstract T createObjectFromLine(String line);
 
 	public boolean isNextAvailable() {
-		return getFirstResult() + getResults().size() < getResultCount();
+		return getFirstResult() + getResultList().size() < getResultCount();
 	}
 
 	public String getFileName() {

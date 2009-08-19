@@ -125,7 +125,7 @@ public abstract class AbstractJdbcDataset<T> extends
 
 	public boolean isNextAvailable() {
 		// make sure results are loaded
-		getResults();
+		getResultList();
 		return nextAvailable;
 	}
 

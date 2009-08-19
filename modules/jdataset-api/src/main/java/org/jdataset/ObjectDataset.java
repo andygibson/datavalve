@@ -23,9 +23,10 @@ import java.util.List;
 public interface ObjectDataset<T> extends Iterable<T> {
 
 	/**
+	 * Returns the list of objects for this dataset 
 	 * @return The list of results for this query
 	 */
-	List<T> getResults();
+	List<T> getResultList();
 
 	/**
 	 * @return The total number of results for this query

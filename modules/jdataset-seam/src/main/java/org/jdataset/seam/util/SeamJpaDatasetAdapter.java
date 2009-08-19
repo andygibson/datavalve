@@ -21,7 +21,7 @@ public class SeamJpaDatasetAdapter<T> extends SeamJpaDataset<T> {
 
 	public List<T> getResultList() {
 		// TODO Auto-generated method stub
-		return super.getResults();
+		return super.getResultList();
 	}
 
 	public int getActivePage() {

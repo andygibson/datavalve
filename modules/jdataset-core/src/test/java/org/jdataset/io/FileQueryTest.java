@@ -56,7 +56,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	public void testFileDataQueryStringIncludingDirs() {
 		FileDataset qry = new FileDataset(baseDir);
 		qry.setIncludeDirectories(true);
-		List<File> res = qry.getResults();
+		List<File> res = qry.getResultList();
 		assertEquals(40, res.size());
 	}
 
@@ -69,7 +69,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 
 	public void testFileDataQueryStringExcludingDirs() {
 		FileDataset qry = new FileDataset(baseDir);
-		List<File> res = qry.getResults();
+		List<File> res = qry.getResultList();
 		assertEquals(20, res.size());
 	}
 

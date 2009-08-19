@@ -120,7 +120,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 		qry.getRestrictions().add("p.id = :personId");
 		qry.getParameters().put("personId", 4l);
-		List<Person> result = qry.getResults();
+		List<Person> result = qry.getResultList();
 		Long val = (Long)qry.resolveParameter(":personId");
 		assertNotNull(val);
 		assertEquals(4, val.intValue());
@@ -139,7 +139,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		qry.setSelectStatement("select p from Person p");
 		qry.setCountStatement("select count(p) from Person p");
 		qry.getRestrictions().add("p.id = #{personId}");
-		List<Person> result = qry.getResults();
+		List<Person> result = qry.getResultList();
 
 		assertNotNull(result);
 		assertEquals(1, qry.getPage());
@@ -153,7 +153,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		qry.setSelectStatement("select p from Person p");
 		qry.setCountStatement("select count(p) from Person p");
 		qry.getRestrictions().add("p.id = #{personId}");
-		List<Person> result = qry.getResults();
+		List<Person> result = qry.getResultList();
 		qry.getParameters().put("personId", null);
 
 		assertNotNull(result);
@@ -230,7 +230,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 			}
 			
 		});
-		List<Person> results = qry.getResults();
+		List<Person> results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(0, results.size());
 		assertEquals(0, qry.getResultCount().intValue());
@@ -259,7 +259,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		qry.setOrderKey("id");
 		// check record count
 		assertEquals(getDataRowCount(), qry.getResultCount().intValue());
-		List<Person> results = qry.getResults();
+		List<Person> results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(getDataRowCount(), results.size());
 	}
@@ -293,7 +293,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	protected void performOrderChecks(ObjectDataset<Person> qry, boolean isAsc) {
 		Long lastValue = null;
 		do {
-			List<Person> results = qry.getResults();
+			List<Person> results = qry.getResultList();
 			for (int i = 0; i < results.size(); i++) {
 				Person p = results.get(i);
 				if (lastValue != null) {

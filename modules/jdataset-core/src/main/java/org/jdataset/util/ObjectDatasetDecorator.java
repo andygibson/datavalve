@@ -40,8 +40,8 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 		return dataset.getResultCount();
 	}
 
-	public List<T> getResults() {
-		return dataset.getResults();
+	public List<T> getResultList() {
+		return dataset.getResultList();
 	}
 
 	public void invalidateResultInfo() {

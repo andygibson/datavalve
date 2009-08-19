@@ -30,7 +30,7 @@ public class SourcedDataset<T> extends AbstractDataset<T> {
 		synchronized (dataset) {
 			dataset.setMaxRows(getMaxRows());
 			dataset.setFirstResult(getFirstResult());
-			results = dataset.getResults();
+			results = dataset.getResultList();
 			nextAvailable = dataset.isNextAvailable();
 		}
 		return results;
@@ -38,7 +38,7 @@ public class SourcedDataset<T> extends AbstractDataset<T> {
 
 	public boolean isNextAvailable() {
 		if (nextAvailable == null) {
-			getResults();
+			getResultList();
 		}
 		return nextAvailable;
 	}

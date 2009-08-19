@@ -23,7 +23,7 @@ public class DatasetIterator<T> implements Iterator<T> {
 	}
 
 	public boolean hasNext() {
-		if (index < dataset.getResults().size()) {
+		if (index < dataset.getResultList().size()) {
 			return true;
 		}
 
@@ -31,12 +31,12 @@ public class DatasetIterator<T> implements Iterator<T> {
 	}
 
 	public T next() {
-		if (index == dataset.getResults().size()) {
+		if (index == dataset.getResultList().size()) {
 			dataset.next();
 			index = 0;
 		}
-		if (index < dataset.getResults().size()) {
-			return dataset.getResults().get(index++);
+		if (index < dataset.getResultList().size()) {
+			return dataset.getResultList().get(index++);
 		}
 
 		throw new IllegalStateException("Unable to return item");

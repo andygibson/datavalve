@@ -6,20 +6,20 @@ import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
 import org.jdataset.ObjectDataset;
-import org.jdataset.sql.AbstractSqlDataset;
-import org.jdataset.sql.SqlDataset;
+import org.jdataset.StatementDataset;
+import org.jdataset.sql.AbstractJdbcDataset;
 import org.phonelist.model.Person;
 
-public class SqlCustomPaginatorPage extends AbstractCustomPaginatorPage {
+public class JdbcCustomPaginatorPage extends AbstractCustomPaginatorPage {
 
-	public SqlCustomPaginatorPage(PageParameters parameters) {
+	public JdbcCustomPaginatorPage(PageParameters parameters) {
 		super(parameters);
 	}
 
 	@Override
 	public ObjectDataset<Person> createDataset() {			
 		Connection connection = getWicketApp().getConnection();
-        SqlDataset<Person> people = new AbstractSqlDataset<Person>(connection) {
+        StatementDataset<Person> people = new AbstractJdbcDataset<Person>(connection) {
 
 			@Override
 			public Person createObjectFromResultSet(ResultSet resultSet)

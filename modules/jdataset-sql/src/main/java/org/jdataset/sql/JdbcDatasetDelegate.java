@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Extends the {@link AbstractSqlDataset} and implements the
+ * Extends the {@link AbstractJdbcDataset} and implements the
  * {@link ResultSetObjectMapper} as a delegate property. This means we can
  * define classes that implement the conversion from {@link ResultSet} to an
  * Object and re-use them. This is particularly useful if we have a dependency
@@ -14,14 +14,14 @@ import java.sql.SQLException;
  * If no delegate is assigned to the {@link ResultSetObjectMapper} property
  * then a {@link NullPointerException} is thrown.
  * 
- * @see SqlQueryDatasetDelegate
+ * @see JdbcQueryDatasetDelegate
  * 
  * @author Andy Gibson
  * 
  * @param <T>
  *            Type of object this dataset returns
  */
-public class SqlDatasetDelegate<T> extends AbstractSqlDataset<T> {
+public class JdbcDatasetDelegate<T> extends AbstractJdbcDataset<T> {
 
 	private ResultSetObjectMapper<T> resultSetObjectMapper;
 

@@ -4,15 +4,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MappedSqlDataset extends AbstractSqlDataset<TableRow> {
+public class MappedJdbcDataset extends AbstractJdbcDataset<TableRow> {
 
 	private static final long serialVersionUID = 1L;
 	
-	public MappedSqlDataset() {
+	public MappedJdbcDataset() {
 		super();	
 	}
 
-	public MappedSqlDataset(Connection connection) {
+	public MappedJdbcDataset(Connection connection) {
 		super(connection);
 	}
 

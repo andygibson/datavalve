@@ -24,20 +24,20 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  *            The type of object that will be returned in the dataset.
  */
-public abstract class AbstractSqlQueryDataset<T> extends AbstractQueryDataset<T>
+public abstract class AbstractJdbcQueryDataset<T> extends AbstractQueryDataset<T>
 		implements ResultSetObjectMapper<T> {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory.getLogger(AbstractSqlQueryDataset.class);
+	private static Logger log = LoggerFactory.getLogger(AbstractJdbcQueryDataset.class);
 	
 	private transient Connection connection;
 	private ResultSetObjectProcessor<T> resultSetObjectProcessor = new ResultSetObjectProcessor<T>();
 
-	public AbstractSqlQueryDataset() {
+	public AbstractJdbcQueryDataset() {
 		this(null);
 	}
 
-	public AbstractSqlQueryDataset(Connection connection) {
+	public AbstractJdbcQueryDataset(Connection connection) {
 		this.connection = connection;
 	}
 

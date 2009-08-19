@@ -10,12 +10,13 @@ import java.util.List;
 
 import org.jdataset.AbstractParameterizedDataset;
 import org.jdataset.ParameterizedDataset;
+import org.jdataset.StatementDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * Base implementation for the SqlDataset interface which adds select and count
+ * Base implementation for the {@link StatementDataset} interface which adds select and count
  * SQL statements on to the {@link ParameterizedDataset} interface. The class
  * extends the {@link AbstractParameterizedDataset} to use the implementation of
  * the {@link ParameterizedDataset} interface. This class also implements the
@@ -33,8 +34,8 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  *            The type of object this dataset will return
  */
-public abstract class AbstractSqlDataset<T> extends
-		AbstractParameterizedDataset<T> implements SqlDataset<T>,
+public abstract class AbstractJdbcDataset<T> extends
+		AbstractParameterizedDataset<T> implements StatementDataset<T>,
 		ResultSetObjectMapper<T> {
 
 	private static final long serialVersionUID = 1L;
@@ -46,13 +47,13 @@ public abstract class AbstractSqlDataset<T> extends
 	private ResultSetObjectProcessor<T> resultSetObjectProcessor = new ResultSetObjectProcessor<T>();
 
 	private static Logger log = LoggerFactory
-			.getLogger(AbstractSqlDataset.class);
+			.getLogger(AbstractJdbcDataset.class);
 
-	public AbstractSqlDataset() {
+	public AbstractJdbcDataset() {
 		this(null);
 	}
 
-	public AbstractSqlDataset(Connection connection) {
+	public AbstractJdbcDataset(Connection connection) {
 		this.connection = connection;
 	}
 

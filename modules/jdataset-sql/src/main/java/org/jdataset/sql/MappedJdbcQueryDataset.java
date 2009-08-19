@@ -5,15 +5,15 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-public class MappedSqlQueryDataset extends AbstractSqlQueryDataset<TableRow>{
+public class MappedJdbcQueryDataset extends AbstractJdbcQueryDataset<TableRow>{
 
 	private static final long serialVersionUID = 1L;
 	
-	public MappedSqlQueryDataset() {
+	public MappedJdbcQueryDataset() {
 		super();
 	}
 
-	public MappedSqlQueryDataset(Connection connection) {
+	public MappedJdbcQueryDataset(Connection connection) {
 		super(connection);
 	}
 

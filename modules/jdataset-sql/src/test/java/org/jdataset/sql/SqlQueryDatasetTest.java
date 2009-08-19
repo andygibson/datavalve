@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.jdataset.ObjectDataset;
 import org.jdataset.QueryDataset;
 
-public class SqlQueryDatasetTest extends BaseSqlDatasetTest<Person> {
+public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 
 	@Override
 	public ObjectDataset<Person> buildObjectDataset() {
@@ -15,7 +15,7 @@ public class SqlQueryDatasetTest extends BaseSqlDatasetTest<Person> {
 
 	public QueryDataset<Person> createDataset() {
 
-		QueryDataset<Person> qry = new AbstractSqlQueryDataset<Person>(
+		QueryDataset<Person> qry = new AbstractJdbcQueryDataset<Person>(
 				getConnection()) {
 
 			@Override

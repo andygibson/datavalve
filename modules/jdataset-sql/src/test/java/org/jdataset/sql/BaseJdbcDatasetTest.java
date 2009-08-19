@@ -23,7 +23,7 @@ import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
  *            The type of object returned from the dataset used in the abstract
  *            test cases.
  */
-public abstract class BaseSqlDatasetTest<T> extends AbstractObjectDatasetJUnitTest<T> {
+public abstract class BaseJdbcDatasetTest<T> extends AbstractObjectDatasetJUnitTest<T> {
 
 	public class TestValue {
 		int id;

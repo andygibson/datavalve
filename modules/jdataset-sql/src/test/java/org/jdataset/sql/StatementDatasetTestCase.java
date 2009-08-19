@@ -7,23 +7,24 @@ import java.util.List;
 import org.jdataset.ObjectDataset;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
+import org.jdataset.StatementDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
+public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	private static Logger log = LoggerFactory
-			.getLogger(SqlDatasetTestCase.class);
+			.getLogger(StatementDatasetTestCase.class);
 
-	private MappedSqlDataset createDataset() {
-		MappedSqlDataset result = new MappedSqlDataset(getConnection());
+	private MappedJdbcDataset createDataset() {
+		MappedJdbcDataset result = new MappedJdbcDataset(getConnection());
 		result.setSelectStatement("select * from TestValues order by id");
 		result.setCountStatement("select count(1) from TestValues");
 		return result;
 	}
 
 	public void testRecordCount() {
-		MappedSqlDataset qry = createDataset();
+		MappedJdbcDataset qry = createDataset();
 		assertEquals(100, qry.getResultCount().intValue());
 	}
 
@@ -65,7 +66,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 	}
 
 	public void testUnsetParameters() {
-		MappedSqlDataset qry = createDataset();
+		MappedJdbcDataset qry = createDataset();
 		qry.setMaxRows(10);
 		qry.setSelectStatement("select * from TestValues where id = #{id}");
 		List<TableRow> results = qry.getResults();
@@ -75,7 +76,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 	}
 
 	public void testSetParameters() {
-		MappedSqlDataset qry = createDataset();
+		MappedJdbcDataset qry = createDataset();
 		qry.setMaxRows(10);
 		qry.setSelectStatement("select * from TestValues where id = :id");
 		qry.addParameter("id", 4);
@@ -88,7 +89,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 	}
 
 	public void testParamResolver() {
-		MappedSqlDataset qry = createDataset();
+		MappedJdbcDataset qry = createDataset();
 		qry.addParameterResolver(new ParameterResolver() {
 
 			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
@@ -112,7 +113,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 	}
 
 	public void testParamResolverMissingValue() {
-		MappedSqlDataset qry = createDataset();
+		MappedJdbcDataset qry = createDataset();
 		qry.addParameterResolver(new ParameterResolver() {
 
 			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
@@ -136,7 +137,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 	}
 
 	public void testInvalidColumnName() {
-		MappedSqlDataset qry = createDataset();
+		MappedJdbcDataset qry = createDataset();
 		List<TableRow> results = qry.getResults();
 		assertNotNull(results);
 		assertEquals(100, results.size());
@@ -150,7 +151,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 
 	public void testPagingPageSizePlusOne() {
 		// test the paging when the
-		MappedSqlDataset qry = createDataset();
+		MappedJdbcDataset qry = createDataset();
 		qry.setSelectStatement("select * from TestValues where id < 21");
 		qry.setCountStatement("select count(1) from TestValues where id < 21");
 
@@ -188,7 +189,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 	public void testPagingPageSizeMinusOne() {
 		log.debug("Testing size minus One");
 		// test the paging when the
-		MappedSqlDataset qry = createDataset();
+		MappedJdbcDataset qry = createDataset();
 		qry.setSelectStatement("select * from TestValues where id < 19");
 		qry.setCountStatement("select count(1) from TestValues where id < 19");
 
@@ -214,7 +215,7 @@ public class SqlDatasetTestCase extends BaseSqlDatasetTest<TableRow> {
 
 	public void testObjectCreation() {
 
-		SqlDataset<TestValue> qry = new AbstractSqlDataset<TestValue>(
+		StatementDataset<TestValue> qry = new AbstractJdbcDataset<TestValue>(
 				getConnection()) {
 
 			private static final long serialVersionUID = 1L;

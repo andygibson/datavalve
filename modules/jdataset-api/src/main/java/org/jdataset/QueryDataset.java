@@ -22,22 +22,22 @@ import org.jdataset.ParameterizedDataset;
  */
 public interface QueryDataset<T> extends ParameterizedDataset<T> {
 
-	public abstract String getSelectStatement();
+	public String getSelectStatement();
 
-	public abstract void setSelectStatement(String selectStatement);
+	public void setSelectStatement(String selectStatement);
 
-	public abstract String getCountStatement();
+	public String getCountStatement();
 
-	public abstract void setCountStatement(String countStatement);
+	public void setCountStatement(String countStatement);
 
-	public abstract Map<String, String> getOrderKeyMap();
+	public Map<String, String> getOrderKeyMap();
 
-	public abstract void setOrderKeyMap(Map<String, String> orderKeyMap);
+	public void setOrderKeyMap(Map<String, String> orderKeyMap);
 	
-	public abstract void addRestriction(String restriction);
+	public void addRestriction(String restriction);
 
-	public abstract List<String> getRestrictions();
+	public List<String> getRestrictions();
 
-	public abstract void setRestrictions(List<String> restrictions);
+	public void setRestrictions(List<String> restrictions);
 
 }

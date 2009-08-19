@@ -71,7 +71,7 @@ public abstract class AbstractDataProviderPage extends WebPage {
 				} else {
 					dataset.setOrderKey(null);
 				}
-				return dataset.getResults().iterator();
+				return dataset.getResultList().iterator();
 			}
 		};*/
 

@@ -89,6 +89,7 @@
 					<chunkFirstSections>0</chunkFirstSections>
 					<chunkSectionDepth>0</chunkSectionDepth>
 					<htmlStylesheet>style.css</htmlStylesheet>
+					<keepRelativeImageUris>1</keepRelativeImageUris>
 				</configuration>
 			</plugin>
 		</plugins>

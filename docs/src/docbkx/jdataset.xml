@@ -196,6 +196,42 @@ List<Person> results = qry.resultList();
 				for free and you can change datastores without needing to alter this
 				code. </para>
 		</sect1>
+		<sect1>
+			<title>Inspiration</title>
+			<para>The inspiration for this project came from a few places. Being
+				a long time Borland Delphi developer, I used their data access
+				components a lot and because they had a standard way of accessing
+				data, developers and third parties found it easy to create add-on
+				components that would just work when connected to the data access
+				components. However, because the data access components were so
+				feature rich,
+				they could be hard to implement. This was partly
+				because
+				Borland had not picked
+				a suitably simple base contract for the
+				Dataset and it
+				was
+				too late to go back and
+				break the API after several
+				years of
+				development.</para>
+			<para>
+				Another source of inspiration is the
+				<code>EntityQuery</code>
+				framework in Seam. This query could use EL expressions to set query
+				parameters and if the values were null, the parameters would be
+				excluded. There were a few limitations with them and some things I
+				would
+				have done differently, so I wrote my own. However, every time I
+				start looking at a new framework (Wicket, Spring MVC, ASP.net), I
+				come
+				across the same problems. Namely, querying data with or without
+				excluding null parameters and handling pagination. I often found
+				myself re-implementing this code or variants thereof and so this was
+				my 'itch' that got me to develop this project, the need for one set
+				of querying components that could provide those features and more.
+			</para>
+		</sect1>
 	</chapter>
 
 	<chapter id="Architecture">
@@ -298,14 +334,27 @@ List<Person> results = qry.resultList();
 					SQL has been set. Any
 					order clause would also be fixed as it is
 					embedded in the SQL
-					statement. If you want to 
+					statement. If you want to
 				</para>
 			</sect2>
-			<para>Different data stores might have different needs from a dataset. For example, we can easily query and order a SQL, JPA, or Hibernate based dataset, but if we have a dataset that reads from a text file, we don't want to code a query engine to access the data. If we want to access the data as </para>
+			<para>
+				Different data stores might have different needs from a
+				dataset. For
+				example, we can easily query and order a SQL, JPA, or
+				Hibernate based
+				dataset, but if we have a dataset that reads from a
+				text file, we
+				don't want to code a query engine to access the data, so for this
+				reason, we provide different interfaces with different degrees of
+				functionality all based around the core
+				<code>ObjectDataset</code>
+				interface.
+			</para>
 		</sect1>
 	</chapter>
 	<chapter>
-	<title>Getting Started</title>
+		<title>Getting Started</title>
+		<para>Lets get start</para>
 	</chapter>
 </book>
 		

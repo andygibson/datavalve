@@ -8,8 +8,8 @@ import java.util.Map.Entry;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.jdataset.AbstractQueryDataset;
 import org.jdataset.QueryDataset;
-import org.jdataset.db.AbstractQueryDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

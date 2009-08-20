@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jdataset.AbstractQueryDataset;
 import org.jdataset.ObjectDataset;
 import org.jdataset.QueryDataset;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;

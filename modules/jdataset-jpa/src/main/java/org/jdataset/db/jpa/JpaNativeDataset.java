@@ -8,7 +8,7 @@ import javax.persistence.Query;
  * 
  * @author Andy Gibson
  * 
- * @param <T>
+ * @param <T> Type of object this dataset contains
  */
 public class JpaNativeDataset<T> extends AbstractJpaDataset<T> {
 

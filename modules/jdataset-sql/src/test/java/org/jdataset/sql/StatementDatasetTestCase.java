@@ -7,6 +7,7 @@ import java.util.List;
 import org.jdataset.ObjectDataset;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
+import org.jdataset.ParameterizedDataset;
 import org.jdataset.StatementDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +93,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		MappedJdbcDataset qry = createDataset();
 		qry.addParameterResolver(new ParameterResolver() {
 
-			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
+			public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
 				if ("#{myId}".equals(parameter.getName())) {
 					parameter.setValue(27);
 					return true;
@@ -116,7 +117,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		MappedJdbcDataset qry = createDataset();
 		qry.addParameterResolver(new ParameterResolver() {
 
-			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
+			public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
 				if ("myId".equals(parameter.getName())) {
 					parameter.setValue(27);
 					return true;

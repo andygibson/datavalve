@@ -35,9 +35,9 @@ import org.slf4j.LoggerFactory;
  * <li>Add the restriction with the renamed params into the final restrictions</li>
  * </ul>
  * </ul>
- * At the end, we should be able to extract a list of finalized restrictions
- * with renamed parameters. We should be able to access the parameters either by
- * name, or by order.
+ * At the end, we should be able to get the list of finalized restrictions with
+ * renamed parameters from the restrictions and parameterList properties. We
+ * should be able to access the parameters either by name, or sequentially.
  * 
  * @author Andy Gibson
  * 
@@ -47,8 +47,9 @@ public class RestrictionBuilder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private ParameterParser parameterParser = new RegexParameterParser();
-	
-	private Pattern logicalOpPattern = Pattern.compile("\\A[ (]*\\b(and|or)\\b[ (]*.*",Pattern.CASE_INSENSITIVE);
+
+	private Pattern logicalOpPattern = Pattern.compile(
+			"\\A[ (]*\\b(and|or)\\b[ (]*.*", Pattern.CASE_INSENSITIVE);
 
 	private static Logger log = LoggerFactory
 			.getLogger(RestrictionBuilder.class);
@@ -99,7 +100,7 @@ public class RestrictionBuilder implements Serializable {
 			ParameterStyle parameterStyle) {
 		super();
 		this.dataset = dataset;
-		this.parameterStyle = parameterStyle;		
+		this.parameterStyle = parameterStyle;
 		refresh();
 	}
 
@@ -311,12 +312,13 @@ public class RestrictionBuilder implements Serializable {
 	}
 
 	/**
-	 * @param s Restriction line to check
+	 * @param s
+	 *            Restriction line to check
 	 * @return True if the line starts with AND or OR
 	 */
 	public boolean startsWithLogicalOperator(String s) {
-		 Matcher m = logicalOpPattern.matcher(s);
-	     return m.matches();
+		Matcher m = logicalOpPattern.matcher(s);
+		return m.matches();
 	}
 
 	public ParameterParser getParameterParser() {

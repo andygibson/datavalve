@@ -6,10 +6,19 @@ import java.util.List;
 
 import org.jdataset.ObjectDataset;
 
-public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable {
+/**
+ * Decorator class that can be used to decorate an existing
+ * {@link ObjectDataset}.
+ * 
+ * @author Andy Gibson
+ * 
+ * @param <T> Type of object this dataset contains
+ */
+public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private ObjectDataset<T> dataset;
 
 	public ObjectDatasetDecorator(ObjectDataset<T> dataset) {
@@ -83,11 +92,11 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 	public void setMaxRows(Integer maxRows) {
 		dataset.setMaxRows(maxRows);
 	}
-	
+
 	public ObjectDataset<T> getDataset() {
 		return dataset;
 	}
-	
+
 	public Iterator<T> iterator() {
 		return this.dataset.iterator();
 	}
@@ -119,7 +128,7 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,Serializable 
 	public void refresh() {
 		dataset.refresh();
 	}
-	
+
 	public void setDataset(ObjectDataset<T> dataset) {
 		this.dataset = dataset;
 	}

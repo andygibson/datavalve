@@ -3,8 +3,17 @@ package org.jdataset.util;
 import java.util.List;
 import java.util.Map;
 
+import org.jdataset.ObjectDataset;
 import org.jdataset.QueryDataset;
 
+/**
+ * Decorator class that can be used to decorate an existing
+ * {@link QueryDataset}.
+ * 
+ * @author Andy Gibson
+ * 
+ * @param <T> Type of object this dataset contains
+ */
 public class QueryDatasetDecorator<T> extends ParameterizedDatasetDecorator<T> implements QueryDataset<T> {
 
 	private static final long serialVersionUID = 1L;

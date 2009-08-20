@@ -2,9 +2,18 @@ package org.jdataset.util;
 
 import java.util.Map;
 
+import org.jdataset.ObjectDataset;
 import org.jdataset.ParameterResolver;
 import org.jdataset.ParameterizedDataset;
 
+/**
+ * Decorator class that can be used to decorate an existing
+ * {@link ParameterizedDataset}.
+ * 
+ * @author Andy Gibson
+ * 
+ * @param <T> Type of object this dataset contains
+ */
 public class ParameterizedDatasetDecorator<T> extends ObjectDatasetDecorator<T> implements ParameterizedDataset<T> {
 
 	private static final long serialVersionUID = 1L;

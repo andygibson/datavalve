@@ -3,6 +3,15 @@ package org.jdataset;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A singleton instance that provides a place to hold global configuration
+ * information. In particular this class holds a list of
+ * {@link ParameterResolver} instances and can be used as a global parameter
+ * resolver to allow you to specify application wide parameters once.
+ * 
+ * @author Andy Gibson
+ * 
+ */
 public class DatasetEnvironment implements ParameterResolver {
 
 	private static DatasetEnvironment instance = new DatasetEnvironment();
@@ -57,9 +66,8 @@ public class DatasetEnvironment implements ParameterResolver {
 		return false;
 	}
 
-	
 	public boolean acceptParameter(String name) {
-		//accept all types
+		// accept all types
 		return true;
 	}
 

@@ -9,6 +9,13 @@ import java.util.List;
 import org.jdataset.BackedDataset;
 
 //TODO Need to create more tests for this class (i.e. setting the path and so on)
+/**
+ * Dataset the represents a directory listing as a collection of {@link File}
+ * objects.
+ * 
+ * @author Andy Gibson
+ * 
+ */
 public class FileDataset extends BackedDataset<File> {
 
 	private static final long serialVersionUID = 1L;

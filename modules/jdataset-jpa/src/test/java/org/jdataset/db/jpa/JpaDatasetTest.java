@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 import org.jdataset.ObjectDataset;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
+import org.jdataset.ParameterizedDataset;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 import org.slf4j.Logger;
@@ -213,7 +214,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 			long id = 20;
 
-			public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
+			public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
 				System.out.println("Resolving "+parameter);
 				if (parameter.getName().equals("#{id}")) {
 					parameter.setValue(id++);

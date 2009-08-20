@@ -3,6 +3,8 @@ package org.jdataset.db;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jdataset.Parameter;
 import org.jdataset.ParameterParser;
@@ -45,6 +47,8 @@ public class RestrictionBuilder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private ParameterParser parameterParser = new RegexParameterParser();
+	
+	private Pattern logicalOpPattern = Pattern.compile("\\A[ (]*\\b(and|or)\\b[ (]*.*",Pattern.CASE_INSENSITIVE);
 
 	private static Logger log = LoggerFactory
 			.getLogger(RestrictionBuilder.class);
@@ -95,7 +99,7 @@ public class RestrictionBuilder implements Serializable {
 			ParameterStyle parameterStyle) {
 		super();
 		this.dataset = dataset;
-		this.parameterStyle = parameterStyle;
+		this.parameterStyle = parameterStyle;		
 		refresh();
 	}
 
@@ -218,14 +222,13 @@ public class RestrictionBuilder implements Serializable {
 		}
 
 		// Process each parameter
-		for (Parameter param : params) {			
-			
-			//calcualte new name for parameter
+		for (Parameter param : params) {
+
+			// calcualte new name for parameter
 			String newName = getReplacementParameterName();
-						
+
 			// calculate the replacement Name - ':paramName' or '?'
 			String replacementName = getReplacementParameterPrefix() + newName;
-			
 
 			// replace the param in the restriction with the new name
 			restriction = restriction.replace(param.getName(), replacementName);
@@ -237,7 +240,7 @@ public class RestrictionBuilder implements Serializable {
 			parameterList.add(param);
 		}
 		// finally, add the restriction to the list
-		log.debug("Adding restriction {}",restriction);
+		log.debug("Adding restriction {}", restriction);
 		restrictions.add(restriction);
 	}
 
@@ -256,7 +259,7 @@ public class RestrictionBuilder implements Serializable {
 		for (String expression : expressions) {
 			// resolve the value
 			Object value = dataset.resolveParameter(expression);
-			log.debug("adding parameter expression '{}'",expression);
+			log.debug("adding parameter expression '{}'", expression);
 			results.add(expression, value);
 		}
 		return results;
@@ -290,17 +293,30 @@ public class RestrictionBuilder implements Serializable {
 	public String buildWhereClause() {
 
 		StringBuilder sb = new StringBuilder();
+
 		for (String s : restrictions) {
-			sb.append("AND ");
+			if (sb.length() != 0) {
+				if (!startsWithLogicalOperator(s)) {
+					sb.append("AND ");
+				}
+			}
 			sb.append(s);
 			sb.append(" ");
 		}
 		if (sb.length() != 0) {
-			sb.delete(0, 4);
 			sb.insert(0, " WHERE ");
 		}
 
 		return sb.toString();
+	}
+
+	/**
+	 * @param s Restriction line to check
+	 * @return True if the line starts with AND or OR
+	 */
+	public boolean startsWithLogicalOperator(String s) {
+		 Matcher m = logicalOpPattern.matcher(s);
+	     return m.matches();
 	}
 
 	public ParameterParser getParameterParser() {
@@ -310,7 +326,7 @@ public class RestrictionBuilder implements Serializable {
 	public void setParameterParser(ParameterParser parameterParser) {
 		this.parameterParser = parameterParser;
 	}
-	
+
 	/**
 	 * Returns a prefix that is prepended to the new parameter name prior to
 	 * replacement. This is used for prefixing the colon ':' to the parameter

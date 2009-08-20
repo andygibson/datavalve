@@ -1,8 +1,5 @@
 package org.jdataset.db;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import junit.framework.TestCase;
 
 public class RestrictionBuilderTest extends TestCase {

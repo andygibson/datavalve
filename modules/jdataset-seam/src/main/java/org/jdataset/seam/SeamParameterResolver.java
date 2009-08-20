@@ -3,7 +3,6 @@ package org.jdataset.seam;
 import java.io.Serializable;
 
 import org.jboss.seam.core.Expressions;
-import org.jdataset.ObjectDataset;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
 import org.jdataset.ParameterizedDataset;

@@ -3,7 +3,6 @@ package org.jdataset.util;
 import java.util.List;
 import java.util.Map;
 
-import org.jdataset.ObjectDataset;
 import org.jdataset.QueryDataset;
 
 /**

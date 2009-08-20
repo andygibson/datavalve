@@ -5,10 +5,11 @@ import java.io.Serializable;
 import org.jdataset.ObjectDataset;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
+import org.jdataset.ParameterizedDataset;
 
 public class TestingParameterResolver implements ParameterResolver,Serializable {
 
-	public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
+	public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
 
 		if (parameter.getName().equals("id")) {
 			parameter.setValue("value_id");

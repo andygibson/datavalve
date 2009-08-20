@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+import org.jdataset.AbstractQueryDataset;
 import org.jdataset.Parameter;
 import org.jdataset.QueryDataset;
-import org.jdataset.db.AbstractQueryDataset;
 import org.jdataset.db.RestrictionBuilder;
 import org.jdataset.db.RestrictionBuilder.ParameterStyle;
 import org.slf4j.Logger;

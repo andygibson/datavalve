@@ -6,6 +6,7 @@ import org.jboss.seam.core.Expressions;
 import org.jdataset.ObjectDataset;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
+import org.jdataset.ParameterizedDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,7 @@ public class SeamParameterResolver implements ParameterResolver,Serializable {
 	private static Logger log = LoggerFactory
 			.getLogger(SeamParameterResolver.class);
 
-	public boolean resolveParameter(ObjectDataset dataset,Parameter parameter) {
+	public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
 		log.debug("Resolving Seam Parameter : {}", parameter);
 		// TODO - we don't want to treat all parameters as EL expressions need
 		// to re-think the parameter splitting		

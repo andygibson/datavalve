@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.hibernate.cfg.CreateKeySecondPass;
 import org.jdataset.AbstractQueryDataset;
 import org.jdataset.QueryDataset;
 import org.slf4j.Logger;
@@ -32,6 +33,14 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 	private final static Logger log = LoggerFactory
 			.getLogger(AbstractJpaDataset.class);
 
+	/**
+	 * 
+	 * Builds a JPA query from the select statement (including the order clause)
+	 * and sets up the maxResults and firstResult properties on the query and
+	 * returns the results.
+	 * 
+	 * @see org.jdataset.AbstractQueryDataset#fetchResultsFromDatabase(java.lang.Integer)
+	 */
 	@Override
 	protected final List<T> fetchResultsFromDatabase(Integer count) {
 		Query qry = buildQuery(getSelectStatement(), true);
@@ -45,6 +54,27 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 		return results;
 	}
 
+	/**
+	 * Builds a JPA Query based on the selectStatement parameter and builds the
+	 * list of parameters that go with the query. Once the statement is built,
+	 * the parameters are iterated through and assigned values on the query.
+	 * Finally, the query is returned to the caller. This method is used for
+	 * both select and count queries so we cannot handle the
+	 * {@link Query#setFirstResult(int)}, {@link Query#setMaxResults(int)}
+	 * method calls here.
+	 * <p>
+	 * The call to {@link #buildStatement(String, Map, boolean)} generates the
+	 * final query statement and the parameters. {@link #createJpaQuery(String)}
+	 * is an abstract method that should be implemented in subclasses. This
+	 * method should return an Ejbql or Native style query depending on the
+	 * implementation of the subclass.
+	 * 
+	 * 
+	 * @param selectStatement
+	 *            The select statement for this query
+	 * @param includeOrderBy
+	 * @return
+	 */
 	protected final Query buildQuery(String selectStatement,
 			boolean includeOrderBy) {
 

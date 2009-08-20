@@ -20,6 +20,11 @@ import org.slf4j.LoggerFactory;
  * select/count statements, and translating orderKey values into other
  * representations. It also defines common methods for defining an order clause
  * and building statements based on the Sql/Ejbql structure.
+ *<p>
+ * Typically, the orderKey translates to an order value through the OrderKeyMap.
+ * However, we wrap this behaviour in the {@link #translateOrderKey(String)}
+ * method. This can be overridden if you want to change how we translate
+ * orderKey values.
  * 
  * @author Andy Gibson
  * 
@@ -36,7 +41,6 @@ public abstract class AbstractQueryDataset<T> extends
 			.getLogger(AbstractQueryDataset.class);
 
 	private static Pattern commaSplitter = Pattern.compile(",");
-
 	private String selectStatement;
 	private String countStatement;
 	private Map<String, String> orderKeyMap = new HashMap<String, String>();
@@ -59,38 +63,18 @@ public abstract class AbstractQueryDataset<T> extends
 		this.countStatement = countStatement;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jdataset.db.QueryDset#getOrderKeyMap()
-	 */
 	public Map<String, String> getOrderKeyMap() {
 		return orderKeyMap;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jdataset.db.QueryDset#setOrderKeyMap(java.util.Map)
-	 */
 	public void setOrderKeyMap(Map<String, String> orderKeyMap) {
 		this.orderKeyMap = orderKeyMap;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jdataset.db.QueryDset#getRestrictions()
-	 */
 	public List<String> getRestrictions() {
 		return restrictions;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jdataset.db.QueryDset#setRestrictions(java.util.List)
-	 */
 	public void setRestrictions(List<String> restrictions) {
 		this.restrictions = restrictions;
 	}
@@ -104,23 +88,29 @@ public abstract class AbstractQueryDataset<T> extends
 	 * 
 	 * @see #calculateOrderByClause()
 	 * 
-	 * @return The order by statements or null of there is no order by
-	 *         specified.
+	 * @return The order by fields with asc/desc indicators or null of there is
+	 *         no order by specified.
 	 */
 	public final String calculateOrderBy() {
 		String orderKey = getOrderKey();
+
 		// fail quickly if we don't have an order
 		if (orderKey == null || orderKey.length() == 0) {
 			return null;
 		}
+
+		// we specified an order key, but we have no values, so issue a warning
+		// to the user
 		if (orderKeyMap.size() == 0) {
-			log
-					.warn("orderKey property is set but there are no values in the orderKeyMap.");
+			log.warn("orderKey property is set but the orderKeyMap is empty.");
 			return null;
 		}
-		String order = getOrderKeyMap().get(orderKey);
+
+		String order = translateOrderKey(orderKey);
 		if (order == null) {
-			log.warn("orderKey value '{}' not found in orderKeyMap", orderKey);
+			// if we can't find the order, then warn the user
+			log.warn("orderKey value '{}' not translated successfully",
+					orderKey);
 			return null;
 		}
 
@@ -136,6 +126,10 @@ public abstract class AbstractQueryDataset<T> extends
 		}
 		log.debug("Order key = {}, order by = {}", getOrderKey(), order);
 		return order;
+	}
+
+	private String translateOrderKey(String orderKeyValue) {
+		return getOrderKeyMap().get(orderKeyValue);
 	}
 
 	/**
@@ -159,7 +153,7 @@ public abstract class AbstractQueryDataset<T> extends
 	 * Constructs a query statement based on the <code>baseStatement</code>, the
 	 * restrictions, and the order values (optional). The restrictions are
 	 * processed and added to the final statement if accepted and the parameters
-	 * are added to the parameter list. 
+	 * are added to the parameter list.
 	 * 
 	 * @see RestrictionBuilder
 	 * @see #calculateOrderByClause()
@@ -206,7 +200,7 @@ public abstract class AbstractQueryDataset<T> extends
 		return temp.subList(0, getMaxRows());
 	}
 
-	public boolean isNextAvailable() {
+	public final boolean isNextAvailable() {
 		// check we have results loaded since this sets the nextAvailable flag
 		checkResultsLoaded();
 		return nextAvailable;

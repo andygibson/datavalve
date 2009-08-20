@@ -4,7 +4,19 @@ import org.apache.wicket.model.IModel;
 import org.jdataset.ObjectDataset;
 import org.jdataset.util.ObjectDatasetDecorator;
 
-public class DatasetModel<T> extends ObjectDatasetDecorator<T> implements ObjectDataset<T>,IModel<ObjectDataset<T>>{
+/**
+ * Extends the {@link ObjectDatasetDecorator} class and implements the
+ * {@link IModel} interface from wicket and the {@link ObjectDataset} interface.
+ * This means that you can have a dataset that decorates any other kind of
+ * dataset and can be used directly as a detachable wicket model.
+ * 
+ * @author Andy Gibson
+ * 
+ * @param <T>
+ *            Type of object this dataset contains
+ */
+public class DatasetModel<T> extends ObjectDatasetDecorator<T> implements
+		ObjectDataset<T>, IModel<ObjectDataset<T>> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,14 +25,12 @@ public class DatasetModel<T> extends ObjectDatasetDecorator<T> implements Object
 	}
 
 	public void detach() {
-		getDataset().invalidateResults();		
+		getDataset().invalidateResults();
 	}
-
 
 	public ObjectDataset<T> getObject() {
 		return getDataset();
 	}
-
 
 	public void setObject(ObjectDataset<T> dataset) {
 		setDataset(dataset);

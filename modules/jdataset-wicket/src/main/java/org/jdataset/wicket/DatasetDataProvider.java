@@ -2,21 +2,30 @@ package org.jdataset.wicket;
 
 import java.util.Iterator;
 
+import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.jdataset.ObjectDataset;
 
+/**
+ * This implements the {@link ISortableDataProvider} interface to provide a
+ * paginated, sorted result set that can be used in a grid in wicket.
+ * 
+ * @author Andy Gibson
+ * 
+ * @param <T>
+ *            Type of object this dataset contains
+ */
 public class DatasetDataProvider<T> extends SortableDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final ObjectDataset<T> dataset;
-	
-	
+
 	public DatasetDataProvider(ObjectDataset<T> dataset) {
 		super();
-		this.dataset = dataset;		
+		this.dataset = dataset;
 	}
 
 	public void detach() {

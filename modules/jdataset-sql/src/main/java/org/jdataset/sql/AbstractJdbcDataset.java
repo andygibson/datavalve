@@ -62,7 +62,7 @@ public abstract class AbstractJdbcDataset<T> extends
 		log.debug("Building Statement with sql = {}", sql);
 
 		try {
-			String[] params = extractParameters(sql);
+			String[] params = getParameterParser().extractParameters(sql);
 			List<Object> paramValues = new ArrayList<Object>();
 
 			// first replace the params in the sql expression

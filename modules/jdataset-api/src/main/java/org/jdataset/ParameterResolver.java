@@ -25,7 +25,7 @@ public interface ParameterResolver {
 	 *            Parameter to resolve
 	 * @return true if this resolver was able to resolve the parameter
 	 */
-	boolean resolveParameter(ObjectDataset<? extends Object> dataset,
+	boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,
 			Parameter parameter);
 
 	/**

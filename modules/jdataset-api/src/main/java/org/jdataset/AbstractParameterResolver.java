@@ -18,14 +18,14 @@ import java.io.Serializable;
 public abstract class AbstractParameterResolver implements ParameterResolver,
 		Serializable {
 
-	public boolean isElExpression(String name) {
+	public final boolean isElExpression(String name) {
 		if (name != null) {
 			return name.startsWith("#{") && name.endsWith("}");
 		}
 		return false;
 	}
 
-	public boolean isCommaExpression(String name) {
+	public final boolean isCommaExpression(String name) {
 		if (name != null) {
 			return name.startsWith(":");
 		}

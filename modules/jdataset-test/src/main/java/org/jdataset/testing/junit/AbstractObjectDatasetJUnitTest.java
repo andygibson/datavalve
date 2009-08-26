@@ -73,6 +73,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 */
 	public void testNextNoRead() {
 		ObjectDataset<T> ds = buildObjectDataset();
+		//this should be false since paging is not enabled by default, hence it is all one big page
 		assertEquals(false, ds.isNextAvailable());
 	}
 

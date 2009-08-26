@@ -335,8 +335,10 @@ List<Person> results = qry.resultList();]]>
 					dataset. For
 					example, we can easily query and order a SQL, JPA, or Hibernate
 					based dataset, but if we have a dataset that reads from a text
-					file, we don't want to code a query engine to access the data, so
-					for this reason, we provide different interfaces with different
+					file, we don't want to write a query engine to access the data from
+					scratch, so
+					for this reason, we provide different interfaces with
+					different
 					degrees of functionality all based around the core
 					<code>ObjectDataset</code>
 					interface.
@@ -346,7 +348,184 @@ List<Person> results = qry.resultList();]]>
 	</chapter>
 	<chapter>
 		<title>Getting Started</title>
-		<para>Lets get start</para>
+		<para>
+			Lets get started and start by creating our own custom dataset.
+			JDataset can be installed into your local Maven repository or the jar
+			files can be manually added to an IDE project. To start with create a
+			new IDE and/or Maven project and add the
+			<code>jdataset-core.jar</code>
+			and the
+			<code>jdataset-api.jar</code>
+			or the
+			<code>jdataset-core</code>
+			dependency in Maven (all dependencies are in the
+			<code>org.jdataset</code>
+			group).
+		</para>
+		<sect1>
+			<title>Simple Dataset</title>
+			<para>
+				Here we will extend the
+				<code>AbstractObjectDataset</code>
+				and implement the methods that will let us return a list of integers
+				from 0 to 99.
+			</para>
+
+			<example>
+				<title>
+					Our first custom dataset
+			</title>
+				<programlisting role="JAVA">
+<![CDATA[public class MyDataset extends AbstractDataset<Integer> {
+
+	protected Integer fetchResultCount() {
+		return 100;
+	}
+
+	protected List<Integer> fetchResults() {
+		//determine the range of numbers to return
+		int first=getFirstResult();
+		//calculate the last result, getMaxRows==0 means return all rows
+		int last = getMaxRows() == 0 ? first+getResultCount() :  first+getMaxRows();
+		//check we are within bounds
+		last = Math.min(last,getResultCount());
+		
+		//create the result list
+		List<Integer> results = new ArrayList<Integer>();
+		
+		//generate the results
+		for (int i = first;i < last;i++) {
+			int value = first+i;
+			//if we are ordering descending, invert the number
+			if (!isOrderAscending()) {
+				value = 99-value;
+			}
+			results.add(value);
+
+		}
+		return results; 
+	}
+
+	public boolean isNextAvailable() {
+		//return whether there are more results left to fetch
+		return getFirstResult() + getResultList().size() < getResultCount();
+	}
+}
+]]>
+			</programlisting>
+			</example>
+			<para>We can now create a little harness to execute that will create
+				the dataset, show us some numbers and we can feel all proud.</para>
+
+			<example>
+				<title>
+					Using our first dataset
+			</title>
+				<programlisting role="JAVA">
+<![CDATA[public class Main {
+
+	public static void main(String[] args) {
+
+		ObjectDataset<Integer> ds = new MyDataset();
+		ds.setMaxRows(5);
+		System.out.println("Print page "+ds.getPage()+" of "+ds.getPageCount());
+		for (Integer i : ds.getResultList()) {
+			System.out.println(i);
+		}
+		ds.next();
+		ds.next();
+		System.out.println("Print page "+ds.getPage()+" of "+ds.getPageCount());
+		for (Integer i : ds.getResultList()) {
+			System.out.println(i);
+		}
+	}
+}]]>
+			</programlisting>
+			</example>
+			<para>If you run this, you will see the following output which means
+				we have paginated the list of numbers and been able to navigate
+				them. Note that from the implementation, you can see that the list
+				is generated lazily and on demand. We could have written it so the
+				dataset contained millions of rows and it would not have generated
+				that list of a million numbers. It would only generate the list that
+				was currently being requested in blocks of 5.</para>
+			<example>
+				<title>
+					Using our first dataset
+			</title>
+				<programlisting role="JAVA">
+<![CDATA[Print page 1 of 20
+0
+1
+2
+3
+4
+Print page 3 of 20
+20
+21
+22
+23
+24]]>
+</programlisting>
+			</example>
+		</sect1>
+		<sect1>
+			<title>Testing our first dataset</title>
+			<para>
+				The problem is, how do we know that our dataset meets all the
+				contractual obligations of the
+				<code>ObjectDataset</code>
+				interface. How do we know we haven't missed some corner case where
+				if the first result value is X and the page size is Y, it will
+				return too many rows and error out. The answer is in automated unit
+				testing and we are in luck, because we have a very well defined
+				interface to test against. Because of this, we already have an
+				abstract object dataset test class that you can subclass to test
+				your own specific dataset with.
+			</para>
+			<para>
+				Create a new class which subclasses the
+				<code>AbstractObjectDatasetJUnitTest</code>
+				. This class contains 30 tests (and growing) that can be used to
+				check that your dataset is implemented correctly. You will need to
+				add the junit jar or maven dependecy, as well as the
+				<code>jdataset-test</code>
+				jar/dependency.
+			</para>
+			<example>
+				<title>
+					Testing our first dataset
+			</title>
+				<programlisting role="JAVA">
+<![CDATA[public class MyDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> {
+
+	@Override
+	public ObjectDataset<Integer> buildObjectDataset() {
+		return new MyDataset();		
+	}
+
+	@Override
+	public int getDataRowCount() {
+		return 100;
+	}
+}]]>
+</programlisting>
+			</example>
+			<para>
+				If you run these tests now, you should get the green light as the
+				tests complete succesfully. The abstract test class implements a
+				number of tests against the
+				<code>ObjectDataset</code>
+				interface. Chances are that you have implemented an interface such
+				as a
+				<code>ParameterizedDataset</code>
+				or a
+				<code>QueryDataset</code>
+				and because they inherit from the
+				<code>ObjectDataset</code>
+				interface, they too can make use of the built in tester.
+			</para>
+		</sect1>
 	</chapter>
 </book>
 		

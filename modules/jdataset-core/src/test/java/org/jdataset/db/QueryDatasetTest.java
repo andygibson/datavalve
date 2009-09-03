@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jdataset.AbstractQueryDataset;
 import org.jdataset.ObjectDataset;
+import org.jdataset.Paginator;
 import org.jdataset.QueryDataset;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 
@@ -22,15 +23,15 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 				return "Select o from Object o";
 			}
 
-			@Override
-			protected List<Integer> fetchResultsFromDatabase(Integer count) {
+			
+			public List<Integer> fetchResultsFromDatabase(Paginator paginator,Integer count) {
 				List<Integer> result = new ArrayList<Integer>();
-				int index = getFirstResult();
+				int index = paginator.getFirstResult();
 				if (count == 0) {
 					count = Integer.MAX_VALUE;
 				}
 				while (index < getResultCount()
-						&& index < getFirstResult() + count) {
+						&& index < paginator.getFirstResult() + count) {
 
 					result.add(new Integer(index));
 					index++;

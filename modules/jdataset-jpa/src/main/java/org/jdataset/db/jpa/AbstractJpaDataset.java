@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.jdataset.AbstractQueryDataset;
+import org.jdataset.Paginator;
 import org.jdataset.QueryDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,13 +42,13 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 	 * @see org.jdataset.AbstractQueryDataset#fetchResultsFromDatabase(java.lang.Integer)
 	 */
 	@Override
-	protected final List<T> fetchResultsFromDatabase(Integer count) {
-		Query qry = buildQuery(getSelectStatement(), true);
+	protected final List<T> fetchResultsFromDatabase(Paginator paginator,Integer count) {
+		Query qry = buildQuery(getSelectStatement(), true,paginator);
 		if (count != 0) {
 			qry.setMaxResults(count);
 		}
 
-		qry.setFirstResult(getFirstResult());
+		qry.setFirstResult(paginator.getFirstResult());
 		@SuppressWarnings("unchecked")
 		List<T> results = qry.getResultList();
 		return results;
@@ -75,13 +76,13 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 	 * @return
 	 */
 	protected final Query buildQuery(String selectStatement,
-			boolean includeOrderBy) {
+			boolean includeOrderBy,Paginator paginator) {
 
 		Map<String, Object> queryParams = new HashMap<String, Object>();
 
 		// build the ejbql statement and parameter list
 		String statement = buildStatement(selectStatement, queryParams,
-				includeOrderBy);
+				includeOrderBy,paginator);
 		log.debug("Built statement : {}", statement);
 
 		// create the actual query (native or JPA)
@@ -113,7 +114,7 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 
 	@Override
 	protected final Integer fetchResultCount() {
-		Query qry = buildQuery(getCountStatement(), false);
+		Query qry = buildQuery(getCountStatement(), false,null);
 		Long result = (Long) qry.getSingleResult();
 		return new Integer(result.intValue());
 	}

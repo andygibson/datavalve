@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jdataset.AbstractQueryDataset;
+import org.jdataset.Paginator;
 import org.jdataset.Parameter;
 import org.jdataset.QueryDataset;
 import org.jdataset.db.RestrictionBuilder;
@@ -42,16 +43,16 @@ public abstract class AbstractJdbcQueryDataset<T> extends AbstractQueryDataset<T
 	}
 
 	@Override
-	protected List<T> fetchResultsFromDatabase(Integer count) {
-		log.debug("FetchResultsFromDB, order = {}",getOrderKey());
+	protected List<T> fetchResultsFromDatabase(Paginator paginator,Integer count) {
+		log.debug("FetchResultsFromDB, order = {}",paginator.getOrderKey());
 		PreparedStatement statement = null;
 		try {
-			statement = buildPreparedStatement(getSelectStatement(),true);
+			statement = buildPreparedStatement(getSelectStatement(),true,paginator);
 			
 			ResultSet resultSet = statement.executeQuery();
 
 			List<T> results =  resultSetObjectProcessor.createListFromResultSet(resultSet, this,
-					getFirstResult(), count);
+					paginator.getFirstResult(), count);
 			log.debug("Results processor returned {} results",results.size());
 			return results;
 
@@ -65,7 +66,7 @@ public abstract class AbstractJdbcQueryDataset<T> extends AbstractQueryDataset<T
 	protected Integer fetchResultCount() {
 		PreparedStatement statement = null;
 		try {
-			statement = buildPreparedStatement(getCountStatement(),false);
+			statement = buildPreparedStatement(getCountStatement(),false,null);
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
@@ -81,14 +82,14 @@ public abstract class AbstractJdbcQueryDataset<T> extends AbstractQueryDataset<T
 		return 0;
 	}
 
-	private PreparedStatement buildPreparedStatement(String selectSql,boolean includeOrderBy)
+	private PreparedStatement buildPreparedStatement(String selectSql,boolean includeOrderBy,Paginator paginator)
 			throws SQLException {
 		
 		RestrictionBuilder rb = new RestrictionBuilder(this,
 				ParameterStyle.ORDERED_QUESTION_MARKS);
 		String sql = selectSql + rb.buildWhereClause();
 		if (includeOrderBy) {
-			sql = sql + calculateOrderByClause();
+			sql = sql + calculateOrderByClause(paginator);
 		}
 		log.debug("Building statement as : {}",sql);
 		PreparedStatement statement = connection.prepareStatement(sql);

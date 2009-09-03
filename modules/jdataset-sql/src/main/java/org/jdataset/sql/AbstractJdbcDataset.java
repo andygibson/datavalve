@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jdataset.AbstractParameterizedDataset;
+import org.jdataset.Paginator;
 import org.jdataset.ParameterizedDataset;
 import org.jdataset.StatementDataset;
 import org.slf4j.Logger;
@@ -104,14 +105,13 @@ public abstract class AbstractJdbcDataset<T> extends
 
 		return count;
 	}
-
-	@Override
-	protected List<T> fetchResults() {
+	
+	public List<T> fetchResults(Paginator paginator) {
 		try {
 			PreparedStatement statement = buildStatement(getSelectStatement());
 			ResultSet resultSet = statement.executeQuery();
 			List<T> results = resultSetObjectProcessor.createListFromResultSet(
-					resultSet, this, getFirstResult(), getMaxRows()); // createListFromResultSet(resultSet);
+					resultSet, this, paginator.getFirstResult(), paginator.getMaxRows()); // createListFromResultSet(resultSet);
 			nextAvailable = resultSet.next();
 			return results;
 		} catch (SQLException ex) {

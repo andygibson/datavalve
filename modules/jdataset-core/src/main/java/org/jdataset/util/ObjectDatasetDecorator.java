@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jdataset.ObjectDataset;
+import org.jdataset.Paginator;
 
 /**
  * Decorator class that can be used to decorate an existing
@@ -12,7 +13,8 @@ import org.jdataset.ObjectDataset;
  * 
  * @author Andy Gibson
  * 
- * @param <T> Type of object this dataset contains
+ * @param <T>
+ *            Type of object this dataset contains
  */
 public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,
 		Serializable {
@@ -89,7 +91,7 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,
 		dataset.setFirstResult(firstResult);
 	}
 
-	public void setMaxRows(Integer maxRows) {
+	public void setMaxRows(int maxRows) {
 		dataset.setMaxRows(maxRows);
 	}
 
@@ -131,5 +133,23 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,
 
 	public void setDataset(ObjectDataset<T> dataset) {
 		this.dataset = dataset;
+	}
+
+	public void copyPaginationInfo(Paginator target) {
+
+		if (target != null) {
+			target.setFirstResult(getFirstResult());
+			target.setMaxRows(getMaxRows());
+			target.setOrderKey(getOrderKey());
+			target.setOrderAscending(isOrderAscending());
+		}
+	}
+
+	public void setNextAvailable(boolean nextAvailable) {
+		this.dataset.setNextAvailable(nextAvailable);
+	}
+
+	public boolean includeAllResults() {
+		return this.dataset.includeAllResults();
 	}
 }

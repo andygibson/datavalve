@@ -43,6 +43,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	private String orderKey;
 	private boolean orderAscending = true;
 	private Class<?> entityClass;
+	private boolean nextAvailable;
 
 	public int getFirstResult() {
 		return firstResult;
@@ -65,13 +66,17 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	protected abstract Integer fetchResultCount();
 
-	protected abstract List<T> fetchResults();
+	protected abstract List<T> fetchResults(Paginator paginator);
 
 	public List<T> getResultList() {
 		if (results == null) {
-			results = fetchResults();
+			results = fetchResults(this);
 		}
 		return results;
+	}
+
+	public List<T> getResultList(Paginator paginator) {
+		return fetchResults(paginator);
 	}
 
 	public void setFirstResult(int firstResult) {
@@ -80,7 +85,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	}
 
-	public void setMaxRows(Integer maxRows) {
+	public void setMaxRows(int maxRows) {
 		if (maxRows < 0) {
 			throw new IllegalArgumentException(
 					"Max rows returned from query cannot be negative");
@@ -89,7 +94,9 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		invalidateResults();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jdataset.ObjectDataset#invalidateResultInfo()
 	 */
 	public void invalidateResultInfo() {
@@ -226,5 +233,22 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	public void refresh() {
 		invalidateResults();
+	}
+	
+	public void copyPaginationInfo(Paginator target) {
+		if (target != null) {
+			target.setFirstResult(firstResult);
+			target.setMaxRows(maxRows);
+			target.setOrderKey(orderKey);
+			target.setOrderAscending(orderAscending);
+		}
+	}
+	
+	public boolean isNextAvailable() {	
+		return nextAvailable;
+	}
+	
+	public void setNextAvailable(boolean nextAvailable) {
+		this.nextAvailable = nextAvailable;
 	}
 }

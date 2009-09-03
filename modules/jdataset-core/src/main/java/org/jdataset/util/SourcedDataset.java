@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jdataset.AbstractDataset;
 import org.jdataset.ObjectDataset;
+import org.jdataset.Paginator;
 
 /**
  * Provides a mechanism for having multiple {@link ObjectDataset} instances
@@ -37,8 +38,7 @@ public class SourcedDataset<T> extends AbstractDataset<T> {
 		return result;
 	}
 
-	@Override
-	protected List<T> fetchResults() {
+	protected List<T> fetchResults(Paginator paginator) {
 		List<T> results = null;
 		synchronized (dataset) {
 			dataset.setMaxRows(getMaxRows());

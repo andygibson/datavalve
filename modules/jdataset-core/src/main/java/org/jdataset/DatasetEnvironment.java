@@ -35,6 +35,10 @@ public class DatasetEnvironment implements ParameterResolver {
 			public boolean resolveParameter(
 					ParameterizedDataset<? extends Object> dataset,
 					Parameter parameter) {
+				if (dataset == null) {
+					throw new IllegalArgumentException(
+							"Null dataset in provider parameter resolution, you need to write the param resolver which accepts a data provider as a parameter");
+				}
 				String strippedName = parameter.getName().substring(1);
 				if (dataset.getParameters().containsKey(strippedName)) {
 					parameter.setValue(dataset.getParameters()

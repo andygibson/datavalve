@@ -91,8 +91,8 @@ public abstract class AbstractQueryDataset<T> extends
 	 * @return The order by fields with asc/desc indicators or null of there is
 	 *         no order by specified.
 	 */
-	public final String calculateOrderBy() {
-		String orderKey = getOrderKey();
+	public final String calculateOrderBy(Paginator paginator) {
+		String orderKey = paginator.getOrderKey();
 
 		// fail quickly if we don't have an order
 		if (orderKey == null || orderKey.length() == 0) {
@@ -122,9 +122,9 @@ public abstract class AbstractQueryDataset<T> extends
 			if (order.length() != 0) {
 				order = order + ", ";
 			}
-			order = order + field + (isOrderAscending() ? " ASC " : " DESC ");
+			order = order + field + (paginator.isOrderAscending() ? " ASC " : " DESC ");
 		}
-		log.debug("Order key = {}, order by = {}", getOrderKey(), order);
+		log.debug("Order key = {}, order by = {}", paginator.getOrderKey(), order);
 		return order;
 	}
 
@@ -141,8 +141,8 @@ public abstract class AbstractQueryDataset<T> extends
 	 * @return Empty string if there is no order by, otherwise, the clause
 	 *         prefixed with " ORDER BY "
 	 */
-	public final String calculateOrderByClause() {
-		String order = calculateOrderBy();
+	public final String calculateOrderByClause(Paginator paginator) {
+		String order = calculateOrderBy(paginator);
 		if (order == null) {
 			return "";
 		}
@@ -167,7 +167,7 @@ public abstract class AbstractQueryDataset<T> extends
 	 * @return
 	 */
 	protected final String buildStatement(String baseStatement,
-			Map<String, Object> queryParams, boolean includeOrderBy) {
+			Map<String, Object> queryParams, boolean includeOrderBy,Paginator paginator) {
 		queryParams.clear();
 		RestrictionBuilder rb = new RestrictionBuilder(this);
 
@@ -177,27 +177,27 @@ public abstract class AbstractQueryDataset<T> extends
 
 		String result = baseStatement + rb.buildWhereClause();
 		if (includeOrderBy) {
-			result = result + calculateOrderByClause();
+			result = result + calculateOrderByClause(paginator);
 		}
 		log.debug("Built statement : '{}'", result);
 		return result;
 	}
 
 	@Override
-	protected final List<T> fetchResults() {
+	protected final List<T> fetchResults(Paginator paginator) {
 
 		// fetch maxrows+1 so we can see if we have more results to fetch
-		Integer count = includeAllResults() ? 0 : getMaxRows() + 1;
-		List<T> temp = fetchResultsFromDatabase(count);
+		Integer count = includeAllResults() ? 0 : paginator.getMaxRows() + 1;
+		List<T> temp = fetchResultsFromDatabase(paginator,count);
 
 		// if we returned more than maxRows, then we have more data to fetch
-		nextAvailable = temp.size() > getMaxRows() && !includeAllResults();
-		if (includeAllResults() || temp.size() < getMaxRows()) {
+		nextAvailable = temp.size() > paginator.getMaxRows() && !includeAllResults();
+		if (includeAllResults() || temp.size() < paginator.getMaxRows()) {
 			return temp;
 		}
 
 		// create a sublist containing maxRows number of rows.
-		return temp.subList(0, getMaxRows());
+		return temp.subList(0, paginator.getMaxRows());
 	}
 
 	public final boolean isNextAvailable() {
@@ -221,7 +221,7 @@ public abstract class AbstractQueryDataset<T> extends
 	 * @return The results from the database based on the select statement and
 	 *         restrictions
 	 */
-	protected abstract List<T> fetchResultsFromDatabase(Integer count);
+	protected abstract List<T> fetchResultsFromDatabase(Paginator paginator,Integer count);
 
 	public void addRestriction(String restriction) {
 		getRestrictions().add(restriction);

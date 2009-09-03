@@ -93,23 +93,24 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 	 * 
 	 */
 	@Override
-	protected final List<T> fetchResults() {
+	protected final List<T> fetchResults(Paginator paginator) {
 		// make this method final since
 
 		// make sure we fetch the data
 		getBackingData();
 
-		int startPos = getFirstResult();
+		int startPos = paginator.getFirstResult();
 		if (startPos > backingData.size()) {
 			startPos = backingData.size();
 		}
 
-		int endPos = getMaxRows() == 0 ? backingData.size() : startPos
-				+ getMaxRows();
+		int endPos = paginator.getMaxRows() == 0 ? backingData.size() : startPos
+				+ paginator.getMaxRows();
 		if (endPos >= backingData.size()) {
 			endPos = backingData.size();
 		}
 
+		paginator.setNextAvailable(getFirstResult() + getResultList().size() < fetchResultCount());
 		return backingData.subList(startPos, endPos);
 	}
 
@@ -125,12 +126,6 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 		super.invalidateResultInfo();
 		// also invalidate the backing data
 		backingData = null;
-	}
-
-	public final boolean isNextAvailable() {
-		// since we are using an in-memory list, we can just examine that to see
-		// if there are more results available.
-		return getFirstResult() + getResultList().size() < fetchResultCount();
 	}
 
 }

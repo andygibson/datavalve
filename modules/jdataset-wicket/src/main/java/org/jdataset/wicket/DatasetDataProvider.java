@@ -6,7 +6,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDat
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.jdataset.ObjectDataset;
+import org.jdataset.IObjectDataset;
 
 /**
  * This implements the {@link ISortableDataProvider} interface to provide a
@@ -21,9 +21,9 @@ public class DatasetDataProvider<T> extends SortableDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ObjectDataset<T> dataset;
+	private final IObjectDataset<T> dataset;
 
-	public DatasetDataProvider(ObjectDataset<T> dataset) {
+	public DatasetDataProvider(IObjectDataset<T> dataset) {
 		super();
 		this.dataset = dataset;
 	}

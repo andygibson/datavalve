@@ -3,15 +3,15 @@ package org.jdataset.wicket;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
-import org.jdataset.ObjectDataset;
+import org.jdataset.IObjectDataset;
 
 public class DatasetResultsModel<T> implements IModel<List<T>> {
 
 	private static final long serialVersionUID = 1L;
 	
-	private ObjectDataset<T> dataset;
+	private IObjectDataset<T> dataset;
 
-	public DatasetResultsModel(ObjectDataset<T> dataset) {
+	public DatasetResultsModel(IObjectDataset<T> dataset) {
 		super();
 		this.dataset = dataset;
 	}

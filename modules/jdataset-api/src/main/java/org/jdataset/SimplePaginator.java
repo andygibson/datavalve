@@ -1,6 +1,7 @@
 package org.jdataset;
 
-public class SimplePaginator implements Paginator {
+
+public class SimplePaginator implements IPaginator {
 
 	private int firstResult = 0;
 	private int maxRows = 0;
@@ -44,11 +45,11 @@ public class SimplePaginator implements Paginator {
 
 	}
 
-	public void copyPaginationInfo(Paginator target) {
+	public void copyPaginationInfo(IPaginator target) {
 		doCopyPaginationInfo(this,target);
 	}
 
-	public static void doCopyPaginationInfo(Paginator source,Paginator target) {
+	public static void doCopyPaginationInfo(IPaginator source,IPaginator target) {
 		if (target != null) {
 			target.setFirstResult(source.getFirstResult());
 			target.setMaxRows(source.getMaxRows());

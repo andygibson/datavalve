@@ -3,27 +3,27 @@ package org.jdataset;
 import java.util.List;
 
 /**
- * This is the base interface for the object datasets. It provides methods for
- * accessing the data, record counts, pagination and navigation of the dataset.
- * It inherits from {@link Iterable} so we can iterate over instances of the
- * interface.
+ * This is the base interface for the stateful object datasets. It provides
+ * methods for accessing the data, record counts, pagination and navigation of
+ * the dataset. It inherits from {@link Iterable} so we can iterate over
+ * instances of the interface. It also inherits from {@link IPaginator} do we
+ * can use this interface in place of the {@link IPaginator}.
  * <p>
- * When writing code to interface with a dataset, you should code to this
+ * When writing code to interface with a basic dataset, you should code to this
  * interface as much as possible. This interface specifies how you access the
  * information without any methods as to how to determine what information the
- * dataset should contain. The {@link QueryDataset} just adds query aspects such
- * as having a count and select statement to determine what objects to put in
- * the result set.
+ * dataset should contain. 
  * 
  * @author Andy Gibson
  * 
  * @param <T>
  *            Type of value this dataset returns
  */
-public interface ObjectDataset<T> extends Iterable<T> , Paginator {
+public interface IObjectDataset<T> extends Iterable<T>, IPaginator {
 
 	/**
-	 * Returns the list of objects for this dataset 
+	 * Returns the list of objects for this dataset
+	 * 
 	 * @return The list of results for this query
 	 */
 	List<T> getResultList();
@@ -43,7 +43,7 @@ public interface ObjectDataset<T> extends Iterable<T> , Paginator {
 	/**
 	 * Called when both the result list and the result count are invalid. This
 	 * method is called when the data this dataset provides has changed and
-	 * therefore the count might have changed. 
+	 * therefore the count might have changed.
 	 */
 	void invalidateResultInfo();
 

@@ -1,6 +1,6 @@
 package org.jdataset;
 
-public interface Paginator {
+public interface IPaginator {
 
 	/**
 	 * @return The index of the first result to return
@@ -63,7 +63,7 @@ public interface Paginator {
 	void changeOrderKey(String orderKey);
 	
 
-	void copyPaginationInfo(Paginator target);
+	void copyPaginationInfo(IPaginator target);
 	
 	boolean includeAllResults();
 	

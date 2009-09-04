@@ -7,17 +7,17 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-import org.jdataset.AbstractQueryDataset;
-import org.jdataset.Paginator;
-import org.jdataset.Parameter;
-import org.jdataset.QueryDataset;
-import org.jdataset.db.RestrictionBuilder;
-import org.jdataset.db.RestrictionBuilder.ParameterStyle;
+import org.jdataset.IPaginator;
+import org.jdataset.params.Parameter;
+import org.jdataset.provider.IQueryDataProvider;
+import org.jdataset.provider.impl.AbstractQueryDataProvider;
+import org.jdataset.support.RestrictionBuilder;
+import org.jdataset.support.RestrictionBuilder.ParameterStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides the base implementation for a SQL based {@link QueryDataset} which
+ * Provides the base implementation for a SQL based {@link IQueryDataProvider} which
  * uses restrictions, parameters and ordering to define the final results.
  * 
  * @author Andy Gibson
@@ -25,25 +25,25 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  *            The type of object that will be returned in the dataset.
  */
-public abstract class AbstractJdbcQueryDataset<T> extends AbstractQueryDataset<T>
+public abstract class AbstractJdbcQueryDataProvider<T> extends AbstractQueryDataProvider<T>
 		implements ResultSetObjectMapper<T> {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory.getLogger(AbstractJdbcQueryDataset.class);
+	private static Logger log = LoggerFactory.getLogger(AbstractJdbcQueryDataProvider.class);
 	
 	private transient Connection connection;
 	private ResultSetObjectProcessor<T> resultSetObjectProcessor = new ResultSetObjectProcessor<T>();
 
-	public AbstractJdbcQueryDataset() {
+	public AbstractJdbcQueryDataProvider() {
 		this(null);
 	}
 
-	public AbstractJdbcQueryDataset(Connection connection) {
+	public AbstractJdbcQueryDataProvider(Connection connection) {
 		this.connection = connection;
 	}
 
 	@Override
-	protected List<T> fetchResultsFromDatabase(Paginator paginator,Integer count) {
+	protected List<T> fetchResultsFromDatabase(IPaginator paginator,Integer count) {
 		log.debug("FetchResultsFromDB, order = {}",paginator.getOrderKey());
 		PreparedStatement statement = null;
 		try {
@@ -63,7 +63,7 @@ public abstract class AbstractJdbcQueryDataset<T> extends AbstractQueryDataset<T
 	}
 
 	@Override
-	protected Integer fetchResultCount() {
+	public Integer fetchResultCount() {
 		PreparedStatement statement = null;
 		try {
 			statement = buildPreparedStatement(getCountStatement(),false,null);
@@ -82,7 +82,7 @@ public abstract class AbstractJdbcQueryDataset<T> extends AbstractQueryDataset<T
 		return 0;
 	}
 
-	private PreparedStatement buildPreparedStatement(String selectSql,boolean includeOrderBy,Paginator paginator)
+	private PreparedStatement buildPreparedStatement(String selectSql,boolean includeOrderBy,IPaginator paginator)
 			throws SQLException {
 		
 		RestrictionBuilder rb = new RestrictionBuilder(this,

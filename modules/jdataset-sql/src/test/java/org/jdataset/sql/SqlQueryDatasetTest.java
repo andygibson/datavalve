@@ -3,21 +3,27 @@ package org.jdataset.sql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.QueryDataset;
+import org.jdataset.IObjectDataset;
+import org.jdataset.combo.IQueryDataset;
+import org.jdataset.combo.QueryDataset;
+import org.jdataset.provider.IQueryDataProvider;
 
 public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Override
-	public ObjectDataset<Person> buildObjectDataset() {
+	public IObjectDataset<Person> buildObjectDataset() {
 		return createDataset();
 	}
 
-	public QueryDataset<Person> createDataset() {
+	public IQueryDataset<Person> createDataset() {
 
-		QueryDataset<Person> qry = new AbstractJdbcQueryDataset<Person>(
+		IQueryDataProvider<Person> provider = new AbstractJdbcQueryDataProvider<Person>(
 				getConnection()) {
 
+			private static final long serialVersionUID = 1L;
+			
 			@Override
 			public Person createObjectFromResultSet(ResultSet resultSet)
 					throws SQLException {
@@ -26,15 +32,16 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 
 			}
 		};
-		qry.setSelectStatement("select * from persons");
-		qry.setCountStatement("select count(1) from persons");
-		qry.getOrderKeyMap().put("id", "id");
-		qry.getOrderKeyMap().put("name", "last_name,first_name");
-		return qry;
+		provider.setSelectStatement("select * from persons");
+		provider.setCountStatement("select count(1) from persons");
+		provider.getOrderKeyMap().put("id", "id");
+		provider.getOrderKeyMap().put("name", "last_name,first_name");
+		
+		return new QueryDataset<Person>(provider);
 	}
 
 	public void testParameterizedQuery() {
-		QueryDataset<Person> ds = createDataset();
+		IQueryDataset<Person> ds = createDataset();
 		ds.getRestrictions().add("FIRST_NAME like 'A%'");
 		int count = 0;
 		for (Person p : ds) {
@@ -45,7 +52,7 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	}
 	
 	public void testParameterizedQueryWithValue() {
-		QueryDataset<Person> ds = createDataset();
+		IQueryDataset<Person> ds = createDataset();
 		ds.getRestrictions().add("FIRST_NAME like :param");
 		ds.getParameters().put("param","S%");
 		int count = 0;
@@ -58,7 +65,7 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	}
 	
 	public void testParameterizedQueryWithValueReRead() {
-		QueryDataset<Person> ds = createDataset();
+		IQueryDataset<Person> ds = createDataset();
 		ds.getRestrictions().add("FIRST_NAME like :param");
 		ds.getParameters().put("param","M%");		
 		for (Person p : ds) {
@@ -74,7 +81,7 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	}
 	
 	public void testParameterizedQueryWithNoValue() {
-		QueryDataset<Person> ds = createDataset();
+		IQueryDataset<Person> ds = createDataset();
 		ds.getRestrictions().add("FIRST_NAME like :param");
 		assertEquals(getDataRowCount(), ds.getResultCount().intValue());
 		int count = ds.getResultCount();
@@ -82,14 +89,14 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	}
 	
 	public void testParameterizedQueryCount() {
-		QueryDataset<Person> ds = createDataset();
+		IQueryDataset<Person> ds = createDataset();
 		ds.getRestrictions().add("FIRST_NAME like :param");
 		ds.getParameters().put("param","%");
 		assertEquals(getDataRowCount(), ds.getResultCount().intValue());							
 	}
 	
 	public void testOrdering() {
-		QueryDataset<Person> ds = createDataset();
+		IQueryDataset<Person> ds = createDataset();
 		ds.setOrderKey("name");
 		String last = null;
 		String test = null;

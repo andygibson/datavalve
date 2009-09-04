@@ -3,14 +3,17 @@ package org.jdataset.seam;
 import javax.persistence.EntityManager;
 
 import org.jboss.seam.annotations.In;
-import org.jdataset.db.jpa.JpaDataset;
+import org.jdataset.combo.QueryDataset;
+import org.jdataset.provider.impl.jpa.JpaDataProvider;
 
 /**
  * Dataset for use in the Seam environment annotated for Seam Managed
  * Persistence Contexts, and resolving parameters using EL expressions. This
  * type of dataset uses a straight Ejbql based JPA query.
  * 
- * You can specify a parameter as having an EL expression and it will resolve it using Seam automatically. i.e. 
+ * You can specify a parameter as having an EL expression and it will resolve it
+ * using Seam automatically. i.e.
+ * 
  * <pre>
  * p.id = #{personSearchCriteria.id}
  * p.firstName = #{personSearchCriteria.firstName.concat('%')}
@@ -23,21 +26,25 @@ import org.jdataset.db.jpa.JpaDataset;
  * 
  * @see SeamJpaNativeDataset
  */
-public class SeamJpaDataset<T> extends JpaDataset<T> {
+public class SeamJpaDataset<T> extends QueryDataset<T> {
 
-	public SeamJpaDataset() {
+	private static final long serialVersionUID = 1L;
+	
+	private final JpaDataProvider<T> jpaProvider;
+	
+	protected SeamJpaDataset(JpaDataProvider<T> jpaProvider) {
+		super(jpaProvider);
+		this.jpaProvider = jpaProvider;
 		addParameterResolver(new SeamParameterResolver());
 	}
 
-	/**
-	 * Overridden method so we can inject the entity manager Seam component
-	 * using the {@link In} annotation.
-	 * 
-	 * @see org.jdataset.db.jpa.AbstractJpaDataset#setEntityManager(javax.persistence.EntityManager)
-	 */
-	@In
-	@Override
+	
+	public SeamJpaDataset() {
+		this(new JpaDataProvider<T>());
+	}
+	
+	@In	
 	public void setEntityManager(EntityManager entityManager) {
-		super.setEntityManager(entityManager);
+		jpaProvider.setEntityManager(entityManager);
 	}
 }

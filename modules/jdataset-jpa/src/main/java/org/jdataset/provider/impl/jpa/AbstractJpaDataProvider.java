@@ -1,4 +1,4 @@
-package org.jdataset.db.jpa;
+package org.jdataset.provider.impl.jpa;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,30 +8,30 @@ import java.util.Map.Entry;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.jdataset.AbstractQueryDataset;
-import org.jdataset.Paginator;
-import org.jdataset.QueryDataset;
+import org.jdataset.IPaginator;
+import org.jdataset.provider.IQueryDataProvider;
+import org.jdataset.provider.impl.AbstractQueryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class for a JPA based {@link QueryDataset}. Override and implement
+ * Base class for a JPA based {@link IQueryDataProvider}. Override and implement
  * {@link #createJpaQuery(String)} to create a query of the type needed.
  * 
- * @see JpaDataset
- * @see JpaNativeDataset
+ * @see JpaDataProvider
+ * @see JpaNativeDataProvider
  * 
  * @author Andy Gibson
  * 
  * @param <T>
  */
-public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
+public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 
 	private EntityManager entityManager;
 	private final static Logger log = LoggerFactory
-			.getLogger(AbstractJpaDataset.class);
+			.getLogger(AbstractJpaDataProvider.class);
 
 	/**
 	 * 
@@ -39,10 +39,10 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 	 * and sets up the maxResults and firstResult properties on the query and
 	 * returns the results.
 	 * 
-	 * @see org.jdataset.AbstractQueryDataset#fetchResultsFromDatabase(java.lang.Integer)
+	 * @see org.jdataset.provider.impl.AbstractQueryDataProvider#fetchResultsFromDatabase(java.lang.Integer)
 	 */
 	@Override
-	protected final List<T> fetchResultsFromDatabase(Paginator paginator,Integer count) {
+	protected final List<T> fetchResultsFromDatabase(IPaginator paginator,Integer count) {
 		Query qry = buildQuery(getSelectStatement(), true,paginator);
 		if (count != 0) {
 			qry.setMaxResults(count);
@@ -76,7 +76,7 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 	 * @return
 	 */
 	protected final Query buildQuery(String selectStatement,
-			boolean includeOrderBy,Paginator paginator) {
+			boolean includeOrderBy,IPaginator paginator) {
 
 		Map<String, Object> queryParams = new HashMap<String, Object>();
 
@@ -102,8 +102,8 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 	/**
 	 * Override to create the specific type of query to use.
 	 * 
-	 * @see JpaDataset
-	 * @see JpaNativeDataset
+	 * @see JpaDataProvider
+	 * @see JpaNativeDataProvider
 	 * 
 	 * @param ql
 	 *            Statement the query must execute
@@ -111,9 +111,8 @@ public abstract class AbstractJpaDataset<T> extends AbstractQueryDataset<T> {
 	 *         the passed in sql.
 	 */
 	protected abstract Query createJpaQuery(String ql);
-
-	@Override
-	protected final Integer fetchResultCount() {
+	
+	public final Integer fetchResultCount() {
 		Query qry = buildQuery(getCountStatement(), false,null);
 		Long result = (Long) qry.getSingleResult();
 		return new Integer(result.intValue());

@@ -25,6 +25,8 @@ import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
  */
 public abstract class BaseJdbcDatasetTest<T> extends AbstractObjectDatasetJUnitTest<T> {
 
+	private static final long serialVersionUID = 1L;
+	
 	public class TestValue {
 		int id;
 		int value;

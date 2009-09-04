@@ -19,6 +19,8 @@ import org.jdataset.seam.SeamJpaDataset;
  */
 public class SeamJpaDatasetAdapter<T> extends SeamJpaDataset<T> {
 
+	private static final long serialVersionUID = 1L;
+	
 	public List<T> getResultList() {
 		// TODO Auto-generated method stub
 		return super.getResultList();

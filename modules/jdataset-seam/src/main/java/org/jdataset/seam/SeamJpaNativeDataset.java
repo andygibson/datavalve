@@ -3,7 +3,8 @@ package org.jdataset.seam;
 import javax.persistence.EntityManager;
 
 import org.jboss.seam.annotations.In;
-import org.jdataset.db.jpa.JpaNativeDataset;
+import org.jdataset.combo.QueryDataset;
+import org.jdataset.provider.impl.jpa.JpaNativeDataProvider;
 
 
 /**
@@ -24,15 +25,25 @@ import org.jdataset.db.jpa.JpaNativeDataset;
  * 
  * @see SeamJpaNativeDataset
  */
-public class SeamJpaNativeDataset<T> extends JpaNativeDataset<T> {
+public class SeamJpaNativeDataset<T> extends QueryDataset<T> {
 
-	public SeamJpaNativeDataset() {
+	private static final long serialVersionUID = 1L;
+	
+	private final JpaNativeDataProvider<T> jpaProvider;
+	
+	protected SeamJpaNativeDataset(JpaNativeDataProvider<T> jpaProvider) {
+		super(jpaProvider);
+		this.jpaProvider = jpaProvider;
 		addParameterResolver(new SeamParameterResolver());
 	}
-		
-	@In
-	@Override
+
+	
+	public SeamJpaNativeDataset() {
+		this(new JpaNativeDataProvider<T>());
+	}
+	
+	@In	
 	public void setEntityManager(EntityManager entityManager) {
-		super.setEntityManager(entityManager);
+		jpaProvider.setEntityManager(entityManager);
 	}
 }

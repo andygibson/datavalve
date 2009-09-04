@@ -4,16 +4,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jdataset.QueryDataset;
+import org.jdataset.provider.IQueryDataProvider;
 
 /**
- * Implementation of an {@link AbstractJdbcDataset} that returns the results as
+ * Implementation of an {@link AbstractJdbcDataProvider} that returns the results as
  * a set of {@link TableRow} objects that contain the columns as map values.
  * <p>
- * Since this is not a structured {@link QueryDataset} you must provide the
+ * Since this is not a structured {@link IQueryDataProvider} you must provide the
  * select, where and order by clauses manually in the
  * {@link #setSelectStatement(String)} and {@link #setCountStatement(String)}
- * statements. To use a {@link QueryDataset} based query, you can use the
+ * statements. To use a {@link IQueryDataProvider} based query, you can use the
  * {@link MappedJdbcQueryDataset} dataset instead.
  * 
  * @author Andy Gibson
@@ -37,15 +37,15 @@ import org.jdataset.QueryDataset;
  * 
  * @see MappedJdbcQueryDataset
  */
-public class MappedJdbcDataset extends AbstractJdbcDataset<TableRow> {
+public class MappedJdbcDataProvider extends AbstractJdbcDataProvider<TableRow> {
 
 	private static final long serialVersionUID = 1L;
 
-	public MappedJdbcDataset() {
+	public MappedJdbcDataProvider() {
 		super();
 	}
 
-	public MappedJdbcDataset(Connection connection) {
+	public MappedJdbcDataProvider(Connection connection) {
 		super(connection);
 	}
 

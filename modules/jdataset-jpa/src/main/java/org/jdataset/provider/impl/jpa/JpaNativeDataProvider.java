@@ -1,4 +1,4 @@
-package org.jdataset.db.jpa;
+package org.jdataset.provider.impl.jpa;
 
 import javax.persistence.Query;
 
@@ -10,7 +10,7 @@ import javax.persistence.Query;
  * 
  * @param <T> Type of object this dataset contains
  */
-public class JpaNativeDataset<T> extends AbstractJpaDataset<T> {
+public class JpaNativeDataProvider<T> extends AbstractJpaDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 

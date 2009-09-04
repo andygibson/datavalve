@@ -6,7 +6,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 /**
- * Implementation of an {@link AbstractJdbcQueryDataset} that returns the
+ * Implementation of an {@link AbstractJdbcQueryDataProvider} that returns the
  * results as a set of {@link TableRow} objects that contain the columns as map
  * values. Since this is implements the {@link QueryDatase} interface, you can
  * apply parameterized restrictions and ordering to the query. The select/count
@@ -32,7 +32,7 @@ import java.sql.SQLException;
  * @author Andy Gibson
  * 
  */
-public class MappedJdbcQueryDataset extends AbstractJdbcQueryDataset<TableRow> {
+public class MappedJdbcQueryDataset extends AbstractJdbcQueryDataProvider<TableRow> {
 
 	private static final long serialVersionUID = 1L;
 

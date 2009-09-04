@@ -4,33 +4,38 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.ParameterizedDataset;
-import org.jdataset.StatementDataset;
+import org.jdataset.IObjectDataset;
+import org.jdataset.combo.IStatementDataset;
+import org.jdataset.combo.StatementDataset;
+import org.jdataset.params.Parameter;
+import org.jdataset.params.ParameterResolver;
+import org.jdataset.provider.IParameterizedDataProvider;
+import org.jdataset.provider.IStatementDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
+	private static final long serialVersionUID = 1L;
+	
 	private static Logger log = LoggerFactory
 			.getLogger(StatementDatasetTestCase.class);
 
-	private MappedJdbcDataset createDataset() {
-		MappedJdbcDataset result = new MappedJdbcDataset(getConnection());
+	private IStatementDataset<TableRow> createDataset() {
+		MappedJdbcDataProvider result = new MappedJdbcDataProvider(getConnection());
 		result.setSelectStatement("select * from TestValues order by id");
 		result.setCountStatement("select count(1) from TestValues");
-		return result;
+		
+		return new StatementDataset<TableRow>(result);
 	}
 
 	public void testRecordCount() {
-		MappedJdbcDataset qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();		
 		assertEquals(100, qry.getResultCount().intValue());
 	}
 
 	public void testResultsFirstPage() {
-		ObjectDataset<TableRow> qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		qry.setMaxRows(10);
 		assertEquals(100, qry.getResultCount().intValue());
 		List<TableRow> results = qry.getResultList();
@@ -46,7 +51,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testResultPages() {
-		ObjectDataset<TableRow> qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		qry.setMaxRows(10);
 		assertEquals(100, qry.getResultCount().intValue());
 		// check values
@@ -67,7 +72,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testUnsetParameters() {
-		MappedJdbcDataset qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		qry.setMaxRows(10);
 		qry.setSelectStatement("select * from TestValues where id = #{id}");
 		List<TableRow> results = qry.getResultList();
@@ -77,7 +82,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testSetParameters() {
-		MappedJdbcDataset qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		qry.setMaxRows(10);
 		qry.setSelectStatement("select * from TestValues where id = :id");
 		qry.addParameter("id", 4);
@@ -90,10 +95,10 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testParamResolver() {
-		MappedJdbcDataset qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		qry.addParameterResolver(new ParameterResolver() {
 
-			public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
+			public boolean resolveParameter(IParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 				if ("#{myId}".equals(parameter.getName())) {
 					parameter.setValue(27);
 					return true;
@@ -114,10 +119,10 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testParamResolverMissingValue() {
-		MappedJdbcDataset qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		qry.addParameterResolver(new ParameterResolver() {
 
-			public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
+			public boolean resolveParameter(IParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 				if ("myId".equals(parameter.getName())) {
 					parameter.setValue(27);
 					return true;
@@ -138,7 +143,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testInvalidColumnName() {
-		MappedJdbcDataset qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		List<TableRow> results = qry.getResultList();
 		assertNotNull(results);
 		assertEquals(100, results.size());
@@ -152,7 +157,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testPagingPageSizePlusOne() {
 		// test the paging when the
-		MappedJdbcDataset qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		qry.setSelectStatement("select * from TestValues where id < 21");
 		qry.setCountStatement("select count(1) from TestValues where id < 21");
 
@@ -190,7 +195,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	public void testPagingPageSizeMinusOne() {
 		log.debug("Testing size minus One");
 		// test the paging when the
-		MappedJdbcDataset qry = createDataset();
+		IStatementDataset<TableRow> qry = createDataset();
 		qry.setSelectStatement("select * from TestValues where id < 19");
 		qry.setCountStatement("select count(1) from TestValues where id < 19");
 
@@ -216,7 +221,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testObjectCreation() {
 
-		StatementDataset<TestValue> qry = new AbstractJdbcDataset<TestValue>(
+		IStatementDataProvider<TestValue> provider = new AbstractJdbcDataProvider<TestValue>(
 				getConnection()) {
 
 			private static final long serialVersionUID = 1L;
@@ -230,6 +235,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 				return result;
 			}
 		};
+		IStatementDataset<TestValue> qry = new StatementDataset<TestValue>(provider);
 		qry.setCountStatement("select count(1) from TestValues");
 		qry.setSelectStatement("select * from TestValues");
 		qry.setMaxRows(10);
@@ -252,7 +258,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	@Override
-	public ObjectDataset<TableRow> buildObjectDataset() {
+	public IObjectDataset<TableRow> buildObjectDataset() {
 		return createDataset();
 	}
 }

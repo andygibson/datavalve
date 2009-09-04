@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jdataset.AbstractParameterizedDataset;
-import org.jdataset.Paginator;
-import org.jdataset.ParameterizedDataset;
-import org.jdataset.StatementDataset;
+import org.jdataset.IPaginator;
+import org.jdataset.provider.IParameterizedDataProvider;
+import org.jdataset.provider.IStatementDataProvider;
+import org.jdataset.provider.impl.AbstractParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * Base implementation for the {@link StatementDataset} interface which adds select and count
- * SQL statements on to the {@link ParameterizedDataset} interface. The class
- * extends the {@link AbstractParameterizedDataset} to use the implementation of
- * the {@link ParameterizedDataset} interface. This class also implements the
+ * Base implementation for the {@link IStatementDataProvider} interface which adds select and count
+ * SQL statements on to the {@link IParameterizedDataProvider} interface. The class
+ * extends the {@link AbstractParameterizedDataProvider} to use the implementation of
+ * the {@link IParameterizedDataProvider} interface. This class also implements the
  * actual fetching of the result count and the results from the database once
  * the parameters have been resolved.
  * </p>
@@ -35,26 +35,25 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  *            The type of object this dataset will return
  */
-public abstract class AbstractJdbcDataset<T> extends
-		AbstractParameterizedDataset<T> implements StatementDataset<T>,
+public abstract class AbstractJdbcDataProvider<T> extends
+		AbstractParameterizedDataProvider<T> implements IStatementDataProvider<T>,
 		ResultSetObjectMapper<T> {
 
 	private static final long serialVersionUID = 1L;
-	
-	private boolean nextAvailable;	
+		
 	private transient Connection connection;
 	private String countStatement;
 	private String selectStatement;
 	private ResultSetObjectProcessor<T> resultSetObjectProcessor = new ResultSetObjectProcessor<T>();
 
 	private static Logger log = LoggerFactory
-			.getLogger(AbstractJdbcDataset.class);
+			.getLogger(AbstractJdbcDataProvider.class);
 
-	public AbstractJdbcDataset() {
+	public AbstractJdbcDataProvider() {
 		this(null);
 	}
 
-	public AbstractJdbcDataset(Connection connection) {
+	public AbstractJdbcDataProvider(Connection connection) {
 		this.connection = connection;
 	}
 
@@ -90,7 +89,7 @@ public abstract class AbstractJdbcDataset<T> extends
 	}
 
 	@Override
-	protected Integer fetchResultCount() {
+	public Integer fetchResultCount() {
 		int count = 0;
 		try {
 			PreparedStatement statement = buildStatement(getCountStatement());
@@ -106,13 +105,14 @@ public abstract class AbstractJdbcDataset<T> extends
 		return count;
 	}
 	
-	public List<T> fetchResults(Paginator paginator) {
+	public List<T> fetchResults(IPaginator paginator) {
 		try {
 			PreparedStatement statement = buildStatement(getSelectStatement());
 			ResultSet resultSet = statement.executeQuery();
 			List<T> results = resultSetObjectProcessor.createListFromResultSet(
 					resultSet, this, paginator.getFirstResult(), paginator.getMaxRows()); // createListFromResultSet(resultSet);
-			nextAvailable = resultSet.next();
+			paginator.setNextAvailable(resultSet.next());
+			
 			return results;
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -122,12 +122,6 @@ public abstract class AbstractJdbcDataset<T> extends
 
 	public abstract T createObjectFromResultSet(ResultSet resultSet)
 			throws SQLException;
-
-	public boolean isNextAvailable() {
-		// make sure results are loaded
-		getResultList();
-		return nextAvailable;
-	}
 
 	public String getSelectStatement() {
 		return selectStatement;

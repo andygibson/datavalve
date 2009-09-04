@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jdataset.AbstractDataset;
-import org.jdataset.Paginator;
+import org.jdataset.IPaginator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,7 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 		return lineCount;
 	}
 
-	public List<T> fetchResults(Paginator paginator) {
+	public List<T> fetchResults(IPaginator paginator) {
 		int rowCount = paginator.getMaxRows() == 0 ? getResultCount() : paginator.getMaxRows();
 		return generateResults(paginator.getFirstResult(), rowCount);
 	}

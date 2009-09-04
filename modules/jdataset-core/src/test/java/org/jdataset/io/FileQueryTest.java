@@ -4,14 +4,33 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
-import org.jdataset.ObjectDataset;
+import org.jdataset.IObjectDataset;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.jdataset.util.GenericDataset;
 
 public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String baseDir;
 	private static final int FILE_COUNT = 20;
 	private static final int DIR_COUNT = 20;
+	
+	private class FileDataset extends GenericDataset<File, FileDataProvider> {
+
+		private static final long serialVersionUID = 1L;
+
+		public FileDataset(FileDataProvider provider) {
+			super(provider);
+		}
+		
+		@Override
+		public void invalidateResultInfo() {
+			super.invalidateResultInfo();
+			getProvider().invalidateData();
+		}
+	}
+	
 
 	@Override
 	protected void setUp() throws Exception {
@@ -54,47 +73,47 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	}
 
 	public void testFileDataQueryStringIncludingDirs() {
-		FileDataset qry = new FileDataset(baseDir);
-		qry.setIncludeDirectories(true);
+		FileDataset qry = buildFileDataset(true);		
 		List<File> res = qry.getResultList();
 		assertEquals(40, res.size());
 	}
 
 	public void testFileDataQueryRecordCountIncludingDirs() {
-		FileDataset qry = new FileDataset(baseDir);
-		qry.setIncludeDirectories(true);
+		FileDataset qry = buildFileDataset(true);		
 		long count = qry.getResultCount();
 		assertEquals(40, count);
 	}
 
 	public void testFileDataQueryStringExcludingDirs() {
-		FileDataset qry = new FileDataset(baseDir);
+		FileDataset qry = buildFileDataset(false);
 		List<File> res = qry.getResultList();
 		assertEquals(20, res.size());
 	}
 
 	public void testFileDataQueryRecordCountExcludingDirs() {
-		FileDataset qry = new FileDataset(baseDir);
-
+		FileDataset qry = buildFileDataset(false);
 		long count = qry.getResultCount();
 		assertEquals(20, count);
 	}
 
 	public void testIncDirChange() {
 		// test changing include dirs invalidates the results
-		FileDataset qry = new FileDataset(baseDir);
+		FileDataset qry = buildFileDataset(false);
 		assertEquals(20, qry.getResultCount().intValue());
-		qry.setIncludeDirectories(true);
+		qry.getProvider().setIncludeDirectories(true);
+		qry.invalidateResultInfo();		
+		
 		assertEquals(40, qry.getResultCount().intValue());
-		qry.setIncludeDirectories(false);
+		qry.getProvider().setIncludeDirectories(false);
+		qry.invalidateResultInfo();
 		assertEquals(20, qry.getResultCount().intValue());
 	}
 
 	public void testPagination() {
-		FileDataset qry = new FileDataset(baseDir);
+		FileDataset qry = buildFileDataset(false);
 		qry.setMaxRows(10);
 		assertEquals(1, qry.getPage());
-		qry.setIncludeDirectories(true);
+		qry.getProvider().setIncludeDirectories(true);
 
 		assertEquals(40, qry.getResultCount().intValue());
 		assertEquals(true, qry.isNextAvailable());
@@ -128,7 +147,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	}
 
 	public void testPageCount() {
-		ObjectDataset<File> qry = new FileDataset(baseDir);
+		FileDataset qry = buildFileDataset(false);
 
 		assertEquals(20, qry.getResultCount().intValue());
 
@@ -166,11 +185,14 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	}
 
 	@Override
-	public ObjectDataset<File> buildObjectDataset() {		
-		FileDataset qry = new FileDataset(baseDir);
-		qry.setIncludeDirectories(true);
-		return qry;
-
+	public IObjectDataset<File> buildObjectDataset() {
+		return buildFileDataset(true);
+	}
+	
+	public FileDataset buildFileDataset(boolean includeDirs) {
+		FileDataset ds = new FileDataset(new FileDataProvider(baseDir));
+		ds.getProvider().setIncludeDirectories(includeDirs);
+		return ds;
 	}
 
 	@Override

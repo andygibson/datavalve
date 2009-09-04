@@ -1,16 +1,23 @@
-package org.jdataset;
+package org.jdataset.provider.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jdataset.AbstractDataset;
+import org.jdataset.DatasetEnvironment;
+import org.jdataset.ParameterParser;
+import org.jdataset.params.Parameter;
+import org.jdataset.params.ParameterResolver;
+import org.jdataset.params.RegexParameterParser;
+import org.jdataset.provider.IParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Extends the {@link AbstractDataset} to implement the
- * {@link ParameterizedDataset} methods. This class adds handling for parameter
+ * {@link IParameterizedDataProvider} methods. This class adds handling for parameter
  * resolvers, holding a fixed parameter map, extracting parameters from text and
  * resolving parameters.
  * <p>
@@ -21,12 +28,12 @@ import org.slf4j.LoggerFactory;
  * 
  * @param <T>
  */
-public abstract class AbstractParameterizedDataset<T> extends
-		AbstractDataset<T> implements ParameterizedDataset<T> {
+public abstract class AbstractParameterizedDataProvider<T> extends
+		AbstractDataProvider<T> implements IParameterizedDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
-			.getLogger(AbstractParameterizedDataset.class);
+			.getLogger(AbstractParameterizedDataProvider.class);
 
 	private ParameterParser parameterParser = new RegexParameterParser();	
 	private Map<String, Object> parameters = new HashMap<String, Object>();

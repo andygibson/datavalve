@@ -3,6 +3,11 @@ package org.jdataset;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jdataset.params.AbstractParameterResolver;
+import org.jdataset.params.Parameter;
+import org.jdataset.params.ParameterResolver;
+import org.jdataset.provider.IParameterizedDataProvider;
+
 /**
  * A singleton instance that provides a place to hold global configuration
  * information. In particular this class holds a list of
@@ -32,8 +37,10 @@ public class DatasetEnvironment implements ParameterResolver {
 	private void addDefaultParameterResolver() {
 		addParameterResolver(new AbstractParameterResolver() {
 
+			private static final long serialVersionUID = 1L;
+			
 			public boolean resolveParameter(
-					ParameterizedDataset<? extends Object> dataset,
+					IParameterizedDataProvider<? extends Object> dataset,
 					Parameter parameter) {
 				if (dataset == null) {
 					throw new IllegalArgumentException(
@@ -59,7 +66,7 @@ public class DatasetEnvironment implements ParameterResolver {
 	}
 
 	public boolean resolveParameter(
-			ParameterizedDataset<? extends Object> dataset, Parameter parameter) {
+			IParameterizedDataProvider<? extends Object> dataset, Parameter parameter) {
 		for (ParameterResolver resolver : parameterResolvers) {
 			if (resolver.acceptParameter(parameter.getName())) {
 				if (resolver.resolveParameter(dataset, parameter)) {

@@ -1,11 +1,11 @@
-package org.jdataset.db;
+package org.jdataset.support;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.Parameter;
+import org.jdataset.params.Parameter;
 
 /**
  * Simple class that stores a list of Parameter instances

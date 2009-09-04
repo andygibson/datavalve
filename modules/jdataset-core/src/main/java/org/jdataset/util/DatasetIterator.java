@@ -2,7 +2,7 @@ package org.jdataset.util;
 
 import java.util.Iterator;
 
-import org.jdataset.ObjectDataset;
+import org.jdataset.IObjectDataset;
 
 /**
  * Iterator implementation for the iterator that is returned from the 
@@ -13,10 +13,10 @@ import org.jdataset.ObjectDataset;
 public class DatasetIterator<T> implements Iterator<T> {
 
 	private static final long serialVersionUID = 1L;
-	private final ObjectDataset<T> dataset;
+	private final IObjectDataset<T> dataset;
 	private int index;
 
-	public DatasetIterator(ObjectDataset<T> dataset) {
+	public DatasetIterator(IObjectDataset<T> dataset) {
 		super();
 		if (dataset == null) {
 			throw new IllegalArgumentException(

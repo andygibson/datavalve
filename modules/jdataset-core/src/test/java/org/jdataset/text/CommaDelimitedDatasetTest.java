@@ -6,13 +6,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import org.jdataset.ObjectDataset;
+import org.jdataset.IObjectDataset;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 
 public class CommaDelimitedDatasetTest extends
 		AbstractObjectDatasetJUnitTest<PhoneEntry> {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String baseDir;
 	private String fileName;
 
@@ -47,14 +49,12 @@ public class CommaDelimitedDatasetTest extends
 			}
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		// TODO Auto-generated method stub
 		super.tearDown();
 		deleteFiles();
 	}
@@ -65,8 +65,8 @@ public class CommaDelimitedDatasetTest extends
 	}
 
 	@Override
-	public ObjectDataset<PhoneEntry> buildObjectDataset() {
-		ObjectDataset<PhoneEntry> result = new CommaDelimitedDataset<PhoneEntry>(fileName) {
+	public IObjectDataset<PhoneEntry> buildObjectDataset() {
+		IObjectDataset<PhoneEntry> result = new CommaDelimitedDataset<PhoneEntry>(fileName) {
 			private static final long serialVersionUID = 2L;
 			@Override
 			protected PhoneEntry createObjectFromColumns(String[] columns) {

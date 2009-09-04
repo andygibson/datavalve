@@ -1,19 +1,21 @@
 package org.jdataset;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import org.jdataset.provider.IDataProvider;
 import org.jdataset.util.LazyList;
 
 /**
  * <p>
- * Implementation of an {@link ObjectDataset} that holds its own data list that
+ * Implementation of an {@link IObjectDataset} that holds its own data list that
  * is used to back the dataset. Introduces a new abstract method to be
  * overridden that allows subclasses to return the <code>List</code> that backs
  * this dataset.
  * </p>
  * <p>
- * This class can be used to provide an {@link ObjectDataset} interface to any
+ * This class can be used to provide an {@link IObjectDataset} interface to any
  * data even if it is held in any kind of list. For example, you can create a
  * paginated dataset from a list of <code>File</code> objects. If the content
  * you need is too big to be held in memory, then you could use a
@@ -21,7 +23,7 @@ import org.jdataset.util.LazyList;
  * </p>
  * <p>
  * Note that regardless of whether the dataset is paged or not, the
- * {@link BackedDataset#fetchBackingData()} method <b>must</b> return all values
+ * {@link BackedDataProvider#fetchBackingData()} method <b>must</b> return all values
  * in the whole dataset. It is only from examining the complete list that we
  * determine whether or not paging is available.
  * </p>
@@ -31,7 +33,7 @@ import org.jdataset.util.LazyList;
  * @param <T>
  *            The type of object this dataset contains.
  */
-public abstract class BackedDataset<T> extends AbstractDataset<T> {
+public abstract class BackedDataProvider<T> implements IDataProvider<T>,Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,8 +47,7 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 	 * 
 	 * @see org.jdataset.AbstractDataset#fetchResultCount()
 	 */
-	@Override
-	protected final Integer fetchResultCount() {
+	public final Integer fetchResultCount() {
 		// make this final since it uses the backing data to get the count
 		return Integer.valueOf(getBackingData().size());
 	}
@@ -55,7 +56,7 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 	 * Lazy loads the data that backs the dataset result set from the
 	 * <code>fetchBackingData()</code> method.
 	 * 
-	 * @see BackedDataset#fetchBackingData()
+	 * @see BackedDataProvider#fetchBackingData()
 	 */
 	public final List<T> getBackingData() {
 		if (backingData == null) {
@@ -92,8 +93,7 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 	 * @see org.jdataset.AbstractDataset#fetchResults()
 	 * 
 	 */
-	@Override
-	protected final List<T> fetchResults(Paginator paginator) {
+	public final List<T> fetchResults(IPaginator paginator) {
 		// make this method final since
 
 		// make sure we fetch the data
@@ -110,22 +110,12 @@ public abstract class BackedDataset<T> extends AbstractDataset<T> {
 			endPos = backingData.size();
 		}
 
-		paginator.setNextAvailable(getFirstResult() + getResultList().size() < fetchResultCount());
-		return backingData.subList(startPos, endPos);
+		List<T> results = backingData.subList(startPos, endPos); 
+		paginator.setNextAvailable(paginator.getFirstResult() + results.size() < fetchResultCount());
+		return results;
 	}
 
-	/**
-	 * Overridden to also invalidate the backing data values used to back this
-	 * list. We do it on the invalidate info since this is called when the
-	 * underlying structure may have changed.
-	 * 
-	 * @see org.jdataset.AbstractDataset#invalidateResultInfo()
-	 */
-	@Override
-	public void invalidateResultInfo() {
-		super.invalidateResultInfo();
-		// also invalidate the backing data
+	public void invalidateData() {
 		backingData = null;
 	}
-
 }

@@ -1,5 +1,7 @@
 package org.jdataset.db;
 
+import org.jdataset.support.RestrictionBuilder;
+
 import junit.framework.TestCase;
 
 public class RestrictionBuilderTest extends TestCase {

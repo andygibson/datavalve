@@ -1,8 +1,11 @@
-package org.jdataset;
+package org.jdataset.params;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
+import org.jdataset.params.Parameter;
+import org.jdataset.params.ParameterResolver;
+import org.jdataset.provider.IParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +42,7 @@ public class ReflectionParameterResolver implements ParameterResolver,Serializab
 		return object;
 	}
 
-	public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
+	public boolean resolveParameter(IParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 		String name=parameter.getName().substring(1);//remove the starting ':'
 		
 		String[] properties = name.split("\\.");

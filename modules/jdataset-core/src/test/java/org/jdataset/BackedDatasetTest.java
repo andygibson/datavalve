@@ -6,18 +6,24 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.jdataset.util.GenericDataset;
 
 public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
     private static Logger log = Logger.getLogger(BackedDatasetTest.class.getName());
+    
+    
 
-    public BackedDataset<Integer> buildTestDataset() {
+    public GenericDataset<Integer, BackedDataProvider<Integer>> buildTestDataset() {
+    	
     	return buildTestDataset(100);
     }
     
-    public BackedDataset<Integer> buildTestDataset(final int count) {
+    public GenericDataset<Integer, BackedDataProvider<Integer>> buildTestDataset(final int count) {
     	
-        return new BackedDataset<Integer>() {
+        BackedDataProvider<Integer> ds = new BackedDataProvider<Integer>() {
 
         	private static final long serialVersionUID = 1L;
         	
@@ -30,16 +36,17 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
                 return res;
             }
         };
+        return new GenericDataset<Integer, BackedDataProvider<Integer>>(ds);
     }
 
     public void testGetResultCount() {
-    	ObjectDataset<Integer> ds = buildTestDataset();
+    	IObjectDataset<Integer> ds = buildTestDataset();
         int res = ds.getResultCount();
         assertEquals(100, res);
     }
 
     public void testGetResultsUnbound() {
-    	ObjectDataset<Integer> ds = buildTestDataset();
+    	IObjectDataset<Integer> ds = buildTestDataset();
         List<Integer> res = ds.getResultList();
         
         assertNotNull(res);
@@ -50,7 +57,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
 
     public void testGetResultsBound() {
-    	ObjectDataset<Integer> ds = buildTestDataset();
+    	IObjectDataset<Integer> ds = buildTestDataset();
         ds.setMaxRows(12);
         List<Integer> res = ds.getResultList();
 
@@ -62,7 +69,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
 
     public void testLast() {
-    	ObjectDataset<Integer> ds = buildTestDataset();
+    	IObjectDataset<Integer> ds = buildTestDataset();
         ds.setMaxRows(10);
         ds.last();        
         assertEquals(10, ds.getPageCount());
@@ -72,7 +79,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
     
     public void testLastWithFractionalCount() {
-    	ObjectDataset<Integer> ds = buildTestDataset(95);
+    	IObjectDataset<Integer> ds = buildTestDataset(95);
         ds.setMaxRows(10);
         ds.last();
         Integer firstResult = ds.getFirstResult();        
@@ -81,7 +88,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
     
     public void testLastWithNoPaging() {
-    	ObjectDataset<Integer> ds = buildTestDataset(5);
+    	IObjectDataset<Integer> ds = buildTestDataset(5);
         ds.setMaxRows(10);
         ds.last();
         int firstResult = ds.getFirstResult();
@@ -90,29 +97,29 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
     
     public void testPaginationPreviousAllResults() {
-    	ObjectDataset<Integer> ds = buildTestDataset(100);
+    	IObjectDataset<Integer> ds = buildTestDataset(100);
         assertEquals(false, ds.isPreviousAvailable());
     }
     
     public void testPaginationNextAllResults() {
-    	ObjectDataset<Integer> ds = buildTestDataset(100);
+    	IObjectDataset<Integer> ds = buildTestDataset(100);
         assertEquals(false, ds.isNextAvailable());
     }
     
     public void testPaginationPreviousPaged() {
-    	ObjectDataset<Integer> ds = buildTestDataset(100);
+    	IObjectDataset<Integer> ds = buildTestDataset(100);
         ds.setMaxRows(10);
         assertEquals(false, ds.isPreviousAvailable());
     }
     
     public void testPaginationNextPaged() {
-    	ObjectDataset<Integer> ds = buildTestDataset(100);
+    	IObjectDataset<Integer> ds = buildTestDataset(100);
         ds.setMaxRows(10);
         assertEquals(true, ds.isNextAvailable());
     }
     
     public void testPaginationNextNoRead() {
-    	ObjectDataset<Integer> ds = buildTestDataset(100);
+    	IObjectDataset<Integer> ds = buildTestDataset(100);
         ds.setMaxRows(10);
         ds.next();
         assertEquals(true, ds.isNextAvailable());
@@ -121,7 +128,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
     
     public void testPaginationPreviousNoRead() {
-        ObjectDataset<Integer> ds = buildTestDataset(100);
+        IObjectDataset<Integer> ds = buildTestDataset(100);
         ds.setMaxRows(10);
         ds.previous();
         assertEquals(0,ds.getFirstResult());
@@ -131,7 +138,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
     
     public void testPaginationLastNoRead() {
-    	ObjectDataset<Integer> ds = buildTestDataset(100);
+    	IObjectDataset<Integer> ds = buildTestDataset(100);
         ds.setMaxRows(10);
         ds.last();
         assertEquals(false, ds.isNextAvailable());
@@ -139,7 +146,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
     
     public void testSmalldataset() {
-    	ObjectDataset<Integer> ds = buildTestDataset(6);
+    	IObjectDataset<Integer> ds = buildTestDataset(6);
         ds.setMaxRows(10);        
         assertEquals(false, ds.isNextAvailable());
         assertEquals(false, ds.isPreviousAvailable());
@@ -151,7 +158,7 @@ public class BackedDatasetTest extends AbstractObjectDatasetJUnitTest<Integer> i
     }
 
 	@Override
-	public ObjectDataset<Integer> buildObjectDataset() {
+	public IObjectDataset<Integer> buildObjectDataset() {
 		return buildTestDataset(100);
 	}
 

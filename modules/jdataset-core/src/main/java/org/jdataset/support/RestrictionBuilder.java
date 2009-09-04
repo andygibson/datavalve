@@ -1,4 +1,4 @@
-package org.jdataset.db;
+package org.jdataset.support;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jdataset.Parameter;
 import org.jdataset.ParameterParser;
-import org.jdataset.QueryDataset;
-import org.jdataset.RegexParameterParser;
+import org.jdataset.params.Parameter;
+import org.jdataset.params.RegexParameterParser;
+import org.jdataset.provider.IQueryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +79,7 @@ public class RestrictionBuilder implements Serializable {
 
 	private List<String> restrictions = new ArrayList<String>();
 	private List<Parameter> parameterList = new ArrayList<Parameter>();
-	private QueryDataset<? extends Object> dataset;
+	private IQueryDataProvider<? extends Object> dataset;
 	private int paramId;
 	private ParameterStyle parameterStyle = ParameterStyle.NAMED_PARAMETERS;
 	private boolean includeMissingParameters = false;
@@ -92,11 +92,11 @@ public class RestrictionBuilder implements Serializable {
 	 *            Dataset that contains the restrictions and parameter
 	 *            resolution for our query
 	 */
-	public RestrictionBuilder(QueryDataset<? extends Object> dataset) {
+	public RestrictionBuilder(IQueryDataProvider<? extends Object> dataset) {
 		this(dataset, ParameterStyle.NAMED_PARAMETERS);
 	}
 
-	public RestrictionBuilder(QueryDataset<? extends Object> dataset,
+	public RestrictionBuilder(IQueryDataProvider<? extends Object> dataset,
 			ParameterStyle parameterStyle) {
 		super();
 		this.dataset = dataset;

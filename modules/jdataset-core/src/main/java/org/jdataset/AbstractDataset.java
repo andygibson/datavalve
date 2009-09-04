@@ -9,7 +9,7 @@ import org.jdataset.util.DatasetIterator;
 
 /**
  * This is an abstract dataset that provides common implementation for most of
- * the {@link ObjectDataset} methods. It uses a strategy pattern for
+ * the {@link IObjectDataset} methods. It uses a strategy pattern for
  * implementing the fetching of information as using mechanisms defined by
  * subclass implementations.
  * <p>
@@ -31,13 +31,13 @@ import org.jdataset.util.DatasetIterator;
  * @param <T>
  *            Type of object this dataset contains.
  */
-public abstract class AbstractDataset<T> implements ObjectDataset<T>,
+public abstract class AbstractDataset<T> implements IObjectDataset<T>,
 		Serializable, Iterable<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	private int firstResult;
-	private int maxRows;
+	private int firstResult = 0;
+	private int maxRows = 0;
 	private Integer resultCount;
 	private List<T> results;
 	private String orderKey;
@@ -66,7 +66,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	protected abstract Integer fetchResultCount();
 
-	protected abstract List<T> fetchResults(Paginator paginator);
+	protected abstract List<T> fetchResults(IPaginator paginator);
 
 	public List<T> getResultList() {
 		if (results == null) {
@@ -75,7 +75,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		return results;
 	}
 
-	public List<T> getResultList(Paginator paginator) {
+	public List<T> getResultList(IPaginator paginator) {
 		return fetchResults(paginator);
 	}
 
@@ -235,7 +235,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		invalidateResults();
 	}
 	
-	public void copyPaginationInfo(Paginator target) {
+	public void copyPaginationInfo(IPaginator target) {
 		if (target != null) {
 			target.setFirstResult(firstResult);
 			target.setMaxRows(maxRows);
@@ -244,7 +244,8 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		}
 	}
 	
-	public boolean isNextAvailable() {	
+	public boolean isNextAvailable() {
+		getResultList();
 		return nextAvailable;
 	}
 	

@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.jdataset.BackedDataset;
+import org.jdataset.BackedDataProvider;
 
 //TODO Need to create more tests for this class (i.e. setting the path and so on)
 /**
@@ -16,13 +16,13 @@ import org.jdataset.BackedDataset;
  * @author Andy Gibson
  * 
  */
-public class FileDataset extends BackedDataset<File> {
+public class FileDataProvider extends BackedDataProvider<File> {
 
 	private static final long serialVersionUID = 1L;
 
 	private File sourceDirectory;
 	private boolean includeDirectories = false;
-
+	
 	private final transient FileFilter fileFilter = new FileFilter() {
 
 		public boolean accept(File file) {
@@ -30,11 +30,11 @@ public class FileDataset extends BackedDataset<File> {
 		}
 	};
 
-	public FileDataset(String path) {
+	public FileDataProvider(String path) {
 		this(createDirectoryFileFromPath(path));
 	}
 
-	public FileDataset(File targetPath) {
+	public FileDataProvider(File targetPath) {
 
 		if (targetPath == null) {
 			return;
@@ -53,7 +53,6 @@ public class FileDataset extends BackedDataset<File> {
 		}
 
 		sourceDirectory = new File(temp.getAbsolutePath());
-		invalidateResultInfo();
 	}
 
 	public String getPath() {
@@ -61,7 +60,6 @@ public class FileDataset extends BackedDataset<File> {
 	}
 
 	public void setPath(String path) {
-		invalidateResultInfo();
 		sourceDirectory = null;
 		createDirectoryFileFromPath(path);
 	}
@@ -83,7 +81,6 @@ public class FileDataset extends BackedDataset<File> {
 
 	public void setIncludeDirectories(boolean includeDirectories) {
 		this.includeDirectories = includeDirectories;
-		invalidateResultInfo();
 	}
 
 	public boolean getIncludeDirectories() {

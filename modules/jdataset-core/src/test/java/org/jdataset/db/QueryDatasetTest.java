@@ -4,17 +4,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdataset.AbstractQueryDataset;
-import org.jdataset.ObjectDataset;
-import org.jdataset.Paginator;
-import org.jdataset.QueryDataset;
+import org.jdataset.IObjectDataset;
+import org.jdataset.IPaginator;
+import org.jdataset.combo.IQueryDataset;
+import org.jdataset.combo.QueryDataset;
+import org.jdataset.provider.IQueryDataProvider;
+import org.jdataset.provider.impl.AbstractQueryDataProvider;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 
 public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		implements Serializable {
 
-	protected QueryDataset<Integer> buildQuery(final int objectCount) {
-		QueryDataset<Integer> result = new AbstractQueryDataset<Integer>() {
+	private static final long serialVersionUID = 1L;
+	
+	protected IQueryDataset<Integer> buildQuery(final int objectCount) {
+		IQueryDataProvider<Integer> provider = new AbstractQueryDataProvider<Integer>() {
 
 			private static final long serialVersionUID = 1L;
 
@@ -24,13 +28,13 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 			}
 
 			
-			public List<Integer> fetchResultsFromDatabase(Paginator paginator,Integer count) {
+			public List<Integer> fetchResultsFromDatabase(IPaginator paginator,Integer count) {
 				List<Integer> result = new ArrayList<Integer>();
 				int index = paginator.getFirstResult();
 				if (count == 0) {
 					count = Integer.MAX_VALUE;
 				}
-				while (index < getResultCount()
+				while (index < fetchResultCount()
 						&& index < paginator.getFirstResult() + count) {
 
 					result.add(new Integer(index));
@@ -38,25 +42,26 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 				}
 				return result;
 			}
-
-			@Override
-			protected Integer fetchResultCount() {
+			
+			public Integer fetchResultCount() {
 				return objectCount;
 			}
 
 		};
 
-		result.getRestrictions().add("id = #{id}");
-		result.getRestrictions().add("firstName = #{person.firstName}");
-		result.getOrderKeyMap().put("id", "o.id");
-		result.getOrderKeyMap().put("first", "o.firstName");
+		IQueryDataset<Integer> res = new QueryDataset<Integer>(provider);
+		
+		res.getRestrictions().add("id = #{id}");
+		res.getRestrictions().add("firstName = #{person.firstName}");
+		res.getOrderKeyMap().put("id", "o.id");
+		res.getOrderKeyMap().put("first", "o.firstName");
 
-		result.addParameterResolver(new TestingParameterResolver());
-		return result;
+		res.addParameterResolver(new TestingParameterResolver());
+		return res;
 	}
 
 	public void testPaginationWithReads() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		List<Integer> res = qry.getResultList();
 		assertEquals(100, res.size());
 		qry.setMaxRows(10);
@@ -110,7 +115,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 	}
 
 	public void testPaginationWithoutReads() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
 
 		assertEquals(true, qry.isNextAvailable());
@@ -139,7 +144,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 	}
 
 	public void testPaginationWithoutPaging() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 
 		assertEquals(1, qry.getPage());
 		assertEquals(false, qry.isNextAvailable());
@@ -173,7 +178,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 	}
 
 	public void testChangingPagesize() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		assertEquals(1, qry.getPage());
 		assertEquals(false, qry.isPreviousAvailable());
 		assertEquals(false, qry.isNextAvailable());
@@ -207,48 +212,48 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 	}
 
 	public void testPaginationInitNoReadIsPrev() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		assertEquals(false, qry.isPreviousAvailable());
 	}
 
 	public void testPaginationInitNoReadIsNext() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		assertEquals(false, qry.isNextAvailable());
 	}
 
 	public void testPaginationNoRead_Last_IsPrev() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		qry.last();
 		assertEquals(false, qry.isPreviousAvailable());
 	}
 
 	public void testPaginationNoRead_Last_IsNext() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		qry.last();
 		assertEquals(false, qry.isNextAvailable());
 	}
 
 	public void testPaginationPaged_NoReadIsPrev() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
 		assertEquals(false, qry.isPreviousAvailable());
 	}
 
 	public void testPaginationPaged_NoReadIsNext() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
 		assertEquals(true, qry.isNextAvailable());
 	}
 
 	public void testPaginationPaged_NoRead_Last_IsPrev() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
 		qry.last();
 		assertEquals(true, qry.isPreviousAvailable());
 	}
 
 	public void testPaginationPaged_NoRead_Last_IsNext() {
-		QueryDataset<Integer> qry = buildQuery(100);
+		IQueryDataset<Integer> qry = buildQuery(100);
 		qry.setMaxRows(10);
 		qry.last();
 		assertEquals(10, qry.getPage());
@@ -256,7 +261,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 	}
 
 	@Override
-	public ObjectDataset<Integer> buildObjectDataset() {
+	public IObjectDataset<Integer> buildObjectDataset() {
 		return buildQuery(100);
 	}
 

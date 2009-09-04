@@ -2,13 +2,15 @@ package org.jdataset.db;
 
 import java.io.Serializable;
 
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.ParameterizedDataset;
+import org.jdataset.params.Parameter;
+import org.jdataset.params.ParameterResolver;
+import org.jdataset.provider.IParameterizedDataProvider;
 
 public class TestingParameterResolver implements ParameterResolver,Serializable {
 
-	public boolean resolveParameter(ParameterizedDataset<? extends Object> dataset,Parameter parameter) {
+	private static final long serialVersionUID = 1L;
+	
+	public boolean resolveParameter(IParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 
 		if (parameter.getName().equals("id")) {
 			parameter.setValue("value_id");

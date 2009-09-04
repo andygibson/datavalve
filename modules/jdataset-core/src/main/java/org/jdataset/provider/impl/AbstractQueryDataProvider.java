@@ -1,4 +1,4 @@
-package org.jdataset;
+package org.jdataset.provider.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,16 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.Parameter;
-import org.jdataset.QueryDataset;
-import org.jdataset.db.RestrictionBuilder;
+import org.jdataset.IObjectDataset;
+import org.jdataset.IPaginator;
+import org.jdataset.params.Parameter;
+import org.jdataset.provider.IQueryDataProvider;
+import org.jdataset.support.RestrictionBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class for Query driven datasets that implements most of the methods
- * in the {@link QueryDataset} interface. It adds features for defining
+ * in the {@link IQueryDataProvider} interface. It adds features for defining
  * select/count statements, and translating orderKey values into other
  * representations. It also defines common methods for defining an order clause
  * and building statements based on the Sql/Ejbql structure.
@@ -31,21 +32,20 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  *            Type of object this dataset contains.
  */
-public abstract class AbstractQueryDataset<T> extends
-		AbstractParameterizedDataset<T> implements QueryDataset<T>,
+public abstract class AbstractQueryDataProvider<T> extends
+		AbstractParameterizedDataProvider<T> implements IQueryDataProvider<T>,
 		Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory
-			.getLogger(AbstractQueryDataset.class);
+			.getLogger(AbstractQueryDataProvider.class);
 
 	private static Pattern commaSplitter = Pattern.compile(",");
 	private String selectStatement;
 	private String countStatement;
 	private Map<String, String> orderKeyMap = new HashMap<String, String>();
-	private List<String> restrictions = new ArrayList<String>();
-	private boolean nextAvailable;
+	private List<String> restrictions = new ArrayList<String>();	
 
 	public String getSelectStatement() {
 		return selectStatement;
@@ -81,9 +81,9 @@ public abstract class AbstractQueryDataset<T> extends
 
 	/**
 	 * Determines the order by clause based on the values of
-	 * {@link ObjectDataset#getOrderKey()},
-	 * {@link QueryDataset#getOrderKeyMap()} and
-	 * {@link QueryDataset#isOrderAscending()}. If no order is specified then
+	 * {@link IObjectDataset#getOrderKey()},
+	 * {@link IQueryDataProvider#getOrderKeyMap()} and
+	 * {@link IQueryDataProvider#isOrderAscending()}. If no order is specified then
 	 * <code>null</code> is returned.
 	 * 
 	 * @see #calculateOrderByClause()
@@ -91,7 +91,7 @@ public abstract class AbstractQueryDataset<T> extends
 	 * @return The order by fields with asc/desc indicators or null of there is
 	 *         no order by specified.
 	 */
-	public final String calculateOrderBy(Paginator paginator) {
+	public final String calculateOrderBy(IPaginator paginator) {
 		String orderKey = paginator.getOrderKey();
 
 		// fail quickly if we don't have an order
@@ -141,7 +141,7 @@ public abstract class AbstractQueryDataset<T> extends
 	 * @return Empty string if there is no order by, otherwise, the clause
 	 *         prefixed with " ORDER BY "
 	 */
-	public final String calculateOrderByClause(Paginator paginator) {
+	public final String calculateOrderByClause(IPaginator paginator) {
 		String order = calculateOrderBy(paginator);
 		if (order == null) {
 			return "";
@@ -167,7 +167,7 @@ public abstract class AbstractQueryDataset<T> extends
 	 * @return
 	 */
 	protected final String buildStatement(String baseStatement,
-			Map<String, Object> queryParams, boolean includeOrderBy,Paginator paginator) {
+			Map<String, Object> queryParams, boolean includeOrderBy,IPaginator paginator) {
 		queryParams.clear();
 		RestrictionBuilder rb = new RestrictionBuilder(this);
 
@@ -183,36 +183,23 @@ public abstract class AbstractQueryDataset<T> extends
 		return result;
 	}
 
-	@Override
-	protected final List<T> fetchResults(Paginator paginator) {
-
+	
+	public final List<T> fetchResults(IPaginator paginator) {
+  
 		// fetch maxrows+1 so we can see if we have more results to fetch
-		Integer count = includeAllResults() ? 0 : paginator.getMaxRows() + 1;
+		Integer count = paginator.includeAllResults() ? 0 : paginator.getMaxRows() + 1;
 		List<T> temp = fetchResultsFromDatabase(paginator,count);
 
 		// if we returned more than maxRows, then we have more data to fetch
-		nextAvailable = temp.size() > paginator.getMaxRows() && !includeAllResults();
-		if (includeAllResults() || temp.size() < paginator.getMaxRows()) {
+		boolean nextAvailable = temp.size() > paginator.getMaxRows() && !paginator.includeAllResults();
+		paginator.setNextAvailable(nextAvailable);
+		if (paginator.includeAllResults() || temp.size() < paginator.getMaxRows()) {
 			return temp;
 		}
+		
 
 		// create a sublist containing maxRows number of rows.
 		return temp.subList(0, paginator.getMaxRows());
-	}
-
-	public final boolean isNextAvailable() {
-		// check we have results loaded since this sets the nextAvailable flag
-		checkResultsLoaded();
-		return nextAvailable;
-	}
-
-	/**
-	 * Method to check that the results are loaded, usually just fetches the
-	 * results, but may in future require more processing.
-	 */
-	protected void checkResultsLoaded() {
-		// just call getResultList to load them if they aren't already loaded.
-		getResultList();
 	}
 
 	/**
@@ -221,7 +208,7 @@ public abstract class AbstractQueryDataset<T> extends
 	 * @return The results from the database based on the select statement and
 	 *         restrictions
 	 */
-	protected abstract List<T> fetchResultsFromDatabase(Paginator paginator,Integer count);
+	protected abstract List<T> fetchResultsFromDatabase(IPaginator paginator,Integer count);
 
 	public void addRestriction(String restriction) {
 		getRestrictions().add(restriction);

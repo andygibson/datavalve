@@ -3,9 +3,10 @@ package org.jdataset.text;
 
 public class PhoneTextFile extends CommaDelimitedDataset<PhoneEntry> {
 
+	private static final long serialVersionUID = 1L;
+
 	public PhoneTextFile(String fileName) {
 		super(fileName);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

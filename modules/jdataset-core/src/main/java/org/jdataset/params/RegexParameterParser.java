@@ -1,10 +1,12 @@
-package org.jdataset;
+package org.jdataset.params;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.jdataset.ParameterParser;
 
 /**
  * Splits the query line based on a regular expression. Override
@@ -16,6 +18,8 @@ import java.util.regex.Pattern;
  */
 public class RegexParameterParser implements ParameterParser, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Pattern pattern;
 
 	protected Pattern getPattern() {

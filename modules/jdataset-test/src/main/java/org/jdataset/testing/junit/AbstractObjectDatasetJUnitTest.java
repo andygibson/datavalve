@@ -9,7 +9,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.jdataset.IObjectDataset;
+import org.jdataset.ObjectDataset;
 
 /**
  * This class appears in two different places. First, it appears in the test
@@ -29,7 +29,7 @@ import org.jdataset.IObjectDataset;
  * </p>
  * <p>
  * This class is an abstract class that implements a set of tests against an
- * {@link IObjectDataset} interface. You just need to subclass this and provide
+ * {@link ObjectDataset} interface. You just need to subclass this and provide
  * an implemenation and a count of the number of records and this will test the
  * pagination handling and other features of the dataset.
  * </p>
@@ -43,7 +43,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 
 	private static final long serialVersionUID = 1L;
 	
-	public abstract IObjectDataset<T> buildObjectDataset();
+	public abstract ObjectDataset<T> buildObjectDataset();
 
 	public abstract int getDataRowCount();
 
@@ -58,7 +58,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	}
 
 	public void testBuilder() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		assertNotNull(ds);
 	}
 
@@ -66,7 +66,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test isPreviousAvailable as soon as we create a dataset with no paging
 	 */
 	public void testPreviousNoRead() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		assertEquals(false, ds.isPreviousAvailable());
 	}
 
@@ -74,7 +74,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test isNextAvailable as soon as we create a dataset with no paging
 	 */
 	public void testNextNoRead() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		//this should be false since paging is not enabled by default, hence it is all one big page
 		assertEquals(false, ds.isNextAvailable());
 	}
@@ -83,7 +83,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test isPreviousAvailable after performing a result set read with pagining
 	 */
 	public void testPreviousPagedNoRead() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		assertEquals(false, ds.isPreviousAvailable());
 	}
@@ -92,7 +92,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test isNextAvailable after performing a result set read with pagining
 	 */
 	public void testNextPagedNoRead() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		assertEquals(true, ds.isNextAvailable());
 	}
@@ -102,7 +102,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * developer
 	 */
 	public void testResultCount() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		assertEquals(getDataRowCount(), ds.getResultCount().intValue());
 	}
 
@@ -111,14 +111,14 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * by the developer
 	 */
 	public void testActualResultCount() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		List<T> results = ds.getResultList();
 		assertEquals(results.size(), ds.getResultCount().intValue());
 		assertEquals(results.size(), getDataRowCount());
 	}
 
 	public void testNextDifferentResults() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		List<T> oldResults = ds.getResultList();
 		assertEquals(oldResults.size(), ds.getMaxRows());
@@ -136,7 +136,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 */
 	public void testResultCountByFetching() {
 		int count = 0;
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		List<T> results = ds.getResultList();
 		count += results.size();
@@ -153,7 +153,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Check the multi page flag is set when we have multiple pages
 	 */
 	public void testIsMultiPageFlagPositive() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10); // we should have 30+ rows
 		assertEquals(true, ds.isMultiPage());
 	}
@@ -162,7 +162,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Check the multi page flag is not set when we don't have multiple pages.
 	 */
 	public void testIsMultiPageFlagNegative() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(ds.getResultCount());
 		assertEquals(false, ds.isMultiPage());
 	}
@@ -172,7 +172,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * when maxResult = 0 and we have no paging (check 1 is returned)
 	 */
 	public void testPageCountSize() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 
 		int rowCount = getDataRowCount();
 		for (int i = 1; i < 30; i++) {
@@ -188,7 +188,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Check that the page numbers increase when doing next
 	 */
 	public void testGetPageNext() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		assertEquals(1, ds.getPage());
 		ds.next();
@@ -201,7 +201,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Check that the page numbers decrease when doing previous
 	 */
 	public void testGetPagePrevious() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		ds.setFirstResult(20);
 		assertEquals(3, ds.getPage());
@@ -215,7 +215,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Check that the page numbers increase when doing next/previous
 	 */
 	public void testGetPageNoPagination() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		assertEquals(1, ds.getPage());
 		ds.next();
@@ -235,7 +235,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * list should be returned.
 	 */
 	public void testReadingBeyondResults() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setFirstResult(getDataRowCount() + 10);
 		ds.setMaxRows(10);
 		List<T> results = ds.getResultList();
@@ -248,7 +248,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Tests the next flag without reading the results.
 	 */
 	public void testNextFlagsNoRead() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 
 		// assume we have tested page count
@@ -265,7 +265,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Tests the previous flag without reading the results.
 	 */
 	public void testPreviousFlagsNoRead() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 
 		// assume we have tested page count
@@ -282,7 +282,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test the for each iterator without paging
 	 */
 	public void testForEachIteratorNonPaged() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		int count = 0;
 		Object old = null;
 		for (T object : ds) {
@@ -298,7 +298,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test the for each iterator with paging
 	 */
 	public void testForEachIteratorPaged() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		int count = 0;
 		Object old = null;
@@ -315,7 +315,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test the for each iterator without paging and an offset at the start
 	 */
 	public void testForEachIteratorNonPagedStartingOffset() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setFirstResult(22);
 		ds.getResultList();
 		int count = 0;
@@ -333,7 +333,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test the for each iterator with paging and with an offset at the start
 	 */
 	public void testForEachIteratorPagedStartingOffset() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		ds.setFirstResult(22);
 		ds.getResultList();
@@ -353,7 +353,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test the iterator manually
 	 */
 	public void testManualIteratorPaged() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		int count = 0;
 		for (Iterator<T> iter = ds.iterator(); iter.hasNext();) {
 			T object = iter.next();
@@ -367,7 +367,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test that iterator.remove throws an exception
 	 */
 	public void testRemoveException() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		try {
 			for (Iterator<T> iter = ds.iterator(); iter.hasNext();) {
 				iter.remove();
@@ -384,7 +384,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * changeOrderKey methods, the ascending flag is being toggled correctly
 	 */
 	public void testOrderKeyToggle() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 
 		assertNull(ds.getOrderKey());
 
@@ -410,7 +410,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test the isAscending flag defaults to true when a dataset is created
 	 */
 	public void testAscendingDefault() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		assertTrue(ds.isOrderAscending());
 	}
 
@@ -418,7 +418,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 * Test the isAscending flag is unaltered by setting the orderkey
 	 */
 	public void testAscendingTrueAfterSetOrderKey() {
-		IObjectDataset<T> ds = buildObjectDataset();
+		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setOrderKey("ABC");
 		assertTrue(ds.isOrderAscending());
 
@@ -439,7 +439,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 		assertTrue(ds.isOrderAscending());
 	}
 
-	protected void performSerializationTest(IObjectDataset<T> dataset) {
+	protected void performSerializationTest(ObjectDataset<T> dataset) {
 		ByteArrayOutputStream bas = new ByteArrayOutputStream(4000);
 		ObjectOutputStream oos;
 
@@ -454,7 +454,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 
 	public void testSerialization() {
 		if (isSerializable()) {
-			IObjectDataset<T> ds = buildObjectDataset();
+			ObjectDataset<T> ds = buildObjectDataset();
 			performSerializationTest(ds);
 		}
 	}

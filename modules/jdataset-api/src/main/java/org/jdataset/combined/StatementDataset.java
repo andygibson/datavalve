@@ -1,7 +1,6 @@
 package org.jdataset.combined;
 
 import org.jdataset.ObjectDataset;
-import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.provider.StatementDataProvider;
 
 /**

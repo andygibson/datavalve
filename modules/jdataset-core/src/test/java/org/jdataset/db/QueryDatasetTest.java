@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultBoundedRangeModel;
-
 import org.jdataset.ObjectDataset;
 import org.jdataset.Paginator;
 import org.jdataset.combined.QueryDataset;
-import org.jdataset.impl.GenericProviderDataset;
 import org.jdataset.impl.combo.DefaultQueryDataset;
 import org.jdataset.impl.provider.AbstractQueryDataProvider;
 import org.jdataset.provider.QueryDataProvider;

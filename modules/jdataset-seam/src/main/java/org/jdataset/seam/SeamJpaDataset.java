@@ -3,8 +3,8 @@ package org.jdataset.seam;
 import javax.persistence.EntityManager;
 
 import org.jboss.seam.annotations.In;
-import org.jdataset.combo.QueryDataset;
-import org.jdataset.provider.impl.jpa.JpaDataProvider;
+import org.jdataset.impl.combo.DefaultQueryDataset;
+import org.jdataset.impl.provider.jpa.JpaDataProvider;
 
 /**
  * Dataset for use in the Seam environment annotated for Seam Managed
@@ -26,7 +26,7 @@ import org.jdataset.provider.impl.jpa.JpaDataProvider;
  * 
  * @see SeamJpaNativeDataset
  */
-public class SeamJpaDataset<T> extends QueryDataset<T> {
+public class SeamJpaDataset<T> extends DefaultQueryDataset<T> {
 
 	private static final long serialVersionUID = 1L;
 	

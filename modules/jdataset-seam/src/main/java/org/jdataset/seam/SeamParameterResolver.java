@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.jboss.seam.core.Expressions;
 import org.jdataset.params.Parameter;
 import org.jdataset.params.ParameterResolver;
-import org.jdataset.provider.IParameterizedDataProvider;
+import org.jdataset.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class SeamParameterResolver implements ParameterResolver,Serializable {
 	private static Logger log = LoggerFactory
 			.getLogger(SeamParameterResolver.class);
 
-	public boolean resolveParameter(IParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
+	public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 		log.debug("Resolving Seam Parameter : {}", parameter);
 		// TODO - we don't want to treat all parameters as EL expressions need
 		// to re-think the parameter splitting		

@@ -1,4 +1,4 @@
-package org.jdataset.provider.impl.jpa;
+package org.jdataset.impl.provider.jpa;
 
 import javax.persistence.Query;
 

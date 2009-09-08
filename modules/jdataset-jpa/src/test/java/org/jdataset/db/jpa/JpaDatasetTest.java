@@ -8,13 +8,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.jdataset.IObjectDataset;
-import org.jdataset.combo.IQueryDataset;
-import org.jdataset.combo.QueryDataset;
+import org.jdataset.ObjectDataset;
+import org.jdataset.combined.QueryDataset;
+import org.jdataset.impl.ProviderQueryDataset;
+import org.jdataset.impl.combo.DefaultQueryDataset;
+import org.jdataset.impl.provider.jpa.JpaDataProvider;
+import org.jdataset.impl.provider.jpa.JpaDataset;
 import org.jdataset.params.Parameter;
 import org.jdataset.params.ParameterResolver;
-import org.jdataset.provider.IParameterizedDataProvider;
-import org.jdataset.provider.impl.jpa.JpaDataProvider;
+import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 import org.slf4j.Logger;
@@ -104,7 +106,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testResultCount() {
-		IQueryDataset<Person> qry = buildQueryDataset();
+		QueryDataset<Person> qry = buildQueryDataset();
 		long result = qry.getResultCount();
 		assertEquals(30, result);
 
@@ -116,7 +118,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testSimpleParameter() {
-		IQueryDataset<Person> qry = buildQueryDataset();
+		QueryDataset<Person> qry = buildQueryDataset();
 		
 		qry.getRestrictions().add("p.id = :personId");
 		qry.getParameters().put("personId", 4l);
@@ -134,7 +136,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testMissingParameter() {
-		IQueryDataset<Person> qry = buildQueryDataset();
+		QueryDataset<Person> qry = buildQueryDataset();
 		qry.getRestrictions().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
 
@@ -145,7 +147,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testNullParameter() {
-		IQueryDataset<Person> qry = buildQueryDataset();
+		QueryDataset<Person> qry = buildQueryDataset();
 		qry.getRestrictions().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
 		qry.getParameters().put("personId", null);
@@ -156,7 +158,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testPagination() {
-		IQueryDataset<Person> qry = buildQueryDataset();
+		QueryDataset<Person> qry = buildQueryDataset();
 		
 		assertEquals(1, qry.getPage());
 		assertEquals(false, qry.isNextAvailable());
@@ -193,7 +195,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	public void testParameterResolverRepeatsEval() {
 		System.out.println("Resolving ");
 		log.debug("Entering : resolver repeats eval test");
-		IQueryDataset<Person> qry = buildQueryDataset();
+		QueryDataset<Person> qry = buildQueryDataset();
 		qry.getRestrictions().add("p.id = #{id}");
 		qry.getRestrictions().add("p.id = #{id}");
 
@@ -201,7 +203,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 			long id = 20;
 
-			public boolean resolveParameter(IParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
+			public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 				System.out.println("Resolving "+parameter);
 				if (parameter.getName().equals("#{id}")) {
 					parameter.setValue(id++);
@@ -226,7 +228,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testQueryWithOrdering() {
-		IObjectDataset<Person> qry = buildObjectDataset();
+		ObjectDataset<Person> qry = buildObjectDataset();
 		qry.setOrderKey("id");
 		// check record count
 		assertEquals(getDataRowCount(), qry.getResultCount().intValue());
@@ -236,32 +238,32 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testOrderByAscNonPaged() {
-		IObjectDataset<Person> qry = buildObjectDataset();
+		ObjectDataset<Person> qry = buildObjectDataset();
 		qry.setOrderKey("id");
 		performOrderChecks(qry,true);
 	}
 
 	public void testOrderByAscPaged() {
-		IObjectDataset<Person> qry = buildObjectDataset();
+		ObjectDataset<Person> qry = buildObjectDataset();
 		qry.setMaxRows(7);
 		qry.setOrderKey("id");
 		performOrderChecks(qry,true);
 	}
 
 	public void testOrderByDescNonPaged() {
-		IObjectDataset<Person> qry = buildObjectDataset();
+		ObjectDataset<Person> qry = buildObjectDataset();
 		qry.setOrderKey("id");
 		performOrderChecks(qry,false);
 	}
 
 	public void testOrderByDescPaged() {
-		IObjectDataset<Person> qry = buildObjectDataset();
+		ObjectDataset<Person> qry = buildObjectDataset();
 		qry.setMaxRows(7);
 		qry.setOrderKey("id");
 		performOrderChecks(qry,false);
 	}
 
-	protected void performOrderChecks(IObjectDataset<Person> qry, boolean isAsc) {
+	protected void performOrderChecks(ObjectDataset<Person> qry, boolean isAsc) {
 		Long lastValue = null;
 		do {
 			List<Person> results = qry.getResultList();
@@ -280,11 +282,11 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 	
 	@Override
-	public IObjectDataset<Person> buildObjectDataset() {
+	public ObjectDataset<Person> buildObjectDataset() {
 		return buildQueryDataset();
 	}
 	
-	public IQueryDataset<Person> buildQueryDataset() {
+	public QueryDataset<Person> buildQueryDataset() {
 		JpaDataProvider<Person> provider = new JpaDataProvider<Person>();
 		provider.setEntityManager(em);
 		provider.setSelectStatement("select p from Person p");
@@ -292,7 +294,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		provider.getOrderKeyMap().put("id", "p.id");
 		provider.getOrderKeyMap().put("name", "p.lastName,p.firstName");
 		provider.getOrderKeyMap().put("phone", "p.phone");
-		return new QueryDataset<Person>(provider);
+		return new DefaultQueryDataset<Person>(provider);
 	}
 
 	@Override

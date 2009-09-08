@@ -1,4 +1,4 @@
-package org.jdataset.provider.impl.jpa;
+package org.jdataset.impl.provider.jpa;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,14 +8,14 @@ import java.util.Map.Entry;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.jdataset.IPaginator;
-import org.jdataset.provider.IQueryDataProvider;
-import org.jdataset.provider.impl.AbstractQueryDataProvider;
+import org.jdataset.Paginator;
+import org.jdataset.impl.provider.AbstractQueryDataProvider;
+import org.jdataset.provider.QueryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class for a JPA based {@link IQueryDataProvider}. Override and implement
+ * Base class for a JPA based {@link QueryDataProvider}. Override and implement
  * {@link #createJpaQuery(String)} to create a query of the type needed.
  * 
  * @see JpaDataProvider
@@ -39,10 +39,10 @@ public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvid
 	 * and sets up the maxResults and firstResult properties on the query and
 	 * returns the results.
 	 * 
-	 * @see org.jdataset.provider.impl.AbstractQueryDataProvider#fetchResultsFromDatabase(java.lang.Integer)
+	 * @see org.jdataset.impl.provider.AbstractQueryDataProvider#fetchResultsFromDatabase(java.lang.Integer)
 	 */
 	@Override
-	protected final List<T> fetchResultsFromDatabase(IPaginator paginator,Integer count) {
+	protected final List<T> fetchResultsFromDatabase(Paginator paginator,Integer count) {
 		Query qry = buildQuery(getSelectStatement(), true,paginator);
 		if (count != 0) {
 			qry.setMaxResults(count);
@@ -76,7 +76,7 @@ public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvid
 	 * @return
 	 */
 	protected final Query buildQuery(String selectStatement,
-			boolean includeOrderBy,IPaginator paginator) {
+			boolean includeOrderBy,Paginator paginator) {
 
 		Map<String, Object> queryParams = new HashMap<String, Object>();
 

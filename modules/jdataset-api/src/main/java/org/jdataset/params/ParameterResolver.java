@@ -1,11 +1,11 @@
 package org.jdataset.params;
 
-import org.jdataset.provider.IParameterizedDataProvider;
-import org.jdataset.provider.IQueryDataProvider;
+import org.jdataset.provider.ParameterizedDataProvider;
+import org.jdataset.provider.QueryDataProvider;
 
 /**
  * Class that can be used to define components that are used to provide
- * parameter values in response to parameters in {@link IQueryDataProvider}
+ * parameter values in response to parameters in {@link QueryDataProvider}
  * restrictions. These parameter resolvers are added to datasets to resolve
  * parameters prior to query execution. Parameter resolvers can also be added to
  * the global parameter resolver list which means it is automatically applied to
@@ -28,7 +28,7 @@ public interface ParameterResolver {
 	 *            Parameter to resolve
 	 * @return true if this resolver was able to resolve the parameter
 	 */
-	boolean resolveParameter(IParameterizedDataProvider<? extends Object> dataset,
+	boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
 			Parameter parameter);
 
 	/**

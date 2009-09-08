@@ -5,7 +5,7 @@ import java.util.Map;
 
 
 /**
- * The <code>QueryDataset</code> interface extends the {@link IStatementDataProvider}
+ * The <code>QueryDataset</code> interface extends the {@link StatementDataProvider}
  * interface and adds methods for handling restrictions and mapping order key
  * values to field values.
  * <p>
@@ -19,7 +19,7 @@ import java.util.Map;
  * @param <T>
  *            Object type this dataset contains
  */
-public interface IQueryDataProvider<T> extends IStatementDataProvider<T> {
+public interface QueryDataProvider<T> extends StatementDataProvider<T> {
 
 	public Map<String, String> getOrderKeyMap();
 

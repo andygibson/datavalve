@@ -6,8 +6,8 @@ import java.util.List;
  * This is the base interface for the stateful object datasets. It provides
  * methods for accessing the data, record counts, pagination and navigation of
  * the dataset. It inherits from {@link Iterable} so we can iterate over
- * instances of the interface. It also inherits from {@link IPaginator} do we
- * can use this interface in place of the {@link IPaginator}.
+ * instances of the interface. It also inherits from {@link Paginator} do we
+ * can use this interface in place of the {@link Paginator}.
  * <p>
  * When writing code to interface with a basic dataset, you should code to this
  * interface as much as possible. This interface specifies how you access the
@@ -19,7 +19,7 @@ import java.util.List;
  * @param <T>
  *            Type of value this dataset returns
  */
-public interface IObjectDataset<T> extends Iterable<T>, IPaginator {
+public interface ObjectDataset<T> extends Iterable<T>, Paginator {
 
 	/**
 	 * Returns the list of objects for this dataset

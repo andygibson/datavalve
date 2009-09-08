@@ -2,11 +2,11 @@ package org.jdataset.provider;
 
 import java.util.Map;
 
-import org.jdataset.IObjectDataset;
+import org.jdataset.ObjectDataset;
 import org.jdataset.params.ParameterResolver;
 
 /**
- * Extends the {@link IObjectDataset} interface to include parameterization of
+ * Extends the {@link ObjectDataset} interface to include parameterization of
  * the dataset. This introduces methods that allows you to define parameters and
  * also attach {@link ParameterResolver} instances to extend the parameter
  * resolution beyond key-value pairs.
@@ -15,7 +15,7 @@ import org.jdataset.params.ParameterResolver;
  * 
  * @param <T>
  */
-public interface IParameterizedDataProvider<T> extends IDataProvider<T> {
+public interface ParameterizedDataProvider<T> extends DataProvider<T> {
 
 	/**
 	 * Returns the map holding local parameters that are by default used in

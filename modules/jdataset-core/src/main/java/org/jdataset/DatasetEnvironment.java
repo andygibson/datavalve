@@ -6,7 +6,7 @@ import java.util.List;
 import org.jdataset.params.AbstractParameterResolver;
 import org.jdataset.params.Parameter;
 import org.jdataset.params.ParameterResolver;
-import org.jdataset.provider.IParameterizedDataProvider;
+import org.jdataset.provider.ParameterizedDataProvider;
 
 /**
  * A singleton instance that provides a place to hold global configuration
@@ -40,7 +40,7 @@ public class DatasetEnvironment implements ParameterResolver {
 			private static final long serialVersionUID = 1L;
 			
 			public boolean resolveParameter(
-					IParameterizedDataProvider<? extends Object> dataset,
+					ParameterizedDataProvider<? extends Object> dataset,
 					Parameter parameter) {
 				if (dataset == null) {
 					throw new IllegalArgumentException(
@@ -66,7 +66,7 @@ public class DatasetEnvironment implements ParameterResolver {
 	}
 
 	public boolean resolveParameter(
-			IParameterizedDataProvider<? extends Object> dataset, Parameter parameter) {
+			ParameterizedDataProvider<? extends Object> dataset, Parameter parameter) {
 		for (ParameterResolver resolver : parameterResolvers) {
 			if (resolver.acceptParameter(parameter.getName())) {
 				if (resolver.resolveParameter(dataset, parameter)) {

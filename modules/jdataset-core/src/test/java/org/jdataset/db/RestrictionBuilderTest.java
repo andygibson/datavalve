@@ -1,6 +1,6 @@
 package org.jdataset.db;
 
-import org.jdataset.support.RestrictionBuilder;
+import org.jdataset.impl.RestrictionBuilder;
 
 import junit.framework.TestCase;
 

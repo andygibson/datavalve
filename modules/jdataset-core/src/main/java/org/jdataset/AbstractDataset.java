@@ -9,7 +9,7 @@ import org.jdataset.util.DatasetIterator;
 
 /**
  * This is an abstract dataset that provides common implementation for most of
- * the {@link IObjectDataset} methods. It uses a strategy pattern for
+ * the {@link ObjectDataset} methods. It uses a strategy pattern for
  * implementing the fetching of information as using mechanisms defined by
  * subclass implementations.
  * <p>
@@ -31,7 +31,7 @@ import org.jdataset.util.DatasetIterator;
  * @param <T>
  *            Type of object this dataset contains.
  */
-public abstract class AbstractDataset<T> implements IObjectDataset<T>,
+public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		Serializable, Iterable<T> {
 
 	private static final long serialVersionUID = 1L;
@@ -66,7 +66,7 @@ public abstract class AbstractDataset<T> implements IObjectDataset<T>,
 
 	protected abstract Integer fetchResultCount();
 
-	protected abstract List<T> fetchResults(IPaginator paginator);
+	protected abstract List<T> fetchResults(Paginator paginator);
 
 	public List<T> getResultList() {
 		if (results == null) {
@@ -75,7 +75,7 @@ public abstract class AbstractDataset<T> implements IObjectDataset<T>,
 		return results;
 	}
 
-	public List<T> getResultList(IPaginator paginator) {
+	public List<T> getResultList(Paginator paginator) {
 		return fetchResults(paginator);
 	}
 
@@ -235,7 +235,7 @@ public abstract class AbstractDataset<T> implements IObjectDataset<T>,
 		invalidateResults();
 	}
 	
-	public void copyPaginationInfo(IPaginator target) {
+	public void copyPaginationInfo(Paginator target) {
 		if (target != null) {
 			target.setFirstResult(firstResult);
 			target.setMaxRows(maxRows);

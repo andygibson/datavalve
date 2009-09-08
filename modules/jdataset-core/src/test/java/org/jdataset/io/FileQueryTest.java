@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
-import org.jdataset.IObjectDataset;
+import org.jdataset.ObjectDataset;
+import org.jdataset.impl.FileDataProvider;
+import org.jdataset.impl.GenericProviderDataset;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
-import org.jdataset.util.GenericDataset;
 
 public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 
@@ -16,7 +17,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	private static final int FILE_COUNT = 20;
 	private static final int DIR_COUNT = 20;
 	
-	private class FileDataset extends GenericDataset<File, FileDataProvider> {
+	private class FileDataset extends GenericProviderDataset<File, FileDataProvider> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -185,7 +186,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	}
 
 	@Override
-	public IObjectDataset<File> buildObjectDataset() {
+	public ObjectDataset<File> buildObjectDataset() {
 		return buildFileDataset(true);
 	}
 	

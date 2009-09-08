@@ -4,26 +4,26 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.IObjectDataset;
-import org.jdataset.IPaginator;
+import org.jdataset.ObjectDataset;
+import org.jdataset.Paginator;
 
 /**
  * Decorator class that can be used to decorate an existing
- * {@link IObjectDataset}.
+ * {@link ObjectDataset}.
  * 
  * @author Andy Gibson
  * 
  * @param <T>
  *            Type of object this dataset contains
  */
-public class ObjectDatasetDecorator<T> implements IObjectDataset<T>,
+public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,
 		Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private IObjectDataset<T> dataset;
+	private ObjectDataset<T> dataset;
 
-	public ObjectDatasetDecorator(IObjectDataset<T> dataset) {
+	public ObjectDatasetDecorator(ObjectDataset<T> dataset) {
 		this.dataset = dataset;
 	}
 
@@ -95,7 +95,7 @@ public class ObjectDatasetDecorator<T> implements IObjectDataset<T>,
 		dataset.setMaxRows(maxRows);
 	}
 
-	public IObjectDataset<T> getDataset() {
+	public ObjectDataset<T> getDataset() {
 		return dataset;
 	}
 
@@ -131,11 +131,11 @@ public class ObjectDatasetDecorator<T> implements IObjectDataset<T>,
 		dataset.refresh();
 	}
 
-	public void setDataset(IObjectDataset<T> dataset) {
+	public void setDataset(ObjectDataset<T> dataset) {
 		this.dataset = dataset;
 	}
 
-	public void copyPaginationInfo(IPaginator target) {
+	public void copyPaginationInfo(Paginator target) {
 
 		if (target != null) {
 			target.setFirstResult(getFirstResult());

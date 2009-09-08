@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import org.jdataset.params.Parameter;
 import org.jdataset.params.ParameterResolver;
-import org.jdataset.provider.IParameterizedDataProvider;
+import org.jdataset.provider.ParameterizedDataProvider;
 
 public class TestingParameterResolver implements ParameterResolver,Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	public boolean resolveParameter(IParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
+	public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 
 		if (parameter.getName().equals("id")) {
 			parameter.setValue("value_id");

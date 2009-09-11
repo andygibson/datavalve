@@ -42,7 +42,7 @@ public abstract class AbstractDataProviderPage extends WebPage {
 		dataset = createDataset();
 		dataset.setMaxRows(10);
 
-		ISortableDataProvider provider = new DatasetDataProvider<Person>(dataset);
+		ISortableDataProvider<Person> provider = new DatasetDataProvider<Person>(dataset);
 		
 /*		ISortableDataProvider dp = new SortableDataProvider() {
 

@@ -4,7 +4,7 @@ import java.net.URL;
 
 import org.apache.wicket.PageParameters;
 import org.jdataset.ObjectDataset;
-import org.jdataset.text.CommaDelimitedDataset;
+import org.jdataset.impl.CommaDelimitedDataset;
 import org.phonelist.model.Person;
 
 public class FileCustomPaginatorPage extends AbstractCustomPaginatorPage {
@@ -21,6 +21,9 @@ public class FileCustomPaginatorPage extends AbstractCustomPaginatorPage {
 		String filename = url.getPath();
 		CommaDelimitedDataset<Person> people = new CommaDelimitedDataset<Person>(
 				filename) {
+
+
+					private static final long serialVersionUID = 1L;
 
 			@Override
 			protected Person createObjectFromColumns(String[] columns) {

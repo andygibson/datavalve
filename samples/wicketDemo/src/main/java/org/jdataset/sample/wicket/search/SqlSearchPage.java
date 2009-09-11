@@ -5,9 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.ParameterizedDataset;
-import org.jdataset.QueryDataset;
-import org.jdataset.sql.AbstractJdbcQueryDataset;
+import org.jdataset.combined.ParameterizedDataset;
+import org.jdataset.combined.QueryDataset;
+import org.jdataset.impl.combo.DefaultParameterizedDataset;
+import org.jdataset.impl.provider.jdbc.AbstractJdbcQueryDataProvider;
+import org.jdataset.provider.QueryDataProvider;
 import org.phonelist.model.Person;
 
 public class SqlSearchPage extends AbstractSearchPage {
@@ -19,7 +21,8 @@ public class SqlSearchPage extends AbstractSearchPage {
 	@Override
 	public ParameterizedDataset<Person> createDataset() {
 		Connection connection = getWicketApp().getConnection();
-		QueryDataset<Person> people = new AbstractJdbcQueryDataset<Person>(connection) {
+		QueryDataProvider<Person> provider = new AbstractJdbcQueryDataProvider<Person>(
+				connection) {
 
 			@Override
 			public Person createObjectFromResultSet(ResultSet resultSet)
@@ -30,17 +33,20 @@ public class SqlSearchPage extends AbstractSearchPage {
 				person.setLastName(resultSet.getString(3));
 				person.setPhone(resultSet.getString(4));
 				return person;
-			}        	
-        };
-                
-        people.setCountStatement("select count(1) from PERSONS p");
-        people.setSelectStatement("select * from PERSONS p");
-        people.getRestrictions().add("upper(p.first_Name) like upper(:firstNameValue)");
-        people.getRestrictions().add("upper(p.last_Name) like upper(:lastNameValue)");
-        people.getRestrictions().add("p.phone like :phoneValue");
-        people.getRestrictions().add("p.id = :id");
-        people.getOrderKeyMap().put("id","p.id");
-        people.getOrderKeyMap().put("name","p.last_Name,p.first_Name");
-        return people;	}
+			}
+		};
+
+		provider.setCountStatement("select count(1) from PERSONS p");
+		provider.setSelectStatement("select * from PERSONS p");
+		provider.getRestrictions().add(
+				"upper(p.first_Name) like upper(:firstNameValue)");
+		provider.getRestrictions().add(
+				"upper(p.last_Name) like upper(:lastNameValue)");
+		provider.getRestrictions().add("p.phone like :phoneValue");
+		provider.getRestrictions().add("p.id = :id");
+		provider.getOrderKeyMap().put("id", "p.id");
+		provider.getOrderKeyMap().put("name", "p.last_Name,p.first_Name");
+		return new DefaultParameterizedDataset<Person>(provider);
+	}
 
 }

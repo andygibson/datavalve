@@ -12,8 +12,9 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.jdataset.ParameterizedDataset;
-import org.jdataset.ReflectionParameterResolver;
+import org.jdataset.combined.ParameterizedDataset;
+import org.jdataset.impl.params.ReflectionParameterResolver;
+import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.sample.wicket.DatasetInfoPanel;
 import org.jdataset.sample.wicket.HeaderLinkPanel;
 import org.jdataset.sample.wicket.WicketApplication;
@@ -42,21 +43,19 @@ public abstract class AbstractSearchPage extends WebPage {
 	public AbstractSearchPage(final PageParameters parameters) {
 
 		add(new HeaderLinkPanel("linkPanel"));
-		
 
-		//set up the dataset
-		dataset = createDataset();		
+		dataset = createDataset();
 		dataset.setMaxRows(10);
 		dataset.addParameterResolver(new ReflectionParameterResolver(criteria));
-		
-		// create model for form labels		
+
+		// create model for form labels
 		add(new DatasetInfoPanel("infoPanel", dataset));
 
-		
-
-		//add the search criteria controls bound to the search criteria bean
-		IModel<PersonSearchCriteria> criteriaModel = new CompoundPropertyModel<PersonSearchCriteria>(criteria);
-		Form<PersonSearchCriteria> form = new Form<PersonSearchCriteria>("criteria",criteriaModel);
+		// add the search criteria controls bound to the search criteria bean
+		IModel<PersonSearchCriteria> criteriaModel = new CompoundPropertyModel<PersonSearchCriteria>(
+				criteria);
+		Form<PersonSearchCriteria> form = new Form<PersonSearchCriteria>(
+				"criteria", criteriaModel);
 		add(form);
 		form.add(new TextField("id"));
 		form.add(new TextField("firstName"));
@@ -69,24 +68,25 @@ public abstract class AbstractSearchPage extends WebPage {
 				dataset.refresh();
 			}
 		});
-		
-		
-		
-		//bind the data table to the dataset results
-		ISortableDataProvider provider = new DatasetDataProvider<Person>(dataset);		
+
+		// bind the data table to the dataset results
+		ISortableDataProvider provider = new DatasetDataProvider<Person>(
+				dataset);
 
 		// add the grid
 		IColumn[] columns = new IColumn[3];
-		columns[0] = new PropertyColumn<String>(new Model<String>("Id"), "id", "id");
-		columns[1] = new PropertyColumn<String>(new Model<String>("Name"), "name",
-				"displayName");
-		columns[2] = new PropertyColumn<String>(new Model<String>("Phone"), "phone",
-		"phone");
-			
-		DefaultDataTable table = new DefaultDataTable("dataTable", columns, provider,
-				10);
+		columns[0] = new PropertyColumn<String>(new Model<String>("Id"), "id",
+				"id");
+		columns[1] = new PropertyColumn<String>(new Model<String>("Name"),
+				"name", "displayName");
+		columns[2] = new PropertyColumn<String>(new Model<String>("Phone"),
+				"phone", "phone");
+
+		DefaultDataTable table = new DefaultDataTable("dataTable", columns,
+				provider, 10);
 		add(table);
 	}
 
 	public abstract ParameterizedDataset<Person> createDataset();
+
 }

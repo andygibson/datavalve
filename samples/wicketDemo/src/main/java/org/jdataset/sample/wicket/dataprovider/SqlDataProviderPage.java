@@ -6,8 +6,9 @@ import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
 import org.jdataset.ObjectDataset;
-import org.jdataset.QueryDataset;
-import org.jdataset.sql.AbstractJdbcQueryDataset;
+import org.jdataset.impl.Dataset;
+import org.jdataset.impl.provider.jdbc.AbstractJdbcQueryDataProvider;
+import org.jdataset.provider.QueryDataProvider;
 import org.phonelist.model.Person;
 
 public class SqlDataProviderPage extends AbstractDataProviderPage {
@@ -20,7 +21,9 @@ public class SqlDataProviderPage extends AbstractDataProviderPage {
 	public ObjectDataset<Person> createDataset() {
 		
 		Connection connection = getWicketApp().getConnection();
-        QueryDataset<Person> people = new AbstractJdbcQueryDataset<Person>(connection) {
+        QueryDataProvider<Person> provider = new AbstractJdbcQueryDataProvider<Person>(connection) {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Person createObjectFromResultSet(ResultSet resultSet)
@@ -35,12 +38,12 @@ public class SqlDataProviderPage extends AbstractDataProviderPage {
 			
 
         };
-        people.setCountStatement("select count(1) from PERSONS p");
-        people.setSelectStatement("select * from PERSONS p");        
-		people.getOrderKeyMap().put("id", "p.ID");
-		people.getOrderKeyMap().put("name", "p.LAST_NAME,p.FIRST_NAME");
-		people.getOrderKeyMap().put("phone", "p.PHONE");
-		return people;
+        provider.setCountStatement("select count(1) from PERSONS p");
+        provider.setSelectStatement("select * from PERSONS p");        
+		provider.getOrderKeyMap().put("id", "p.ID");
+		provider.getOrderKeyMap().put("name", "p.LAST_NAME,p.FIRST_NAME");
+		provider.getOrderKeyMap().put("phone", "p.PHONE");
+		return new Dataset<Person>(provider);
 	}
 
 }

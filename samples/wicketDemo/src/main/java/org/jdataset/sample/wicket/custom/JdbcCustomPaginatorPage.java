@@ -6,8 +6,10 @@ import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
 import org.jdataset.ObjectDataset;
-import org.jdataset.StatementDataset;
-import org.jdataset.sql.AbstractJdbcDataset;
+import org.jdataset.combined.StatementDataset;
+import org.jdataset.impl.Dataset;
+import org.jdataset.impl.provider.jdbc.AbstractJdbcDataProvider;
+import org.jdataset.provider.StatementDataProvider;
 import org.phonelist.model.Person;
 
 public class JdbcCustomPaginatorPage extends AbstractCustomPaginatorPage {
@@ -19,7 +21,8 @@ public class JdbcCustomPaginatorPage extends AbstractCustomPaginatorPage {
 	@Override
 	public ObjectDataset<Person> createDataset() {			
 		Connection connection = getWicketApp().getConnection();
-        StatementDataset<Person> people = new AbstractJdbcDataset<Person>(connection) {
+		
+        StatementDataProvider<Person> people = new AbstractJdbcDataProvider<Person>(connection) {
 
 			@Override
 			public Person createObjectFromResultSet(ResultSet resultSet)
@@ -34,8 +37,8 @@ public class JdbcCustomPaginatorPage extends AbstractCustomPaginatorPage {
         };
         
         people.setCountStatement("select count(1) from PERSONS p");
-        people.setSelectStatement("select * from PERSONS p");        
-        return people;
+        people.setSelectStatement("select * from PERSONS p");
+        return new Dataset<Person>(people);        
 	}
 	
 

@@ -69,5 +69,11 @@ public interface Paginator {
 	
 	boolean isNextAvailable();
 	
+	boolean isPreviousAvailable();
+	
 	void setNextAvailable(boolean nextAvailable);
+	
+	void next();
+	
+	void previous();
 }

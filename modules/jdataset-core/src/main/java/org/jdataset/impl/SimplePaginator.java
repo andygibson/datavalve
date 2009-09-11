@@ -1,9 +1,9 @@
 package org.jdataset.impl;
 
 import org.jdataset.Paginator;
+import java.io.Serializable;
 
-
-public class SimplePaginator implements Paginator {
+public class SimplePaginator implements Paginator,Serializable {
 
 	private int firstResult = 0;
 	private int maxRows = 0;
@@ -48,10 +48,10 @@ public class SimplePaginator implements Paginator {
 	}
 
 	public void copyPaginationInfo(Paginator target) {
-		doCopyPaginationInfo(this,target);
+		doCopyPaginationInfo(this, target);
 	}
 
-	public static void doCopyPaginationInfo(Paginator source,Paginator target) {
+	public static void doCopyPaginationInfo(Paginator source, Paginator target) {
 		if (target != null) {
 			target.setFirstResult(source.getFirstResult());
 			target.setMaxRows(source.getMaxRows());
@@ -71,5 +71,24 @@ public class SimplePaginator implements Paginator {
 
 	public void setNextAvailable(boolean nextAvailable) {
 		this.nextAvailable = nextAvailable;
+	}
+
+	public void next() {
+		if (isNextAvailable()) {
+			firstResult = firstResult + getMaxRows();
+		}
+	}
+
+	public void previous() {
+		if (isPreviousAvailable()) {
+			firstResult -= getMaxRows();
+			if (firstResult < 0) {
+				firstResult = 0;
+			}
+		}
+	}
+
+	public boolean isPreviousAvailable() {
+		return firstResult > 0;
 	}
 }

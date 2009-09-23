@@ -17,10 +17,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * Base implementation for the {@link StatementDataProvider} interface which adds select and count
- * SQL statements on to the {@link ParameterizedDataProvider} interface. The class
- * extends the {@link AbstractParameterizedDataProvider} to use the implementation of
- * the {@link ParameterizedDataProvider} interface. This class also implements the
+ * Base implementation for the {@link StatementDataProvider} interface which
+ * adds select and count SQL statements on to the
+ * {@link ParameterizedDataProvider} interface. The class extends the
+ * {@link AbstractParameterizedDataProvider} to use the implementation of the
+ * {@link ParameterizedDataProvider} interface. This class also implements the
  * actual fetching of the result count and the results from the database once
  * the parameters have been resolved.
  * </p>
@@ -36,11 +37,11 @@ import org.slf4j.LoggerFactory;
  *            The type of object this dataset will return
  */
 public abstract class AbstractJdbcDataProvider<T> extends
-		AbstractParameterizedDataProvider<T> implements StatementDataProvider<T>,
-		ResultSetObjectMapper<T> {
+		AbstractParameterizedDataProvider<T> implements
+		StatementDataProvider<T>, ResultSetObjectMapper<T> {
 
 	private static final long serialVersionUID = 1L;
-		
+
 	private transient Connection connection;
 	private String countStatement;
 	private String selectStatement;
@@ -104,15 +105,16 @@ public abstract class AbstractJdbcDataProvider<T> extends
 
 		return count;
 	}
-	
+
 	public List<T> fetchResults(Paginator paginator) {
 		try {
 			PreparedStatement statement = buildStatement(getSelectStatement());
 			ResultSet resultSet = statement.executeQuery();
 			List<T> results = resultSetObjectProcessor.createListFromResultSet(
-					resultSet, this, paginator.getFirstResult(), paginator.getMaxRows()); // createListFromResultSet(resultSet);
+					resultSet, this, paginator.getFirstResult(), paginator
+							.getMaxRows()); // createListFromResultSet(resultSet);
 			paginator.setNextAvailable(resultSet.next());
-			
+
 			return results;
 		} catch (SQLException ex) {
 			ex.printStackTrace();

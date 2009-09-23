@@ -53,7 +53,7 @@ public class ResultSetObjectProcessor<T> implements Serializable {
 	 * @throws SQLException
 	 */
 	public List<T> createListFromResultSet(ResultSet resultSet,
-			ResultSetObjectMapper<T> objectMapper, int firstRow, int maxRows)
+			ResultSetObjectMapper<T> objectMapper, int firstRow, Integer maxRows)
 			throws SQLException {
 		List<T> results = new ArrayList<T>();
 
@@ -66,7 +66,7 @@ public class ResultSetObjectProcessor<T> implements Serializable {
 			results.add(objectMapper.createObjectFromResultSet(resultSet));
 
 			// if this is paged, limit the number of rows loaded
-			if (maxRows != 0 && results.size() == maxRows) {
+			if (maxRows != null && results.size() == maxRows) {
 				return results;
 			}
 

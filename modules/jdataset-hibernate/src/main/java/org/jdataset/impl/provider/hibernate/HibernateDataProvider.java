@@ -90,7 +90,7 @@ public class HibernateDataProvider<T> extends AbstractQueryDataProvider<T> {
 
 	public final Integer fetchResultCount() {
 		Query qry = buildQuery(getCountStatement(), false, null);
-		Integer result = (Integer) qry.uniqueResult();
+		Long result = (Long) qry.uniqueResult();
 		return result.intValue();
 	}
 

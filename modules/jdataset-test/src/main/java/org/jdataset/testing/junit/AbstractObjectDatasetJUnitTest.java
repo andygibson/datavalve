@@ -42,7 +42,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 		implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public abstract ObjectDataset<T> buildObjectDataset();
 
 	public abstract int getDataRowCount();
@@ -75,7 +75,8 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 */
 	public void testNextNoRead() {
 		ObjectDataset<T> ds = buildObjectDataset();
-		//this should be false since paging is not enabled by default, hence it is all one big page
+		// this should be false since paging is not enabled by default, hence it
+		// is all one big page
 		assertEquals(false, ds.isNextAvailable());
 	}
 
@@ -121,7 +122,7 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 		ObjectDataset<T> ds = buildObjectDataset();
 		ds.setMaxRows(10);
 		List<T> oldResults = ds.getResultList();
-		assertEquals(oldResults.size(), ds.getMaxRows());
+		assertEquals(oldResults.size(), ds.getMaxRows().intValue());
 		ds.next();
 		assertEquals(10, ds.getFirstResult());
 		List<T> results = ds.getResultList();
@@ -129,6 +130,19 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 		for (int i = 0; i < 10; i++) {
 			assertNotSame(oldResults.get(i), results.get(i));
 		}
+	}
+
+	public void testNullingMaxRows() {
+		// test we can set the maxRows value to null after it has been set and
+		// the query will come back correct
+		ObjectDataset<T> ds = buildObjectDataset();
+		ds.setMaxRows(10);
+		List<T> oldResults = ds.getResultList();
+		assertEquals(oldResults.size(), ds.getMaxRows().intValue());
+		ds.setMaxRows(null);
+		List<T> newResults = ds.getResultList();
+		assertNotSame(oldResults.size(), newResults.size());
+		assertEquals(getDataRowCount(), newResults.size());
 	}
 
 	/**

@@ -61,7 +61,8 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 	}
 
 	public List<T> fetchResults(Paginator paginator) {
-		int rowCount = paginator.getMaxRows() == 0 ? getResultCount() : paginator.getMaxRows();
+		int rowCount = paginator.getMaxRows() == null ? getResultCount()
+				: paginator.getMaxRows();
 		return generateResults(paginator.getFirstResult(), rowCount);
 	}
 

@@ -12,26 +12,26 @@ import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String baseDir;
 	private static final int FILE_COUNT = 20;
 	private static final int DIR_COUNT = 20;
-	
-	private class FileDataset extends GenericProviderDataset<File, FileDataProvider> {
+
+	private class FileDataset extends
+			GenericProviderDataset<File, FileDataProvider> {
 
 		private static final long serialVersionUID = 1L;
 
 		public FileDataset(FileDataProvider provider) {
 			super(provider);
 		}
-		
+
 		@Override
 		public void invalidateResultInfo() {
 			super.invalidateResultInfo();
 			getProvider().invalidateData();
 		}
 	}
-	
 
 	@Override
 	protected void setUp() throws Exception {
@@ -74,13 +74,13 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	}
 
 	public void testFileDataQueryStringIncludingDirs() {
-		FileDataset qry = buildFileDataset(true);		
+		FileDataset qry = buildFileDataset(true);
 		List<File> res = qry.getResultList();
 		assertEquals(40, res.size());
 	}
 
 	public void testFileDataQueryRecordCountIncludingDirs() {
-		FileDataset qry = buildFileDataset(true);		
+		FileDataset qry = buildFileDataset(true);
 		long count = qry.getResultCount();
 		assertEquals(40, count);
 	}
@@ -102,8 +102,8 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 		FileDataset qry = buildFileDataset(false);
 		assertEquals(20, qry.getResultCount().intValue());
 		qry.getProvider().setIncludeDirectories(true);
-		qry.invalidateResultInfo();		
-		
+		qry.invalidateResultInfo();
+
 		assertEquals(40, qry.getResultCount().intValue());
 		qry.getProvider().setIncludeDirectories(false);
 		qry.invalidateResultInfo();
@@ -173,7 +173,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 		qry.setMaxRows(1);
 		assertEquals(20, qry.getPageCount());
 
-		qry.setMaxRows(0);
+		qry.setMaxRows(null);
 		assertEquals(1, qry.getPageCount());
 
 		try {
@@ -189,7 +189,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	public ObjectDataset<File> buildObjectDataset() {
 		return buildFileDataset(true);
 	}
-	
+
 	public FileDataset buildFileDataset(boolean includeDirs) {
 		FileDataset ds = new FileDataset(new FileDataProvider(baseDir));
 		ds.getProvider().setIncludeDirectories(includeDirs);

@@ -45,7 +45,7 @@ public abstract class AbstractQueryDataProvider<T> extends
 	private String selectStatement;
 	private String countStatement;
 	private Map<String, String> orderKeyMap = new HashMap<String, String>();
-	private List<String> restrictions = new ArrayList<String>();	
+	private List<String> restrictions = new ArrayList<String>();
 
 	public String getSelectStatement() {
 		return selectStatement;
@@ -83,8 +83,8 @@ public abstract class AbstractQueryDataProvider<T> extends
 	 * Determines the order by clause based on the values of
 	 * {@link ObjectDataset#getOrderKey()},
 	 * {@link QueryDataProvider#getOrderKeyMap()} and
-	 * {@link QueryDataProvider#isOrderAscending()}. If no order is specified then
-	 * <code>null</code> is returned.
+	 * {@link QueryDataProvider#isOrderAscending()}. If no order is specified
+	 * then <code>null</code> is returned.
 	 * 
 	 * @see #calculateOrderByClause()
 	 * 
@@ -122,9 +122,11 @@ public abstract class AbstractQueryDataProvider<T> extends
 			if (order.length() != 0) {
 				order = order + ", ";
 			}
-			order = order + field + (paginator.isOrderAscending() ? " ASC " : " DESC ");
+			order = order + field
+					+ (paginator.isOrderAscending() ? " ASC " : " DESC ");
 		}
-		log.debug("Order key = {}, order by = {}", paginator.getOrderKey(), order);
+		log.debug("Order key = {}, order by = {}", paginator.getOrderKey(),
+				order);
 		return order;
 	}
 
@@ -167,7 +169,8 @@ public abstract class AbstractQueryDataProvider<T> extends
 	 * @return
 	 */
 	protected final String buildStatement(String baseStatement,
-			Map<String, Object> queryParams, boolean includeOrderBy,Paginator paginator) {
+			Map<String, Object> queryParams, boolean includeOrderBy,
+			Paginator paginator) {
 		queryParams.clear();
 		RestrictionBuilder rb = new RestrictionBuilder(this);
 
@@ -183,20 +186,21 @@ public abstract class AbstractQueryDataProvider<T> extends
 		return result;
 	}
 
-	
 	public final List<T> fetchResults(Paginator paginator) {
-  
+
 		// fetch maxrows+1 so we can see if we have more results to fetch
-		Integer count = paginator.includeAllResults() ? 0 : paginator.getMaxRows() + 1;
-		List<T> temp = fetchResultsFromDatabase(paginator,count);
+		Integer count = paginator.includeAllResults() ? 0 : paginator
+				.getMaxRows() + 1;
+		List<T> temp = fetchResultsFromDatabase(paginator, count);
 
 		// if we returned more than maxRows, then we have more data to fetch
-		boolean nextAvailable = temp.size() > paginator.getMaxRows() && !paginator.includeAllResults();
+		boolean nextAvailable = (!paginator.includeAllResults())
+				&& temp.size() > paginator.getMaxRows();
 		paginator.setNextAvailable(nextAvailable);
-		if (paginator.includeAllResults() || temp.size() < paginator.getMaxRows()) {
+		if (paginator.includeAllResults()
+				|| temp.size() < paginator.getMaxRows()) {
 			return temp;
 		}
-		
 
 		// create a sublist containing maxRows number of rows.
 		return temp.subList(0, paginator.getMaxRows());
@@ -208,7 +212,8 @@ public abstract class AbstractQueryDataProvider<T> extends
 	 * @return The results from the database based on the select statement and
 	 *         restrictions
 	 */
-	protected abstract List<T> fetchResultsFromDatabase(Paginator paginator,Integer count);
+	protected abstract List<T> fetchResultsFromDatabase(Paginator paginator,
+			Integer count);
 
 	public void addRestriction(String restriction) {
 		getRestrictions().add(restriction);

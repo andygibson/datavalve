@@ -16,13 +16,13 @@ public interface Paginator {
 	/**
 	 * @return the maximum number of rows to return
 	 */
-	int getMaxRows();
+	Integer getMaxRows();
 
 	/**
 	 * @param maxRows
 	 *            the maximum number of rows to return
 	 */
-	void setMaxRows(int maxRows);
+	void setMaxRows(Integer maxRows);
 
 	/**
 	 * @return The key value we are ordering by
@@ -61,19 +61,18 @@ public interface Paginator {
 	 *            The new key value to order by
 	 */
 	void changeOrderKey(String orderKey);
-	
 
 	void copyPaginationInfo(Paginator target);
-	
+
 	boolean includeAllResults();
-	
+
 	boolean isNextAvailable();
-	
+
 	boolean isPreviousAvailable();
-	
+
 	void setNextAvailable(boolean nextAvailable);
-	
+
 	void next();
-	
+
 	void previous();
 }

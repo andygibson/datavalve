@@ -35,7 +35,7 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,
 		return dataset.getFirstResult();
 	}
 
-	public int getMaxRows() {
+	public Integer getMaxRows() {
 		return dataset.getMaxRows();
 	}
 
@@ -91,7 +91,7 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,
 		dataset.setFirstResult(firstResult);
 	}
 
-	public void setMaxRows(int maxRows) {
+	public void setMaxRows(Integer maxRows) {
 		dataset.setMaxRows(maxRows);
 	}
 

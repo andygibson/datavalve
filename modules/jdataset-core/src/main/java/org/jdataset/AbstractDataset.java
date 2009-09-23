@@ -37,7 +37,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	private static final long serialVersionUID = 1L;
 
 	private int firstResult = 0;
-	private int maxRows = 0;
+	private Integer maxRows;
 	private Integer resultCount;
 	private List<T> results;
 	private String orderKey;
@@ -49,7 +49,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		return firstResult;
 	}
 
-	public int getMaxRows() {
+	public Integer getMaxRows() {
 		return maxRows;
 	}
 
@@ -85,8 +85,8 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	}
 
-	public void setMaxRows(int maxRows) {
-		if (maxRows < 0) {
+	public void setMaxRows(Integer maxRows) {
+		if (maxRows != null && maxRows < 0) {
 			throw new IllegalArgumentException(
 					"Max rows returned from query cannot be negative");
 		}
@@ -134,7 +134,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	}
 
 	public boolean includeAllResults() {
-		return getMaxRows() == 0;
+		return getMaxRows() == null;
 	}
 
 	public void next() {
@@ -234,7 +234,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	public void refresh() {
 		invalidateResults();
 	}
-	
+
 	public void copyPaginationInfo(Paginator target) {
 		if (target != null) {
 			target.setFirstResult(firstResult);
@@ -243,12 +243,12 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 			target.setOrderAscending(orderAscending);
 		}
 	}
-	
+
 	public boolean isNextAvailable() {
 		getResultList();
 		return nextAvailable;
 	}
-	
+
 	public void setNextAvailable(boolean nextAvailable) {
 		this.nextAvailable = nextAvailable;
 	}

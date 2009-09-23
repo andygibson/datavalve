@@ -107,7 +107,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 			startPos = backingData.size();
 		}
 
-		int endPos = paginator.getMaxRows() == 0 ? backingData.size()
+		int endPos = paginator.getMaxRows() == null ? backingData.size()
 				: startPos + paginator.getMaxRows();
 		if (endPos >= backingData.size()) {
 			endPos = backingData.size();

@@ -1,12 +1,15 @@
 package org.jdataset.impl;
 
-import org.jdataset.Paginator;
 import java.io.Serializable;
 
-public class SimplePaginator implements Paginator,Serializable {
+import org.jdataset.Paginator;
+
+public class SimplePaginator implements Paginator, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int firstResult = 0;
-	private int maxRows = 0;
+	private Integer maxRows = 0;
 	private boolean orderAscending = true;
 	private String orderKey;
 	private boolean nextAvailable;
@@ -19,11 +22,11 @@ public class SimplePaginator implements Paginator,Serializable {
 		this.firstResult = firstResult;
 	}
 
-	public int getMaxRows() {
+	public Integer getMaxRows() {
 		return maxRows;
 	}
 
-	public void setMaxRows(int maxRows) {
+	public void setMaxRows(Integer maxRows) {
 		this.maxRows = maxRows;
 	}
 
@@ -62,7 +65,7 @@ public class SimplePaginator implements Paginator,Serializable {
 	}
 
 	public boolean includeAllResults() {
-		return getMaxRows() == 0;
+		return getMaxRows() == null;
 	}
 
 	public boolean isNextAvailable() {

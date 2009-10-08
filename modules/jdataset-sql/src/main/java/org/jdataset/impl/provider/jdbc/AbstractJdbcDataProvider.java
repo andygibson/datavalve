@@ -140,4 +140,12 @@ public abstract class AbstractJdbcDataProvider<T> extends
 	public void setCountStatement(String countStatement) {
 		this.countStatement = countStatement;
 	}
+
+	public void init(Class<? extends Object> clazz, String prefix) {
+		setCountStatement(String.format("select count(%s) from %s %s ", prefix,
+				clazz.getSimpleName(), prefix));
+		setSelectStatement(String.format("select %s from %s %s ", prefix, clazz
+				.getSimpleName(), prefix));
+
+	}
 }

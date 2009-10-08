@@ -261,6 +261,26 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		assertEquals(false, qry.isNextAvailable());
 	}
 
+	public void testStatementInitializer() {
+		QueryDataProvider<Integer>  qry = new AbstractQueryDataProvider<Integer>() {
+
+			@Override
+			protected List<Integer> fetchResultsFromDatabase(
+					Paginator paginator, Integer count) {
+				return null;
+			}
+
+			@Override
+			public Integer fetchResultCount() {
+				return null;
+			}
+			
+		};
+		qry.init(QueryDatasetTest.class, "c");
+		
+		assertEquals("select c from QueryDatasetTest c ", qry.getSelectStatement());
+		assertEquals("select count(c) from QueryDatasetTest c ", qry.getCountStatement());		
+	}
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {
 		return buildQuery(100);

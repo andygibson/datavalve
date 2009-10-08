@@ -25,5 +25,7 @@ public interface StatementDataProvider<T> extends ParameterizedDataProvider<T> {
 	public String getSelectStatement();
 
 	public void setSelectStatement(String selectStatement);
+	
+	public void init(Class<? extends Object> clazz,String prefix);
 
 }

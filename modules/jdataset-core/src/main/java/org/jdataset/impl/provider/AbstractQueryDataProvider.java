@@ -38,6 +38,8 @@ public abstract class AbstractQueryDataProvider<T> extends
 
 	private static final long serialVersionUID = 1L;
 
+	private int paramId;
+
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractQueryDataProvider.class);
 
@@ -77,6 +79,11 @@ public abstract class AbstractQueryDataProvider<T> extends
 
 	public void setRestrictions(List<String> restrictions) {
 		this.restrictions = restrictions;
+	}
+
+	public void init(Class<? extends Object> clazz, String prefix) {
+		setCountStatement(String.format("select count(%s) from %s %s ",prefix,clazz.getSimpleName(),prefix));
+		setSelectStatement(String.format("select %s from %s %s ",prefix,clazz.getSimpleName(),prefix));		
 	}
 
 	/**
@@ -217,6 +224,33 @@ public abstract class AbstractQueryDataProvider<T> extends
 
 	public void addRestriction(String restriction) {
 		getRestrictions().add(restriction);
+	}
+
+	protected String getNextParamName() {
+		return "_param_" + String.valueOf(paramId++);
+	}
+
+	public boolean addRestriction(String syntax, Object value) {
+		return addRestriction(syntax, value, value);
+	}
+
+	public boolean addRestriction(String syntax, String testValue,
+			String paramValue) {
+		if (testValue != null && testValue.length() != 0) {
+			return addRestriction(syntax, testValue,paramValue);
+		}
+		return false;
+	}
+
+	public boolean addRestriction(String syntax, Object testValue, Object paramValue) {
+		if (testValue != null) {
+			String name = getNextParamName();
+			syntax = syntax.replace(":param", ":" + name);
+			addRestriction(syntax);
+			getParameters().put(name, paramValue);
+			return true;
+		}
+		return false;
 	}
 
 }

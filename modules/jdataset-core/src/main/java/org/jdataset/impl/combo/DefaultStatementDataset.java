@@ -47,4 +47,9 @@ public class DefaultStatementDataset<T> extends DefaultParameterizedDataset<T> i
 		getCastProvider().setSelectStatement(selectStatement);		
 	}
 
+	public void init(Class<? extends Object> clazz, String prefix) {
+		setCountStatement(String.format("select count(%s) from %s %s ",prefix,clazz.getName(),prefix));
+		setSelectStatement(String.format("select %s from %s %s ",prefix,clazz.getName(),prefix));		
+	}
+	
 }

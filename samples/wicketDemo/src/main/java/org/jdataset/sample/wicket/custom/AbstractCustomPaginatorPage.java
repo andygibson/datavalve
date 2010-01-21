@@ -17,7 +17,7 @@ import org.jdataset.wicket.DatasetModel;
 import org.phonelist.model.Person;
 
 /**
- * Homepage
+ * This is the abstract page for displaying the custom paginator. 
  */
 public abstract class AbstractCustomPaginatorPage extends WebPage {
 

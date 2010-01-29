@@ -90,6 +90,7 @@
 					<chunkSectionDepth>0</chunkSectionDepth>
 					<htmlStylesheet>style.css</htmlStylesheet>
 					<keepRelativeImageUris>1</keepRelativeImageUris>
+					<bodyFontFamily>sans-serif</bodyFontFamily>
 				</configuration>
 			</plugin>
 		</plugins>

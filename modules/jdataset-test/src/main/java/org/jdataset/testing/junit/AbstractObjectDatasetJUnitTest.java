@@ -114,8 +114,9 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	public void testActualResultCount() {
 		ObjectDataset<T> ds = buildObjectDataset();
 		List<T> results = ds.getResultList();
-		assertEquals(results.size(), ds.getResultCount().intValue());
-		assertEquals(results.size(), getDataRowCount());
+		
+		assertEquals(ds.getResultCount().intValue(),results.size());
+		assertEquals(getDataRowCount(),results.size());
 	}
 
 	public void testNextDifferentResults() {

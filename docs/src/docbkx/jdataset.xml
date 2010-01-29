@@ -221,7 +221,8 @@ public interface DataProvider<T> {
                     </title>
 						<programlisting role="JAVA">
 <![CDATA[
-if (searchCriteria.id != null  && searchCriteria.id.length() != 0) {
+if (searchCriteria.id != null  
+  && searchCriteria.id.length() != 0) {
     if (sql.length()!= null) {
       sql = sql + " AND ";
     }
@@ -229,7 +230,8 @@ if (searchCriteria.id != null  && searchCriteria.id.length() != 0) {
     paramsMap("id",searchCriteria.id);
 }
 
-if (searchCriteria.firstName != null  && searchCriteria.firstName.length() != 0) {
+if (searchCriteria.firstName != null  
+  && searchCriteria.firstName.length() != 0) {
     if (sql.length()!= null) {
       sql = sql + " AND ";
     }
@@ -237,7 +239,8 @@ if (searchCriteria.firstName != null  && searchCriteria.firstName.length() != 0)
     paramsMap("firstName",searchCriteria.firstName);
 }
 
-if (searchCriteria.lastName != null  && searchCriteria.lastName.length() != 0) {
+if (searchCriteria.lastName != null  
+  && searchCriteria.lastName.length() != 0) {
     if (sql.length()!= null) {
       sql = sql + " AND ";
     }
@@ -272,7 +275,9 @@ List<Person> results = qry.resultList();
 qry.addRestriction("p.id = :id");
 qry.addRestriction("p.firstName = :firstName");
 qry.addRestriction("p.lastName = :lastName");
-qry.addParameterResolver(new ReflectionParameterResolver(searchCriteria));
+ParameterResolver resolver = 
+  new ReflectionParameterResolver(searchCriteria));
+qry.addParameterResolver(resolver);
 List<Person> results = qry.resultList();]]>
 					</programlisting>
 					</example>
@@ -350,10 +355,11 @@ public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 		
 		int start = paginator.getFirstResult();
 		
-		int end = paginator.includeAllResults() ? 100 : Math.min(100, start+paginator.getMaxRows().intValue()-1);
+		int end = paginator.includeAllResults() ? 100 : 
+		  Math.min(100, start+paginator.getMaxRows().intValue()-1);
 		
 		List<Integer> results = new ArrayList<Integer>();
-		System.out.println("Generating results from "+start+" to "+(end));
+		System.out.println("Generating results from "+start+" to "+end);
 		while (start <= end) {
 			results.add(start++);			
 		}
@@ -520,7 +526,8 @@ Value = 9
 				</title>
 				<programlisting role="JAVA">
 <![CDATA[
-public class IntegerDataProviderTest extends AbstractObjectDatasetJUnitTest<Integer> {
+public class IntegerDataProviderTest extends 
+  AbstractObjectDatasetJUnitTest<Integer> {
 
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {
@@ -582,7 +589,8 @@ public class IntegerDataProviderTest extends AbstractObjectDatasetJUnitTest<Inte
 		
 		int start = paginator.getFirstResult()+1; //results start from 1
 		
-		int end = paginator.includeAllResults() ? 100 : Math.min(100, start+paginator.getMaxRows().intValue()-1);
+		int end = paginator.includeAllResults() ? 100 : 
+		  Math.min(100, start+paginator.getMaxRows().intValue()-1);
 		
 		List<Integer> results = new ArrayList<Integer>();
 		System.out.println("Generating results from "+start+" to "+(end));
@@ -725,7 +733,8 @@ public static void main(String[] args) {
 				<programlisting role="JAVA">
 <![CDATA[
 public static void main(String[] args) {
-	ObjectDataset<Integer> ds = new Dataset<Integer>(new IntegerDataProvider());
+    DataProvider<Integer> provider = new IntegerDataProvider();
+	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
 	ds.setMaxRows(5);
 
 	List<Integer> results = ds.getResultList();		
@@ -791,13 +800,108 @@ Value = 5
 					<code>getResults</code>
 					you will get all the results from the
 					<code>firstResult</code>
-					index to the end.
+					index to the end. When you create a
+					<classname>ObjectDataset</classname>
+					by default, it is set up to fetch results from the first row and is
+					not paginated so it will return all results from the beginning to
+					the end.
 				</para>
+				<example>
+					<title>Returning all results</title>
+					<programlisting>
+<![CDATA[
+public static void main(String[] args) {
+    DataProvider<Integer> provider = new IntegerDataProvider();
+	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
+	showResults(ds.getResultList());			
+}
+]]>
+</programlisting>
+				</example>
+				<figure>
+					<title>Returning all results</title>
+					<screen>			
+Generating results from 1 to 100
+Result Size = 100
+Value = 1
+Value = 2
+Value = 3
+Value = 4
+Value = 5
+Value = 6
+Value = 7
+...
+...
+...
+Value = 98
+Value = 99
+Value = 100
+</screen>
+				</figure>
 			</sect2>
 			<sect2>
 				<title>Iteratively Speaking</title>
-				<para>The dataset implements </para>
+				<para>
+					The dataset implements the
+					<classname>Iterable</classname>
+					interface which means that we can iterate over the dataset. If
+					pagination is in use, it is performed transparently as you iterate
+					through the dataset.
+				</para>
+				<example>
+					<title>Returning all results</title>
+					<programlisting>
+<![CDATA[
+public static void main(String[] args) {
+    DataProvider<Integer> provider = new IntegerDataProvider();
+	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
+	ds.setMaxRows(5);
+	for (Integer i : ds) {
+		System.out.println("Iterating over value "+i);
+	}		
+}
+]]>
+</programlisting>
+				</example>
+				<figure>
+					<title>Iterating over a paginated dataset</title>
+					<screen>
+Generating results from 1 to 5
+Iterating over value 1
+Iterating over value 2
+Iterating over value 3
+Iterating over value 4
+Iterating over value 5
+Generating results from 6 to 10
+Iterating over value 6
+Iterating over value 7
+Iterating over value 8
+Iterating over value 9
+Iterating over value 10
+Generating results from 11 to 15
+Iterating over value 11
+Iterating over value 12
+...
+...
+...
+terating over value 89
+Iterating over value 90
+Generating results from 91 to 95
+Iterating over value 91
+Iterating over value 92
+Iterating over value 93
+Iterating over value 94
+Iterating over value 95
+Generating results from 96 to 100
+Iterating over value 96
+Iterating over value 97
+Iterating over value 98
+Iterating over value 99
+Iterating over value 100							
+</screen>
+				</figure>
 			</sect2>
+
 		</sect1>
 	</chapter>
 </book>

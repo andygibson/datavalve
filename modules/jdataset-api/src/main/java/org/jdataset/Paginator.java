@@ -14,7 +14,8 @@ public interface Paginator {
 	void setFirstResult(int firstResult);
 
 	/**
-	 * @return the maximum number of rows to return
+	 * @return the maximum number of rows to return. Null indicates we are
+	 *         returning all rows from firstResult to the end of the dataset
 	 */
 	Integer getMaxRows();
 

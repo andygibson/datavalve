@@ -9,11 +9,20 @@ public class SimplePaginator implements Paginator, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int firstResult = 0;
-	private Integer maxRows = 0;
+	private Integer maxRows;
 	private boolean orderAscending = true;
 	private String orderKey;
 	private boolean nextAvailable;
 
+	public SimplePaginator() {
+		this(10);		
+	}
+	
+	public SimplePaginator(Integer maxRows) {
+		this.maxRows = maxRows;
+	}
+
+	
 	public int getFirstResult() {
 		return firstResult;
 	}

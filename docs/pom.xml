@@ -85,12 +85,14 @@
 					<chapterAutolabel>1</chapterAutolabel>
 					<partAutolabel>1</partAutolabel>
 					<sectionAutolabel>1</sectionAutolabel>
-					<sectionLabelIncludes.component.label>1</sectionLabelIncludes.component.label>
+					<sectionLabelIncludesComponentLabel>1</sectionLabelIncludesComponentLabel>
 					<chunkFirstSections>0</chunkFirstSections>
 					<chunkSectionDepth>0</chunkSectionDepth>
 					<htmlStylesheet>style.css</htmlStylesheet>
 					<keepRelativeImageUris>1</keepRelativeImageUris>
 					<bodyFontFamily>sans-serif</bodyFontFamily>
+					<sectionAutolabelMaxDepth>3</sectionAutolabelMaxDepth>					
+
 				</configuration>
 			</plugin>
 		</plugins>

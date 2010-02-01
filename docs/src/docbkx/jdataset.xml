@@ -568,7 +568,7 @@ public class IntegerDataProviderTest extends
 				just need to define more closely what our dataset does. We'll make
 				it
 				so that it does return 100 values in the range from 1 to 100, and
-				we'll even add some test cases top ensure that it does. First lets
+				we'll even add some test cases to ensure that it does. First lets
 				alter the
 				<methodname>fetchResults</methodname>
 				method in our
@@ -900,9 +900,203 @@ Iterating over value 99
 Iterating over value 100							
 </screen>
 				</figure>
+				<para>This could be useful in cases where you want to group fetches
+					into batches if fetches are expensive, or maybe even incorporate
+					some multi-threading to let one thread fetch data and other threads
+					to process result sets as they come in.</para>
+			</sect2>
+			<sect2>
+				<title>Paging Datasets</title>
+				<para>Generally paging through a dataset is done using the next and
+					previous which changes the subset of data you are looking at.
+					Generally speaking, using the iterator is the best way to iterate
+					over every item in the dataset since paging is generally used to
+					move to a specific page as to iterate through the data. </para>
+				<para>Iterating manually is fraught with corner cases that could
+					lead to a number of errors.</para>
+
+				<example>
+					<title>Attempting manual iteration</title>
+					<programlisting>
+<![CDATA[
+//BROKEN CODE, DO NOT USE
+while (ds.isNextAvailable()) {
+	List<Integer> res = ds.getResultList();
+	showResults(res);
+	ds.next();
+}
+]]>
+</programlisting>
+				</example>
+				<para>
+					What happens here is that when we move to the last page using next,
+					the
+					<methodname>nextAvailable</methodname>
+					property is set to false and we exit the loop before we display it.
+					We could process the results after the loop but what happens when
+					you forget to add the code at the end? The best demonstration of
+					this is where the size of the result set is smaller than the page
+					size, and when we fetch the first page of results,
+					<methodname>nextAvailable</methodname>
+					is false since this is the first and only page, and so we don't
+					display the list.
+				</para>
+				<para>
+					In general, use the dataset next/previous/first/last methods to
+					navigate the dataset by moving from page to page and the
+					<classname>Iterator</classname>
+					implementation to go through the dataset item by item
+					<superscript>*</superscript>
+					. The iterator implementation handles all the corner cases in a
+					familiar and consistent manner.
+				</para>
+				<para>
+					Note that in the event of you reaching the end of the dataset
+					and
+					calling next, the active page will not change and you will
+					receive
+					the last result set back. Unless the dataset is empty,
+					there will
+					always be results returned in the result list, and if
+					there are no
+					results, an empty list should be returned. The results should never
+					be
+					<code>null</code>
+					.
+				</para>
+				<note>
+					<para>
+						<superscript>*</superscript>
+						We do use this kind of incorrect paging through data in
+						some of the
+						test cases, but only where we are not testing the
+						number of
+						results, but the actual result content, and we want to
+						test the
+						first/next/previous/last methods as opposed to the
+						iterator
+						implementation.
+					</para>
+				</note>
+			</sect2>
+			<sect2>
+				<title>Manually Fetching Data</title>
+				<para>
+					As we discussed initially, the
+					<classname>ObjectDataset</classname>
+					is a helper construct that manages the two key interfaces of the
+					<classname>Paginator</classname>
+					and
+					<classname>DataProvider</classname>
+					. We can easily use these two classes separate very easily, there
+					is no complex glue code implemented by the
+					<classname>ObjectDataset</classname>
+					except where it has provided enhanced features. Using two
+					separately instantiated pagiantors and providers is very simple.
+				</para>
+
+				<example>
+					<title>Manually creating provider and pagination instances and
+						fetching results</title>
+					<programlisting>
+<![CDATA[
+DataProvider<Integer> provider = new IntegerDataProvider();
+Paginator paginator = new SimplePaginator(10);
+List<Integer> results = provider.fetchResults(paginator);
+showResults(results); 			
+]]>
+</programlisting>
+				</example>
+				<para>
+					Each call to
+					<methodname>fetchResults</methodname>
+					executes the process to fetch the data. This can mean running a
+					database query or parsing a file. The results are not cached unlike
+					the
+					<classname>ObjectDataset</classname>
+					. This is because the
+					<classname>DataProvider</classname>
+					and
+					<classname>Paginator</classname>
+					instances are the raw building blocks that make up the
+					<classname>ObjectDataset</classname>
+					. In fact, as we'll see in the next chapter, these two classes,
+					particularly the
+					<classname>DataProvider</classname>
+					is the building block for most of the framework.
+				</para>
+				<para>
+					One important thing to bear in mind with using these components
+					manually is that the
+					<classname>DataProvider</classname>
+					implementation is responsible for setting the
+					<code>nextAvailable</code>
+					property on the
+					<classname>Paginator</classname>
+					instance passed in to the
+					<methodname>fetchResults</methodname>
+					method. This means that when you first create a paginator, the
+					<methodname>isNextAvailable</methodname>
+					value is false so you cannot create a new paginator instance and
+					call the
+					<methodname>next()</methodname>
+					method since it, as well as other functions, depends on the
+					<code>nextAvailable</code>
+					flag.
+				</para>
+				<para>One benefit of using these standalone components manually is
+					that you
+					can use multiple paginator instances to provide different
+					views of
+					the same dataset independent of each other. This can be
+					useful when you want application scoped data with local pagination.
+				</para>
+				<example>
+					<title>Multiple views of the same data</title>
+					<programlisting>
+<![CDATA[
+DataProvider<Integer> provider = new IntegerDataProvider();
+Paginator paginator1 = new SimplePaginator(10);
+Paginator paginator2 = new SimplePaginator(15);
+paginator1.setFirstResult(20);
+paginator2.setFirstResult(30);
+		
+System.out.println("First result = "+paginator1.getFirstResult());
+		
+List<Integer> results1 = provider.fetchResults(paginator1);
+List<Integer> results2 = provider.fetchResults(paginator2);
+System.out.println("Result Set 1");
+showResults(results1); 			
+System.out.println("Result Set 2");
+showResults(results2);
+]]>
+</programlisting>
+				</example>
+				<para>Here we obtain two different sets of data from a single data
+					provider. This can let you re-use data providers that obtain data
+					from expensive data sources.</para>
 			</sect2>
 
 		</sect1>
+	</chapter>
+
+	<chapter>
+		<title>The JQA Architecture</title>
+		<para>
+			The last chapter introduced you to a number of concepts
+			regarding how
+			to use basic data providers controlled by an instance
+			of a paginator,
+			or abstracted through the object dataset
+			implementations. Now we've
+			covered these fundamentals we can expand our knowledge by looking at
+			the different subclasses of the
+			<classname>DataProvider</classname>
+			interface and implementations for this is how we create datasets that
+			can attach to different datasources in a useful way.
+		</para>
+		<sect1><title></title></sect1>
+		
 	</chapter>
 </book>
 	

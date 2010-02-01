@@ -15,7 +15,7 @@ public class SimplePaginator implements Paginator, Serializable {
 	private boolean nextAvailable;
 
 	public SimplePaginator() {
-		this(10);		
+		this(null);		
 	}
 	
 	public SimplePaginator(Integer maxRows) {

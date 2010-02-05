@@ -1095,8 +1095,51 @@ showResults(results2);
 			interface and implementations for this is how we create datasets that
 			can attach to different datasources in a useful way.
 		</para>
-		<sect1><title></title></sect1>
-		
+		<sect1>
+			<title>
+				<classname>ParameterizedDataProvider</classname>
+			</title>
+			<para>
+				The first subclass of the
+				<classname>DataProvider</classname>
+				interface is the
+				<classname>ParameterizedDataProvider</classname>
+				that introduces methods for fetching data based on dynamic
+				parameters.
+			</para>
+		</sect1>
+
+		<sect1>
+			<title>
+				<classname>StatementDataProvider</classname>
+			</title>
+			<para>
+				The
+				<classname>StatementDataProvider</classname>
+				extends the
+				<classname>ParameterizedDataProvider</classname>
+				and adds the ability to define string based statements for fetching
+				and counting the number of rows of data. Since this extends the
+				<classname>ParameterizedDataProvider</classname>
+				we can let the user define statements that have parameters within
+				them. This obviously lends itself to easily providing the bulk of
+				features of a Sql or Ejbql or Hql data provider.
+			</para>
+		</sect1>
+
+		<sect1>
+			<title>
+				<classname>QueryDataProvider</classname>
+			</title>
+			<para>
+				The
+				<classname>QueryDataProvider</classname>
+				extends the
+				<classname>StatementDataProvider</classname>
+				and adds the ability to define restrictions and ordering.
+			</para>
+		</sect1>
+
 	</chapter>
 </book>
 	

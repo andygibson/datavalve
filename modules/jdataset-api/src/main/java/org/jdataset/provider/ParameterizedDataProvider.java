@@ -13,7 +13,7 @@ import org.jdataset.params.ParameterResolver;
  * 
  * @author Andy Gibson
  * 
- * @param <T>
+ * @param <T> The type of objects returned from this query
  */
 public interface ParameterizedDataProvider<T> extends DataProvider<T> {
 
@@ -26,7 +26,7 @@ public interface ParameterizedDataProvider<T> extends DataProvider<T> {
 	public abstract Map<String, Object> getParameters();
 
 	/**
-	 * Changes the parameter map for this dataset.
+	 * Set the parameter map for this dataset.
 	 * 
 	 * @param parameters
 	 *            The parameter map to assign to this dataset
@@ -39,7 +39,7 @@ public interface ParameterizedDataProvider<T> extends DataProvider<T> {
 	 * @param name
 	 *            Name of new parameter
 	 * @param value
-	 *            value of new parameter
+	 *            Value of new parameter
 	 */
 	public abstract void addParameter(String name, Object value);
 
@@ -59,7 +59,7 @@ public interface ParameterizedDataProvider<T> extends DataProvider<T> {
 	 * #{name} for EL expressions. This method should use the
 	 * {@link ParameterResolver} instances attached to this dataset to resolve
 	 * the parameter name to a value. This method should return the first
-	 * non-null value that is return from the attached resolver.
+	 * non-null value that is return from an attached resolver.
 	 * 
 	 * @param name
 	 *            of the parameter to resolve

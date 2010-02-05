@@ -6,23 +6,35 @@ import org.jdataset.ObjectDataset;
 import org.jdataset.Paginator;
 
 /**
- * Base interface for the {@link DataProvider} interfaces which define how to
- * access the data and provide data to the {@link ObjectDataset} instances.
- * <p>
- * The {@link DataProvider} also lets you access the data artbitrarily by
- * calling the {@link DataProvider#fetchResults(Paginator)} method and passing
- * in your own {@link Paginator} interface. This lets us decouple the state
- * from the data. We can hold the pagination information separately from the
- * data it works on.
+ * Interface for accessing data based on the current state of the provider and
+ * {@link Paginator}. Both the result count and data fetch are based on the
+ * current state of the provider indicating what data the user wants. This is
+ * particularly important in subclasses which may have SQL restrictions.
  * 
  * @author Andy Gibson
  * 
  * @param <T>
+ *            The type of object returned from this dataset.
  */
 public interface DataProvider<T> {
 
+	/**
+	 * Returns the number of rows that are in the complete dataset once the
+	 * state of the provider has been taken into account.
+	 * 
+	 * @return The number of rows in the whole dataset
+	 */
 	Integer fetchResultCount();
 
+	/**
+	 * Fetches the (sub)set of data based on the current provider state and the
+	 * contents of the Paginator.
+	 * 
+	 * @param paginator
+	 *            Indicates the set of data to return from the complete set.
+	 * @return List of objects of type <T> for the rows of the dataset as
+	 *         defined by the Paginator.
+	 */
 	List<T> fetchResults(Paginator paginator);
 
 }

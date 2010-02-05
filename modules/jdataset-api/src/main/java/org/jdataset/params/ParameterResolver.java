@@ -34,7 +34,7 @@ public interface ParameterResolver {
 	/**
 	 * Determines whether or not this parameter is suitable for resolution by
 	 * this resolver based on the name of the parameter. For example an EL
-	 * resolver may only want paramters that start with a '#{' and end with a
+	 * resolver may only want parameters that start with a '#{' and end with a
 	 * '}'. Other resolvers only want to try with parameters that start with a
 	 * colon.
 	 * 

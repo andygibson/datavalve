@@ -1,8 +1,8 @@
 package org.jdataset.sample.wicket.dataprovider;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.ObjectDataset;
-import org.jdataset.impl.Dataset;
+import org.jdataset.dataset.Dataset;
+import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.impl.provider.jpa.JpaDataProvider;
 import org.phonelist.model.Person;
 

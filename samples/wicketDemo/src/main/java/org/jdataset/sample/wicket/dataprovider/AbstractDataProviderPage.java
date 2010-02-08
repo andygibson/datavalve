@@ -7,7 +7,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDat
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.Model;
-import org.jdataset.ObjectDataset;
+import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.sample.wicket.DatasetInfoPanel;
 import org.jdataset.sample.wicket.HeaderLinkPanel;
 import org.jdataset.sample.wicket.WicketApplication;

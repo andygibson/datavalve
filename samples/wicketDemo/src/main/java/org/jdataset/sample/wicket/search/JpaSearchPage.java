@@ -1,11 +1,9 @@
 package org.jdataset.sample.wicket.search;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.combined.ParameterizedDataset;
-import org.jdataset.impl.combo.DefaultParameterizedDataset;
+import org.jdataset.dataset.DefaultParameterizedDataset;
+import org.jdataset.dataset.ParameterizedDataset;
 import org.jdataset.impl.provider.jpa.JpaDataProvider;
-import org.jdataset.impl.provider.jpa.JpaDataset;
-import org.jdataset.provider.QueryDataProvider;
 import org.phonelist.model.Person;
 
 public class JpaSearchPage extends AbstractSearchPage {

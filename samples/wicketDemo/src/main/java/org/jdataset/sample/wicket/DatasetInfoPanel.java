@@ -3,7 +3,7 @@ package org.jdataset.sample.wicket;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.jdataset.ObjectDataset;
+import org.jdataset.dataset.ObjectDataset;
 
 public class DatasetInfoPanel extends Panel {
 

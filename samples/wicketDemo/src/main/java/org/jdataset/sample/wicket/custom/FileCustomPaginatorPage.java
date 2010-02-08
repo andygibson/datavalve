@@ -3,8 +3,8 @@ package org.jdataset.sample.wicket.custom;
 import java.net.URL;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.ObjectDataset;
-import org.jdataset.impl.CommaDelimitedDataset;
+import org.jdataset.dataset.CommaDelimitedDataset;
+import org.jdataset.dataset.ObjectDataset;
 import org.phonelist.model.Person;
 
 public class FileCustomPaginatorPage extends AbstractCustomPaginatorPage {

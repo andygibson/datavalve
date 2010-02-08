@@ -5,9 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.combined.ParameterizedDataset;
-import org.jdataset.combined.QueryDataset;
-import org.jdataset.impl.combo.DefaultParameterizedDataset;
+import org.jdataset.dataset.DefaultParameterizedDataset;
+import org.jdataset.dataset.ParameterizedDataset;
 import org.jdataset.impl.provider.jdbc.AbstractJdbcQueryDataProvider;
 import org.jdataset.provider.QueryDataProvider;
 import org.phonelist.model.Person;

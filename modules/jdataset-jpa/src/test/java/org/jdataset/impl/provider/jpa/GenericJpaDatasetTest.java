@@ -8,9 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.impl.GenericProviderDataset;
-import org.jdataset.impl.provider.jpa.JpaDataProvider;
+import org.jdataset.dataset.GenericProviderDataset;
+import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.params.Parameter;
 import org.jdataset.params.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;

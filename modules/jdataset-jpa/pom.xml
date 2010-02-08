@@ -86,5 +86,10 @@
 			<version>1.4.2</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jdataset</groupId>
+			<artifactId>jdataset-dataset</artifactId>
+			<version>0.1-Alpha</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -1,6 +1,6 @@
 package org.jdataset.impl.provider.jpa;
 
-import org.jdataset.impl.GenericProviderDataset;
+import org.jdataset.dataset.GenericProviderDataset;
 import org.jdataset.provider.QueryDataProvider;
 
 public class JpaDataset<T> extends GenericProviderDataset<T, QueryDataProvider<T>> {

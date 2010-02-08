@@ -2,7 +2,6 @@ package org.jdataset.provider;
 
 import java.util.List;
 
-import org.jdataset.ObjectDataset;
 import org.jdataset.Paginator;
 
 /**

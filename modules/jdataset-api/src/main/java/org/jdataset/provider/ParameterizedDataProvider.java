@@ -2,7 +2,6 @@ package org.jdataset.provider;
 
 import java.util.Map;
 
-import org.jdataset.ObjectDataset;
 import org.jdataset.params.ParameterResolver;
 
 /**

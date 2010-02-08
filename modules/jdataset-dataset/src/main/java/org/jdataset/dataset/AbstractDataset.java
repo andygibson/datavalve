@@ -9,9 +9,9 @@ import org.jdataset.Paginator;
 
 /**
  * This is an abstract dataset that provides common implementation for most of
- * the {@link ObjectDataset} methods. It uses a strategy pattern for
- * implementing the fetching of information as using mechanisms defined by
- * subclass implementations.
+ * the {@link ObjectDataset} methods. It uses a template pattern for
+ * implementing the fetching of information by letting subclasses define that
+ * particular function.
  * <p>
  * The <code>fetchResultCount()</code> and <code>fetchResults()</code> methods
  * should be overridden in subclasses to implement the fetching of data and the

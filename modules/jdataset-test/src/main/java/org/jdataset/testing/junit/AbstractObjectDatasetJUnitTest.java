@@ -9,7 +9,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.jdataset.ObjectDataset;
+import org.jdataset.dataset.ObjectDataset;
 
 /**
  * This class appears in two different places. First, it appears in the test

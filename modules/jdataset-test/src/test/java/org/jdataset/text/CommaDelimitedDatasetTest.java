@@ -6,8 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.impl.CommaDelimitedDataset;
+import org.jdataset.dataset.CommaDelimitedDataset;
+import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 

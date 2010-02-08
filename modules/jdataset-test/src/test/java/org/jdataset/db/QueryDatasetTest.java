@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdataset.ObjectDataset;
 import org.jdataset.Paginator;
-import org.jdataset.combined.QueryDataset;
-import org.jdataset.impl.combo.DefaultQueryDataset;
+import org.jdataset.dataset.DefaultQueryDataset;
+import org.jdataset.dataset.ObjectDataset;
+import org.jdataset.dataset.QueryDataset;
 import org.jdataset.impl.provider.AbstractQueryDataProvider;
 import org.jdataset.provider.QueryDataProvider;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;

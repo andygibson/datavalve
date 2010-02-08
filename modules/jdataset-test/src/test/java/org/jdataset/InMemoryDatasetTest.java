@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.jdataset.impl.GenericProviderDataset;
+import org.jdataset.dataset.GenericProviderDataset;
+import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.impl.InMemoryDataProvider;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 

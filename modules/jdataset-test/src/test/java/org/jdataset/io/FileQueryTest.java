@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
-import org.jdataset.ObjectDataset;
+import org.jdataset.dataset.GenericProviderDataset;
+import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.impl.FileDataProvider;
-import org.jdataset.impl.GenericProviderDataset;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 
 public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {

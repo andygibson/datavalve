@@ -1,9 +1,7 @@
 package org.jdataset.impl.provider.jdbc;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.impl.combo.DefaultQueryDataset;
-import org.jdataset.impl.provider.jdbc.MappedJdbcQueryDataset;
-import org.jdataset.impl.provider.jdbc.TableRow;
+import org.jdataset.dataset.DefaultQueryDataset;
+import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.provider.QueryDataProvider;
 
 public class MappedSqlQueryDatasetTest extends BaseJdbcDatasetTest<TableRow> {

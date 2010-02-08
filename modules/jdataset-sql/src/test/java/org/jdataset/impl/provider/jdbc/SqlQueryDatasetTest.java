@@ -3,10 +3,9 @@ package org.jdataset.impl.provider.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.combined.QueryDataset;
-import org.jdataset.impl.combo.DefaultQueryDataset;
-import org.jdataset.impl.provider.jdbc.AbstractJdbcQueryDataProvider;
+import org.jdataset.dataset.DefaultQueryDataset;
+import org.jdataset.dataset.ObjectDataset;
+import org.jdataset.dataset.QueryDataset;
 import org.jdataset.provider.QueryDataProvider;
 
 public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {

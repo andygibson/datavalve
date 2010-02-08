@@ -4,12 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.combined.StatementDataset;
-import org.jdataset.impl.combo.DefaultStatementDataset;
-import org.jdataset.impl.provider.jdbc.AbstractJdbcDataProvider;
-import org.jdataset.impl.provider.jdbc.MappedJdbcDataProvider;
-import org.jdataset.impl.provider.jdbc.TableRow;
+import org.jdataset.dataset.DefaultStatementDataset;
+import org.jdataset.dataset.ObjectDataset;
+import org.jdataset.dataset.StatementDataset;
 import org.jdataset.params.Parameter;
 import org.jdataset.params.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;

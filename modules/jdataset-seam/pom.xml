@@ -45,5 +45,10 @@
 			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jdataset</groupId>
+			<artifactId>jdataset-dataset</artifactId>
+			<version>0.1-Alpha</version>
+		</dependency>		
 	</dependencies>
 </project>

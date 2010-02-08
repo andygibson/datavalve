@@ -3,7 +3,7 @@ package org.jdataset.seam;
 import javax.persistence.EntityManager;
 
 import org.jboss.seam.annotations.In;
-import org.jdataset.impl.combo.DefaultQueryDataset;
+import org.jdataset.dataset.DefaultQueryDataset;
 import org.jdataset.impl.provider.jpa.JpaNativeDataProvider;
 
 

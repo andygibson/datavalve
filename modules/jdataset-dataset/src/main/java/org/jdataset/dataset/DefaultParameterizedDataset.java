@@ -1,10 +1,7 @@
-package org.jdataset.impl.combo;
+package org.jdataset.dataset;
 
 import java.util.Map;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.combined.ParameterizedDataset;
-import org.jdataset.impl.Dataset;
 import org.jdataset.params.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;
 
@@ -50,7 +47,7 @@ public class DefaultParameterizedDataset<T> extends Dataset<T> implements
 	public Object resolveParameter(String name) {
 		return getProvider().resolveParameter(name);
 	}
-
+	
 	public void setParameters(Map<String, Object> parameters) {
 		getProvider().setParameters(parameters);
 	}

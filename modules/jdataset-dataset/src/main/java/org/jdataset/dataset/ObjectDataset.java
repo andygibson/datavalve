@@ -1,6 +1,8 @@
-package org.jdataset;
+package org.jdataset.dataset;
 
 import java.util.List;
+
+import org.jdataset.Paginator;
 
 /**
  * This is the base interface for the stateful object datasets. It provides

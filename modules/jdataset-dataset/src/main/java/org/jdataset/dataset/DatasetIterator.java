@@ -1,8 +1,6 @@
-package org.jdataset.util;
+package org.jdataset.dataset;
 
 import java.util.Iterator;
-
-import org.jdataset.ObjectDataset;
 
 /**
  * Iterator implementation for the iterator that is returned from the 

@@ -1,11 +1,8 @@
-package org.jdataset.impl.combo;
+package org.jdataset.dataset;
 
 import java.util.List;
 import java.util.Map;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.combined.QueryDataset;
-import org.jdataset.impl.Dataset;
 import org.jdataset.provider.QueryDataProvider;
 
 /**

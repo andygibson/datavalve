@@ -1,8 +1,7 @@
-package org.jdataset.impl;
+package org.jdataset.dataset;
 
 import java.util.List;
 
-import org.jdataset.AbstractDataset;
 import org.jdataset.Paginator;
 import org.jdataset.provider.DataProvider;
 

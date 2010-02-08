@@ -1,4 +1,4 @@
-package org.jdataset.impl;
+package org.jdataset.dataset;
 
 import org.jdataset.provider.QueryDataProvider;
 

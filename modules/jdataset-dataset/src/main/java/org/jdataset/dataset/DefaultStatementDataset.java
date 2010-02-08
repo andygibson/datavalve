@@ -1,8 +1,5 @@
-package org.jdataset.impl.combo;
+package org.jdataset.dataset;
 
-import org.jdataset.ObjectDataset;
-import org.jdataset.combined.StatementDataset;
-import org.jdataset.impl.Dataset;
 import org.jdataset.provider.StatementDataProvider;
 
 /**

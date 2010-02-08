@@ -1,11 +1,11 @@
-package org.jdataset;
+package org.jdataset.dataset;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.util.DatasetIterator;
+import org.jdataset.Paginator;
 
 /**
  * This is an abstract dataset that provides common implementation for most of

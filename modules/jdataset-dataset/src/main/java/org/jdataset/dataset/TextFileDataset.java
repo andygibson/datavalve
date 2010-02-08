@@ -1,4 +1,4 @@
-package org.jdataset.impl;
+package org.jdataset.dataset;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdataset.AbstractDataset;
 import org.jdataset.Paginator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

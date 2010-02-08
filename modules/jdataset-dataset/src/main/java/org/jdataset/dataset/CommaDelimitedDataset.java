@@ -1,4 +1,4 @@
-package org.jdataset.impl;
+package org.jdataset.dataset;
 
 /**
  * This dataset extends the {@link TextFileDataset} dataset to treat each line

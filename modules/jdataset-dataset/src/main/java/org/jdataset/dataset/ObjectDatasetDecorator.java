@@ -1,10 +1,9 @@
-package org.jdataset.util;
+package org.jdataset.dataset;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.ObjectDataset;
 import org.jdataset.Paginator;
 
 /**

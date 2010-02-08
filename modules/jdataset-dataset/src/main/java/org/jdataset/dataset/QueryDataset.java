@@ -1,6 +1,5 @@
-package org.jdataset.combined;
+package org.jdataset.dataset;
 
-import org.jdataset.ObjectDataset;
 import org.jdataset.provider.QueryDataProvider;
 
 /**

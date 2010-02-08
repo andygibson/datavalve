@@ -69,5 +69,10 @@
 			<version>3.8.0.GA</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jdataset</groupId>
+			<artifactId>jdataset-dataset</artifactId>
+			<version>0.1-Alpha</version>
+		</dependency>
 	</dependencies>
 </project>

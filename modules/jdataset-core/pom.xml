@@ -36,12 +36,6 @@
 			<version>0.1-Alpha</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jdataset</groupId>
-			<artifactId>jdataset-test</artifactId>
-			<version>0.1-Alpha</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.5.8</version>

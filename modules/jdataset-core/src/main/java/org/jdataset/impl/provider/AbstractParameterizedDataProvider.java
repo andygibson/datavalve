@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdataset.AbstractDataset;
 import org.jdataset.DatasetEnvironment;
 import org.jdataset.impl.params.ParameterParser;
 import org.jdataset.impl.params.RegexParameterParser;

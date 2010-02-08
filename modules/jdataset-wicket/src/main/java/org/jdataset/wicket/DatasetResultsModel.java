@@ -3,7 +3,7 @@ package org.jdataset.wicket;
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
-import org.jdataset.ObjectDataset;
+import org.jdataset.dataset.ObjectDataset;
 
 public class DatasetResultsModel<T> implements IModel<List<T>> {
 

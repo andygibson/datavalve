@@ -6,7 +6,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDat
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.jdataset.ObjectDataset;
+import org.jdataset.dataset.ObjectDataset;
 
 /**
  * This implements the {@link ISortableDataProvider} interface to provide a

@@ -1,8 +1,8 @@
 package org.jdataset.wicket;
 
 import org.apache.wicket.model.IModel;
-import org.jdataset.ObjectDataset;
-import org.jdataset.util.ObjectDatasetDecorator;
+import org.jdataset.dataset.ObjectDataset;
+import org.jdataset.dataset.ObjectDatasetDecorator;
 
 /**
  * Extends the {@link ObjectDatasetDecorator} class and implements the

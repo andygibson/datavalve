@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jdataset</groupId>
 	<artifactId>jdataset</artifactId>
@@ -11,6 +12,7 @@
 		<jsdName>jdataset</jsdName>
 		<jdsVersion>0.1-Alpha</jdsVersion>
 		<jdsGroupId>org.jdataset</jdsGroupId>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<build>
 		<plugins>
@@ -26,13 +28,15 @@
 	</build>
 
 	<modules>
-    <module>jdataset-api</module>
-    <module>jdataset-core</module>
-    <module>jdataset-jpa</module>
-    <module>jdataset-test</module>
-    <module>jdataset-sql</module>
-    <module>jdataset-wicket</module>
-    <module>jdataset-seam</module>
-    <module>jdataset-hibernate</module>
-  </modules>
+		<module>jdataset-api</module>
+		<module>jdataset-core</module>
+		<module>jdataset-dataset</module>
+		<module>jdataset-jpa</module>
+		<module>jdataset-test</module>
+		<module>jdataset-sql</module>
+		<module>jdataset-wicket</module>
+		<module>jdataset-seam</module>
+		<module>jdataset-hibernate</module>
+
+	</modules>
 </project>

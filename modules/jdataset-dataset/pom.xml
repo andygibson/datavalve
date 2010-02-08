@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>jdataset</artifactId>
+    <groupId>org.jdataset</groupId>
+    <version>0.1-Alpha</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jdataset</groupId>
+  <artifactId>jdataset-dataset</artifactId>
+  <name>jdataset-dataset</name>
+  <version>0.1-Alpha</version>
+  <description>Contains the datasets for the jdataset project</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.jdataset</groupId>
+  		<artifactId>jdataset-api</artifactId>
+  		<version>0.1-Alpha</version>
+  	</dependency>
+  </dependencies>
+</project>

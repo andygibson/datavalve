@@ -1,4 +1,4 @@
-package org.jdataset.params;
+package org.jdataset;
 
 /**
  * A value holder used to store resolved parameters. 

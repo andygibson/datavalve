@@ -1,8 +1,6 @@
 package org.jdataset.dataset;
 
-import java.util.Map;
-
-import org.jdataset.params.ParameterResolver;
+import org.jdataset.ParameterManager;
 import org.jdataset.provider.ParameterizedDataProvider;
 
 /**
@@ -32,23 +30,10 @@ public class DefaultParameterizedDataset<T> extends Dataset<T> implements
 		return (ParameterizedDataProvider<T>) super.getProvider();
 	}
 
-	public void addParameter(String name, Object value) {
-		getProvider().addParameter(name, value);
-	}
-
-	public void addParameterResolver(ParameterResolver resolver) {
-		getProvider().addParameterResolver(resolver);
-	}
-
-	public Map<String, Object> getParameters() {
-		return getProvider().getParameters();
-	}
-
-	public Object resolveParameter(String name) {
-		return getProvider().resolveParameter(name);
+	public ParameterManager getParameterHandler() {
+		return getProvider().getParameterHandler();
 	}
 	
-	public void setParameters(Map<String, Object> parameters) {
-		getProvider().setParameters(parameters);
-	}
+	
+
 }

@@ -35,8 +35,8 @@ public class JdbcCustomPaginatorPage extends AbstractCustomPaginatorPage {
 			}        	
         };
         
-        people.setCountStatement("select count(1) from PERSONS p");
-        people.setSelectStatement("select * from PERSONS p");
+        people.getStatementHandler().setCountStatement("select count(1) from PERSONS p");
+        people.getStatementHandler().setSelectStatement("select * from PERSONS p");
         return new Dataset<Person>(people);        
 	}
 	

@@ -35,7 +35,7 @@ public class SeamJpaDataset<T> extends DefaultQueryDataset<T> {
 	protected SeamJpaDataset(JpaDataProvider<T> jpaProvider) {
 		super(jpaProvider);
 		this.jpaProvider = jpaProvider;
-		addParameterResolver(new SeamParameterResolver());
+		getParameterHandler().addParameterResolver(new SeamParameterResolver());
 	}
 
 	

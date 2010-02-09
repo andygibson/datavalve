@@ -1,15 +1,21 @@
 package org.jdataset.impl.provider;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.jdataset.OrderManager;
 import org.jdataset.Paginator;
+import org.jdataset.Parameter;
+import org.jdataset.ParameterManager;
+import org.jdataset.RestrictionManager;
+import org.jdataset.StatementManager;
+import org.jdataset.impl.DefaultParameterManager;
+import org.jdataset.impl.DefaultQLOrderHandler;
+import org.jdataset.impl.DefaultRestrictionManager;
+import org.jdataset.impl.DefaultStatementManager;
 import org.jdataset.impl.RestrictionBuilder;
-import org.jdataset.params.Parameter;
 import org.jdataset.provider.QueryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,112 +38,26 @@ import org.slf4j.LoggerFactory;
  *            Type of object this dataset contains.
  */
 public abstract class AbstractQueryDataProvider<T> extends
-		AbstractParameterizedDataProvider<T> implements QueryDataProvider<T>,
-		Serializable {
+		AbstractDataProvider<T> implements QueryDataProvider<T>, Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private int paramId;
 
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractQueryDataProvider.class);
 
 	private static Pattern commaSplitter = Pattern.compile(",");
-	private String selectStatement;
-	private String countStatement;
-	private Map<String, String> orderKeyMap = new HashMap<String, String>();
-	private List<String> restrictions = new ArrayList<String>();
+	private StatementManager statementHandler = new DefaultStatementManager();
+	private DefaultQLOrderHandler orderHandler = new DefaultQLOrderHandler();
+	private RestrictionManager restrictionHandler;
+	private ParameterManager parameterHandler;
 
-	public String getSelectStatement() {
-		return selectStatement;
-	}
-
-	public void setSelectStatement(String selectStatement) {
-		this.selectStatement = selectStatement;
-	}
-
-	public String getCountStatement() {
-		return countStatement;
-	}
-
-	public void setCountStatement(String countStatement) {
-		this.countStatement = countStatement;
-	}
-
-	public Map<String, String> getOrderKeyMap() {
-		return orderKeyMap;
-	}
-
-	public void setOrderKeyMap(Map<String, String> orderKeyMap) {
-		this.orderKeyMap = orderKeyMap;
-	}
-
-	public List<String> getRestrictions() {
-		return restrictions;
-	}
-
-	public void setRestrictions(List<String> restrictions) {
-		this.restrictions = restrictions;
+	public AbstractQueryDataProvider() {
+		parameterHandler = new DefaultParameterManager();
+		restrictionHandler = new DefaultRestrictionManager(parameterHandler);
 	}
 
 	public void init(Class<? extends Object> clazz, String prefix) {
-		setCountStatement(String.format("select count(%s) from %s %s ",prefix,clazz.getSimpleName(),prefix));
-		setSelectStatement(String.format("select %s from %s %s ",prefix,clazz.getSimpleName(),prefix));		
-	}
-
-	/**
-	 * Determines the order by clause based on the values of
-	 * {@link ObjectDataset#getOrderKey()},
-	 * {@link QueryDataProvider#getOrderKeyMap()} and
-	 * {@link QueryDataProvider#isOrderAscending()}. If no order is specified
-	 * then <code>null</code> is returned.
-	 * 
-	 * @see #calculateOrderByClause()
-	 * 
-	 * @return The order by fields with asc/desc indicators or null of there is
-	 *         no order by specified.
-	 */
-	public final String calculateOrderBy(Paginator paginator) {
-		String orderKey = paginator.getOrderKey();
-
-		// fail quickly if we don't have an order
-		if (orderKey == null || orderKey.length() == 0) {
-			return null;
-		}
-
-		// we specified an order key, but we have no values, so issue a warning
-		// to the user
-		if (orderKeyMap.size() == 0) {
-			log.warn("orderKey property is set but the orderKeyMap is empty.");
-			return null;
-		}
-
-		String order = translateOrderKey(orderKey);
-		if (order == null) {
-			// if we can't find the order, then warn the user
-			log.warn("orderKey value '{}' not translated successfully",
-					orderKey);
-			return null;
-		}
-
-		// parse out fields and add order
-		String[] fields = commaSplitter.split(order);
-		order = "";
-		// concatenate the fields with the direction, put commas in between
-		for (String field : fields) {
-			if (order.length() != 0) {
-				order = order + ", ";
-			}
-			order = order + field
-					+ (paginator.isOrderAscending() ? " ASC " : " DESC ");
-		}
-		log.debug("Order key = {}, order by = {}", paginator.getOrderKey(),
-				order);
-		return order;
-	}
-
-	private String translateOrderKey(String orderKeyValue) {
-		return getOrderKeyMap().get(orderKeyValue);
+		statementHandler.init(clazz, prefix);
 	}
 
 	/**
@@ -150,7 +70,7 @@ public abstract class AbstractQueryDataProvider<T> extends
 	 *         prefixed with " ORDER BY "
 	 */
 	public final String calculateOrderByClause(Paginator paginator) {
-		String order = calculateOrderBy(paginator);
+		String order = orderHandler.calculateOrderBy(paginator);
 		if (order == null) {
 			return "";
 		}
@@ -178,7 +98,7 @@ public abstract class AbstractQueryDataProvider<T> extends
 			Map<String, Object> queryParams, boolean includeOrderBy,
 			Paginator paginator) {
 		queryParams.clear();
-		RestrictionBuilder rb = new RestrictionBuilder(this);
+		RestrictionBuilder rb = new RestrictionBuilder(getRestrictionHandler());
 
 		for (Parameter param : rb.getParameterList()) {
 			queryParams.put(param.getName(), param.getValue());
@@ -212,6 +132,22 @@ public abstract class AbstractQueryDataProvider<T> extends
 		return temp.subList(0, paginator.getMaxRows());
 	}
 
+	public RestrictionManager getRestrictionHandler() {
+		return restrictionHandler;
+	}
+
+	public ParameterManager getParameterHandler() {
+		return parameterHandler;
+	}
+
+	public OrderManager getOrderHandler() {
+		return orderHandler;
+	}
+
+	public StatementManager getStatementHandler() {
+		return statementHandler;
+	}
+
 	/**
 	 * @param count
 	 *            Number of rows to returnm, if 0, return all rows.
@@ -220,36 +156,5 @@ public abstract class AbstractQueryDataProvider<T> extends
 	 */
 	protected abstract List<T> fetchResultsFromDatabase(Paginator paginator,
 			Integer count);
-
-	public void addRestriction(String restriction) {
-		getRestrictions().add(restriction);
-	}
-
-	protected String getNextParamName() {
-		return "_param_" + String.valueOf(paramId++);
-	}
-
-	public boolean addRestriction(String syntax, Object value) {
-		return addRestriction(syntax, value, value);
-	}
-
-	public boolean addRestriction(String syntax, String testValue,
-			String paramValue) {
-		if (testValue != null && testValue.length() != 0) {
-			return addRestriction(syntax, testValue,paramValue);
-		}
-		return false;
-	}
-
-	public boolean addRestriction(String syntax, Object testValue, Object paramValue) {
-		if (testValue != null) {
-			String name = getNextParamName();
-			syntax = syntax.replace(":param", ":" + name);
-			addRestriction(syntax);
-			getParameters().put(name, paramValue);
-			return true;
-		}
-		return false;
-	}
 
 }

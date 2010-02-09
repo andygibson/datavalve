@@ -2,8 +2,8 @@ package org.jdataset.dataset;
 
 import java.util.List;
 
+import org.jdataset.DataProvider;
 import org.jdataset.Paginator;
-import org.jdataset.provider.DataProvider;
 
 /**
  * A Generic version of the provider dataset that extends the

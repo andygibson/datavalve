@@ -1,7 +1,8 @@
-package org.jdataset.params;
+package org.jdataset;
 
 import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.provider.QueryDataProvider;
+
 
 /**
  * Class that can be used to define components that are used to provide

@@ -2,8 +2,8 @@ package org.jdataset.db;
 
 import java.io.Serializable;
 
-import org.jdataset.params.Parameter;
-import org.jdataset.params.ParameterResolver;
+import org.jdataset.Parameter;
+import org.jdataset.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;
 
 public class TestingParameterResolver implements ParameterResolver,Serializable {

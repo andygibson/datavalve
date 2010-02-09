@@ -3,8 +3,8 @@ package org.jdataset.impl.params;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-import org.jdataset.params.Parameter;
-import org.jdataset.params.ParameterResolver;
+import org.jdataset.Parameter;
+import org.jdataset.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

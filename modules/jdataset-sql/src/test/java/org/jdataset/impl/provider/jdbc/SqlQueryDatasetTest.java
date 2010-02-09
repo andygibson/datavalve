@@ -32,17 +32,17 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 
 			}
 		};
-		provider.setSelectStatement("select * from persons");
-		provider.setCountStatement("select count(1) from persons");
-		provider.getOrderKeyMap().put("id", "id");
-		provider.getOrderKeyMap().put("name", "last_name,first_name");
+		provider.getStatementHandler().setSelectStatement("select * from persons");
+		provider.getStatementHandler().setCountStatement("select count(1) from persons");
+		provider.getOrderHandler().add("id", "id");
+		provider.getOrderHandler().add("name", "last_name,first_name");
 		
 		return new DefaultQueryDataset<Person>(provider);
 	}
 
 	public void testParameterQuery() {
 		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like 'A%'");
+		ds.getRestrictionHandler().add("FIRST_NAME like 'A%'");
 		int count = 0;
 		for (Person p : ds) {
 			assertTrue(p.getFirstName().startsWith("A"));
@@ -53,8 +53,8 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	
 	public void testParameterQueryWithValue() {
 		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like :param");
-		ds.getParameters().put("param","S%");
+		ds.getRestrictionHandler().add("FIRST_NAME like :param");
+		ds.getParameterHandler().addParameter("param","S%");
 		int count = 0;
 		for (Person p : ds) {
 			assertTrue(p.getFirstName().startsWith("S"));
@@ -66,13 +66,13 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	
 	public void testParameterQueryWithValueReRead() {
 		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like :param");
-		ds.getParameters().put("param","M%");		
+		ds.getRestrictionHandler().add("FIRST_NAME like :param");
+		ds.getParameterHandler().addParameter("param","M%");		
 		for (Person p : ds) {
 			assertTrue(p.getFirstName().startsWith("M"));
 		}
 		
-		ds.getParameters().put("param","T%");		
+		ds.getParameterHandler().addParameter("param","T%");		
 		ds.refresh();
 		for (Person p : ds) {
 			assertTrue(p.getFirstName().startsWith("T"));
@@ -82,7 +82,7 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	
 	public void testParameterQueryWithNoValue() {
 		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like :param");
+		ds.getRestrictionHandler().add("FIRST_NAME like :param");
 		assertEquals(getDataRowCount(), ds.getResultCount().intValue());
 		int count = ds.getResultCount();
 		assertEquals(getDataRowCount(), count);	
@@ -90,8 +90,8 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	
 	public void testParameterizedQueryCount() {
 		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like :param");
-		ds.getParameters().put("param","%");
+		ds.getRestrictionHandler().add("FIRST_NAME like :param");
+		ds.getParameterHandler().addParameter("param","%");
 		assertEquals(getDataRowCount(), ds.getResultCount().intValue());							
 	}
 	

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.params.Parameter;
+import org.jdataset.Parameter;
 
 /**
  * Simple class that stores a list of Parameter instances

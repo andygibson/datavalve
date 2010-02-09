@@ -3,8 +3,8 @@ package org.jdataset.seam;
 import java.io.Serializable;
 
 import org.jboss.seam.core.Expressions;
-import org.jdataset.params.Parameter;
-import org.jdataset.params.ParameterResolver;
+import org.jdataset.Parameter;
+import org.jdataset.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

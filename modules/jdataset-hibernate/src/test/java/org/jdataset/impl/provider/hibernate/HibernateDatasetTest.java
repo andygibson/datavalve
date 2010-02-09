@@ -7,11 +7,11 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.jdataset.Parameter;
+import org.jdataset.ParameterResolver;
 import org.jdataset.dataset.DefaultQueryDataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.dataset.QueryDataset;
-import org.jdataset.params.Parameter;
-import org.jdataset.params.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
@@ -111,7 +111,7 @@ public class HibernateDatasetTest extends
 		long result = qry.getResultCount();
 		assertEquals(30, result);
 
-		qry.getRestrictions().add("p.id = 3");
+		qry.getRestrictionHandler().add("p.id = 3");
 		qry.invalidateResultInfo();
 		result = qry.getResultCount();
 		assertEquals(1, result);
@@ -121,10 +121,10 @@ public class HibernateDatasetTest extends
 	public void testSimpleParameter() {
 		QueryDataset<Person> qry = buildQueryDataset();
 
-		qry.getRestrictions().add("p.id = :personId");
-		qry.getParameters().put("personId", 4l);
+		qry.getRestrictionHandler().add("p.id = :personId");
+		qry.getParameterHandler().addParameter("personId", 4l);
 		List<Person> result = qry.getResultList();
-		Long val = (Long) qry.resolveParameter(":personId");
+		Long val = (Long) qry.getParameterHandler().resolveParameter(":personId");
 		assertNotNull(val);
 		assertEquals(4, val.intValue());
 
@@ -138,7 +138,7 @@ public class HibernateDatasetTest extends
 
 	public void testMissingParameter() {
 		QueryDataset<Person> qry = buildQueryDataset();
-		qry.getRestrictions().add("p.id = #{personId}");
+		qry.getRestrictionHandler().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
 
 		assertNotNull(result);
@@ -149,9 +149,9 @@ public class HibernateDatasetTest extends
 
 	public void testNullParameter() {
 		QueryDataset<Person> qry = buildQueryDataset();
-		qry.getRestrictions().add("p.id = #{personId}");
+		qry.getRestrictionHandler().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
-		qry.getParameters().put("personId", null);
+		qry.getParameterHandler().addParameter("personId", null);
 
 		assertNotNull(result);
 
@@ -197,10 +197,10 @@ public class HibernateDatasetTest extends
 		System.out.println("Resolving ");
 		log.debug("Entering : resolver repeats eval test");
 		QueryDataset<Person> qry = buildQueryDataset();
-		qry.getRestrictions().add("p.id = #{id}");
-		qry.getRestrictions().add("p.id = #{id}");
+		qry.getRestrictionHandler().add("p.id = #{id}");
+		qry.getRestrictionHandler().add("p.id = #{id}");
 
-		qry.addParameterResolver(new ParameterResolver() {
+		qry.getParameterHandler().addParameterResolver(new ParameterResolver() {
 
 			long id = 20;
 
@@ -294,11 +294,11 @@ public class HibernateDatasetTest extends
 	public QueryDataset<Person> buildQueryDataset() {
 		HibernateDataProvider<Person> provider = new HibernateDataProvider<Person>();
 		provider.setSession(session);
-		provider.setSelectStatement("select p from Person p");
-		provider.setCountStatement("select count(p) from Person p");
-		provider.getOrderKeyMap().put("id", "p.id");
-		provider.getOrderKeyMap().put("name", "p.lastName,p.firstName");
-		provider.getOrderKeyMap().put("phone", "p.phone");
+		provider.getStatementHandler().setSelectStatement("select p from Person p");
+		provider.getStatementHandler().setCountStatement("select count(p) from Person p");
+		provider.getOrderHandler().add("id", "p.id");
+		provider.getOrderHandler().add("name", "p.lastName,p.firstName");
+		provider.getOrderHandler().add("phone", "p.phone");
 		return new DefaultQueryDataset<Person>(provider);
 	}
 

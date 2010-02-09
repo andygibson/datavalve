@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jdataset.Parameter;
+import org.jdataset.RestrictionManager;
 import org.jdataset.impl.params.ParameterParser;
 import org.jdataset.impl.params.ParameterValues;
 import org.jdataset.impl.params.RegexParameterParser;
-import org.jdataset.params.Parameter;
-import org.jdataset.provider.QueryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,7 +80,7 @@ public class RestrictionBuilder implements Serializable {
 
 	private List<String> restrictions = new ArrayList<String>();
 	private List<Parameter> parameterList = new ArrayList<Parameter>();
-	private QueryDataProvider<? extends Object> dataset;
+	private RestrictionManager restrictionHandler;
 	private int paramId;
 	private ParameterStyle parameterStyle = ParameterStyle.NAMED_PARAMETERS;
 	private boolean includeMissingParameters = false;
@@ -89,18 +89,19 @@ public class RestrictionBuilder implements Serializable {
 	 * Constructs a RestrictionBuilder for this particular dataset and defaults
 	 * the parameter style to <code>NAMED_PARAMETERS</code>
 	 * 
-	 * @param dataset
+	 * @param provider
 	 *            Dataset that contains the restrictions and parameter
 	 *            resolution for our query
 	 */
-	public RestrictionBuilder(QueryDataProvider<? extends Object> dataset) {
-		this(dataset, ParameterStyle.NAMED_PARAMETERS);
+	public RestrictionBuilder(RestrictionManager restrictionHandler) {
+		this(restrictionHandler, ParameterStyle.NAMED_PARAMETERS);
 	}
 
-	public RestrictionBuilder(QueryDataProvider<? extends Object> dataset,
+	public RestrictionBuilder(RestrictionManager restrictionHandler,
 			ParameterStyle parameterStyle) {
 		super();
-		this.dataset = dataset;
+		//this.provider = provider;
+		this.restrictionHandler = restrictionHandler;
 		this.parameterStyle = parameterStyle;
 		refresh();
 	}
@@ -122,7 +123,7 @@ public class RestrictionBuilder implements Serializable {
 
 	/**
 	 * Returns a parameter name to replace the parameter expression in the
-	 * query. If this dataset can use named parameters, then we return a unique
+	 * query. If this provider can use named parameters, then we return a unique
 	 * named parameter. Otherwise, we return a question mark '?' for use with
 	 * ordered parameters where they are referenced by the order they appear.
 	 * 
@@ -179,11 +180,11 @@ public class RestrictionBuilder implements Serializable {
 	public void refresh() {
 		paramId = 0;
 		clear();
-		if (dataset == null) {
+		if (restrictionHandler == null) {
 			return;
 		}
 
-		for (String restriction : dataset.getRestrictions()) {
+		for (String restriction : restrictionHandler.getRestrictions()) {
 			processRestriction(restriction);
 		}
 	}
@@ -260,7 +261,8 @@ public class RestrictionBuilder implements Serializable {
 
 		for (String expression : expressions) {
 			// resolve the value
-			Object value = dataset.resolveParameter(expression);
+			Object value = restrictionHandler.getParameterManager().resolveParameter(
+					expression);
 			log.debug("adding parameter expression '{}'", expression);
 			results.add(expression, value);
 		}

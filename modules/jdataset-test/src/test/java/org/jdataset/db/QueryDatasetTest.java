@@ -23,10 +23,10 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 
 			private static final long serialVersionUID = 1L;
 
-			@Override
+/*			@Override
 			public String getSelectStatement() {
 				return "Select o from Object o";
-			}
+			}*/
 
 			
 			public List<Integer> fetchResultsFromDatabase(Paginator paginator,Integer count) {
@@ -50,14 +50,15 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 
 		};
 
+		provider.getStatementHandler().setSelectStatement("Select o from Object o");
 		QueryDataset<Integer> res = new DefaultQueryDataset<Integer>(provider);
 		
-		res.getRestrictions().add("id = #{id}");
-		res.getRestrictions().add("firstName = #{person.firstName}");
-		res.getOrderKeyMap().put("id", "o.id");
-		res.getOrderKeyMap().put("first", "o.firstName");
+		res.getRestrictionHandler().add("id = #{id}");
+		res.getRestrictionHandler().add("firstName = #{person.firstName}");
+		res.getOrderHandler().add("id", "o.id");
+		res.getOrderHandler().add("first", "o.firstName");
 
-		res.addParameterResolver(new TestingParameterResolver());
+		res.getParameterHandler().addParameterResolver(new TestingParameterResolver());
 		return res;
 	}
 
@@ -278,8 +279,8 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		};
 		qry.init(QueryDatasetTest.class, "c");
 		
-		assertEquals("select c from QueryDatasetTest c ", qry.getSelectStatement());
-		assertEquals("select count(c) from QueryDatasetTest c ", qry.getCountStatement());		
+		assertEquals("select c from QueryDatasetTest c ", qry.getStatementHandler().getSelectStatement());
+		assertEquals("select count(c) from QueryDatasetTest c ", qry.getStatementHandler().getCountStatement());		
 	}
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {

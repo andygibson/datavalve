@@ -5,9 +5,9 @@ import java.util.Iterator;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.jdataset.DataProvider;
 import org.jdataset.Paginator;
 import org.jdataset.impl.SimplePaginator;
-import org.jdataset.provider.DataProvider;
 
 public class PaginatedDataProvider<T> extends SortableDataProvider<T> {
 

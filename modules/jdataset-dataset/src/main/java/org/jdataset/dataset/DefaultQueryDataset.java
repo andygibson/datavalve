@@ -3,6 +3,8 @@ package org.jdataset.dataset;
 import java.util.List;
 import java.util.Map;
 
+import org.jdataset.OrderManager;
+import org.jdataset.RestrictionManager;
 import org.jdataset.provider.QueryDataProvider;
 
 /**
@@ -30,40 +32,11 @@ public class DefaultQueryDataset<T> extends DefaultStatementDataset<T>
 	protected QueryDataProvider<T> getCastProvider() {
 		return (QueryDataProvider<T>) super.getProvider();
 	}
-
-	public void addRestriction(String restriction) {
-		getCastProvider().addRestriction(restriction);
+	public RestrictionManager getRestrictionHandler() {
+		return getCastProvider().getRestrictionHandler();
 	}
 
-	public Map<String, String> getOrderKeyMap() {
-		return getCastProvider().getOrderKeyMap();
-	}
-
-	public List<String> getRestrictions() {
-		return getCastProvider().getRestrictions();
-	}
-
-	public void setOrderKeyMap(Map<String, String> orderKeyMap) {
-		getCastProvider().setOrderKeyMap(orderKeyMap);
-	}
-
-	public void setRestrictions(List<String> restrictions) {
-		getCastProvider().setRestrictions(restrictions);
-	}
-
-	public boolean addRestriction(String restriction, Object value) {
-		return getCastProvider().addRestriction(restriction, value);
-	}
-
-	public boolean addRestriction(String restriction, String testValue,
-			String paramValue) {
-		return getCastProvider().addRestriction(restriction, testValue,
-				paramValue);
-	}
-
-	public boolean addRestriction(String restriction, Object testValue,
-			Object paramValue) {
-		return getCastProvider().addRestriction(restriction, testValue,
-				paramValue);
+	public OrderManager getOrderHandler() {
+		return getCastProvider().getOrderHandler();
 	}
 }

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import org.jdataset.DataProvider;
 import org.jdataset.Paginator;
-import org.jdataset.provider.DataProvider;
 
 public abstract class AbstractDataProvider<T> implements DataProvider<T>,Serializable {
 

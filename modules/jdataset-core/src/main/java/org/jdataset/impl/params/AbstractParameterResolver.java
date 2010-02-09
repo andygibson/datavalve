@@ -1,6 +1,8 @@
-package org.jdataset.params;
+package org.jdataset.impl.params;
 
 import java.io.Serializable;
+
+import org.jdataset.ParameterResolver;
 
 /**
  * Abstract class that implements {@link ParameterResolver} and

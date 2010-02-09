@@ -8,10 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.jdataset.Parameter;
+import org.jdataset.ParameterResolver;
 import org.jdataset.dataset.GenericProviderDataset;
 import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.params.Parameter;
-import org.jdataset.params.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
@@ -115,7 +115,7 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 		long result = qry.getResultCount();
 		assertEquals(30, result);
 
-		qry.getProvider().getRestrictions().add("p.id = 3");
+		qry.getProvider().getRestrictionHandler().add("p.id = 3");
 		qry.invalidateResultInfo();
 		result = qry.getResultCount();
 		assertEquals(1, result);
@@ -125,10 +125,10 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 	public void testSimpleParameter() {
 		JpaDataset<Person> qry = buildQueryDataset();
 		
-		qry.getProvider().getRestrictions().add("p.id = :personId");
-		qry.getProvider().getParameters().put("personId", 4l);
+		qry.getProvider().getRestrictionHandler().add("p.id = :personId");
+		qry.getProvider().getParameterHandler().addParameter("personId", 4l);
 		List<Person> result = qry.getResultList();
-		Long val = (Long)qry.getProvider().resolveParameter(":personId");
+		Long val = (Long)qry.getProvider().getParameterHandler().resolveParameter(":personId");
 		assertNotNull(val);
 		assertEquals(4, val.intValue());
 
@@ -142,7 +142,7 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 
 	public void testMissingParameter() {
 		JpaDataset<Person> qry = buildQueryDataset();
-		qry.getProvider().getRestrictions().add("p.id = #{personId}");
+		qry.getProvider().getRestrictionHandler().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
 
 		assertNotNull(result);
@@ -153,9 +153,9 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 
 	public void testNullParameter() {
 		JpaDataset<Person> qry = buildQueryDataset();
-		qry.getProvider().getRestrictions().add("p.id = #{personId}");
+		qry.getProvider().getRestrictionHandler().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
-		qry.getProvider().getParameters().put("personId", null);
+		qry.getProvider().getParameterHandler().addParameter("personId", null);
 
 		assertNotNull(result);
 
@@ -201,10 +201,10 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 		System.out.println("Resolving ");
 		log.debug("Entering : resolver repeats eval test");
 		JpaDataset<Person> qry = buildQueryDataset();		
-		qry.getProvider().getRestrictions().add("p.id = #{id}");
-		qry.getProvider().getRestrictions().add("p.id = #{id}");
+		qry.getProvider().getRestrictionHandler().add("p.id = #{id}");
+		qry.getProvider().getRestrictionHandler().add("p.id = #{id}");
 
-		qry.getProvider().addParameterResolver(new ParameterResolver() {
+		qry.getProvider().getParameterHandler().addParameterResolver(new ParameterResolver() {
 
 			long id = 20;
 
@@ -294,11 +294,11 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 	public JpaDataset<Person> buildQueryDataset() {
 		JpaDataProvider<Person> provider = new JpaDataProvider<Person>();
 		provider.setEntityManager(em);
-		provider.setSelectStatement("select p from Person p");
-		provider.setCountStatement("select count(p) from Person p");
-		provider.getOrderKeyMap().put("id", "p.id");
-		provider.getOrderKeyMap().put("name", "p.lastName,p.firstName");
-		provider.getOrderKeyMap().put("phone", "p.phone");
+		provider.getStatementHandler().setSelectStatement("select p from Person p");
+		provider.getStatementHandler().setCountStatement("select count(p) from Person p");
+		provider.getOrderHandler().add("id", "p.id");
+		provider.getOrderHandler().add("name", "p.lastName,p.firstName");
+		provider.getOrderHandler().add("phone", "p.phone");
 		return new JpaDataset<Person>(provider);
 	}
 

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import org.jdataset.DataProvider;
 import org.jdataset.Paginator;
-import org.jdataset.provider.DataProvider;
 import org.jdataset.util.LazyList;
 
 /**

@@ -2,10 +2,9 @@ package org.jdataset;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.jdataset.params.AbstractParameterResolver;
-import org.jdataset.params.Parameter;
-import org.jdataset.params.ParameterResolver;
+import org.jdataset.impl.params.AbstractParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;
 
 /**
@@ -38,21 +37,23 @@ public class DatasetEnvironment implements ParameterResolver {
 		addParameterResolver(new AbstractParameterResolver() {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			public boolean resolveParameter(
 					ParameterizedDataProvider<? extends Object> dataset,
 					Parameter parameter) {
 				if (dataset == null) {
-					throw new IllegalArgumentException(
-							"Null dataset in provider parameter resolution, you need to write the param resolver which accepts a data provider as a parameter");
+					return false;
 				}
 				String strippedName = parameter.getName().substring(1);
-				if (dataset.getParameters().containsKey(strippedName)) {
-					parameter.setValue(dataset.getParameters()
-							.get(strippedName));
+				Map<String, Object> params = dataset.getParameterHandler()
+						.getParameters();
+
+				if (params.containsKey(strippedName)) {
+					parameter.setValue(params.get(strippedName));
 					return true;
 				}
 				return false;
+
 			}
 
 			public boolean acceptParameter(String name) {
@@ -66,7 +67,8 @@ public class DatasetEnvironment implements ParameterResolver {
 	}
 
 	public boolean resolveParameter(
-			ParameterizedDataProvider<? extends Object> dataset, Parameter parameter) {
+			ParameterizedDataProvider<? extends Object> dataset,
+			Parameter parameter) {
 		for (ParameterResolver resolver : parameterResolvers) {
 			if (resolver.acceptParameter(parameter.getName())) {
 				if (resolver.resolveParameter(dataset, parameter)) {

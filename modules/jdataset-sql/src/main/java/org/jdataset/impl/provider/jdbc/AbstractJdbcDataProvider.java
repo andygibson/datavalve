@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jdataset.Paginator;
+import org.jdataset.StatementManager;
+import org.jdataset.impl.DefaultStatementManager;
 import org.jdataset.impl.provider.AbstractParameterizedDataProvider;
 import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.provider.StatementDataProvider;
@@ -43,8 +45,7 @@ public abstract class AbstractJdbcDataProvider<T> extends
 	private static final long serialVersionUID = 1L;
 
 	private transient Connection connection;
-	private String countStatement;
-	private String selectStatement;
+	private StatementManager statementHandler = new DefaultStatementManager();
 	private ResultSetObjectProcessor<T> resultSetObjectProcessor = new ResultSetObjectProcessor<T>();
 
 	private static Logger log = LoggerFactory
@@ -70,9 +71,9 @@ public abstract class AbstractJdbcDataProvider<T> extends
 			for (String param : params) {
 				log.debug("Evaluating param : {}", param);
 				sql = sql.replace(param, "?");
-				Object value = resolveParameter(param);
+				Object value = getParameterHandler().resolveParameter(param);
 				log.debug("Resolved to  : {}", value);
-				paramValues.add(resolveParameter(param));
+				paramValues.add(getParameterHandler().resolveParameter(param));
 			}
 			log.debug("Final sql = {}", sql);
 			statement = connection.prepareStatement(sql);
@@ -93,7 +94,8 @@ public abstract class AbstractJdbcDataProvider<T> extends
 	public Integer fetchResultCount() {
 		int count = 0;
 		try {
-			PreparedStatement statement = buildStatement(getCountStatement());
+			PreparedStatement statement = buildStatement(getStatementHandler()
+					.getCountStatement());
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				count = resultSet.getInt(1);
@@ -108,7 +110,8 @@ public abstract class AbstractJdbcDataProvider<T> extends
 
 	public List<T> fetchResults(Paginator paginator) {
 		try {
-			PreparedStatement statement = buildStatement(getSelectStatement());
+			PreparedStatement statement = buildStatement(getStatementHandler()
+					.getSelectStatement());
 			ResultSet resultSet = statement.executeQuery();
 			List<T> results = resultSetObjectProcessor.createListFromResultSet(
 					resultSet, this, paginator.getFirstResult(), paginator
@@ -125,27 +128,13 @@ public abstract class AbstractJdbcDataProvider<T> extends
 	public abstract T createObjectFromResultSet(ResultSet resultSet)
 			throws SQLException;
 
-	public String getSelectStatement() {
-		return selectStatement;
-	}
-
-	public void setSelectStatement(String selectStatement) {
-		this.selectStatement = selectStatement;
-	}
-
-	public String getCountStatement() {
-		return countStatement;
-	}
-
-	public void setCountStatement(String countStatement) {
-		this.countStatement = countStatement;
+	public StatementManager getStatementHandler() {
+		return statementHandler;
 	}
 
 	public void init(Class<? extends Object> clazz, String prefix) {
-		setCountStatement(String.format("select count(%s) from %s %s ", prefix,
-				clazz.getSimpleName(), prefix));
-		setSelectStatement(String.format("select %s from %s %s ", prefix, clazz
-				.getSimpleName(), prefix));
+		getStatementHandler().init(clazz, prefix);
 
 	}
+
 }

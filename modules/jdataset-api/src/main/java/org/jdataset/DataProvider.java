@@ -1,8 +1,6 @@
-package org.jdataset.provider;
+package org.jdataset;
 
 import java.util.List;
-
-import org.jdataset.Paginator;
 
 /**
  * Interface for accessing data based on the current state of the provider and

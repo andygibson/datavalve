@@ -62,7 +62,6 @@ public abstract class AbstractJdbcQueryDataProvider<T> extends AbstractQueryData
 		return Collections.emptyList();
 	}
 
-	@Override
 	public Integer fetchResultCount() {
 		PreparedStatement statement = null;
 		try {

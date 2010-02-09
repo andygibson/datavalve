@@ -3,7 +3,6 @@ package org.jdataset.impl.provider;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.jdataset.OrderManager;
 import org.jdataset.Paginator;
@@ -45,7 +44,6 @@ public abstract class AbstractQueryDataProvider<T> extends
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractQueryDataProvider.class);
 
-	private static Pattern commaSplitter = Pattern.compile(",");
 	private StatementManager statementHandler = new DefaultStatementManager();
 	private DefaultQLOrderHandler orderHandler = new DefaultQLOrderHandler();
 	private RestrictionManager restrictionHandler;
@@ -140,7 +138,7 @@ public abstract class AbstractQueryDataProvider<T> extends
 		return parameterHandler;
 	}
 
-	public OrderManager getOrderHandler() {
+	public OrderManager<String> getOrderHandler() {
 		return orderHandler;
 	}
 

@@ -271,7 +271,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 				return null;
 			}
 
-			@Override
+			
 			public Integer fetchResultCount() {
 				return null;
 			}

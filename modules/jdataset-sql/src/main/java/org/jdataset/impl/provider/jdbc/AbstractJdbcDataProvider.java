@@ -89,8 +89,7 @@ public abstract class AbstractJdbcDataProvider<T> extends
 		}
 		return statement;
 	}
-
-	@Override
+	
 	public Integer fetchResultCount() {
 		int count = 0;
 		try {

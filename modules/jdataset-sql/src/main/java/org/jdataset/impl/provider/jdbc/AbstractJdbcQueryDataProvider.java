@@ -47,7 +47,7 @@ public abstract class AbstractJdbcQueryDataProvider<T> extends AbstractQueryData
 		log.debug("FetchResultsFromDB, order = {}",paginator.getOrderKey());
 		PreparedStatement statement = null;
 		try {
-			statement = buildPreparedStatement(getStatementHandler().getSelectStatement(),true,paginator);
+			statement = buildPreparedStatement(getSelectStatement(),true,paginator);
 			
 			ResultSet resultSet = statement.executeQuery();
 
@@ -62,10 +62,11 @@ public abstract class AbstractJdbcQueryDataProvider<T> extends AbstractQueryData
 		return Collections.emptyList();
 	}
 
+	@Override
 	public Integer fetchResultCount() {
 		PreparedStatement statement = null;
 		try {
-			statement = buildPreparedStatement(getStatementHandler().getCountStatement(),false,null);
+			statement = buildPreparedStatement(getCountStatement(),false,null);
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
@@ -84,7 +85,7 @@ public abstract class AbstractJdbcQueryDataProvider<T> extends AbstractQueryData
 	private PreparedStatement buildPreparedStatement(String selectSql,boolean includeOrderBy,Paginator paginator)
 			throws SQLException {
 		
-		RestrictionBuilder rb = new RestrictionBuilder(getRestrictionHandler(),
+		RestrictionBuilder rb = new RestrictionBuilder(this,
 				ParameterStyle.ORDERED_QUESTION_MARKS);
 		String sql = selectSql + rb.buildWhereClause();
 		if (includeOrderBy) {

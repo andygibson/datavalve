@@ -50,15 +50,15 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 
 		};
 
-		provider.getStatementHandler().setSelectStatement("Select o from Object o");
+		provider.setSelectStatement("Select o from Object o");
 		QueryDataset<Integer> res = new DefaultQueryDataset<Integer>(provider);
 		
-		res.getRestrictionHandler().add("id = #{id}");
-		res.getRestrictionHandler().add("firstName = #{person.firstName}");
-		res.getOrderHandler().add("id", "o.id");
-		res.getOrderHandler().add("first", "o.firstName");
+		res.addRestriction("id = #{id}");
+		res.addRestriction("firstName = #{person.firstName}");
+		res.getOrderKeyMap().put("id", "o.id");
+		res.getOrderKeyMap().put("first", "o.firstName");
 
-		res.getParameterHandler().addParameterResolver(new TestingParameterResolver());
+		res.addParameterResolver(new TestingParameterResolver());
 		return res;
 	}
 
@@ -279,8 +279,8 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		};
 		qry.init(QueryDatasetTest.class, "c");
 		
-		assertEquals("select c from QueryDatasetTest c ", qry.getStatementHandler().getSelectStatement());
-		assertEquals("select count(c) from QueryDatasetTest c ", qry.getStatementHandler().getCountStatement());		
+		assertEquals("select c from QueryDatasetTest c ", qry.getSelectStatement());
+		assertEquals("select count(c) from QueryDatasetTest c ", qry.getCountStatement());		
 	}
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {

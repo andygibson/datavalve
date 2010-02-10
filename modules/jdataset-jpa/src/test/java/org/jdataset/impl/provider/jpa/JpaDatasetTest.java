@@ -107,7 +107,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		long result = qry.getResultCount();
 		assertEquals(30, result);
 
-		qry.getRestrictionHandler().add("p.id = 3");
+		qry.getRestrictions().add("p.id = 3");
 		qry.invalidateResultInfo();
 		result = qry.getResultCount();
 		assertEquals(1, result);
@@ -117,10 +117,10 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	public void testSimpleParameter() {
 		QueryDataset<Person> qry = buildQueryDataset();
 		
-		qry.getRestrictionHandler().add("p.id = :personId");
-		qry.getParameterHandler().addParameter("personId", 4l);
+		qry.getRestrictions().add("p.id = :personId");
+		qry.getParameters().put("personId", 4l);
 		List<Person> result = qry.getResultList();
-		Long val = (Long)qry.getParameterHandler().resolveParameter(":personId");
+		Long val = (Long)qry.resolveParameter(":personId");
 		assertNotNull(val);
 		assertEquals(4, val.intValue());
 
@@ -134,7 +134,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 	public void testMissingParameter() {
 		QueryDataset<Person> qry = buildQueryDataset();
-		qry.getRestrictionHandler().add("p.id = #{personId}");
+		qry.getRestrictions().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
 
 		assertNotNull(result);
@@ -145,9 +145,9 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 	public void testNullParameter() {
 		QueryDataset<Person> qry = buildQueryDataset();
-		qry.getRestrictionHandler().add("p.id = #{personId}");
+		qry.getRestrictions().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
-		qry.getParameterHandler().addParameter("personId", null);
+		qry.getParameters().put("personId", null);
 
 		assertNotNull(result);
 
@@ -193,10 +193,10 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		System.out.println("Resolving ");
 		log.debug("Entering : resolver repeats eval test");
 		QueryDataset<Person> qry = buildQueryDataset();
-		qry.getRestrictionHandler().add("p.id = #{id}");
-		qry.getRestrictionHandler().add("p.id = #{id}");
+		qry.getRestrictions().add("p.id = #{id}");
+		qry.getRestrictions().add("p.id = #{id}");
 
-		qry.getParameterHandler().addParameterResolver(new ParameterResolver() {
+		qry.addParameterResolver(new ParameterResolver() {
 
 			long id = 20;
 
@@ -286,11 +286,11 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	public QueryDataset<Person> buildQueryDataset() {
 		JpaDataProvider<Person> provider = new JpaDataProvider<Person>();
 		provider.setEntityManager(em);
-		provider.getStatementHandler().setSelectStatement("select p from Person p");
-		provider.getStatementHandler().setCountStatement("select count(p) from Person p");
-		provider.getOrderHandler().add("id", "p.id");
-		provider.getOrderHandler().add("name", "p.lastName,p.firstName");
-		provider.getOrderHandler().add("phone", "p.phone");
+		provider.setSelectStatement("select p from Person p");
+		provider.setCountStatement("select count(p) from Person p");
+		provider.getOrderKeyMap().put("id", "p.id");
+		provider.getOrderKeyMap().put("name", "p.lastName,p.firstName");
+		provider.getOrderKeyMap().put("phone", "p.phone");
 		return new DefaultQueryDataset<Person>(provider);
 	}
 

@@ -1,6 +1,5 @@
 package org.jdataset.dataset;
 
-import org.jdataset.StatementManager;
 import org.jdataset.provider.StatementDataProvider;
 
 /**
@@ -29,13 +28,25 @@ public class DefaultStatementDataset<T> extends DefaultParameterizedDataset<T> i
 		super(provider);
 	}
 
+	public String getCountStatement() {
+		return getCastProvider().getCountStatement();
+	}
 
-	public StatementManager getStatementHandler() {	
-		return getCastProvider().getStatementHandler();
+	public String getSelectStatement() {
+		return getCastProvider().getSelectStatement();
+	}
+
+	public void setCountStatement(String countStatement) {
+		getCastProvider().setCountStatement(countStatement);		
+	}
+
+	public void setSelectStatement(String selectStatement) {
+		getCastProvider().setSelectStatement(selectStatement);		
 	}
 
 	public void init(Class<? extends Object> clazz, String prefix) {
-		getCastProvider().init(clazz, prefix);
+		setCountStatement(String.format("select count(%s) from %s %s ",prefix,clazz.getName(),prefix));
+		setSelectStatement(String.format("select %s from %s %s ",prefix,clazz.getName(),prefix));		
 	}
 	
 }

@@ -39,8 +39,8 @@ public class HibernateDataProvider<T> extends AbstractQueryDataProvider<T> {
 	 */
 	@Override
 	protected final List<T> fetchResultsFromDatabase(Paginator paginator,
-			Integer count) {		
-		Query qry = buildQuery(getStatementHandler().getSelectStatement(), true, paginator);
+			Integer count) {
+		Query qry = buildQuery(getSelectStatement(), true, paginator);
 		if (count != 0) {
 			qry.setMaxResults(count);
 		}
@@ -89,7 +89,7 @@ public class HibernateDataProvider<T> extends AbstractQueryDataProvider<T> {
 	}
 
 	public final Integer fetchResultCount() {
-		Query qry = buildQuery(getStatementHandler().getCountStatement(), false, null);
+		Query qry = buildQuery(getCountStatement(), false, null);
 		Long result = (Long) qry.uniqueResult();
 		return result.intValue();
 	}

@@ -43,7 +43,7 @@ public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvid
 	 */
 	@Override
 	protected final List<T> fetchResultsFromDatabase(Paginator paginator,Integer count) {
-		Query qry = buildQuery(getStatementHandler().getSelectStatement(), true,paginator);
+		Query qry = buildQuery(getSelectStatement(), true,paginator);
 		if (count != 0) {
 			qry.setMaxResults(count);
 		}
@@ -113,7 +113,7 @@ public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvid
 	protected abstract Query createJpaQuery(String ql);
 	
 	public final Integer fetchResultCount() {
-		Query qry = buildQuery(getStatementHandler().getCountStatement(), false,null);
+		Query qry = buildQuery(getCountStatement(), false,null);
 		Long result = (Long) qry.getSingleResult();
 		return new Integer(result.intValue());
 	}

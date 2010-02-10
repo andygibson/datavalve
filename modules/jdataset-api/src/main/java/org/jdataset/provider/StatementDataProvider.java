@@ -1,7 +1,5 @@
 package org.jdataset.provider;
 
-import org.jdataset.StatementManager;
-
 
 
 /**
@@ -11,7 +9,8 @@ import org.jdataset.StatementManager;
  * statements.<br/>
  * This is different to a {@link QueryDataProvider} in that the dataset doesn't
  * handle the ordering or restrictions. The query is a fixed SQL statement that
- * is optionally parameterized.
+ * is parameterized.
+ * 
  * 
  * @author Andy Gibson
  * 
@@ -19,8 +18,14 @@ import org.jdataset.StatementManager;
  */
 public interface StatementDataProvider<T> extends ParameterizedDataProvider<T> {
 
+	public String getCountStatement();
+
+	public void setCountStatement(String countStatement);
+
+	public String getSelectStatement();
+
+	public void setSelectStatement(String selectStatement);
 	
-	StatementManager getStatementHandler();	
 	public void init(Class<? extends Object> clazz,String prefix);
 
 }

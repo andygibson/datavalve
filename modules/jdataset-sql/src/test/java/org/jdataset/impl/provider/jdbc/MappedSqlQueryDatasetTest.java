@@ -10,10 +10,10 @@ public class MappedSqlQueryDatasetTest extends BaseJdbcDatasetTest<TableRow> {
 	
 	public ObjectDataset<TableRow> buildDataset() {
 		QueryDataProvider<TableRow> provider = new MappedJdbcQueryDataset(getConnection());
-		provider.getStatementHandler().setSelectStatement("select * from TestValues");
-		provider.getStatementHandler().setCountStatement("select count(1) from TestValues");
-		provider.getOrderHandler().add("id", "id");
-		provider.getOrderHandler().add("value", "value");		
+		provider.setSelectStatement("select * from TestValues");
+		provider.setCountStatement("select count(1) from TestValues");
+		provider.getOrderKeyMap().put("id", "id");
+		provider.getOrderKeyMap().put("value", "value");		
 		return new DefaultQueryDataset<TableRow>(provider);		
 	}
 	

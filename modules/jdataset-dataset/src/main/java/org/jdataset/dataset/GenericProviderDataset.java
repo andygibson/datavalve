@@ -17,8 +17,6 @@ import org.jdataset.Paginator;
  *  
  * @author Andy Gibson
  * 
- * 
- * 
  * @param <T>
  *            The type of object this dataset will end up returning
  * @param <P>

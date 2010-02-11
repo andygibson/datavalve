@@ -16,14 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Implements the data provider as a JDBC SQL based query using simple select
+ * and count SQL statements and parameters. This does not use the same restriction mechanism.
  * <p>
- * Base implementation for the {@link StatementDataProvider} interface which
+ * 
+ * Implementation for the {@link StatementDataProvider} interface which
  * adds select and count SQL statements on to the
  * {@link ParameterizedDataProvider} interface. The class extends the
  * {@link AbstractParameterizedDataProvider} to use the implementation of the
  * {@link ParameterizedDataProvider} interface. This class also implements the
  * actual fetching of the result count and the results from the database once
- * the parameters have been resolved.
+ * the parameters have been resolved. 
  * </p>
  * <p>
  * Once the JDBC result set has been fetched, this class uses the
@@ -72,7 +75,7 @@ public abstract class AbstractJdbcDataProvider<T> extends
 				sql = sql.replace(param, "?");
 				Object value = resolveParameter(param);
 				log.debug("Resolved to  : {}", value);
-				paramValues.add(resolveParameter(param));
+				paramValues.add(value);
 			}
 			log.debug("Final sql = {}", sql);
 			statement = connection.prepareStatement(sql);

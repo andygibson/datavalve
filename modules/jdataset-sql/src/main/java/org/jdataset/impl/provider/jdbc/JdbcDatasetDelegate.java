@@ -9,10 +9,11 @@ import java.sql.SQLException;
  * define classes that implement the conversion from {@link ResultSet} to an
  * Object and re-use them. This is particularly useful if we have a dependency
  * injection framework as part of the application since it can be injected as a
- * dependency.
+ * dependency. This is as opposed to the non-delegate version that needs
+ * overriding or an anonymous class to implement the mapping.
  * <p>
- * If no delegate is assigned to the {@link ResultSetObjectMapper} property
- * then a {@link NullPointerException} is thrown.
+ * If no delegate is assigned to the {@link ResultSetObjectMapper} property then
+ * a {@link NullPointerException} is thrown.
  * 
  * @see JdbcQueryDatasetDelegate
  * 
@@ -24,7 +25,7 @@ import java.sql.SQLException;
 public class JdbcDatasetDelegate<T> extends AbstractJdbcDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private ResultSetObjectMapper<T> resultSetObjectMapper;
 
 	@Override

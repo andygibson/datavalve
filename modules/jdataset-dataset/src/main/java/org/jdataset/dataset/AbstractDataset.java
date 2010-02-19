@@ -188,6 +188,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	public void setOrderKey(String orderKey) {
 		this.orderKey = orderKey;
+		invalidateResults();
 	}
 
 	/**
@@ -219,6 +220,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	public void setOrderAscending(boolean isAscending) {
 		this.orderAscending = isAscending;
+		invalidateResults();
 	}
 
 	public Class<?> getEntityClass() {

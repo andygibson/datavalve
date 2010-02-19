@@ -2,7 +2,9 @@ package org.jdataset.io;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import org.jdataset.dataset.GenericProviderDataset;
 import org.jdataset.dataset.ObjectDataset;
@@ -16,6 +18,11 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	private String baseDir;
 	private static final int FILE_COUNT = 20;
 	private static final int DIR_COUNT = 20;
+	private static final Random random = new Random();
+
+	private int getRandomValue(int min, int max) {
+		return min + random.nextInt(max - min);
+	}
 
 	private class FileDataset extends
 			GenericProviderDataset<File, FileDataProvider> {
@@ -44,7 +51,10 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 
 		for (int i = 0; i < FILE_COUNT; i++) {
 			fs = new FileOutputStream(new File(baseDir + "file" + i + ".txt"));
-			fs.write(123);
+			int count = getRandomValue(5, 100);
+			for (int s = 0; s < count; s++) {
+				fs.write(123);
+			}
 			fs.close();
 		}
 
@@ -193,11 +203,102 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	public FileDataset buildFileDataset(boolean includeDirs) {
 		FileDataset ds = new FileDataset(new FileDataProvider(baseDir));
 		ds.getProvider().setIncludeDirectories(includeDirs);
+		ds.getProvider().getOrderKeyMap().put("name", new Comparator<File>() {
+
+			public int compare(File o1, File o2) {
+				return o1.getName().compareToIgnoreCase(o2.getName());
+			}
+		});
+
+		ds.getProvider().getOrderKeyMap().put("size", new Comparator<File>() {
+
+			public int compare(File o1, File o2) {
+				return (int) (o1.length() - o2.length());
+			}
+		});
 		return ds;
 	}
 
 	@Override
 	public int getDataRowCount() {
 		return FILE_COUNT + DIR_COUNT;
+	}
+
+	public void testOrderingSizeAsc() {
+		FileDataset qry = buildFileDataset(false);
+		qry.setOrderKey("size");
+		qry.setOrderAscending(true);
+		List<File> results = qry.getResultList();
+		long size = 0;
+		for (File f : results) {
+			assertTrue(size <= f.length());
+			size = f.length();
+		}
+	}
+
+	public void checkListOrderedNameAsc(List<File> list) {
+		String value = null;
+		for (File f : list) {
+			if (value != null) {
+				assertTrue(value.compareToIgnoreCase(f.getName()) < 0);
+			}
+			value = f.getName();
+		}
+	}
+
+	public void checkListOrderedNameDesc(List<File> list) {
+		String value = null;
+		for (File f : list) {
+			if (value != null) {
+				assertTrue(value.compareToIgnoreCase(f.getName()) > 0);
+			}
+			value = f.getName();
+		}
+	}
+
+	public void checkListOrderedSizeDesc(List<File> list) {
+		long size = 999999;
+		for (File f : list) {
+			assertTrue(size >= f.length());
+			size = f.length();
+		}
+	}
+
+	public void checkListOrderedSizeAsc(List<File> list) {
+		long size = 0;
+		for (File f : list) {
+			assertTrue(size <= f.length());
+			size = f.length();
+		}
+	}
+
+	public void testOrdering() {
+		FileDataset qry = buildFileDataset(false);
+		qry.setOrderKey("size");
+
+		qry.setOrderAscending(false);
+		List<File> results = qry.getResultList();
+		checkListOrderedSizeDesc(results);
+
+		qry.setOrderAscending(true);
+		results = qry.getResultList();
+		checkListOrderedSizeAsc(results);
+		//
+		qry.setOrderAscending(false);
+		qry.setOrderKey("name");
+		results = qry.getResultList();
+		checkListOrderedNameDesc(results);
+
+		// check that order is correct when we change the key
+		qry.setOrderKey("size");
+		results = qry.getResultList();
+		checkListOrderedSizeDesc(results);
+
+	}
+
+	@Override
+	public boolean isSerializable() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

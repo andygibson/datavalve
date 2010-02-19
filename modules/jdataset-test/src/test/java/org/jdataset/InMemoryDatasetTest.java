@@ -58,6 +58,29 @@ public class InMemoryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
             assertEquals(i, res.get(i).intValue());
         }
     }
+    
+    public void testGetResultsUnboundOrdering() {
+    	ObjectDataset<Integer> ds = buildTestDataset();
+        List<Integer> res = ds.getResultList();
+        
+        assertNotNull(res);
+        assertEquals(100, res.size());
+        for (int i = 0; i < 10; i++) {
+            assertEquals(i, res.get(i).intValue());
+        }
+        
+        //lets flip the order
+        ds.setOrderAscending(false);
+        res = ds.getResultList();
+        
+        assertNotNull(res);
+        assertEquals(100, res.size());
+        for (int i = 0; i < 10; i++) {
+            assertEquals(99-i, res.get(i).intValue());
+        }
+        
+    }
+    
 
     public void testGetResultsBound() {
     	ObjectDataset<Integer> ds = buildTestDataset();

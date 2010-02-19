@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import org.jdataset.Paginator;
 
+/**
+ * Default and complete implementation of the {@link Paginator} interface.
+ *  
+ * @author Andy Gibson
+ *
+ */
 public class SimplePaginator implements Paginator, Serializable {
 
 	private static final long serialVersionUID = 1L;

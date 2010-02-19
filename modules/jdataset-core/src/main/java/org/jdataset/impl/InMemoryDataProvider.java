@@ -2,11 +2,16 @@ package org.jdataset.impl;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jdataset.DataProvider;
 import org.jdataset.Paginator;
 import org.jdataset.util.LazyList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -38,6 +43,12 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 		Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static Logger log = LoggerFactory.getLogger(InMemoryDataProvider.class);
+
+	private Map<String, Comparator<T>> orderKeyMap = new HashMap<String, Comparator<T>>();
+	private Comparator<T> activeSortOrder;
+	private boolean orderedAscendingFlag = true;
 
 	private List<T> backingData;
 
@@ -100,6 +111,9 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 
 		// make sure we fetch the data
 		getBackingData();
+		// check sorting hasn't changed
+		defineOrdering(paginator.getOrderKey());
+		defineOrderDirection(paginator.isOrderAscending());
 
 		int startPos = paginator.getFirstResult();
 		if (startPos > backingData.size()) {
@@ -121,4 +135,51 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 	public void invalidateData() {
 		backingData = null;
 	}
+
+	public Map<String, Comparator<T>> getOrderKeyMap() {
+		return orderKeyMap;
+	}
+
+	private void defineOrderDirection(boolean ascending) {
+		
+		if (ascending != orderedAscendingFlag) {
+			orderedAscendingFlag = ascending;
+			// flip the list
+			log.debug("Flipping list for sort order");
+			Collections.reverse(getBackingData());
+		}
+	}
+
+	private void defineOrdering(String key) {
+		if (key == null) {
+			activeSortOrder = null;
+			return;
+		}
+
+		Comparator<T> sorter = getOrderKeyMap().get(key);
+
+		// if there is no matching sort order, just clear it and leave the order
+		// as is.
+		if (sorter == null) {
+			activeSortOrder = null;
+			return;
+		}
+
+		// return if we are already sorted by this value then do nothing
+		if (sorter.equals(activeSortOrder)) {
+			return;
+		}
+		// when we changed the order, it defaults to ascending
+		orderedAscendingFlag = true;
+		activeSortOrder = sorter;
+		sort();
+	}
+
+	public void sort() {
+
+		log.debug("Sorting list using #0  ", activeSortOrder);
+		
+		Collections.sort(getBackingData(), activeSortOrder);
+	}
+
 }

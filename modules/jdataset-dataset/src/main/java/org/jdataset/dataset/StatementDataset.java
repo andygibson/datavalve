@@ -12,6 +12,7 @@ import org.jdataset.provider.StatementDataProvider;
  * @param <T>
  *            type of object this dataset returns
  */
+//TODO do we even need this? We have the Provider Query Dataset that could be renamed better
 public interface StatementDataset<T> extends ObjectDataset<T>,StatementDataProvider<T> {
 
 }

@@ -12,6 +12,8 @@ import org.jdataset.provider.ParameterizedDataProvider;
  * @param <T>
  *            type of object this dataset returns
  */
+
+//TODO do we even need this? We have the Provider Query Dataset that could be renamed better
 public interface ParameterizedDataset<T> extends ObjectDataset<T>,
 		ParameterizedDataProvider<T> {
 

@@ -53,7 +53,7 @@ public class ResultSetObjectProcessor<T> implements Serializable {
 	 * @throws SQLException
 	 */
 	public List<T> createListFromResultSet(ResultSet resultSet,
-			ResultSetObjectMapper<T> objectMapper, int firstRow, Integer maxRows)
+			ResultSetObjectMapper<T> objectMapper, Integer firstRow, Integer maxRows)
 			throws SQLException {
 		List<T> results = new ArrayList<T>();
 
@@ -83,13 +83,17 @@ public class ResultSetObjectProcessor<T> implements Serializable {
 	 * @param resultSet
 	 *            Result set to skip rows in
 	 * @param firstRow
-	 *            number of rows we need to skip
+	 *            number of rows we need to skip, null or zero for the first row
 	 * @return returns true if there are more rows left to process, or false if
 	 *         the end of the result set was reached
 	 * @throws SQLException
 	 */
-	private boolean skipRows(ResultSet resultSet, int firstRow)
+	private boolean skipRows(ResultSet resultSet, Integer firstRow)
 			throws SQLException {
+		//if firstRow is null, then just return
+		if (firstRow == null) {
+			firstRow = 0;
+		}
 		int index = 0;
 		while (index < firstRow && resultSet.next()) {
 			index++;

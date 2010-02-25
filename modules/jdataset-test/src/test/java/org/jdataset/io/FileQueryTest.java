@@ -298,7 +298,6 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 
 	@Override
 	public boolean isSerializable() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

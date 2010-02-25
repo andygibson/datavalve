@@ -14,16 +14,19 @@ import org.jdataset.Paginator;
  * ds = new GenericDataset&lt;Person, MyCustomProvider&gt;();
  * ds.getProvider().someCustomMethod();
  * </pre>
- *  
+ * 
+ * We have 'helper' types for this with specific implementations for
+ * parameterized,statement,and query provider types. These are currently implemented as {@link ProviderParameterizedDataset}, {@link ProviderStatementDataset}, and {@link ProviderQueryDataset}.
+ * 
  * @author Andy Gibson
- * 
- * 
  * 
  * @param <T>
  *            The type of object this dataset will end up returning
  * @param <P>
  *            The type of data provider used to fetch the data
  */
+
+//TODO rename subclasses to their shorter versions and remove the current implementations of QueryDataset etc.. 
 public class GenericProviderDataset<T, P extends DataProvider<T>> extends
 		AbstractDataset<T> {
 

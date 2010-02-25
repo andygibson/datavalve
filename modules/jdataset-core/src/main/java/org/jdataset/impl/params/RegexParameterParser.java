@@ -29,7 +29,7 @@ public class RegexParameterParser implements ParameterParser, Serializable {
 	}
 
 	private String getRegEx() {
-		return ":[A-Za-z0-9]+|#\\{.+}";
+		return ":[A-Za-z0-9\\_]+|#\\{.+}";
 	}
 
 	public String[] extractParameters(String line) {

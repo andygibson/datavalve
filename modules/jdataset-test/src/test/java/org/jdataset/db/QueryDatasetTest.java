@@ -9,6 +9,7 @@ import org.jdataset.dataset.DefaultQueryDataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.dataset.QueryDataset;
 import org.jdataset.impl.provider.AbstractQueryDataProvider;
+import org.jdataset.impl.provider.DataQuery;
 import org.jdataset.provider.QueryDataProvider;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 
@@ -16,35 +17,51 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected QueryDataset<Integer> buildQuery(final int objectCount) {
-		
+
 		QueryDataProvider<Integer> provider = new AbstractQueryDataProvider<Integer>() {
 
 			private static final long serialVersionUID = 1L;
 
-/*			@Override
-			public String getSelectStatement() {
-				return "Select o from Object o";
-			}*/
+			/*
+			 * @Override public String getSelectStatement() { return
+			 * "Select o from Object o"; }
+			 */
 
-			
-			public List<Integer> fetchResultsFromDatabase(Paginator paginator,Integer count) {
+			@Override
+			protected List<Integer> queryForResults(DataQuery query,
+					Integer firstResult, Integer count) {
 				List<Integer> result = new ArrayList<Integer>();
-				int index = paginator.getFirstResult();
-				if (count == 0) {
+				
+				int index = firstResult == null ? 0 : firstResult.intValue();
+				int start = index;
+				
+				if (count == null) {
 					count = Integer.MAX_VALUE;
 				}
+				
 				while (index < fetchResultCount()
-						&& index < paginator.getFirstResult() + count) {
+						&& index < start + count) {
 
 					result.add(new Integer(index));
 					index++;
 				}
 				return result;
 			}
-			
+
 			public Integer fetchResultCount() {
+				return objectCount;
+			}
+
+			@Override
+			protected DataQuery buildDataQuery(String baseStatement,
+					boolean includeOrdering, Paginator paginator) {
+				return new DataQuery();
+			}
+
+			@Override
+			protected Integer queryForCount(DataQuery query) {
 				return objectCount;
 			}
 
@@ -52,7 +69,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 
 		provider.setSelectStatement("Select o from Object o");
 		QueryDataset<Integer> res = new DefaultQueryDataset<Integer>(provider);
-		
+
 		res.addRestriction("id = #{id}");
 		res.addRestriction("firstName = #{person.firstName}");
 		res.getOrderKeyMap().put("id", "o.id");
@@ -262,26 +279,6 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		assertEquals(false, qry.isNextAvailable());
 	}
 
-	public void testStatementInitializer() {
-		QueryDataProvider<Integer>  qry = new AbstractQueryDataProvider<Integer>() {
-
-			@Override
-			protected List<Integer> fetchResultsFromDatabase(
-					Paginator paginator, Integer count) {
-				return null;
-			}
-
-			
-			public Integer fetchResultCount() {
-				return null;
-			}
-			
-		};
-		qry.init(QueryDatasetTest.class, "c");
-		
-		assertEquals("select c from QueryDatasetTest c ", qry.getSelectStatement());
-		assertEquals("select count(c) from QueryDatasetTest c ", qry.getCountStatement());		
-	}
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {
 		return buildQuery(100);

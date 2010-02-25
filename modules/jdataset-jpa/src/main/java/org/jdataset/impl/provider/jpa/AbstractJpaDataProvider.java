@@ -1,9 +1,6 @@
 package org.jdataset.impl.provider.jpa;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -28,103 +25,15 @@ import org.slf4j.LoggerFactory;
  * 
  * @param <T>
  */
-public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvider<T> {
+public abstract class AbstractJpaDataProvider<T> extends
+		AbstractQueryDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 
 	private EntityManager entityManager;
+
 	private final static Logger log = LoggerFactory
 			.getLogger(AbstractJpaDataProvider.class);
-
-	/**
-	 * 
-	 * Builds a JPA query from the select statement (including the order clause)
-	 * and sets up the maxResults and firstResult properties on the query and
-	 * returns the results.
-	 * 
-	 * @see org.jdataset.impl.provider.AbstractQueryDataProvider#fetchResultsFromDatabase(java.lang.Integer)
-	 */
-	@Override
-	protected final List<T> fetchResultsFromDatabase(Paginator paginator,Integer count) {
-		
-		
-		Query qry = buildQuery(getSelectStatement(), true,paginator);		
-		if (count != 0) {
-			qry.setMaxResults(count);
-		}
-
-		qry.setFirstResult(paginator.getFirstResult());
-		@SuppressWarnings("unchecked")
-		List<T> results = qry.getResultList();
-		return results;
-	}
-
-	/**
-	 * Builds a JPA Query based on the selectStatement parameter and builds the
-	 * list of parameters that go with the query. Once the statement is built,
-	 * the parameters are iterated through and assigned values on the query.
-	 * Finally, the query is returned to the caller. This method is used for
-	 * both select and count queries so we cannot handle the
-	 * {@link Query#setFirstResult(int)}, {@link Query#setMaxResults(int)}
-	 * method calls here.
-	 * <p>
-	 * The call to {@link #buildStatement(String, Map, boolean)} generates the
-	 * final query statement and the parameters. {@link #createJpaQuery(String)}
-	 * is an abstract method that should be implemented in subclasses. This
-	 * method should return an Ejbql or Native style query depending on the
-	 * implementation of the subclass.
-	 * 
-	 * 
-	 * @param selectStatement
-	 *            The select statement for this query
-	 * @param includeOrderBy
-	 * @return
-	 */
-	protected final DataQuery buildDataQuery(String selectStatement,
-			boolean includeOrderBy,Paginator paginator) {
-		DataQueryBuilder builder = new DataQueryBuilder();
-		builder.setProvider(this);
-		builder.setBaseStatement(selectStatement);
-		if (includeOrderBy) {
-			builder.setOrderBy(getOrderKeyMap().get(paginator.getOrderKey()));
-			builder.setOrderAscending(paginator.isOrderAscending());
-		}		
-		return builder.build();
-	}
-	
-	protected final Query buildQuery(String selectStatement,
-			boolean includeOrderBy,Paginator paginator) {
-		DataQuery dataQuery = buildDataQuery(selectStatement, includeOrderBy, paginator);
-		Query qry = createJpaQuery(dataQuery.getStatement());
-		for (Parameter param : dataQuery.getParameters()) {
-			qry.setParameter(param.getName(),param.getValue());
-		}
-		return qry;
-		
-	}
-	protected final Query buildQuery_old(String selectStatement,
-			boolean includeOrderBy,Paginator paginator) {
-
-		Map<String, Object> queryParams = new HashMap<String, Object>();
-
-		// build the ejbql statement and parameter list
-		String statement = buildStatement(selectStatement, queryParams,
-				includeOrderBy,paginator);
-		log.debug("Built statement : {}", statement);
-
-		// create the actual query (native or JPA)
-		Query qry = createJpaQuery(statement);
-
-		// set the parameters from the internal parameter list
-		for (Entry<String, Object> entry : queryParams.entrySet()) {
-			log.debug("Setting query parameter '{}' to value '{}'", entry
-					.getKey(), entry.getValue());
-			qry.setParameter(entry.getKey(), entry.getValue());
-		}
-
-		// return it for use
-		return qry;
-	}
 
 	/**
 	 * Override to create the specific type of query to use.
@@ -133,17 +42,13 @@ public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvid
 	 * @see JpaNativeDataProvider
 	 * 
 	 * @param ql
-	 *            Statement the query must execute
-	 * @return Query object created from the entity manager and configured with
+	 *            Statement the query must execute (could be EJBQL or Native
+	 *            depending on subclass)
+	 * @return {@link Query} object created from the
+	 *         {@link AbstractJpaDataProvider#entityManager} and configured with
 	 *         the passed in sql.
 	 */
 	protected abstract Query createJpaQuery(String ql);
-	
-	public final Integer fetchResultCount() {
-		Query qry = buildQuery(getCountStatement(), false,null);
-		Long result = (Long) qry.getSingleResult();
-		return new Integer(result.intValue());
-	}
 
 	public EntityManager getEntityManager() {
 		return entityManager;
@@ -151,5 +56,45 @@ public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvid
 
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+	/**
+	 * Initializes a JPA {@link Query} using the passed in {@link DataQuery}.
+	 * The type of query returned is determined from the
+	 * {@link AbstractJpaDataProvider#createJpaQuery(String)} method which can
+	 * return a native or EJBQL query depending on the subclass.
+	 * 
+	 * @param dataQuery The {@link DataQuery} to initialize the query with
+	 * @return The initialized {@link Query}
+	 */
+	private final Query buildJpaQuery(DataQuery dataQuery) {
+		Query qry = createJpaQuery(dataQuery.getStatement());
+		for (Parameter param : dataQuery.getParameters()) {
+			qry.setParameter(param.getName(), param.getValue());
+		}
+		return qry;
+	}
+
+	@Override
+	protected Integer queryForCount(DataQuery query) {
+		Query qry = buildJpaQuery(query);
+		Long result = (Long) qry.getSingleResult();
+		return new Integer(result.intValue());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected List<T> queryForResults(DataQuery query, Integer firstResult,
+			Integer count) {
+		Query qry = buildJpaQuery(query);
+		if (firstResult != null) {
+			qry.setFirstResult(firstResult.intValue());
+		}
+
+		if (count != null) {
+			qry.setMaxResults(count);
+		}
+
+		return qry.getResultList();
 	}
 }

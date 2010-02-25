@@ -24,6 +24,22 @@ public abstract class AbstractQLDataProvider<T> extends
 	private String selectStatement;
 	private String countStatement;
 
+	public String getSelectStatement() {
+		return selectStatement;
+	}
+
+	public void setSelectStatement(String selectStatement) {
+		this.selectStatement = selectStatement;
+	}
+
+	public String getCountStatement() {
+		return countStatement;
+	}
+
+	public void setCountStatement(String countStatement) {
+		this.countStatement = countStatement;
+	}
+
 	@Override
 	public Integer fetchResultCount() {
 		DataQuery query = buildDataQuery(getCountStatement(), false, null);
@@ -33,7 +49,7 @@ public abstract class AbstractQLDataProvider<T> extends
 	@Override
 	public List<T> fetchResults(Paginator paginator) {
 		// fetch the results by building the data query and handing it off to a
-		// query executor.
+		// query execution method.
 		DataQuery query = buildDataQuery(getSelectStatement(), true, paginator);
 
 		Integer count = paginator.includeAllResults() ? null : paginator
@@ -54,26 +70,12 @@ public abstract class AbstractQLDataProvider<T> extends
 
 	}
 
-	public String getSelectStatement() {
-		return selectStatement;
-	}
-
-	public void setSelectStatement(String selectStatement) {
-		this.selectStatement = selectStatement;
-	}
-
-	public String getCountStatement() {
-		return countStatement;
-	}
-
-	public void setCountStatement(String countStatement) {
-		this.countStatement = countStatement;
-	}
-
 	/**
 	 * Go fetch the results from the database using the defined query and first
 	 * result and result size information.
-	 * 
+	 * <p/>
+	 * Override in subclasses to provide different implementations for fetching
+	 * the results
 	 * 
 	 * @param query
 	 *            The {@link DataQuery} instance containing the statement and
@@ -94,7 +96,8 @@ public abstract class AbstractQLDataProvider<T> extends
 	 * the {@link DataQuery} reference passed in. In most cases, the statement
 	 * needs executing and the count value retrieved from the query.
 	 * <p/>
-	 * Override in subclasses to provide different implementations.
+	 * Override in subclasses to provide different implementations for fetching
+	 * the count
 	 * 
 	 * @param query
 	 * @return
@@ -102,13 +105,25 @@ public abstract class AbstractQLDataProvider<T> extends
 	protected abstract Integer queryForCount(DataQuery query);
 
 	/**
-	 * Builds the {@link DataQuery} object from the base statement and the
-	 * provider information. We pass the paginator for order information as well
-	 * as a flag indicating whether ordering is included. We dont' want ordering
-	 * on count statements so make sure it is false for those.
+	 * Builds the {@link DataQuery} object from the base query statement and the
+	 * provider information. Pass the {@link Paginator} for order information
+	 * as well as a flag indicating whether ordering is included. We don't want
+	 * ordering on count statements so make sure it is false for those.
 	 * <p>
 	 * This method is all about taking the provider statements and restrictions
-	 * and
+	 * and assembling the final query including parameterizing the restrictions
+	 * and adding the order by clause if needed.
+	 * <p/>
+	 * Override in subclasses to provide different implementations for
+	 * generating the query, althought a default implementation is provided in
+	 * the {@link AbstractQueryDataProvider} which most Query Language based
+	 * providers should subclass.
+	 * <p/>
+	 * In most final subclasses for JPA, SQL, Hibernate etc, you should just
+	 * need to implement the <code>queryForCount</code> and
+	 * <code>queryForResults</code> methods since these are specific to the
+	 * actual data connectivity mechanism whereas more general code has been
+	 * pulled up into parent classes to be inherited.
 	 * 
 	 * @param baseStatement
 	 *            Initial statement to use for selecting data

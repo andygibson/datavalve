@@ -62,8 +62,9 @@ public abstract class AbstractQueryDataProvider<T> extends
 	/**
 	 * Returns the order fields for a given order key pair. Default
 	 * implementation works off the
-	 * {@link AbstractQueryDataProvider#orderKeyMap} {@link Map} property. Can
-	 * be overridden to handle custom specific mappings.
+	 * {@link AbstractQueryDataProvider#orderKeyMap} {@link Map} property.
+	 * <p/>
+	 * Can be overridden to handle custom specific mappings.
 	 * 
 	 * @param orderKeyValue
 	 * @return
@@ -72,12 +73,12 @@ public abstract class AbstractQueryDataProvider<T> extends
 		return getOrderKeyMap().get(orderKeyValue);
 	}
 
-	public final void addRestriction(String restriction) {
-		getRestrictions().add(restriction);
-	}
-
 	protected final String getNextParamName() {
 		return "_param_" + String.valueOf(paramId++);
+	}
+
+	public final void addRestriction(String restriction) {
+		getRestrictions().add(restriction);
 	}
 
 	public final boolean addRestriction(String syntax, Object value) {
@@ -105,7 +106,7 @@ public abstract class AbstractQueryDataProvider<T> extends
 	}
 
 	protected DataQuery buildDataQuery(String baseStatement,
-			boolean includeOrdering, Paginator paginator) {
+			boolean includeOrdering, Paginator paginator) {		
 		DataQueryBuilder builder = new DataQueryBuilder();
 		builder.setProvider(this);
 		builder.setBaseStatement(baseStatement);

@@ -5,14 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.jdataset.Paginator;
-import org.jdataset.Parameter;
-import org.jdataset.impl.RestrictionBuilder;
 import org.jdataset.provider.QueryDataProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class for Query driven datasets that implements most of the methods
@@ -32,15 +27,11 @@ import org.slf4j.LoggerFactory;
  *            Type of object this dataset contains.
  */
 public abstract class AbstractQueryDataProvider<T> extends
-		AbstractQLDataProvider<T> implements QueryDataProvider<T>,
-		Serializable {
+		AbstractQLDataProvider<T> implements QueryDataProvider<T>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private int paramId;
-
-	private static Logger log = LoggerFactory
-			.getLogger(AbstractQueryDataProvider.class);
 
 	private Map<String, String> orderKeyMap = new HashMap<String, String>();
 	private List<String> restrictions = new ArrayList<String>();
@@ -62,35 +53,47 @@ public abstract class AbstractQueryDataProvider<T> extends
 	}
 
 	public void init(Class<? extends Object> clazz, String prefix) {
-		setCountStatement(String.format("select count(%s) from %s %s ",prefix,clazz.getSimpleName(),prefix));
-		setSelectStatement(String.format("select %s from %s %s ",prefix,clazz.getSimpleName(),prefix));		
+		setCountStatement(String.format("select count(%s) from %s %s ", prefix,
+				clazz.getSimpleName(), prefix));
+		setSelectStatement(String.format("select %s from %s %s ", prefix, clazz
+				.getSimpleName(), prefix));
 	}
 
-	private String translateOrderKey(String orderKeyValue) {
+	/**
+	 * Returns the order fields for a given order key pair. Default
+	 * implementation works off the
+	 * {@link AbstractQueryDataProvider#orderKeyMap} {@link Map} property. Can
+	 * be overridden to handle custom specific mappings.
+	 * 
+	 * @param orderKeyValue
+	 * @return
+	 */
+	protected String translateOrderKey(String orderKeyValue) {
 		return getOrderKeyMap().get(orderKeyValue);
 	}
 
-	public void addRestriction(String restriction) {
+	public final void addRestriction(String restriction) {
 		getRestrictions().add(restriction);
 	}
 
-	protected String getNextParamName() {
+	protected final String getNextParamName() {
 		return "_param_" + String.valueOf(paramId++);
 	}
 
-	public boolean addRestriction(String syntax, Object value) {
+	public final boolean addRestriction(String syntax, Object value) {
 		return addRestriction(syntax, value, value);
 	}
 
-	public boolean addRestriction(String syntax, String testValue,
+	public final boolean addRestriction(String syntax, String testValue,
 			String paramValue) {
 		if (testValue != null && testValue.length() != 0) {
-			return addRestriction(syntax, testValue,paramValue);
+			return addRestriction(syntax, testValue, paramValue);
 		}
 		return false;
 	}
 
-	public boolean addRestriction(String syntax, Object testValue, Object paramValue) {
+	public final boolean addRestriction(String syntax, Object testValue,
+			Object paramValue) {
 		if (testValue != null) {
 			String name = getNextParamName();
 			syntax = syntax.replace(":param", ":" + name);
@@ -107,10 +110,10 @@ public abstract class AbstractQueryDataProvider<T> extends
 		builder.setProvider(this);
 		builder.setBaseStatement(baseStatement);
 		if (includeOrdering) {
-			builder.setOrderBy(getOrderKeyMap().get(paginator.getOrderKey()));
+			builder.setOrderBy(translateOrderKey(paginator.getOrderKey()));
 			builder.setOrderAscending(paginator.isOrderAscending());
 		}
 		return builder.build();
 	}
-	
+
 }

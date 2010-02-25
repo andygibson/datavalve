@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jdataset.dataset.QueryDataset;
-
 /**
  * Implementation of an {@link AbstractJdbcQueryDataProvider} that returns the
  * results as a set of {@link TableRow} objects that contain the columns as map

@@ -29,7 +29,19 @@ public class HibernateDatasetTest extends
 	private SessionFactory sessionFactory;
 	private Session session;
 	private transient Connection connection;
+	private QueryDataset<Person> qry;
 
+	protected QueryDataset<Person> buildQueryDatasetx() {
+		HibernateDataProvider<Person> provider = new HibernateDataProvider<Person>();
+		provider.setSession(session);
+		provider.setSelectStatement("select p from Person p");
+		provider.setCountStatement("select count(p) from Person p");
+		provider.getOrderKeyMap().put("id", "p.id");
+		provider.getOrderKeyMap().put("name", "p.lastName,p.firstName");
+		provider.getOrderKeyMap().put("phone", "p.phone");
+		return new DefaultQueryDataset<Person>(provider);
+	}
+	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -49,6 +61,7 @@ public class HibernateDatasetTest extends
 		sessionFactory = cfg.configure().buildSessionFactory();
 		session = sessionFactory.openSession();
 		generateTestData();
+		qry = buildQueryDatasetx();
 	}
 
 	@Override
@@ -106,8 +119,7 @@ public class HibernateDatasetTest extends
 		assertEquals(10, res.longValue());
 	}
 
-	public void testResultCount() {
-		QueryDataset<Person> qry = buildQueryDataset();
+	public void testResultCount() {		
 		long result = qry.getResultCount();
 		assertEquals(30, result);
 
@@ -118,8 +130,7 @@ public class HibernateDatasetTest extends
 
 	}
 
-	public void testSimpleParameter() {
-		QueryDataset<Person> qry = buildQueryDataset();
+	public void testSimpleParameter() {		
 
 		qry.getRestrictions().add("p.id = :personId");
 		qry.getParameters().put("personId", 4l);
@@ -137,7 +148,6 @@ public class HibernateDatasetTest extends
 	}
 
 	public void testMissingParameter() {
-		QueryDataset<Person> qry = buildQueryDataset();
 		qry.getRestrictions().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
 
@@ -148,7 +158,6 @@ public class HibernateDatasetTest extends
 	}
 
 	public void testNullParameter() {
-		QueryDataset<Person> qry = buildQueryDataset();
 		qry.getRestrictions().add("p.id = #{personId}");
 		List<Person> result = qry.getResultList();
 		qry.getParameters().put("personId", null);
@@ -159,7 +168,6 @@ public class HibernateDatasetTest extends
 	}
 
 	public void testPagination() {
-		QueryDataset<Person> qry = buildQueryDataset();
 
 		assertEquals(1, qry.getPage());
 		assertEquals(false, qry.isNextAvailable());
@@ -195,8 +203,7 @@ public class HibernateDatasetTest extends
 
 	public void testParameterResolverRepeatsEval() {
 		System.out.println("Resolving ");
-		log.debug("Entering : resolver repeats eval test");
-		QueryDataset<Person> qry = buildQueryDataset();
+		log.debug("Entering : resolver repeats eval test");		
 		qry.getRestrictions().add("p.id = #{id}");
 		qry.getRestrictions().add("p.id = #{id}");
 
@@ -288,19 +295,9 @@ public class HibernateDatasetTest extends
 
 	@Override
 	public ObjectDataset<Person> buildObjectDataset() {
-		return buildQueryDataset();
+		return qry;
 	}
 
-	public QueryDataset<Person> buildQueryDataset() {
-		HibernateDataProvider<Person> provider = new HibernateDataProvider<Person>();
-		provider.setSession(session);
-		provider.setSelectStatement("select p from Person p");
-		provider.setCountStatement("select count(p) from Person p");
-		provider.getOrderKeyMap().put("id", "p.id");
-		provider.getOrderKeyMap().put("name", "p.lastName,p.firstName");
-		provider.getOrderKeyMap().put("phone", "p.phone");
-		return new DefaultQueryDataset<Person>(provider);
-	}
 
 	@Override
 	public int getDataRowCount() {

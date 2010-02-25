@@ -1,10 +1,6 @@
 package org.jdataset.impl.provider.jpa;
 
-import java.util.List;
-
 import javax.persistence.Query;
-
-import org.jdataset.impl.provider.DataQuery;
 
 /**
  * JPA based query that uses the Ejbql syntax for querying.

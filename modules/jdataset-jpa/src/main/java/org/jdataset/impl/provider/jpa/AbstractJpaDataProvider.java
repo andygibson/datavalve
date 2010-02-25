@@ -5,11 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.jdataset.Paginator;
 import org.jdataset.Parameter;
 import org.jdataset.impl.provider.AbstractQueryDataProvider;
 import org.jdataset.impl.provider.DataQuery;
-import org.jdataset.impl.provider.DataQueryBuilder;
 import org.jdataset.provider.QueryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

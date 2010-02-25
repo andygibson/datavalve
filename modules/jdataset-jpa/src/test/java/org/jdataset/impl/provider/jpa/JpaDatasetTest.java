@@ -10,10 +10,8 @@ import javax.persistence.Persistence;
 
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
-import org.jdataset.dataset.DefaultQueryDataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.dataset.ProviderQueryDataset;
-import org.jdataset.dataset.QueryDataset;
 import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;

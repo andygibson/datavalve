@@ -51,10 +51,13 @@ public class WicketApplication extends WebApplication {
 	}
 
 	@SuppressWarnings("deprecation")
-	public Connection getConnection() {		
+	public Connection getConnection() {
+		// we are lazily just using the hibernate JDBC connection rather than
+		// setting up our own for the JDBC examples.
 		return getHibernateSession().connection();
+
 	}
-	
+
 	@Override
 	public Class<? extends Page> getHomePage() {
 		return SqlSearchPage.class;

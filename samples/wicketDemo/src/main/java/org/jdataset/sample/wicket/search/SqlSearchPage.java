@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.apache.wicket.PageParameters;
 import org.jdataset.dataset.DefaultParameterizedDataset;
 import org.jdataset.dataset.ParameterizedDataset;
-import org.jdataset.impl.provider.jdbc.AbstractJdbcQueryDataProvider;
+import org.jdataset.impl.provider.jdbc.AbstractJdbcDataProvider;
 import org.jdataset.provider.QueryDataProvider;
 import org.phonelist.model.Person;
 
@@ -20,7 +20,7 @@ public class SqlSearchPage extends AbstractSearchPage {
 	@Override
 	public ParameterizedDataset<Person> createDataset() {
 		Connection connection = getWicketApp().getConnection();
-		QueryDataProvider<Person> provider = new AbstractJdbcQueryDataProvider<Person>(
+		QueryDataProvider<Person> provider = new AbstractJdbcDataProvider<Person>(
 				connection) {
 
 			@Override

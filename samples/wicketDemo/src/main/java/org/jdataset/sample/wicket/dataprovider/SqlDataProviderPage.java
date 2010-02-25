@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.apache.wicket.PageParameters;
 import org.jdataset.dataset.Dataset;
 import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.impl.provider.jdbc.AbstractJdbcQueryDataProvider;
+import org.jdataset.impl.provider.jdbc.AbstractJdbcDataProvider;
 import org.jdataset.provider.QueryDataProvider;
 import org.phonelist.model.Person;
 
@@ -21,7 +21,7 @@ public class SqlDataProviderPage extends AbstractDataProviderPage {
 	public ObjectDataset<Person> createDataset() {
 		
 		Connection connection = getWicketApp().getConnection();
-        QueryDataProvider<Person> provider = new AbstractJdbcQueryDataProvider<Person>(connection) {
+        QueryDataProvider<Person> provider = new AbstractJdbcDataProvider<Person>(connection) {
 
 			private static final long serialVersionUID = 1L;
 

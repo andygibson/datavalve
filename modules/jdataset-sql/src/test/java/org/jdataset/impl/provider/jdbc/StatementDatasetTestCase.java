@@ -221,7 +221,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testObjectCreation() {
 
-		StatementDataProvider<TestValue> provider = new AbstractJdbcQueryDataProvider<TestValue>(
+		StatementDataProvider<TestValue> provider = new AbstractJdbcDataProvider<TestValue>(
 				getConnection()) {
 
 			private static final long serialVersionUID = 1L;

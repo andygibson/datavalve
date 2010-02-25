@@ -19,7 +19,7 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 
 	public QueryDataset<Person> createDataset() {
 
-		QueryDataProvider<Person> provider = new AbstractJdbcQueryDataProvider<Person>(
+		QueryDataProvider<Person> provider = new AbstractJdbcDataProvider<Person>(
 				getConnection()) {
 
 			private static final long serialVersionUID = 1L;

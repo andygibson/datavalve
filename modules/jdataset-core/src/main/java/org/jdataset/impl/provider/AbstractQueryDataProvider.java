@@ -42,7 +42,6 @@ public abstract class AbstractQueryDataProvider<T> extends
 	private static Logger log = LoggerFactory
 			.getLogger(AbstractQueryDataProvider.class);
 
-	private static Pattern commaSplitter = Pattern.compile(",");
 	private Map<String, String> orderKeyMap = new HashMap<String, String>();
 	private List<String> restrictions = new ArrayList<String>();
 

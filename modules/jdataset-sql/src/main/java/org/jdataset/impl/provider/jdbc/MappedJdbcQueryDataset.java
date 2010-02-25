@@ -30,7 +30,7 @@ import org.jdataset.dataset.QueryDataset;
  * @author Andy Gibson
  * 
  */
-public class MappedJdbcQueryDataset extends AbstractJdbcQueryDataProvider<TableRow> {
+public class MappedJdbcQueryDataset extends AbstractJdbcDataProvider<TableRow> {
 
 	private static final long serialVersionUID = 1L;
 

@@ -32,20 +32,20 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  *            The type of object that will be returned in the dataset.
  */
-public abstract class AbstractJdbcQueryDataProvider<T> extends
+public abstract class AbstractJdbcDataProvider<T> extends
 		AbstractQueryDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
-			.getLogger(AbstractJdbcQueryDataProvider.class);
+			.getLogger(AbstractJdbcDataProvider.class);
 
 	private transient Connection connection;
 
-	public AbstractJdbcQueryDataProvider() {
+	public AbstractJdbcDataProvider() {
 		this(null);
 	}
 
-	public AbstractJdbcQueryDataProvider(Connection connection) {
+	public AbstractJdbcDataProvider(Connection connection) {
 		this.connection = connection;
 	}
 

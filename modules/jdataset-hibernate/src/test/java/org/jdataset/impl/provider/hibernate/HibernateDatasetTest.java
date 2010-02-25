@@ -29,7 +29,7 @@ public class HibernateDatasetTest extends
 	private SessionFactory sessionFactory;
 	private Session session;
 	private transient Connection connection;
-	private QueryDataset<Person> qry;
+	private QueryDataset<Person> dataset;
 
 	protected QueryDataset<Person> buildQueryDatasetx() {
 		HibernateDataProvider<Person> provider = new HibernateDataProvider<Person>();
@@ -61,7 +61,7 @@ public class HibernateDatasetTest extends
 		sessionFactory = cfg.configure().buildSessionFactory();
 		session = sessionFactory.openSession();
 		generateTestData();
-		qry = buildQueryDatasetx();
+		dataset = buildQueryDatasetx();
 	}
 
 	@Override
@@ -120,47 +120,47 @@ public class HibernateDatasetTest extends
 	}
 
 	public void testResultCount() {		
-		long result = qry.getResultCount();
+		long result = dataset.getResultCount();
 		assertEquals(30, result);
 
-		qry.getRestrictions().add("p.id = 3");
-		qry.invalidateResultInfo();
-		result = qry.getResultCount();
+		dataset.getRestrictions().add("p.id = 3");
+		dataset.invalidateResultInfo();
+		result = dataset.getResultCount();
 		assertEquals(1, result);
 
 	}
 
 	public void testSimpleParameter() {		
 
-		qry.getRestrictions().add("p.id = :personId");
-		qry.getParameters().put("personId", 4l);
-		List<Person> result = qry.getResultList();
-		Long val = (Long) qry.resolveParameter(":personId");
+		dataset.getRestrictions().add("p.id = :personId");
+		dataset.getParameters().put("personId", 4l);
+		List<Person> result = dataset.getResultList();
+		Long val = (Long) dataset.resolveParameter(":personId");
 		assertNotNull(val);
 		assertEquals(4, val.intValue());
 
 		assertNotNull(result);
 
 		assertEquals(1, result.size());
-		assertEquals(1, qry.getPage());
+		assertEquals(1, dataset.getPage());
 		Person p = result.get(0);
 		assertEquals(new Long(4), p.getId());
 	}
 
 	public void testMissingParameter() {
-		qry.getRestrictions().add("p.id = #{personId}");
-		List<Person> result = qry.getResultList();
+		dataset.getRestrictions().add("p.id = #{personId}");
+		List<Person> result = dataset.getResultList();
 
 		assertNotNull(result);
-		assertEquals(1, qry.getPage());
+		assertEquals(1, dataset.getPage());
 		assertEquals(30, result.size());
 
 	}
 
 	public void testNullParameter() {
-		qry.getRestrictions().add("p.id = #{personId}");
-		List<Person> result = qry.getResultList();
-		qry.getParameters().put("personId", null);
+		dataset.getRestrictions().add("p.id = #{personId}");
+		List<Person> result = dataset.getResultList();
+		dataset.getParameters().put("personId", null);
 
 		assertNotNull(result);
 
@@ -169,45 +169,45 @@ public class HibernateDatasetTest extends
 
 	public void testPagination() {
 
-		assertEquals(1, qry.getPage());
-		assertEquals(false, qry.isNextAvailable());
-		assertEquals(false, qry.isPreviousAvailable());
+		assertEquals(1, dataset.getPage());
+		assertEquals(false, dataset.isNextAvailable());
+		assertEquals(false, dataset.isPreviousAvailable());
 
-		qry.setMaxRows(10);
-		assertEquals(1, qry.getPage());
+		dataset.setMaxRows(10);
+		assertEquals(1, dataset.getPage());
 
-		assertEquals(true, qry.isNextAvailable());
-		assertEquals(false, qry.isPreviousAvailable());
+		assertEquals(true, dataset.isNextAvailable());
+		assertEquals(false, dataset.isPreviousAvailable());
 
-		qry.next();
-		assertEquals(2, qry.getPage());
-		assertEquals(true, qry.isNextAvailable());
-		assertEquals(true, qry.isPreviousAvailable());
+		dataset.next();
+		assertEquals(2, dataset.getPage());
+		assertEquals(true, dataset.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
 
-		qry.previous();
-		assertEquals(1, qry.getPage());
-		assertEquals(true, qry.isNextAvailable());
-		assertEquals(false, qry.isPreviousAvailable());
+		dataset.previous();
+		assertEquals(1, dataset.getPage());
+		assertEquals(true, dataset.isNextAvailable());
+		assertEquals(false, dataset.isPreviousAvailable());
 
-		qry.last();
-		assertEquals(3, qry.getPage());
-		assertEquals(false, qry.isNextAvailable());
-		assertEquals(true, qry.isPreviousAvailable());
+		dataset.last();
+		assertEquals(3, dataset.getPage());
+		assertEquals(false, dataset.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
 
-		qry.previous();
-		assertEquals(2, qry.getPage());
-		assertEquals(true, qry.isNextAvailable());
-		assertEquals(true, qry.isPreviousAvailable());
+		dataset.previous();
+		assertEquals(2, dataset.getPage());
+		assertEquals(true, dataset.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
 
 	}
 
 	public void testParameterResolverRepeatsEval() {
 		System.out.println("Resolving ");
 		log.debug("Entering : resolver repeats eval test");		
-		qry.getRestrictions().add("p.id = #{id}");
-		qry.getRestrictions().add("p.id = #{id}");
+		dataset.getRestrictions().add("p.id = #{id}");
+		dataset.getRestrictions().add("p.id = #{id}");
 
-		qry.addParameterResolver(new ParameterResolver() {
+		dataset.addParameterResolver(new ParameterResolver() {
 
 			long id = 20;
 
@@ -232,10 +232,10 @@ public class HibernateDatasetTest extends
 			}
 
 		});
-		List<Person> results = qry.getResultList();
+		List<Person> results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(0, results.size());
-		assertEquals(0, qry.getResultCount().intValue());
+		assertEquals(0, dataset.getResultCount().intValue());
 
 	}
 
@@ -295,7 +295,7 @@ public class HibernateDatasetTest extends
 
 	@Override
 	public ObjectDataset<Person> buildObjectDataset() {
-		return qry;
+		return dataset;
 	}
 
 

@@ -50,7 +50,8 @@ public class WicketApplication extends WebApplication {
 		return (Session) createEntityManager().getDelegate();
 	}
 
-	public Connection getConnection() {
+	@SuppressWarnings("deprecation")
+	public Connection getConnection() {		
 		return getHibernateSession().connection();
 	}
 	

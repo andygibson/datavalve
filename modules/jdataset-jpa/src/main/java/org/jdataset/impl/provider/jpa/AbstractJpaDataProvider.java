@@ -9,8 +9,6 @@ import org.jdataset.Parameter;
 import org.jdataset.impl.provider.AbstractQueryDataProvider;
 import org.jdataset.impl.provider.DataQuery;
 import org.jdataset.provider.QueryDataProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for a JPA based {@link QueryDataProvider}. Override and implement
@@ -29,9 +27,6 @@ public abstract class AbstractJpaDataProvider<T> extends
 	private static final long serialVersionUID = 1L;
 
 	private EntityManager entityManager;
-
-	private final static Logger log = LoggerFactory
-			.getLogger(AbstractJpaDataProvider.class);
 
 	/**
 	 * Override to create the specific type of query to use.

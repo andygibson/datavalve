@@ -55,10 +55,10 @@ public class DummyDataProvider<T> extends AbstractQueryDataProvider<T> {
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected List<T> queryForResults(DataQuery query, Integer firstResult,
 			Integer count) {
-		// TODO Auto-generated method stub
 		return Collections.EMPTY_LIST;
 	}
 

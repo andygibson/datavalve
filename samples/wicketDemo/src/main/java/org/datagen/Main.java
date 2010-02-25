@@ -12,7 +12,6 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
 			FileWriter fw = new FileWriter(new File("c:\\testData100000.csv"));
 			for (int i = 0; i < 100000; i++) {
@@ -27,7 +26,6 @@ public class Main {
 			}
 			fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

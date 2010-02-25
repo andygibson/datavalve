@@ -32,8 +32,6 @@ public abstract class AbstractCustomPaginatorPage extends WebPage {
 		return (WicketApplication) super.getApplication();
 	}
 
-	// TODO Add any page properties or variables here
-
 	/**
 	 * Constructor that is invoked when page is invoked without a session.
 	 * 

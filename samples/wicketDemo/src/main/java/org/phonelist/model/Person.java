@@ -16,7 +16,6 @@ public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Person() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Person(Long id, String firstName, String lastName, String phone) {

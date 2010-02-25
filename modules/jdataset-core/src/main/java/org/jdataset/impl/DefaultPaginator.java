@@ -10,7 +10,7 @@ import org.jdataset.Paginator;
  * @author Andy Gibson
  *
  */
-public class SimplePaginator implements Paginator, Serializable {
+public class DefaultPaginator implements Paginator, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,11 +20,11 @@ public class SimplePaginator implements Paginator, Serializable {
 	private String orderKey;
 	private boolean nextAvailable;
 
-	public SimplePaginator() {
+	public DefaultPaginator() {
 		this(null);		
 	}
 	
-	public SimplePaginator(Integer maxRows) {
+	public DefaultPaginator(Integer maxRows) {
 		this.maxRows = maxRows;
 	}
 

@@ -85,7 +85,6 @@ public class DataQueryBuilder {
 		}
 
 		query.setStatement(buildFinalStatement());
-		System.out.println("Built query : " + query.getStatement());
 
 		return query;
 	}

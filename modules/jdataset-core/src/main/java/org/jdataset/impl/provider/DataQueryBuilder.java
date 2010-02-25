@@ -217,8 +217,7 @@ public class DataQueryBuilder {
 		if (provider != null) {
 			for (String expression : expressions) {
 				Object value = provider.resolveParameter(expression);
-				Parameter param = results.add(expression, value);
-
+				results.add(expression, value);
 			}
 		}
 		return results;

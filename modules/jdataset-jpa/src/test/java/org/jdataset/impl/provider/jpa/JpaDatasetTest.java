@@ -190,7 +190,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testParameterResolverRepeatsEval() {
-		System.out.println("Resolving ");
+		
 		log.debug("Entering : resolver repeats eval test");
 		QueryDataset<Person> qry = buildQueryDataset();
 		qry.getRestrictions().add("p.id = #{id}");
@@ -201,7 +201,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 			long id = 20;
 
 			public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
-				System.out.println("Resolving "+parameter);
+				System.out.println("Resolving parameter");
 				if (parameter.getName().equals("#{id}")) {
 					parameter.setValue(id++);
 					return true;
@@ -211,8 +211,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 
 			public boolean acceptParameter(String parameter) {
 				
-				boolean val = parameter.startsWith("#{") && parameter.endsWith("}");
-				System.out.println("Do we accept param "+parameter+ " - "+val);
+				boolean val = parameter.startsWith("#{") && parameter.endsWith("}");			
 				return val;
 			}
 			

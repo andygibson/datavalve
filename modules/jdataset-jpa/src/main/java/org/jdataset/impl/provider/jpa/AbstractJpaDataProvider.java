@@ -9,7 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.jdataset.Paginator;
+import org.jdataset.Parameter;
 import org.jdataset.impl.provider.AbstractQueryDataProvider;
+import org.jdataset.impl.provider.DataQuery;
+import org.jdataset.impl.provider.DataQueryBuilder;
 import org.jdataset.provider.QueryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +46,9 @@ public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvid
 	 */
 	@Override
 	protected final List<T> fetchResultsFromDatabase(Paginator paginator,Integer count) {
-		Query qry = buildQuery(getSelectStatement(), true,paginator);
+		
+		
+		Query qry = buildQuery(getSelectStatement(), true,paginator);		
 		if (count != 0) {
 			qry.setMaxResults(count);
 		}
@@ -75,7 +80,29 @@ public abstract class AbstractJpaDataProvider<T> extends AbstractQueryDataProvid
 	 * @param includeOrderBy
 	 * @return
 	 */
+	protected final DataQuery buildDataQuery(String selectStatement,
+			boolean includeOrderBy,Paginator paginator) {
+		DataQueryBuilder builder = new DataQueryBuilder();
+		builder.setProvider(this);
+		builder.setBaseStatement(selectStatement);
+		if (includeOrderBy) {
+			builder.setOrderBy(getOrderKeyMap().get(paginator.getOrderKey()));
+			builder.setOrderAscending(paginator.isOrderAscending());
+		}		
+		return builder.build();
+	}
+	
 	protected final Query buildQuery(String selectStatement,
+			boolean includeOrderBy,Paginator paginator) {
+		DataQuery dataQuery = buildDataQuery(selectStatement, includeOrderBy, paginator);
+		Query qry = createJpaQuery(dataQuery.getStatement());
+		for (Parameter param : dataQuery.getParameters()) {
+			qry.setParameter(param.getName(),param.getValue());
+		}
+		return qry;
+		
+	}
+	protected final Query buildQuery_old(String selectStatement,
 			boolean includeOrderBy,Paginator paginator) {
 
 		Map<String, Object> queryParams = new HashMap<String, Object>();

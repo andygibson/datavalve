@@ -21,7 +21,7 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(TextFileDataset.class);
+	//private static Logger log = LoggerFactory.getLogger(TextFileDataset.class);
 
 	private final String fileName;
 	private final File file;
@@ -66,8 +66,6 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 	}
 
 	private List<T> generateResults(int firstResult, int rowCount) {
-		log.debug("Generating results from text file, first = {}, count = {}",
-				firstResult, rowCount);
 		BufferedReader reader;
 		List<T> results = new ArrayList<T>();
 		String line;
@@ -94,7 +92,6 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		log.debug("Result count generated = {}", results.size());
 		return results;
 
 	}

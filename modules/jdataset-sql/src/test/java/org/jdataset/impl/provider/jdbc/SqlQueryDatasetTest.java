@@ -11,19 +11,27 @@ import org.jdataset.provider.QueryDataProvider;
 public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 
 	private static final long serialVersionUID = 1L;
-	
+	private QueryDataset<Person> dataset;
+
 	@Override
 	public ObjectDataset<Person> buildObjectDataset() {
-		return createDataset();
+		return dataset;
 	}
 
-	public QueryDataset<Person> createDataset() {
+	@Override
+	protected void setUp() throws Exception {
+		// TODO Auto-generated method stub
+		super.setUp();
+		dataset = createDataset();
+	}
+
+	protected QueryDataset<Person> createDataset() {
 
 		QueryDataProvider<Person> provider = new AbstractJdbcDataProvider<Person>(
 				getConnection()) {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			@Override
 			public Person createObjectFromResultSet(ResultSet resultSet)
 					throws SQLException {
@@ -36,78 +44,72 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 		provider.setCountStatement("select count(1) from persons");
 		provider.getOrderKeyMap().put("id", "id");
 		provider.getOrderKeyMap().put("name", "last_name,first_name");
-		
+
 		return new DefaultQueryDataset<Person>(provider);
 	}
 
 	public void testParameterQuery() {
-		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like 'A%'");
+		dataset.getRestrictions().add("FIRST_NAME like 'A%'");
 		int count = 0;
-		for (Person p : ds) {
+		for (Person p : dataset) {
 			assertTrue(p.getFirstName().startsWith("A"));
 			count++;
 		}
-		assertEquals(count, ds.getResultCount().intValue());		
+		assertEquals(count, dataset.getResultCount().intValue());
 	}
-	
+
 	public void testParameterQueryWithValue() {
-		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like :param");
-		ds.getParameters().put("param","S%");
+		dataset.getRestrictions().add("FIRST_NAME like :param");
+		dataset.getParameters().put("param", "S%");
 		int count = 0;
-		for (Person p : ds) {
+		for (Person p : dataset) {
 			assertTrue(p.getFirstName().startsWith("S"));
 			count++;
 		}
-		
-		assertEquals(count, ds.getResultCount().intValue());
+
+		assertEquals(count, dataset.getResultCount().intValue());
 	}
-	
+
 	public void testParameterQueryWithValueReRead() {
-		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like :param");
-		ds.getParameters().put("param","M%");		
-		for (Person p : ds) {
+
+		dataset.getRestrictions().add("FIRST_NAME like :param");
+		dataset.getParameters().put("param", "M%");
+		for (Person p : dataset) {
 			assertTrue(p.getFirstName().startsWith("M"));
 		}
-		
-		ds.getParameters().put("param","T%");		
-		ds.refresh();
-		for (Person p : ds) {
+
+		dataset.getParameters().put("param", "T%");
+		dataset.refresh();
+		for (Person p : dataset) {
 			assertTrue(p.getFirstName().startsWith("T"));
 		}
-		
+
 	}
-	
+
 	public void testParameterQueryWithNoValue() {
-		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like :param");
-		assertEquals(getDataRowCount(), ds.getResultCount().intValue());
-		int count = ds.getResultCount();
-		assertEquals(getDataRowCount(), count);	
+		dataset.getRestrictions().add("FIRST_NAME like :param");
+		assertEquals(getDataRowCount(), dataset.getResultCount().intValue());
+		int count = dataset.getResultCount();
+		assertEquals(getDataRowCount(), count);
 	}
-	
+
 	public void testParameterizedQueryCount() {
-		QueryDataset<Person> ds = createDataset();
-		ds.getRestrictions().add("FIRST_NAME like :param");
-		ds.getParameters().put("param","%");
-		assertEquals(getDataRowCount(), ds.getResultCount().intValue());							
+		dataset.getRestrictions().add("FIRST_NAME like :param");
+		dataset.getParameters().put("param", "%");
+		assertEquals(getDataRowCount(), dataset.getResultCount().intValue());
 	}
-	
+
 	public void testOrdering() {
-		QueryDataset<Person> ds = createDataset();
-		ds.setOrderKey("name");
+		dataset.setOrderKey("name");
 		String last = null;
 		String test = null;
-		for (Person person : ds) {
-			test = person.getLastName()+" " +person.getFirstName();
-			if (last != null) {				
+		for (Person person : dataset) {
+			test = person.getLastName() + " " + person.getFirstName();
+			if (last != null) {
 				assertTrue(last.compareTo(test) < 0);
 			}
 			last = test;
 		}
 	}
-	
-	
+
 }

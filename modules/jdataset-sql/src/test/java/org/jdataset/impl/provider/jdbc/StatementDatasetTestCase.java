@@ -20,7 +20,15 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	
 	private static Logger log = LoggerFactory
 			.getLogger(StatementDatasetTestCase.class);
+	
+	private StatementDataset<TableRow> dataset;
 
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		dataset = createDataset();
+	}
+	
 	private StatementDataset<TableRow> createDataset() {
 		MappedJdbcQueryDataset result = new MappedJdbcQueryDataset(getConnection());
 		result.setSelectStatement("select * from TestValues order by id");
@@ -29,16 +37,14 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		return new DefaultStatementDataset<TableRow>(result);
 	}
 
-	public void testRecordCount() {
-		StatementDataset<TableRow> qry = createDataset();		
-		assertEquals(100, qry.getResultCount().intValue());
+	public void testRecordCount() {		
+		assertEquals(100, dataset.getResultCount().intValue());
 	}
 
 	public void testResultsFirstPage() {
-		StatementDataset<TableRow> qry = createDataset();
-		qry.setMaxRows(10);
-		assertEquals(100, qry.getResultCount().intValue());
-		List<TableRow> results = qry.getResultList();
+		dataset.setMaxRows(10);
+		assertEquals(100, dataset.getResultCount().intValue());
+		List<TableRow> results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(10, results.size());
 		// check values
@@ -51,13 +57,12 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testResultPages() {
-		StatementDataset<TableRow> qry = createDataset();
-		qry.setMaxRows(10);
-		assertEquals(100, qry.getResultCount().intValue());
+		dataset.setMaxRows(10);
+		assertEquals(100, dataset.getResultCount().intValue());
 		// check values
 
 		for (int p = 0; p < 10; p++) {
-			List<TableRow> results = qry.getResultList();
+			List<TableRow> results = dataset.getResultList();
 			assertNotNull(results);
 			assertEquals(10, results.size());
 
@@ -67,26 +72,24 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 				assertEquals(expected, results.get(i).getValue("VALUE"));
 				assertEquals(expected, results.get(i).getValue("ID"));
 			}
-			qry.next();
+			dataset.next();
 		}
 	}
 
 	public void testUnsetParameters() {
-		StatementDataset<TableRow> qry = createDataset();
-		qry.setMaxRows(10);
-		qry.setSelectStatement("select * from TestValues where id = #{id}");
-		List<TableRow> results = qry.getResultList();
+		dataset.setMaxRows(10);
+		dataset.setSelectStatement("select * from TestValues where id = #{id}");
+		List<TableRow> results = dataset.getResultList();
 
 		assertNotNull(results);
 		assertEquals(0, results.size());
 	}
 
 	public void testSetParameters() {
-		StatementDataset<TableRow> qry = createDataset();
-		qry.setMaxRows(10);
-		qry.setSelectStatement("select * from TestValues where id = :id");
-		qry.addParameter("id", 4);
-		List<TableRow> results = qry.getResultList();		
+		dataset.setMaxRows(10);
+		dataset.setSelectStatement("select * from TestValues where id = :id");
+		dataset.addParameter("id", 4);
+		List<TableRow> results = dataset.getResultList();		
 
 		assertNotNull(results);
 		assertEquals(1, results.size());
@@ -95,8 +98,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testParamResolver() {
-		StatementDataset<TableRow> qry = createDataset();
-		qry.addParameterResolver(new ParameterResolver() {
+		dataset.addParameterResolver(new ParameterResolver() {
 
 			public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 				if ("#{myId}".equals(parameter.getName())) {
@@ -110,8 +112,8 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 				return parameter.startsWith("#{") && parameter.endsWith("}");
 			}
 		});
-		qry.setSelectStatement("select * from TestValues where id = #{myId}");
-		List<TableRow> results = qry.getResultList();
+		dataset.setSelectStatement("select * from TestValues where id = #{myId}");
+		List<TableRow> results = dataset.getResultList();
 
 		assertNotNull(results);
 		assertEquals(1, results.size());
@@ -119,8 +121,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testParamResolverMissingValue() {
-		StatementDataset<TableRow> qry = createDataset();
-		qry.addParameterResolver(new ParameterResolver() {
+		dataset.addParameterResolver(new ParameterResolver() {
 
 			public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 				if ("myId".equals(parameter.getName())) {
@@ -134,17 +135,16 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 				return true;
 			}
 		});
-		qry
+		dataset
 				.setSelectStatement("select * from TestValues where id = #{myId_unknown}");
-		List<TableRow> results = qry.getResultList();
+		List<TableRow> results = dataset.getResultList();
 
 		assertNotNull(results);
 		assertEquals(0, results.size());
 	}
 
 	public void testInvalidColumnName() {
-		StatementDataset<TableRow> qry = createDataset();
-		List<TableRow> results = qry.getResultList();
+		List<TableRow> results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(100, results.size());
 		try {
@@ -157,66 +157,64 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testPagingPageSizePlusOne() {
 		// test the paging when the
-		StatementDataset<TableRow> qry = createDataset();
-		qry.setSelectStatement("select * from TestValues where id < 21");
-		qry.setCountStatement("select count(1) from TestValues where id < 21");
+		dataset.setSelectStatement("select * from TestValues where id < 21");
+		dataset.setCountStatement("select count(1) from TestValues where id < 21");
 
-		assertEquals(21, qry.getResultCount().intValue());
+		assertEquals(21, dataset.getResultCount().intValue());
 
-		assertEquals(21, qry.getResultList().size());
+		assertEquals(21, dataset.getResultList().size());
 
-		qry.setMaxRows(10);
-		assertEquals(false, qry.isPreviousAvailable());
-		assertEquals(true, qry.isNextAvailable());
+		dataset.setMaxRows(10);
+		assertEquals(false, dataset.isPreviousAvailable());
+		assertEquals(true, dataset.isNextAvailable());
 
-		assertEquals(3, qry.getPageCount());
+		assertEquals(3, dataset.getPageCount());
 
-		List<TableRow> results = qry.getResultList();
+		List<TableRow> results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(10, results.size());
-		assertEquals(false, qry.isPreviousAvailable());
-		assertEquals(true, qry.isNextAvailable());
+		assertEquals(false, dataset.isPreviousAvailable());
+		assertEquals(true, dataset.isNextAvailable());
 
-		qry.next();
-		results = qry.getResultList();
+		dataset.next();
+		results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(10, results.size());
-		assertEquals(true, qry.isPreviousAvailable());
-		assertEquals(true, qry.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
+		assertEquals(true, dataset.isNextAvailable());
 
-		qry.next();
-		results = qry.getResultList();
+		dataset.next();
+		results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(1, results.size());
-		assertEquals(true, qry.isPreviousAvailable());
-		assertEquals(false, qry.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
+		assertEquals(false, dataset.isNextAvailable());
 	}
 
 	public void testPagingPageSizeMinusOne() {
 		log.debug("Testing size minus One");
 		// test the paging when the
-		StatementDataset<TableRow> qry = createDataset();
-		qry.setSelectStatement("select * from TestValues where id < 19");
-		qry.setCountStatement("select count(1) from TestValues where id < 19");
+		dataset.setSelectStatement("select * from TestValues where id < 19");
+		dataset.setCountStatement("select count(1) from TestValues where id < 19");
 
-		assertEquals(19, qry.getResultCount().intValue());
-		assertEquals(19, qry.getResultList().size());
+		assertEquals(19, dataset.getResultCount().intValue());
+		assertEquals(19, dataset.getResultList().size());
 
-		qry.setMaxRows(10);
-		assertEquals(2, qry.getPageCount());
+		dataset.setMaxRows(10);
+		assertEquals(2, dataset.getPageCount());
 
-		List<TableRow> results = qry.getResultList();
+		List<TableRow> results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(10, results.size());
-		assertEquals(false, qry.isPreviousAvailable());
-		assertEquals(true, qry.isNextAvailable());
+		assertEquals(false, dataset.isPreviousAvailable());
+		assertEquals(true, dataset.isNextAvailable());
 
-		qry.next();
-		results = qry.getResultList();
+		dataset.next();
+		results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(9, results.size());
-		assertEquals(true, qry.isPreviousAvailable());
-		assertEquals(false, qry.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
+		assertEquals(false, dataset.isNextAvailable());
 	}
 
 	public void testObjectCreation() {
@@ -259,6 +257,6 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	@Override
 	public ObjectDataset<TableRow> buildObjectDataset() {
-		return createDataset();
+		return dataset;
 	}
 }

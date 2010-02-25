@@ -22,7 +22,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 			.getLogger(StatementDatasetTestCase.class);
 
 	private StatementDataset<TableRow> createDataset() {
-		MappedJdbcDataProvider result = new MappedJdbcDataProvider(getConnection());
+		MappedJdbcQueryDataset result = new MappedJdbcQueryDataset(getConnection());
 		result.setSelectStatement("select * from TestValues order by id");
 		result.setCountStatement("select count(1) from TestValues");
 		
@@ -221,7 +221,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testObjectCreation() {
 
-		StatementDataProvider<TestValue> provider = new AbstractJdbcDataProvider<TestValue>(
+		StatementDataProvider<TestValue> provider = new AbstractJdbcQueryDataProvider<TestValue>(
 				getConnection()) {
 
 			private static final long serialVersionUID = 1L;

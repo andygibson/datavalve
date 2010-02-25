@@ -1,14 +1,10 @@
 package org.jdataset.impl.provider.jdbc;
 
-import java.awt.geom.Rectangle2D;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -25,8 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TableRow {
 
-	private static Logger log = LoggerFactory.getLogger(TableRow.class);
-	
 	/**
 	 * The <code>values</code> map holds the values
 	 */

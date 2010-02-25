@@ -2,16 +2,14 @@ package org.jdataset.impl.provider.jdbc;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+
+import org.jdataset.dataset.QueryDataset;
 
 /**
  * Implementation of an {@link AbstractJdbcQueryDataProvider} that returns the
  * results as a set of {@link TableRow} objects that contain the columns as map
- * values. Since this is implements the {@link QueryDataset} interface, you can
- * apply parameterized restrictions and ordering to the query. The select/count
- * statement should contain only the select part and the dataset will add the
- * rest.
+ * values. 
  * 
  * <pre>
  * MappedJdbcQueryDataset ds  new MappedJdbcQueryDataset(connection);
@@ -37,25 +35,17 @@ public class MappedJdbcQueryDataset extends AbstractJdbcQueryDataProvider<TableR
 	private static final long serialVersionUID = 1L;
 
 	public MappedJdbcQueryDataset() {
-		super();
+		super(null);
 	}
 
 	public MappedJdbcQueryDataset(Connection connection) {
 		super(connection);
 	}
-
+	
 	@Override
 	public TableRow createObjectFromResultSet(ResultSet resultSet)
 			throws SQLException {
-		TableRow result = new TableRow();
-		ResultSetMetaData metadata = resultSet.getMetaData();
-
-		for (int i = 0; i < metadata.getColumnCount(); i++) {
-			result.add(metadata.getColumnName(i + 1), resultSet
-					.getObject(i + 1));
-		}
-
-		return result;
+		return TableRow.createTableRowFromResultSet(resultSet);
 	}
 
 }

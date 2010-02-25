@@ -1095,6 +1095,14 @@ showResults(results2);
 			interface and implementations for this is how we create datasets that
 			can attach to different datasources in a useful way.
 		</para>
+		<para>
+			Most subclasses of the
+			<classname>DataProvider</classname>
+			are mirrored in some form of
+			<classname>ObjectDataset</classname>
+			subclass which acts as a thick client wrapper around the data
+			provider and internally uses an instance of that particular subclass.
+		</para>
 		<sect1>
 			<title>
 				<classname>ParameterizedDataProvider</classname>
@@ -1105,7 +1113,7 @@ showResults(results2);
 				interface is the
 				<classname>ParameterizedDataProvider</classname>
 				that introduces methods for fetching data based on dynamic
-				parameters.
+				parameters. 
 			</para>
 		</sect1>
 

@@ -1,10 +1,5 @@
 package org.jdataset.impl.provider;
 
-import org.jdataset.DataProvider;
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.provider.ParameterizedDataProvider;
-
 import junit.framework.TestCase;
 
 public class OrderedParamsDataQueryBuilderTest extends TestCase {

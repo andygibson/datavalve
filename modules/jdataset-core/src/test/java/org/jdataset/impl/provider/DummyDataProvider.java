@@ -7,9 +7,11 @@ import org.jdataset.Paginator;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
 import org.jdataset.provider.ParameterizedDataProvider;
-import org.jdataset.provider.QueryDataProvider;
 
 public class DummyDataProvider<T> extends AbstractQueryDataProvider<T> {
+
+
+	private static final long serialVersionUID = 1L;
 
 	public DummyDataProvider() {
 		addParameterResolver(new ParameterResolver() {

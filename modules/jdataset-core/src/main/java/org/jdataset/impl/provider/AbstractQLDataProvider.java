@@ -6,8 +6,8 @@ import org.jdataset.Paginator;
 
 /**
  * Base class for any data provider that is driven by a Query Language. This
- * class implements the fundamentals of generating a {@link DataQuery} object that
- * can then be used to query data in the different query language providers
+ * class implements the fundamentals of generating a {@link DataQuery} object
+ * that can then be used to query data in the different query language providers
  * (Hql, Ejbql, Sql etc).
  * <p>
  * By using an internal query to hold the statement and the parameters, we can
@@ -23,18 +23,18 @@ public abstract class AbstractQLDataProvider<T> extends
 
 	private String selectStatement;
 	private String countStatement;
-	
 
 	@Override
-	public Integer fetchResultCount() {	
-		DataQuery query = buildDataQuery(getCountStatement(), false,null);
+	public Integer fetchResultCount() {
+		DataQuery query = buildDataQuery(getCountStatement(), false, null);
 		return queryForCount(query);
 	}
 
 	@Override
 	public List<T> fetchResults(Paginator paginator) {
-	// fetch the results by building the data query and handing it off to a query executor.
-		DataQuery query = buildDataQuery(getSelectStatement(), true,paginator);
+		// fetch the results by building the data query and handing it off to a
+		// query executor.
+		DataQuery query = buildDataQuery(getSelectStatement(), true, paginator);
 
 		Integer count = paginator.includeAllResults() ? null : paginator
 				.getMaxRows() + 1;
@@ -89,6 +89,16 @@ public abstract class AbstractQLDataProvider<T> extends
 	protected abstract List<T> queryForResults(DataQuery query,
 			Integer firstResult, Integer count);
 
+	/**
+	 * Query for the actual result count value using the information defined in
+	 * the {@link DataQuery} reference passed in. In most cases, the statement
+	 * needs executing and the count value retrieved from the query.
+	 * <p/>
+	 * Override in subclasses to provide different implementations.
+	 * 
+	 * @param query
+	 * @return
+	 */
 	protected abstract Integer queryForCount(DataQuery query);
 
 	/**
@@ -97,7 +107,8 @@ public abstract class AbstractQLDataProvider<T> extends
 	 * as a flag indicating whether ordering is included. We dont' want ordering
 	 * on count statements so make sure it is false for those.
 	 * <p>
-	 * This method is all about taking the provider statements and restrictions and 
+	 * This method is all about taking the provider statements and restrictions
+	 * and
 	 * 
 	 * @param baseStatement
 	 *            Initial statement to use for selecting data

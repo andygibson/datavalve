@@ -7,7 +7,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.jdataset.DataProvider;
 import org.jdataset.Paginator;
-import org.jdataset.impl.SimplePaginator;
+import org.jdataset.impl.DefaultPaginator;
 
 public class PaginatedDataProvider<T> extends SortableDataProvider<T> {
 
@@ -17,7 +17,7 @@ public class PaginatedDataProvider<T> extends SortableDataProvider<T> {
 	private Integer size;
 
 	public Iterator<? extends T> iterator(int first, int count) {
-		Paginator paginator = new SimplePaginator();
+		Paginator paginator = new DefaultPaginator();
 		paginator.setFirstResult(first);
 		paginator.setMaxRows(count);
 		return provider.fetchResults(paginator).iterator();

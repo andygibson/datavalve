@@ -27,6 +27,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	private EntityManagerFactory emf;
 	private EntityManager em;
 	private transient Connection connection;
+	private ProviderQueryDataset<Person> dataset;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -44,6 +45,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		emf = Persistence.createEntityManagerFactory("testPU");
 		em = emf.createEntityManager();
 		generateTestData();
+		dataset = buildQueryDatasetx();
 	}
 
 	@Override
@@ -101,52 +103,48 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		assertEquals(10, res.longValue());
 	}
 
-	public void testResultCount() {
-		ProviderQueryDataset<Person> qry = buildQueryDataset();
-		long result = qry.getResultCount();
+	public void testResultCount() {		
+		long result = dataset.getResultCount();
 		assertEquals(30, result);
 
-		qry.getProvider().getRestrictions().add("p.id = 3");
-		qry.invalidateResultInfo();
-		result = qry.getResultCount();
+		dataset.getProvider().getRestrictions().add("p.id = 3");
+		dataset.invalidateResultInfo();
+		result = dataset.getResultCount();
 		assertEquals(1, result);
 
 	}
 
 	public void testSimpleParameter() {
-		ProviderQueryDataset<Person> qry = buildQueryDataset();
 		
-		qry.getProvider().getRestrictions().add("p.id = :personId");
-		qry.getProvider().getParameters().put("personId", 4l);
-		List<Person> result = qry.getResultList();
-		Long val = (Long)qry.getProvider().resolveParameter(":personId");
+		dataset.getProvider().getRestrictions().add("p.id = :personId");
+		dataset.getProvider().getParameters().put("personId", 4l);
+		List<Person> result = dataset.getResultList();
+		Long val = (Long)dataset.getProvider().resolveParameter(":personId");
 		assertNotNull(val);
 		assertEquals(4, val.intValue());
 
 		assertNotNull(result);
 
 		assertEquals(1, result.size());
-		assertEquals(1, qry.getPage());
+		assertEquals(1, dataset.getPage());
 		Person p = result.get(0);
 		assertEquals(new Long(4), p.getId());
 	}
 
 	public void testMissingParameter() {
-		ProviderQueryDataset<Person> qry = buildQueryDataset();
-		qry.getProvider().getRestrictions().add("p.id = #{personId}");
-		List<Person> result = qry.getResultList();
+		dataset.getProvider().getRestrictions().add("p.id = #{personId}");
+		List<Person> result = dataset.getResultList();
 
 		assertNotNull(result);
-		assertEquals(1, qry.getPage());
+		assertEquals(1, dataset.getPage());
 		assertEquals(30, result.size());
 
 	}
 
 	public void testNullParameter() {
-		ProviderQueryDataset<Person> qry = buildQueryDataset();
-		qry.getProvider().getRestrictions().add("p.id = #{personId}");
-		List<Person> result = qry.getResultList();
-		qry.getProvider().getParameters().put("personId", null);
+		dataset.getProvider().getRestrictions().add("p.id = #{personId}");
+		List<Person> result = dataset.getResultList();
+		dataset.getProvider().getParameters().put("personId", null);
 
 		assertNotNull(result);
 
@@ -154,48 +152,47 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 
 	public void testPagination() {
-		ProviderQueryDataset<Person> qry = buildQueryDataset();
 		
-		assertEquals(1, qry.getPage());
-		assertEquals(false, qry.isNextAvailable());
-		assertEquals(false, qry.isPreviousAvailable());
+		assertEquals(1, dataset.getPage());
+		assertEquals(false, dataset.isNextAvailable());
+		assertEquals(false, dataset.isPreviousAvailable());
 
-		qry.setMaxRows(10);
-		assertEquals(1, qry.getPage());
+		dataset.setMaxRows(10);
+		assertEquals(1, dataset.getPage());
 
-		assertEquals(true, qry.isNextAvailable());
-		assertEquals(false, qry.isPreviousAvailable());
+		assertEquals(true, dataset.isNextAvailable());
+		assertEquals(false, dataset.isPreviousAvailable());
 
-		qry.next();
-		assertEquals(2, qry.getPage());
-		assertEquals(true, qry.isNextAvailable());
-		assertEquals(true, qry.isPreviousAvailable());
+		dataset.next();
+		assertEquals(2, dataset.getPage());
+		assertEquals(true, dataset.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
 
-		qry.previous();
-		assertEquals(1, qry.getPage());
-		assertEquals(true, qry.isNextAvailable());
-		assertEquals(false, qry.isPreviousAvailable());
+		dataset.previous();
+		assertEquals(1, dataset.getPage());
+		assertEquals(true, dataset.isNextAvailable());
+		assertEquals(false, dataset.isPreviousAvailable());
 
-		qry.last();
-		assertEquals(3, qry.getPage());
-		assertEquals(false, qry.isNextAvailable());
-		assertEquals(true, qry.isPreviousAvailable());
+		dataset.last();
+		assertEquals(3, dataset.getPage());
+		assertEquals(false, dataset.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
 
-		qry.previous();
-		assertEquals(2, qry.getPage());
-		assertEquals(true, qry.isNextAvailable());
-		assertEquals(true, qry.isPreviousAvailable());
+		dataset.previous();
+		assertEquals(2, dataset.getPage());
+		assertEquals(true, dataset.isNextAvailable());
+		assertEquals(true, dataset.isPreviousAvailable());
 
 	}
 
 	public void testParameterResolverRepeatsEval() {
 		
 		log.debug("Entering : resolver repeats eval test");
-		ProviderQueryDataset<Person> qry = buildQueryDataset();
-		qry.getProvider().getRestrictions().add("p.id = #{id}");
-		qry.getProvider().getRestrictions().add("p.id = #{id}");
 
-		qry.getProvider().addParameterResolver(new ParameterResolver() {
+		dataset.getProvider().getRestrictions().add("p.id = #{id}");
+		dataset.getProvider().getRestrictions().add("p.id = #{id}");
+
+		dataset.getProvider().addParameterResolver(new ParameterResolver() {
 
 			long id = 20;
 
@@ -215,10 +212,10 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 			}
 			
 		});
-		List<Person> results = qry.getResultList();
+		List<Person> results = dataset.getResultList();
 		assertNotNull(results);
 		assertEquals(0, results.size());
-		assertEquals(0, qry.getResultCount().intValue());
+		assertEquals(0, dataset.getResultCount().intValue());
 
 	}
 
@@ -278,10 +275,10 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	
 	@Override
 	public ObjectDataset<Person> buildObjectDataset() {
-		return buildQueryDataset();
+		return dataset;
 	}
 	
-	public ProviderQueryDataset<Person> buildQueryDataset() {
+	protected ProviderQueryDataset<Person> buildQueryDatasetx() {
 		JpaDataProvider<Person> provider = new JpaDataProvider<Person>();
 		provider.setEntityManager(em);
 		provider.setSelectStatement("select p from Person p");
@@ -297,40 +294,37 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		return 30;
 	}
 	
-	public void testLocalConstParameterInclusion() {
-		ProviderQueryDataset<Person> qry = buildQueryDataset();		
-		qry.setMaxRows(7);
-		qry.setOrderKey("id");
-		qry.getProvider().addRestriction("id=3");
-		List<Person> results = qry.getResultList();
+	public void testLocalConstParameterInclusion() {		
+		dataset.setMaxRows(7);
+		dataset.setOrderKey("id");
+		dataset.getProvider().addRestriction("id=3");
+		List<Person> results = dataset.getResultList();
 		assertEquals(1, results.size());
 	}
 	
 	public void testLocalConstParameterInclusionMixed() {
-		ProviderQueryDataset<Person> qry = buildQueryDataset();
-		qry.getProvider().addParameter("VALUEx", 4l);
+		dataset.getProvider().addParameter("VALUEx", 4l);
 		
-		qry.setMaxRows(7);
-		qry.setOrderKey("id");
-		qry.getProvider().addRestriction("id=3");
-		qry.getProvider().addRestriction("or id=:VALUEx");
+		dataset.setMaxRows(7);
+		dataset.setOrderKey("id");
+		dataset.getProvider().addRestriction("id=3");
+		dataset.getProvider().addRestriction("or id=:VALUEx");
 				
-		List<Person> results = qry.getResultList();
+		List<Person> results = dataset.getResultList();
 		assertEquals(2, results.size());
 		assertEquals(3l, results.get(0).getId().longValue());
 		assertEquals(4l, results.get(1).getId().longValue());
 	}
 	
 	public void testLocalConstParameterInclusionAutoNamed() {
-		ProviderQueryDataset<Person> qry = buildQueryDataset();
-		qry.getProvider().addParameter("VALUEx", 4l);
+		dataset.getProvider().addParameter("VALUEx", 4l);
 		
-		qry.setMaxRows(7);
-		qry.setOrderKey("id");
-		qry.getProvider().addRestriction("id=3");
-		qry.getProvider().addRestriction("or id = :param",4l);
+		dataset.setMaxRows(7);
+		dataset.setOrderKey("id");
+		dataset.getProvider().addRestriction("id=3");
+		dataset.getProvider().addRestriction("or id = :param",4l);
 				
-		List<Person> results = qry.getResultList();
+		List<Person> results = dataset.getResultList();
 		assertEquals(2, results.size());
 		assertEquals(3l, results.get(0).getId().longValue());
 		assertEquals(4l, results.get(1).getId().longValue());

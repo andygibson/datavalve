@@ -38,11 +38,11 @@ public class SqlDataProviderPage extends AbstractDataProviderPage {
 			
 
         };
-        provider.getStatementHandler().setCountStatement("select count(1) from PERSONS p");
-        provider.getStatementHandler().setSelectStatement("select * from PERSONS p");        
-		provider.getOrderHandler().add("id", "p.ID");
-		provider.getOrderHandler().add("name", "p.LAST_NAME,p.FIRST_NAME");
-		provider.getOrderHandler().add("phone", "p.PHONE");
+        provider.setCountStatement("select count(1) from PERSONS p");
+        provider.setSelectStatement("select * from PERSONS p");        
+		provider.getOrderKeyMap().put("id", "p.ID");
+		provider.getOrderKeyMap().put("name", "p.LAST_NAME,p.FIRST_NAME");
+		provider.getOrderKeyMap().put("phone", "p.PHONE");
 		return new Dataset<Person>(provider);
 	}
 

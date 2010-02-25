@@ -15,15 +15,15 @@ public class JpaSearchPage extends AbstractSearchPage {
 	@Override
 	public ParameterizedDataset<Person> createDataset() {
         JpaDataProvider<Person> provider = new JpaDataProvider<Person>();
-        provider.getStatementHandler().setCountStatement("select count(p) from Person p");
-        provider.getStatementHandler().setSelectStatement("select p from Person p");
-        provider.getRestrictionHandler().add("upper(p.firstName) like upper(:firstNameValue)");
-        provider.getRestrictionHandler().add("upper(p.lastName) like upper(:lastNameValue)");
-        provider.getRestrictionHandler().add("p.phone like :phoneValue");
-        provider.getRestrictionHandler().add("p.id = :id");
+        provider.setCountStatement("select count(p) from Person p");
+        provider.setSelectStatement("select p from Person p");
+        provider.addRestriction("upper(p.firstName) like upper(:firstNameValue)");
+        provider.addRestriction("upper(p.lastName) like upper(:lastNameValue)");
+        provider.addRestriction("p.phone like :phoneValue");
+        provider.addRestriction("p.id = :id");
         provider.setEntityManager(getWicketApp().createEntityManager());
-        provider.getOrderHandler().add("id","p.id");
-        provider.getOrderHandler().add("name","p.lastName,p.firstName");
+        provider.getOrderKeyMap().put("id","p.id");
+        provider.getOrderKeyMap().put("name","p.lastName,p.firstName");
         return new DefaultParameterizedDataset<Person>(provider);
 	}
 

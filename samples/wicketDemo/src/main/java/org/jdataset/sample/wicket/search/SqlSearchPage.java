@@ -35,16 +35,16 @@ public class SqlSearchPage extends AbstractSearchPage {
 			}
 		};
 		
-		provider.getStatementHandler().setCountStatement("select count(1) from PERSONS p");
-		provider.getStatementHandler().setSelectStatement("select * from PERSONS p");
-		provider.getRestrictionHandler().add(
+		provider.setCountStatement("select count(1) from PERSONS p");
+		provider.setSelectStatement("select * from PERSONS p");
+		provider.addRestriction(
 				"upper(p.first_Name) like upper(:firstNameValue)");
-		provider.getRestrictionHandler().add(
+		provider.addRestriction(
 				"upper(p.last_Name) like upper(:lastNameValue)");
-		provider.getRestrictionHandler().add("p.phone like :phoneValue");
-		provider.getRestrictionHandler().add("p.id = :id");
-		provider.getOrderHandler().add("id", "p.id");
-		provider.getOrderHandler().add("name", "p.last_Name,p.first_Name");
+		provider.addRestriction("p.phone like :phoneValue");
+		provider.addRestriction("p.id = :id");
+		provider.getOrderKeyMap().put("id", "p.id");
+		provider.getOrderKeyMap().put("name", "p.last_Name,p.first_Name");
 		return new DefaultParameterizedDataset<Person>(provider);
 	}
 

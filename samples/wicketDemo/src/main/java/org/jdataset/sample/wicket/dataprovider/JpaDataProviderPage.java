@@ -15,12 +15,12 @@ public class JpaDataProviderPage extends AbstractDataProviderPage {
 	@Override
 	public ObjectDataset<Person> createDataset() {
         JpaDataProvider<Person> people = new JpaDataProvider<Person>();
-        people.getStatementHandler().setCountStatement("select count(p) from Person p");
-        people.getStatementHandler().setSelectStatement("select p from Person p");
+        people.setCountStatement("select count(p) from Person p");
+        people.setSelectStatement("select p from Person p");
         people.setEntityManager(getWicketApp().createEntityManager());
-        people.getOrderHandler().add("id", "p.id");
-        people.getOrderHandler().add("name", "p.lastName,p.firstName");
-        people.getOrderHandler().add("phone", "p.phone");
+        people.getOrderKeyMap().put("id", "p.id");
+        people.getOrderKeyMap().put("name", "p.lastName,p.firstName");
+        people.getOrderKeyMap().put("phone", "p.phone");
         return new Dataset<Person>(people);
 	}
 

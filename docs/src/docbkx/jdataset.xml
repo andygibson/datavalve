@@ -536,17 +536,23 @@ List<Person> results = qry.resultList();]]>
 			<classname>QueryDataProvider</classname>
 			. This interface adds features such as ordering, restrictions and parameters
 			for flexible querying. Note that since they implement the same interface,
-			they can be interchanges with very little code changes if any. Let's look at
-			some examples of fetching data using a data driven query.
+			they can be interchanges with very little code changes if any.
 		</para>
-		<example>
-			<title>
-				Fetching data from a database using JPA					
+		<sect1>
+			<title>Simple Fetches</title>
+			<para>
+				Let's start by considering some simple cases of fetching data using a
+				data
+				driven query.
+				</para>
+			<example>
+				<title>
+					Fetching data from a database using JPA					
 				</title>
-			<programlisting>
+				<programlisting>
 <![CDATA[
 
-  QueryProvider<Person> provider = new JpaDataProvider<Person>(em)
+  QueryProvider<Person> provider = new JpaDataProvider<Person>(em);
   QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
   dataset.init(Person.class, "p");
   List<Person> results = dataset.getResultList();
@@ -555,12 +561,314 @@ List<Person> results = qry.resultList();]]>
   }
 ]]>  
 				</programlisting>
-		</example>
-		<para>
-			We defined the provider and then created a
-			<classname>QueryDataset</classname>
-			instance for that provider.
+			</example>
+		</sect1>
+		<sect1>
+			<title>Restricting Results</title>
+			<para>
+				We can add restrictions to the query so we only return a set of rows
+				that we
+				want. In this case, we want to return a specific person.
 		</para>
+
+			<example>
+				<title>
+					Restricting the data fetched					
+				</title>
+				<programlisting>
+<![CDATA[  
+  QueryDataProvider<Person> provider = createPersonProvider();
+  provider.addRestriction("p.id = 4");  
+]]>  
+				</programlisting>
+			</example>
+
+
+			<para>It is often more convenient to specify restrictions using parameters
+				and
+				JQA has a number of different mechanisms with which to specify
+				parameterized
+				restrictions. First we'll look at the straightforward adding of
+				a
+				parameter.
+		</para>
+
+			<example>
+				<title>
+					Parameterized restrictions					
+				</title>
+				<programlisting>
+<![CDATA[  
+  QueryDataProvider<Person> provider = createPersonProvider();
+  provider.addRestriction("p.id = :param",4);
+  provider.addRestriction("or p.id = :param",88);
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				In many cases, we don't want to include restrictions where the value we
+				are
+				comparing is
+				<code>null</code>
+				, such as search forms where the user has left values
+				blank. In these cases,
+				any restriction with null parameter should not be included.
+			</para>
+			<example>
+				<title>
+					Parameterized restrictions					
+				</title>
+				<programlisting>
+<![CDATA[  
+  QueryDataProvider<Person> provider = createPersonProvider();
+  provider.addRestriction("p.firstName = :param",searchCriteria.firstName);
+  provider.addRestriction("or p.lastName = :param",searchCriteria.lastName);
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				These are really just helper methods so you don't have to do your own "
+				<code>if value != null then add parameter</code>
+				" code for each line, although it is certainly possible that you can do
+				that
+				in certain cases. However, many times you want to evaluate one value to
+				check
+				if is null but use another value for the parameter. We have a method
+				for
+				that
+				too.
+			</para>
+			<example>
+				<title>
+					Parameterized restrictions					
+				</title>
+				<programlisting>
+<![CDATA[  
+  QueryDataProvider<Person> provider = createPersonProvider();
+  provider.addRestriction("p.firstName like :param",searchCriteria.firstName,searchCriteria.firstName+"%");
+  provider.addRestriction("or p.lastName like :param",searchCriteria.lastName,searchCriteria.lastName+"%");
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				What we do there is check whether the first/last name value is null and
+				if
+				so,
+				we do nothing, but otherwise we add the restriction and for the
+				parameter, we
+				use the value with the wildcard appended. Also note that we use
+				the
+				<code>OR</code>
+				expression in the second restriction which lets us find people where the
+				first or second restrictions apply. If there is no logical operator at the
+				start of the restriction then by default an
+				<code>AND</code>
+				expression is prefixed onto it.
+			</para>
+			<para>This may seem a fairly broad set of ways to parameterize the your
+				queries, but it is only scratching the surface. </para>
+		</sect1>
+		<sect1>
+			<title>Parameter Resolvers</title>
+			<para>
+				The
+				<code>ParameterResolver</code>
+				interface can be used to attach code at run time that will resolve
+				parameters. When the query is executed the parameters are evaluated as the
+				query is built so any restrictions with null parameters can be excluded. We
+				can attach parameter resolvers to the provider so it will be used when the
+				provider tries to resolve the parameter for a restriction. This mechanism
+				allows us to attach an EL parameter resolver for environments where EL is in
+				use (such as JSF, or Seam applications).
+			</para>
+			<para>It also lets offers us different mechanisms for resolving values such
+				as using reflection onto a an object.</para>
+			<example>
+				<title>
+					Parameter Resolving with Reflection					
+				</title>
+				<programlisting>
+<![CDATA[  
+  QueryDataProvider<Person> provider = createPersonProvider();
+  provider.addRestriction("p.firstName like :firstName");
+  provider.addRestriction("or p.lastName like :lastName");
+  provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));
+]]>  
+				</programlisting>
+			</example>
+			<para>We can also bake the parameter resolver into the object itself by
+				making it implement the parameter resolver interface.</para>
+			<example>
+				<title>
+					Built in parameter resolution					
+				</title>
+				<programlisting>
+<![CDATA[  
+public class SearchCriteria implements ParameterResolver {
+
+    //return values with wildcards
+	boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
+			Parameter parameter) {
+			if ("firstName".equals(parameter.getName())) {			  
+			  return firstName == null ? null : firstName+"%";
+			}
+			if ("lastName".equals(parameter.getName())) {			  
+			  return lastName == null ? null : lastName+"%";
+			}
+			return null;
+    }
+
+	boolean acceptParameter(String name) {
+	  return name.startsWith(":");
+	}
+
+}
+
+...
+...
+...
+
+  QueryDataProvider<Person> provider = createPersonProvider();
+  provider.addRestriction("p.firstName = :firstName");
+  provider.addRestriction("or p.lastName = :lastName");
+  provider.addParameterResolver(searchCriteria);
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				The Seam data provider classes use an EL based parameter resolver
+				by default
+				so you can simple use it the same way you would with an
+				<classname>EntityQuery</classname>
+				.
+			</para>
+
+			<example>
+				<title>
+					Using the Seam data provider 					
+				</title>
+				<programlisting>
+<![CDATA[  
+@Name("myPostsQuery")
+pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
+  public MyPostsQueryBean() {
+    setSelectStatement("select p from Posts p left join fetch p.comments");
+    setSelectStatement("select count(p) from Posts p");    
+    addRestriction("p.author.id = #{loggedInUser.id}");
+  }
+}
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				On the subject of Seam, with JQA you can subclass either a
+				<classname>SeamJPaQueryDataset</classname>
+				or a
+				<classname>SeamJpaNativeDataset</classname>
+				so you can use with a Ejbql or Native query for fetching data. Also, there
+				is an adapter class that can be used instead which adds on the additional
+				methods needed to make the class compatible with
+				<classname>EntityQuery</classname>
+				based classes.
+			</para>
+		</sect1>
+		<sect1>
+			<title>Order in the house</title>
+			<para>JQA also features key based ordering so rather than specify ordering as
+				a set of fields on the dataset, you can specify ordering using a key that
+				maps to one or more fields.</para>
+			<example>
+				<title>
+					Ordering on the data
+				</title>
+				<programlisting>
+<![CDATA[  
+  QueryDataProvider<Person> provider = createPersonProvider();  
+  provider.addRestriction("p.lastName = 'SMITH'");
+  provider.getOrderKeyMap().put("name","p.lastName,p.firstName");
+  provider.getOrderKeyMap().put("age","p.dateOfBirth");
+  provider.getOrderKeyMap().put("id","p.id");
+  //now set the order
+  Paginator paginator = new DefaultPaginator();
+  paginator.setOrderKey("name");  //order by the persons name
+  paginator.setOrderAscending(false);
+  
+  List<Person> orderedList = provider.fetchResults(paginator):
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				Note that in this example, the order key map has two fields, last and
+				first
+				name to sort on. If this key is used, then both these fields will be
+				used to
+				order both ascending and descending. The order information consists of the
+				key value which indicates which key to use and whether it is meant to be
+				ascending or descending. Both of these attributes are on the
+				<classname>Paginator</classname>
+				interface and are read from it when
+				<methodname>fetchResults</methodname>
+				is called on the provider.
+			</para>
+		</sect1>
+		<sect1>
+			<title>Polymorphism</title>
+			<para>
+				One of the best features here is that in order to switch from Hibernate to
+				JPA, or another JPA implementation, all we need to change is our
+				<methodname>createPersonProvider()</methodname>
+				method. Following good principles, we have been coding to an interface and
+				not an actual class type so we are not locked in to using a concrete class,
+				but any class that implements the
+				<classname>QueryDataProvider</classname>
+				interface. Currently, there are
+				<classname>QueryDataProvider</classname>
+				implementations for SQL/JDBC, native Hibernate and JPA. The JPA versions
+				include both Ejbql and Native querying as do the Seam extensions for the JPA
+				providers.
+			</para>
+			<para>
+				You could easily return a hibernate data provider from the
+				<methodname>createPersonProvider</methodname>
+				without having to change any code since the mappings will be the same.
+			</para>
+		</sect1>
+		<sect1>
+			<title>Mapping SQL to Objects</title>
+			<para>One problem so far is that our data providers always deal with objects
+				while our sql based datasets are begin defined as a group of rows of values.
+				We still need some way to convert that raw data into an object that can be
+				returned in our results.</para>
+			<para>
+				This can be done in one of two ways but both involve a
+				<classname>java.sql.ResultSet</classname>
+				and building an instance of our model objects from the current row of data.
+			</para>
+			<para>
+				The first method is to subclass the
+				<classname>AbstractJdbcDataProvider</classname>
+				and override the
+				<methodname>createObjectFromResultSet</methodname>
+				method.
+			</para>
+			<example>
+				<title>
+					Implementing the SQL to Object mapping
+				</title>
+				<programlisting>
+<![CDATA[
+public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
+  public T createObjectFromResultSet(ResultSet resultSet) throws SQLException {
+    return new Person(resultSet.getLong(1), resultSet.getString(2),
+	    resultSet.getString(3));
+  }
+}  
+]]>  
+				</programlisting>
+			</example>
+			
+		</sect1>
+
 	</chapter>
 	<chapter>
 		<title>Introducing the data provider</title>
@@ -677,7 +985,7 @@ public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 public class Main {
 
 	public static void main(String[] args) {
-		Paginator paginator = new SimplePaginator(10);
+		Paginator paginator = new DefaultPaginator(10);
 		DataProvider<Integer> provider = new IntegerDataProvider();		
 
 		List<Integer> results = provider.fetchResults(paginator);
@@ -700,7 +1008,7 @@ public class Main {
 				In the
 				<methodname>main</methodname>
 				method, we create a new
-				<classname>SimplePaginator</classname>
+				<classname>DefaultPaginator</classname>
 				instance that implements the
 				<classname>Paginator</classname>
 				interface. We pass our initial page size into the constructor so we
@@ -845,17 +1153,20 @@ public class IntegerDataProviderTest extends
 				</mediaobject>
 			</figure>
 			<para>
-				The problem is subtle, and based on the old gotcha there are 101
-				numbers from
+				The problem is subtle but involves on the old gotcha there are 101
+				numbers
+				from
 				0 to 100 inclusive. The solution is
 				fairly simple, we
-				just need to define more
+				just need to define
+				more
 				closely what our dataset does. We'll make
 				it
 				so that it does return 100
 				values
 				in the range from 1 to 100, and
-				we'll even add some test cases to ensure that
+				we'll even add some test cases to
+				ensure that
 				it does. First lets
 				alter the
 				<methodname>fetchResults</methodname>
@@ -1430,8 +1741,8 @@ showResults(results);
 					<programlisting>
 <![CDATA[
 DataProvider<Integer> provider = new IntegerDataProvider();
-Paginator paginator1 = new SimplePaginator(10);
-Paginator paginator2 = new SimplePaginator(15);
+Paginator paginator1 = new DefaultPaginator(10);
+Paginator paginator2 = new DefaultPaginator(15);
 paginator1.setFirstResult(20);
 paginator2.setFirstResult(30);
 		

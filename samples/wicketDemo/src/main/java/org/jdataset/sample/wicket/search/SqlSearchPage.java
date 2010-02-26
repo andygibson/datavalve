@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.dataset.DefaultParameterizedDataset;
 import org.jdataset.dataset.ParameterizedDataset;
 import org.jdataset.impl.provider.jdbc.AbstractJdbcDataProvider;
 import org.jdataset.provider.QueryDataProvider;
@@ -45,7 +44,7 @@ public class SqlSearchPage extends AbstractSearchPage {
 		provider.addRestriction("p.id = :id");
 		provider.getOrderKeyMap().put("id", "p.id");
 		provider.getOrderKeyMap().put("name", "p.last_Name,p.first_Name");
-		return new DefaultParameterizedDataset<Person>(provider);
+		return new ParameterizedDataset<Person>(provider);
 	}
 
 }

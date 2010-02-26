@@ -1,9 +1,9 @@
 package org.jdataset.text;
 
-import org.jdataset.dataset.CommaDelimitedDataset;
+import org.jdataset.util.CommaDelimitedProvider;
 
 
-public class PhoneTextFile extends CommaDelimitedDataset<PhoneEntry> {
+public class PhoneTextFile extends CommaDelimitedProvider<PhoneEntry> {
 
 	private static final long serialVersionUID = 1L;
 

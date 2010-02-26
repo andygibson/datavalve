@@ -1,7 +1,6 @@
 package org.jdataset.sample.wicket.search;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.dataset.DefaultParameterizedDataset;
 import org.jdataset.dataset.ParameterizedDataset;
 import org.jdataset.impl.provider.jpa.JpaDataProvider;
 import org.phonelist.model.Person;
@@ -24,7 +23,7 @@ public class JpaSearchPage extends AbstractSearchPage {
         provider.setEntityManager(getWicketApp().createEntityManager());
         provider.getOrderKeyMap().put("id","p.id");
         provider.getOrderKeyMap().put("name","p.lastName,p.firstName");
-        return new DefaultParameterizedDataset<Person>(provider);
+        return new ParameterizedDataset<Person>(provider);
 	}
 
 }

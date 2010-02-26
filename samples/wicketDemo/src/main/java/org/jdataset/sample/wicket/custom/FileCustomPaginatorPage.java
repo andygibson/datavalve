@@ -3,8 +3,9 @@ package org.jdataset.sample.wicket.custom;
 import java.net.URL;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.dataset.CommaDelimitedDataset;
+import org.jdataset.dataset.Dataset;
 import org.jdataset.dataset.ObjectDataset;
+import org.jdataset.util.CommaDelimitedProvider;
 import org.phonelist.model.Person;
 
 public class FileCustomPaginatorPage extends AbstractCustomPaginatorPage {
@@ -19,7 +20,7 @@ public class FileCustomPaginatorPage extends AbstractCustomPaginatorPage {
 		URL url = getWicketApp().getClass().getResource("testData100.csv");
 		
 		String filename = url.getPath();
-		CommaDelimitedDataset<Person> people = new CommaDelimitedDataset<Person>(
+		CommaDelimitedProvider<Person> personProvider = new CommaDelimitedProvider<Person>(
 				filename) {
 
 
@@ -32,7 +33,7 @@ public class FileCustomPaginatorPage extends AbstractCustomPaginatorPage {
 			}
 
 		};
-		return people;
+		return new Dataset<Person>(personProvider);
 	}
 
 }

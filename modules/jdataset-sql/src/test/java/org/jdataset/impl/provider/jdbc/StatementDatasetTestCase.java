@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
-import org.jdataset.dataset.DefaultStatementDataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.dataset.StatementDataset;
 import org.jdataset.provider.ParameterizedDataProvider;
@@ -34,7 +33,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 		result.setSelectStatement("select * from TestValues order by id");
 		result.setCountStatement("select count(1) from TestValues");
 		
-		return new DefaultStatementDataset<TableRow>(result);
+		return new StatementDataset<TableRow>(result);
 	}
 
 	public void testRecordCount() {		
@@ -233,7 +232,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 				return result;
 			}
 		};
-		StatementDataset<TestValue> qry = new DefaultStatementDataset<TestValue>(provider);
+		StatementDataset<TestValue> qry = new StatementDataset<TestValue>(provider);
 		qry.setCountStatement("select count(1) from TestValues");
 		qry.setSelectStatement("select * from TestValues");
 		qry.setMaxRows(10);

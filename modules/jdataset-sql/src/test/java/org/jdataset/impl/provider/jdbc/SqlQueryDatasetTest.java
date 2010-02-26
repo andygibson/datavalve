@@ -3,7 +3,6 @@ package org.jdataset.impl.provider.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jdataset.dataset.DefaultQueryDataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.dataset.QueryDataset;
 import org.jdataset.provider.QueryDataProvider;
@@ -20,7 +19,6 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 
 	@Override
 	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
 		super.setUp();
 		dataset = createDataset();
 	}
@@ -45,7 +43,7 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 		provider.getOrderKeyMap().put("id", "id");
 		provider.getOrderKeyMap().put("name", "last_name,first_name");
 
-		return new DefaultQueryDataset<Person>(provider);
+		return new QueryDataset<Person>(provider);
 	}
 
 	public void testParameterQuery() {

@@ -6,10 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import org.jdataset.dataset.CommaDelimitedDataset;
+import org.jdataset.dataset.Dataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.jdataset.util.CommaDelimitedProvider;
 
 public class CommaDelimitedDatasetTest extends
 		AbstractObjectDatasetJUnitTest<PhoneEntry> {
@@ -67,14 +68,14 @@ public class CommaDelimitedDatasetTest extends
 
 	@Override
 	public ObjectDataset<PhoneEntry> buildObjectDataset() {
-		ObjectDataset<PhoneEntry> result = new CommaDelimitedDataset<PhoneEntry>(fileName) {
+		CommaDelimitedProvider<PhoneEntry> provider = new CommaDelimitedProvider<PhoneEntry>(fileName) {
 			private static final long serialVersionUID = 2L;
 			@Override
 			protected PhoneEntry createObjectFromColumns(String[] columns) {
 				return new PhoneEntry(Integer.valueOf(columns[0]),columns[1],columns[2],columns[3]);
 			}			
 		};
-		return result;
+		return new Dataset<PhoneEntry>(provider);
 	}
 
 	@Override

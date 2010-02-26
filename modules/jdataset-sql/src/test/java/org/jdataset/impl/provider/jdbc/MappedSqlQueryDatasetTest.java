@@ -1,7 +1,7 @@
 package org.jdataset.impl.provider.jdbc;
 
-import org.jdataset.dataset.DefaultQueryDataset;
 import org.jdataset.dataset.ObjectDataset;
+import org.jdataset.dataset.QueryDataset;
 import org.jdataset.provider.QueryDataProvider;
 
 public class MappedSqlQueryDatasetTest extends BaseJdbcDatasetTest<TableRow> {
@@ -14,7 +14,7 @@ public class MappedSqlQueryDatasetTest extends BaseJdbcDatasetTest<TableRow> {
 		provider.setCountStatement("select count(1) from TestValues");
 		provider.getOrderKeyMap().put("id", "id");
 		provider.getOrderKeyMap().put("value", "value");		
-		return new DefaultQueryDataset<TableRow>(provider);		
+		return new QueryDataset<TableRow>(provider);		
 	}
 	
 

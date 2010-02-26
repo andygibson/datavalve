@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jdataset.Paginator;
-import org.jdataset.dataset.DefaultQueryDataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.dataset.QueryDataset;
 import org.jdataset.impl.provider.AbstractQueryDataProvider;
@@ -68,7 +67,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		};
 
 		provider.setSelectStatement("Select o from Object o");
-		QueryDataset<Integer> res = new DefaultQueryDataset<Integer>(provider);
+		QueryDataset<Integer> res = new QueryDataset<Integer>(provider);
 
 		res.addRestriction("id = #{id}");
 		res.addRestriction("firstName = #{person.firstName}");

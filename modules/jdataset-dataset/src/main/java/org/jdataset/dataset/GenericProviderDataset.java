@@ -16,7 +16,7 @@ import org.jdataset.Paginator;
  * </pre>
  * 
  * We have 'helper' types for this with specific implementations for
- * parameterized,statement,and query provider types. These are currently implemented as {@link ProviderParameterizedDataset}, {@link ProviderStatementDataset}, and {@link ProviderQueryDataset}.
+ * parameterized,statement,and query provider types. These are currently implemented as {@link ParameterizedDataset}, {@link StatementDataset}, and {@link QueryDataset}.
  * 
  * @author Andy Gibson
  * 
@@ -39,8 +39,14 @@ public class GenericProviderDataset<T, P extends DataProvider<T>> extends
 		this.provider = provider;
 	}
 
-	public Integer fetchResultCount() {
+	public Integer loadResultCount() {
 		return provider.fetchResultCount();
+	}
+	
+	@Override
+	protected List<T> loadResults(Paginator paginator) {
+	
+		return provider.fetchResults(paginator);
 	}
 
 	public List<T> fetchResults(Paginator paginator) {

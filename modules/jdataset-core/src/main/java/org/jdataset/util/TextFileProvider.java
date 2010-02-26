@@ -1,4 +1,4 @@
-package org.jdataset.dataset;
+package org.jdataset.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,14 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jdataset.Paginator;
+import org.jdataset.impl.provider.AbstractDataProvider;
 
-/**
- * @author Andy Gibson
- * 
- * @param <T>
- *            type of object this dataset contains
- */
-public abstract class TextFileDataset<T> extends AbstractDataset<T> {
+public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +20,7 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 	private final File file;
 	private final int lineCount;
 
-	public TextFileDataset(String fileName) {
+	public TextFileProvider(String fileName) {
 		super();
 		this.file = new File(fileName);
 		this.fileName = fileName;
@@ -53,17 +48,17 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 	}
 
 	@Override
-	protected Integer fetchResultCount() {
-		return lineCount;
+	public Integer fetchResultCount() {
+		return countNumberOfLines(file);
 	}
 
+	//TODO change this implementation so it doesn't need to get the row count	
+	@Override
 	public List<T> fetchResults(Paginator paginator) {
-		int rowCount = paginator.getMaxRows() == null ? getResultCount()
+		int rowCount = paginator.getMaxRows() == null ? fetchResultCount()
 				: paginator.getMaxRows();
-		return generateResults(paginator.getFirstResult(), rowCount);
-	}
-
-	private List<T> generateResults(int firstResult, int rowCount) {
+		int firstResult = paginator.getFirstResult();
+		
 		BufferedReader reader;
 		List<T> results = new ArrayList<T>();
 		String line;
@@ -86,6 +81,8 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 				}
 				rowCount--;
 			}
+			//do we have any more lines?
+			paginator.setNextAvailable(reader.readLine() != null);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -96,11 +93,8 @@ public abstract class TextFileDataset<T> extends AbstractDataset<T> {
 
 	protected abstract T createObjectFromLine(String line);
 
-	public boolean isNextAvailable() {
-		return getFirstResult() + getResultList().size() < getResultCount();
-	}
-
 	public String getFileName() {
 		return fileName;
 	}
+
 }

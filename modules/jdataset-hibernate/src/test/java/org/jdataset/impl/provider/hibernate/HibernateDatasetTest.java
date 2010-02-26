@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
-import org.jdataset.dataset.DefaultQueryDataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.dataset.QueryDataset;
 import org.jdataset.provider.ParameterizedDataProvider;
@@ -39,7 +38,7 @@ public class HibernateDatasetTest extends
 		provider.getOrderKeyMap().put("id", "p.id");
 		provider.getOrderKeyMap().put("name", "p.lastName,p.firstName");
 		provider.getOrderKeyMap().put("phone", "p.phone");
-		return new DefaultQueryDataset<Person>(provider);
+		return new QueryDataset<Person>(provider);
 	}
 	
 	@Override
@@ -62,6 +61,7 @@ public class HibernateDatasetTest extends
 		session = sessionFactory.openSession();
 		generateTestData();
 		dataset = buildQueryDatasetx();
+		
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class HibernateDatasetTest extends
 		long result = dataset.getResultCount();
 		assertEquals(30, result);
 
-		dataset.getRestrictions().add("p.id = 3");
+		dataset.getProvider().getRestrictions().add("p.id = 3");
 		dataset.invalidateResultInfo();
 		result = dataset.getResultCount();
 		assertEquals(1, result);

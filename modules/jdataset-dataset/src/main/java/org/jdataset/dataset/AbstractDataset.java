@@ -55,7 +55,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	public Integer getResultCount() {
 		if (resultCount == null) {
-			resultCount = fetchResultCount();
+			resultCount = loadResultCount();
 		}
 		return resultCount;
 	}
@@ -64,19 +64,15 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		this.resultCount = resultCount;
 	}
 
-	protected abstract Integer fetchResultCount();
+	protected abstract Integer loadResultCount();
 
-	protected abstract List<T> fetchResults(Paginator paginator);
+	protected abstract List<T> loadResults(Paginator paginator);
 
 	public List<T> getResultList() {
 		if (results == null) {
-			results = fetchResults(this);
+			results = loadResults(this);
 		}
 		return results;
-	}
-
-	public List<T> getResultList(Paginator paginator) {
-		return fetchResults(paginator);
 	}
 
 	public void setFirstResult(int firstResult) {
@@ -94,13 +90,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		invalidateResults();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jdataset.ObjectDataset#invalidateResultInfo()
-	 */
 	public void invalidateResultInfo() {
-
 		resultCount = null;
 		results = null;
 

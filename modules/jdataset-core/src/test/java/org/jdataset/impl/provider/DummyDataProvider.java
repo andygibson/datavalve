@@ -51,7 +51,6 @@ public class DummyDataProvider<T> extends AbstractQueryDataProvider<T> {
 
 	@Override
 	protected Integer queryForCount(DataQuery query) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

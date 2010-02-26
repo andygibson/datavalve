@@ -9,7 +9,6 @@ public class DataQueryBuilderTest extends TestCase {
 
 	@Override
 	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
 		super.setUp();
 		builder = new DataQueryBuilder();
 		builder.setBaseStatement("select x from y");

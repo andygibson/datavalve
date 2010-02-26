@@ -8,13 +8,13 @@ import org.jdataset.Paginator;
  * This is the base interface for the stateful object datasets. It provides
  * methods for accessing the data, record counts, pagination and navigation of
  * the dataset. It inherits from {@link Iterable} so we can iterate over
- * instances of the interface. It also inherits from {@link Paginator} so we
- * can use this interface in place of the {@link Paginator}.
+ * instances of the interface. It also inherits from {@link Paginator} so we can
+ * use this interface in place of the {@link Paginator}.
  * <p>
  * When writing code to interface with a basic dataset, you should code to this
  * interface as much as possible. This interface specifies how you access the
  * information without any methods as to how to determine what information the
- * dataset should contain. 
+ * dataset should contain.
  * 
  * @author Andy Gibson
  * 
@@ -74,30 +74,6 @@ public interface ObjectDataset<T> extends Iterable<T>, Paginator {
 	void last();
 
 	/**
-	 * @return Indicates whether there is a page after the current one to
-	 *         navigate to
-	 */
-	boolean isNextAvailable();
-
-	/**
-	 * @return Indicates whether there is a page before the current one to
-	 *         navigate to
-	 */
-	boolean isPreviousAvailable();
-
-	/**
-	 * Moves to the next page in the result set. Does nothing if there is no
-	 * next page to go to (including if this is a non-paged dataset)
-	 */
-	void next();
-
-	/**
-	 * Moves to the previous page in the result set. Does nothing if there is no
-	 * previous page to go to (including if this is a non-paged dataset)
-	 */
-	void previous();
-
-	/**
 	 * @return Indicates whether this dataset has more than one page. Can be
 	 *         used to indicate whether paging is needed. This value is based on
 	 *         the actual results as opposed to the dataset settings.
@@ -109,5 +85,9 @@ public interface ObjectDataset<T> extends Iterable<T>, Paginator {
 	 */
 	Class<?> getEntityClass();
 
+	/**
+	 * Called to invalidate the data and the result info so it will be re-read
+	 * next time it is requested.
+	 */
 	void refresh();
 }

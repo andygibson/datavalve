@@ -3,10 +3,13 @@ package org.jdataset.dataset;
 import java.util.Iterator;
 
 /**
- * Iterator implementation for the iterator that is returned from the 
+ * Iterator implementation for the iterator that is returned from the
+ * {@link ObjectDataset#iterator()} method.
+ * 
  * @author Andy Gibson
- *
- * @param <T> Type of object this iterator returns
+ * 
+ * @param <T>
+ *            Type of object this iterator returns
  */
 public class DatasetIterator<T> implements Iterator<T> {
 

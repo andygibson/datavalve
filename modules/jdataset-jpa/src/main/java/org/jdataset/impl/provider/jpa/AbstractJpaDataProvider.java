@@ -22,11 +22,19 @@ import org.jdataset.provider.QueryDataProvider;
  * @param <T>
  */
 public abstract class AbstractJpaDataProvider<T> extends
-		AbstractQueryDataProvider<T> {
+		AbstractQueryDataProvider<T> implements JpaDataProviderIntf<T> {
 
 	private static final long serialVersionUID = 1L;
 
 	private EntityManager entityManager;
+
+	public AbstractJpaDataProvider() {		
+	}
+	
+	public AbstractJpaDataProvider(EntityManager entityManager) {
+		super();
+		this.entityManager = entityManager;
+	}
 
 	/**
 	 * Override to create the specific type of query to use.
@@ -57,7 +65,8 @@ public abstract class AbstractJpaDataProvider<T> extends
 	 * {@link AbstractJpaDataProvider#createJpaQuery(String)} method which can
 	 * return a native or EJBQL query depending on the subclass.
 	 * 
-	 * @param dataQuery The {@link DataQuery} to initialize the query with
+	 * @param dataQuery
+	 *            The {@link DataQuery} to initialize the query with
 	 * @return The initialized {@link Query}
 	 */
 	private final Query buildJpaQuery(DataQuery dataQuery) {

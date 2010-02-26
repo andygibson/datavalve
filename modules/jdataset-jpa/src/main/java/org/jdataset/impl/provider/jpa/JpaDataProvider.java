@@ -1,5 +1,6 @@
 package org.jdataset.impl.provider.jpa;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 /**
@@ -10,6 +11,13 @@ import javax.persistence.Query;
  * @param <T>
  */
 public class JpaDataProvider<T> extends AbstractJpaDataProvider<T> {
+
+	public JpaDataProvider() {		
+	}
+	
+	public JpaDataProvider(EntityManager entityManager) {
+		super(entityManager);
+	}
 
 	private static final long serialVersionUID = 1L;
 	

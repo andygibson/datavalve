@@ -11,8 +11,9 @@ import javax.persistence.Persistence;
 import org.jdataset.Parameter;
 import org.jdataset.ParameterResolver;
 import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.dataset.ProviderQueryDataset;
+import org.jdataset.dataset.QueryDataset;
 import org.jdataset.provider.ParameterizedDataProvider;
+import org.jdataset.provider.QueryDataProvider;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	private EntityManagerFactory emf;
 	private EntityManager em;
 	private transient Connection connection;
-	private ProviderQueryDataset<Person> dataset;
+	private QueryDataset<Person> dataset;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -278,15 +279,14 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		return dataset;
 	}
 	
-	protected ProviderQueryDataset<Person> buildQueryDatasetx() {
-		JpaDataProvider<Person> provider = new JpaDataProvider<Person>();
-		provider.setEntityManager(em);
+	protected QueryDataset<Person> buildQueryDatasetx() {
+		JpaDataProvider<Person> provider = new JpaDataProvider<Person>(em);		
 		provider.setSelectStatement("select p from Person p");
 		provider.setCountStatement("select count(p) from Person p");
 		provider.getOrderKeyMap().put("id", "p.id");
 		provider.getOrderKeyMap().put("name", "p.lastName,p.firstName");
 		provider.getOrderKeyMap().put("phone", "p.phone");
-		return new ProviderQueryDataset<Person>(provider);
+		return new QueryDataset<Person>(provider);
 	}
 
 	@Override
@@ -328,6 +328,20 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		assertEquals(2, results.size());
 		assertEquals(3l, results.get(0).getId().longValue());
 		assertEquals(4l, results.get(1).getId().longValue());
+	}
+	
+	public void testDocumentationExample() {
+		
+		JpaDataProviderIntf<Person> provider = new JpaDataProvider<Person>(em);
+		JpaDataset<Person> ds = new JpaDataset<Person>(provider);		
+		
+		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
+		dataset.init(Person.class, "p");
+		List<Person> results = dataset.getResultList();
+		for (Person p : results) {
+		System.out.println(p.getName());
+		}
+		
 	}
 	
 }

@@ -17,23 +17,23 @@ import org.slf4j.LoggerFactory;
  * @author Andy Gibson
  * 
  */
-public class SeamParameterResolver implements ParameterResolver,Serializable {
+public class SeamParameterResolver implements ParameterResolver, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static Logger log = LoggerFactory
 			.getLogger(SeamParameterResolver.class);
 
-	public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
-		log.debug("Resolving Seam Parameter : {}", parameter);
-		// TODO - we don't want to treat all parameters as EL expressions need
-		// to re-think the parameter splitting		
-		Object result = Expressions.instance().createValueExpression(parameter.getName())
-				.getValue();
+	public boolean resolveParameter(
+			ParameterizedDataProvider<? extends Object> dataset,
+			Parameter parameter) {
+		// log.debug("Resolving Seam Parameter : {}", parameter);
+		Object result = Expressions.instance().createValueExpression(
+				parameter.getName()).getValue();
 		log.debug("Expression {} evaluated to {}", parameter.getName(), result);
 
 		if (result != null) {
-			log.debug("Result type is {}", result.getClass().getName());
+			// log.debug("Result type is {}", result.getClass().getName());
 			parameter.setValue(result);
 			return true;
 		}
@@ -41,7 +41,7 @@ public class SeamParameterResolver implements ParameterResolver,Serializable {
 	}
 
 	public boolean acceptParameter(String parameter) {
-		return parameter.startsWith("#{") && parameter.endsWith("}");		
+		return parameter.startsWith("#{") && parameter.endsWith("}");
 	}
 
 }

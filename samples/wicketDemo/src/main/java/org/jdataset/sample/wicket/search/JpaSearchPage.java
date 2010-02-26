@@ -3,6 +3,7 @@ package org.jdataset.sample.wicket.search;
 import org.apache.wicket.PageParameters;
 import org.jdataset.dataset.ParameterizedDataset;
 import org.jdataset.impl.provider.jpa.JpaDataProvider;
+import org.jdataset.impl.provider.jpa.JpaQueryProvider;
 import org.phonelist.model.Person;
 
 public class JpaSearchPage extends AbstractSearchPage {
@@ -13,7 +14,7 @@ public class JpaSearchPage extends AbstractSearchPage {
 
 	@Override
 	public ParameterizedDataset<Person> createDataset() {
-        JpaDataProvider<Person> provider = new JpaDataProvider<Person>();
+        JpaDataProvider<Person> provider = new JpaQueryProvider<Person>();
         provider.setCountStatement("select count(p) from Person p");
         provider.setSelectStatement("select p from Person p");
         provider.addRestriction("upper(p.firstName) like upper(:firstNameValue)");

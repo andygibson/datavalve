@@ -22,7 +22,7 @@ import org.jdataset.provider.QueryDataProvider;
  * @param <T>
  */
 public abstract class AbstractJpaDataProvider<T> extends
-		AbstractQueryDataProvider<T> implements JpaDataProviderIntf<T> {
+		AbstractQueryDataProvider<T> implements JpaDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 

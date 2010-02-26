@@ -280,7 +280,7 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	}
 	
 	protected QueryDataset<Person> buildQueryDatasetx() {
-		JpaDataProvider<Person> provider = new JpaDataProvider<Person>(em);		
+		JpaDataProvider<Person> provider = new JpaQueryProvider<Person>(em);		
 		provider.setSelectStatement("select p from Person p");
 		provider.setCountStatement("select count(p) from Person p");
 		provider.getOrderKeyMap().put("id", "p.id");
@@ -332,11 +332,12 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	
 	public void testDocumentationExample() {
 		
-		JpaDataProviderIntf<Person> provider = new JpaDataProvider<Person>(em);
+		JpaDataProvider<Person> provider = new JpaQueryProvider<Person>(em);
 		JpaDataset<Person> ds = new JpaDataset<Person>(provider);		
 		
 		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
 		dataset.init(Person.class, "p");
+		
 		List<Person> results = dataset.getResultList();
 		for (Person p : results) {
 		System.out.println(p.getName());

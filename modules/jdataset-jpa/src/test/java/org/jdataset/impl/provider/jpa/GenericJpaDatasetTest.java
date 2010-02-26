@@ -289,7 +289,7 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 	}
 	
 	protected JpaDataset<Person> buildQueryDataset() {
-		JpaDataProvider<Person> provider = new JpaDataProvider<Person>(em);		
+		JpaDataProvider<Person> provider = new JpaQueryProvider<Person>(em);		
 		provider.setSelectStatement("select p from Person p");
 		provider.setCountStatement("select count(p) from Person p");
 		provider.getOrderKeyMap().put("id", "p.id");

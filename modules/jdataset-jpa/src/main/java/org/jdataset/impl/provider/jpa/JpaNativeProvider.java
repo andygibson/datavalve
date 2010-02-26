@@ -11,9 +11,12 @@ import javax.persistence.Query;
  * 
  * @param <T> Type of object this dataset contains
  */
-public class JpaNativeDataProvider<T> extends AbstractJpaDataProvider<T> {
+public class JpaNativeProvider<T> extends AbstractJpaDataProvider<T> {
 
-	public JpaNativeDataProvider(EntityManager entityManager) {
+	public JpaNativeProvider() {	
+	}
+	
+	public JpaNativeProvider(EntityManager entityManager) {
 		super(entityManager);
 	}
 

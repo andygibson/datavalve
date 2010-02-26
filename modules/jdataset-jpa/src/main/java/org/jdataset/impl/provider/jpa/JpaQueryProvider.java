@@ -10,12 +10,13 @@ import javax.persistence.Query;
  *
  * @param <T>
  */
-public class JpaDataProvider<T> extends AbstractJpaDataProvider<T> {
+public class JpaQueryProvider<T> extends AbstractJpaDataProvider<T> {
 
-	public JpaDataProvider() {		
+	public JpaQueryProvider() {
+		// TODO Auto-generated constructor stub
 	}
 	
-	public JpaDataProvider(EntityManager entityManager) {
+	public JpaQueryProvider(EntityManager entityManager) {
 		super(entityManager);
 	}
 

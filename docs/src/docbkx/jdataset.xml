@@ -20,15 +20,22 @@
 		<title>Introduction</title>
 		<para>
 			The purpose behind this framework is to let developers access
-			diverse sources of data in an easy and consistent manner. It also
-			aims to augment the functionalities of existing data access
-			mechanisms such as JDBC, Hibernate and JPA in a reusable manner.
+			diverse
+			sources of data in an easy and consistent
+			manner. It also
+			aims to augment the
+			functionalities of existing data access
+			mechanisms such as JDBC, Hibernate and
+			JPA
+			in a reusable manner.
 		</para>
 		<sect1>
 			<title>The Itch</title>
 			<para>
 				When starting a new data driven application you typically need
-				some mechanism to query data with the following capabilities:
+				some
+				mechanism to query data with the following
+				capabilities:
 		</para>
 			<itemizedlist>
 				<listitem>
@@ -42,11 +49,13 @@
 				</listitem>
 				<listitem>
 					<para>Optional restrictions in the query for when parameter values
-						are missing</para>
+						are
+						missing</para>
 				</listitem>
 				<listitem>
 					<para>The ability to apply a common front end to the back end query
-						mechanism so you can reuse both pieces to implement forms in
+						mechanism so you can reuse both pieces to
+						implement forms in
 						minutes.</para>
 				</listitem>
 			</itemizedlist>
@@ -54,41 +63,70 @@
 				As a long time Seam user, Seam provides most of this with the
 				<classname>EntityQuery</classname>
 				that can be used to run queries using JPA but it isn't perfect. I
-				extended the Seam
+				extended
+				the Seam
 				<classname>EntityQuery</classname>
 				and
 				<ulink
 					url="http://www.andygibson.net/blog/index.php/2008/10/02/codeless-ajax-ordered-and-paginated-tables-in-seam/">blogged about it </ulink>
 				and it still remains a popular article today and one I get most
-				emails about when people are looking for JSF and pagination.
-				However, this stil has problems since it only works in Seam projects
-				but the same functionality is needed in Wicket, Spring, JSP and even
-				Swing and console apps. Other frameworks such as Wicket provided an
+				emails about
+				when people are looking for JSF and
+				pagination.
+				However, this stil has
+				problems since it only works in Seam projects
+				but the same functionality is
+				needed
+				in Wicket, Spring, JSP and even
+				Swing and console apps. Other
+				frameworks such as Wicket provided an
 				interface for
-				handling ordered paginated datasets, but the
+				handling ordered paginated
+				datasets, but the
 				implementation was
-				usually up to the user as this was beyond the
-				scope of Wicket.
+				usually up to the user as this was beyond
+				the
+				scope of
+				Wicket.
 			</para>
 
 			<para>The other source of inspiration is from Borland Delphi which
-				worked on the idea that a common data access interface meant that
-				data driven components could access data without considering where
-				it came from. A standard query interface means we can create a
-				reusable front end. Third party Delphi component developers could
-				create data access components that would work with any kind of data
-				source, from Oracle, MySQL and MS Access to XML or file based
+				worked on
+				the idea that a common data access
+				interface meant that
+				data driven components
+				could access data without considering where
+				it came from. A standard query
+				interface means we can create a
+				reusable front end. Third party Delphi
+				component developers could
+				create data access
+				components that would work with
+				any kind of data
+				source, from Oracle, MySQL and MS Access to XML or file
+				based
 				datasets as long as there was a dataset implementation for it. When
-				developing in Java, you typically have to code against a common but
-				more precise back end such as a JDBC query and write new interfaces
-				for different view technologies.
+				developing in Java, you typically have to code
+				against a common but
+				more
+				precise back end such as a JDBC query and write new interfaces
+				for different
+				view
+				technologies.
 			</para>
 			<para>It seems that all these frameworks recognized the need to
-				access data in a uniform way, but it was beyond the scope of the
-				frameworks to provide it, and the scope of what they did provide was
-				usually limited to their own framework. Without a uniform data
-				access mechanism developers have to write and re-write their front
-				and back ends every time they start a new project or want to re-use
+				access data in
+				a uniform way, but it was beyond the
+				scope of the
+				frameworks to provide it,
+				and the scope of what they did provide was
+				usually limited to their own
+				framework. Without a uniform data
+				access mechanism developers have to write
+				and re-write their front
+				and back ends
+				every time they start a new project or
+				want to re-use
 				some existing code from a different view technology.
 			</para>
 			<figure>
@@ -110,9 +148,14 @@
 		<sect1>
 			<title>The Solution</title>
 			<para>So, I scratched my own itch and created this project that
-				defines a common API for querying diverse data sources with
-				pagination and optionally with ordering, restrictions and
-				parameters. This lets us write common view code that can interface
+				defines a
+				common API for querying diverse data sources
+				with
+				pagination and optionally
+				with ordering, restrictions and
+				parameters. This lets us write common view
+				code that
+				can interface
 				with queries that are interchangeable. 
 			</para>
 			<figure>
@@ -137,10 +180,13 @@
 					. The
 					<classname>Paginator</classname>
 					holds the state about our dataset such as the order information,
-					the page size and the current page. The
+					the page
+					size and the current page. The
 					<classname>DataProvider</classname>
 					interface defines two simple methods which are used to fetch the
-					total number of rows in the dataset, and a (sub)set of the items in
+					total
+					number of rows in the dataset, and a (sub)set
+					of the items in
 					the
 					dataset.
 				</para>
@@ -170,7 +216,8 @@ public interface DataProvider<T> {
 				<para>
 					Even if you still plan on using a single data access mechanism
 					(i.e.
-					Hibernate or JPA) there are still advantages to using Java
+					Hibernate or JPA) there are still
+					advantages to using Java
 					Query
 					Adapters.
 				</para>
@@ -179,25 +226,38 @@ public interface DataProvider<T> {
 					<title>Interchangable query mechanisms</title>
 					<para>
 						Most projects only plan on using one data access mechanism
-						but by coding to the JQA API, you can easily switch implementation
-						later. You might move from JPA to hibernate or even to plain JDBC
-						queries and your code that uses these queries, including
+						but by
+						coding to the JQA API, you can easily switch
+						implementation
+						later. You might
+						move from JPA to hibernate or even to plain JDBC
+						queries and your code that
+						uses
+						these queries, including
 						parameterized
-						queries, will remain the same. 
+						queries, will remain the same.
 					</para>
 					<para>If you later need to introduce some new kind of data
 						store
-						into the project, you can do so while using your
+						into the
+						project, you can do so while using your
 						existing view code
-						to paginate and order the data. Even if you can
+						to paginate and
+						order the data. Even if you can
 						never imagine
-						switching data access mechanisms or having to access
+						switching data access
+						mechanisms or
+						having to access
 						diverse data
-						stores, you may want to just switch the query here
+						stores, you may want to just
+						switch the query here
 						and there from a
-						pure ORM type query to a JDBC SQL query but still
+						pure ORM type query
+						to a JDBC SQL
+						query but still
 						want to interface
-						with the data the same way you do with your
+						with the data the same way you do with
+						your
 						other queries.
 					</para>
 				</sect3>
@@ -206,13 +266,23 @@ public interface DataProvider<T> {
 					<title>Easy Querying</title>
 					<para>JQA makes it easier to query for the data
 						you need. It
-						features flexible parameter definition by setting the value
-						manually, using EL expressions, extracting the values using
-						reflection or your own custom parameter resolver. Parameters that
-						don't have a value assigned can optionally be left out of the
-						query which can be useful when you are writing search forms where
-						the user may leave out search criteria and you don't want it
-						included in the query. Doing this manually can lead to problematic
+						features
+						flexible parameter definition by setting the
+						value
+						manually, using EL
+						expressions, extracting the values using
+						reflection or your own custom
+						parameter resolver.
+						Parameters that
+						don't have a value assigned can
+						optionally be left out of the
+						query which can be useful when you are
+						writing search forms where
+						the user may leave out search criteria and you
+						don't want it
+						included in the query. Doing
+						this manually can lead to
+						problematic
 						code that is hard to read, test and maintain.
 					</para>
 					<example>
@@ -260,9 +330,12 @@ List<Person> results = qry.resultList();
 					</example>
 					<para>With JQA, you can define the query once, specify
 						how the
-						parameters are resolved and the query
-						will take care of generating
-						the right request so that the only
+						parameters are
+						resolved and the query
+						will take care of
+						generating
+						the right request so that
+						the only
 						restrictions included in the
 						query are ones with parameter values
 						assigned.</para>
@@ -288,54 +361,232 @@ List<Person> results = qry.resultList();]]>
 					<title>Flexible and Secure Ordering Abstraction</title>
 					<para>JQA lets you order your data based on order key values as
 						opposed to
-						explicit table column values which could be prone to SQL
+						explicit table column values which could
+						be prone to SQL
 						injection attacks.
 						By using an orderKey value which is translated
 						server side into a
-						query level representation, you can control what
+						query
+						level
+						representation, you can control what
 						values are used
-						for setting the order of the dataset ensuring no
+						for setting the
+						order of the dataset ensuring no
 						harmful
 						SQL is
-						inserted into your query.</para>
+						inserted into your query.
+					</para>
 					<para>There are even provisions for assisting sorting in non-SQL
-						based queries.</para>
+						based
+						queries using comparators.</para>
 				</sect3>
 				<sect3>
 					<title>Convert anything into a dataset</title>
 					<para>At the heart of JQA is a simple API which allows you to turn
-						anything into a dataset that can be accessed and paginated from a
-						common set of view code. This can range from custom datasources or
-						third party applications, to text, csv or binary file sources or
-						even just an in-memory list of objects. The JQA API provides the
-						framework for turning each of these data stores into paginated
-						data
-						sources that can be accessed as Java objects by common view
-						code that handles the user interface for pagination.
+						anything
+						into a dataset that can be accessed and
+						paginated from
+						reusable view code.
+						This can range from custom datasources or
+						third party applications, to
+						text, csv
+						or binary file sources or
+						even just an in-memory list of objects.
 					</para>
-					<para>For more sophisticated data stores you can add more features
-						like ordering, parameterization and restrictions as needed. </para>
 				</sect3>
 			</sect2>
 		</sect1>
 	</chapter>
 	<chapter>
-		<title>Getting Started</title>
-		<para>This chapter looks at creating a simple dataset, testing it and
-			seeing the different ways we can access the data in it.</para>
+		<title>Architecture</title>
+		<para>
+			This section covers the architecture of the framework and how
+			they all
+			relate to each other.</para>
+		<sect1>
+			<title>Main API</title>
+			<para>
+				The main API consists of the
+				<classname>Paginator</classname>
+				and
+				<classname>DataProvider</classname>
+				interfaces. The Paginator is like a bookmark for a dataset and holds
+				the
+				current record, page size and ordering
+				information as well as
+				flags indicating
+				whether there is a previous or next page available.
+				Inversely, the
+				<classname>DataProvider</classname>
+				is the stateless part of the equation. It provides the data to the
+				end user
+				when requested based on the state of the
+				paginator passed
+				in.
+			</para>
+			<example>
+				<title>Fetching data from a provider</title>
+				<programlisting>
+<![CDATA[				
+  DataProvider prov = new CustomDataProvider();
+  Paginator paginator = new DefaultPaginator();
+  List<ResultClass> results = prov.fetchResults(paginator);
+  Integer count = prov.getResultCount();  
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				This is a simple example where we create an instance of our custom provider
+				that knows how
+				to fetch the data. We create an instance of a
+				<classname>Paginator</classname>
+				and when we fetch the results we pass that in to the datasource to
+				tell the
+				provider which set of data to return. In
+				this case, we
+				returned all the data
+				but by setting properties on the paginator we
+				can tell the provider just to
+				return
+				a subset.
+			</para>
+			<example>
+				<title>Limiting the data fetched from a data provider</title>
+				<programlisting>
+<![CDATA[				
+  DataProvider prov = new CustomDataProvider();
+  Paginator paginator = new DefaultPaginator();
+  paginator.setMaxRows(10);
+  paginator.setFirstResult(35);
+  List<ResultClass> results = prov.fetchResults(paginator);
+  Integer count = prov.fetchResultCount();
+    
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				Here we set the maximum number of rows to return to 10 and we want the first
+				result to start at item number 35. The implementation of the
+				<classname>CustomProvider</classname>
+				is responsible for returning the correct subset of data to the caller. It is
+				also responsible for setting the
+				<code>nextAvailable</code>
+				flag on the paginator. This keeps track of whether there are more results
+				available or not.
+			</para>
+			<para>
+				If you were to call
+				<methodname>fetchResults</methodname>
+				a second time, the provider would go off and re-fetch the data executing
+				whatever process it does to fetch the data. It does not cache the data in
+				anyway and should be implemented statelessly such that one call to the
+				dataset is independent to any other calls to the dataset.
+			</para>
+			<para>
+				The third part of the interface is an
+				<classname>ObjectDataset</classname>
+				which combines both the provider and paginator information into one
+				class and
+				can be used to manage the fetched data.
+				This component
+				should be considered
+				stateful as it holds on to the results and
+				caches them. This piece is very
+				similar
+				to the
+				<classname>EntityQuery</classname>
+				component in Seam. It also lets you iterate over the dataset easily and
+				doing so
+				will also take pagination into account.
+			</para>
+			<example>
+				<title>
+					Using an
+					<classname>ObjectDataset</classname>
+				</title>
+				<programlisting>
+<![CDATA[				
+  DataProvider provider = new CustomDataProvider();
+  Dataset<SomeClass> dataset = new Dataset(provider);
+  dataset.setMaxRows(10);
+  dataset.setFirstResult(35);
+  List<ResultClass> results = dataset.getResults();
+  for (SomeClass item : dataset) {
+    ...some code...
+  }
+]]>  
+				</programlisting>
+			</example>
+			<para>
+				The
+				<classname>ObjectDataset</classname>
+				incorporates its own
+				<classname>Paginator</classname>
+				and works on the data provider passed in to the constructor.
+			</para>
+		</sect1>
+	</chapter>
+	<chapter>
+		<title>Using Database Driven Providers</title>
+		<para>
+			While JQA offers a way to access many different types of data stores, in most
+			cases, you will want to fetch data from a database. JQA comes with data
+			providers for fetching data using JPA, Hibernate or just plain SQL via JDBC.
+			These different providers are based off and implement the
+			<classname>QueryDataProvider</classname>
+			. This interface adds features such as ordering, restrictions and parameters
+			for flexible querying. Note that since they implement the same interface,
+			they can be interchanges with very little code changes if any. Let's look at
+			some examples of fetching data using a data driven query.
+		</para>
+		<example>
+			<title>
+				Fetching data from a database using JPA					
+				</title>
+			<programlisting>
+<![CDATA[
+
+  QueryProvider<Person> provider = new JpaDataProvider<Person>(em)
+  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
+  dataset.init(Person.class, "p");
+  List<Person> results = dataset.getResultList();
+  for (Person p : results) {
+    System.out.println(p.getName());
+  }
+]]>  
+				</programlisting>
+		</example>
+		<para>
+			We defined the provider and then created a
+			<classname>QueryDataset</classname>
+			instance for that provider.
+		</para>
+	</chapter>
+	<chapter>
+		<title>Introducing the data provider</title>
+		<para>This chapter looks at creating a simple data provider, testing
+			it and
+			seeing the different ways we can access the
+			data in it.</para>
 		<sect1>
 			<title>
 				Our first
 				<classname>DataProvider</classname>
 			</title>
 			<para>
-				Let us start by creating a simple dataset to show how the
-				different
-				pieces and parts connect. We'll create a new dataset that
+				Let us start by seeing how the different parts and pieces connect by
+				creating a new provider that
 				lists the
-				numbers from 1 to 100 and access it in different ways. We'll start
+				numbers
+				from 1 to 100 and
+				we
+				will access
+				it in different ways. We'll start
 				by
-				writing our data provider that implements the
+				writing our data
+				provider
+				that implements
+				the
 				<classname>DataProvider&lt;Integer&gt;</classname>
 				interface.
 			</para>
@@ -374,18 +625,25 @@ public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 				The
 				<methodname>fetchResultCount()</methodname>
 				method returns a constant value of 100 in this case because we are
-				dealing with a fixed range of integers. Typically though, this will
-				return the number of items in the complete dataset and is used to
-				determine the number pages available.
+				dealing
+				with a fixed range of integers. Typically
+				though, this will
+				return the number
+				of items in the complete dataset and is used to
+				determine the number pages
+				available.
 			</para>
 			<para>
 				The
 				<methodname>fetchResults</methodname>
 				methods takes a paginator and generates the list of integers to
-				return to the user. The list is based on two things, the
+				return to the
+				user. The list is based on two things,
+				the
 				<code>firstResult</code>
 				value that determines which page we are on and therefore where to
-				start counting from, and the
+				start
+				counting from, and the
 				<code>maxRows</code>
 				value that determines how many results to return. If
 				<code>maxRows</code>
@@ -393,15 +651,23 @@ public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 				utility method
 				<methodname>includeAllResults</methodname>
 				to make it easier to check this. Once we have determined the start
-				and end points to count from and to, we build the list of results,
-				and before returning it, we set the flag for indicating whether
+				and end
+				points to count from and to, we build the
+				list of results,
+				and before
+				returning it, we set the flag for indicating whether
 				there
-				are more results available. This is the responsibility of the
+				are more results
+				available. This
+				is the responsibility of the
 				data
-				provider because only it knows whethere there are more results.
+				provider because only it
+				knows whethere there are more results.
 			</para>
 			<para>Next, we'll create a client for this provider as a simple class
-				that just fetches the results and lists them.</para>
+				that
+				just fetches the results and lists them.
+			</para>
 			<example>
 				<title>
 					<code>IntegerDataProvider.java</code>
@@ -438,15 +704,20 @@ public class Main {
 				instance that implements the
 				<classname>Paginator</classname>
 				interface. We pass our initial page size into the constructor so we
-				will start by returning 10 rows at a time. We then create an
+				will
+				start by returning 10 rows at a time. We
+				then create an
 				instance
-				of our data provider, and call the
+				of our data
+				provider, and call the
 				<methodname>fetchResults</methodname>
 				method to return the first page of results. We then pass the results
 				to the
 				<methodname>showResults</methodname>
 				method which just displays the number of results. If we run this, we
-				get the expected list of numbers from 0 to 9 with a page size of 10.
+				get the
+				expected list of numbers from 0 to 9
+				with a page size of 10.
 			</para>
 			<example>
 				<title>
@@ -473,15 +744,21 @@ Value = 9
 				So everthing looks fine, this is the result we expected so we
 				must
 				have
-				a working dataset right? Well not so fast. Let's create a
+				a
+				working dataset right? Well not so fast.
+				Let's create a
 				test case
 				for
-				it first. Since we are working will well defined
+				it first.
+				Since we are working with well defined
 				interfaces we can
-				define a test case that tests the interface and
+				define a test case
+				that
+				tests the interface and
 				make
 				sure our
-				implementation is meeting the contract defined by the
+				implementation is meeting the
+				contract defined by the
 				interface.
 			</para>
 		</sect1>
@@ -493,7 +770,8 @@ Value = 9
 			<para>
 				Create a new class (in the test packages if applicable) and create
 				it
-				as a subclass of
+				as a
+				subclass of
 				<classname>package
 					org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest
 				</classname>
@@ -512,7 +790,8 @@ Value = 9
 				<classname>DataProvider</classname>
 				implementation in one class for convenience. We can easily create
 				one
-				by creating an instance of a
+				by
+				creating an instance of a
 				<classname>org.jdataset.impl.Dataset</classname>
 				and pass it an instance of our
 				<classname>IntegerDataProvider</classname>
@@ -546,9 +825,12 @@ public class IntegerDataProviderTest extends
 			</example>
 			<para>If you run this test case now, you will see things light up
 				like
-				a Christmas tree. We have a lot of tests failing in some code
+				a
+				Christmas tree. We have a lot of tests failing
+				in some code
 				that
-				not only looked ok, but worked fine when we ran it. 
+				not only
+				looked ok, but worked fine when we ran it. 
 	</para>
 			<figure>
 				<title>Oh Noes! Epic Fail</title>
@@ -564,11 +846,17 @@ public class IntegerDataProviderTest extends
 			</figure>
 			<para>
 				The problem is subtle, and based on the old gotcha there are 101
-				numbers from 0 to 100 inclusive. The solution is fairly simple, we
-				just need to define more closely what our dataset does. We'll make
+				numbers from
+				0 to 100 inclusive. The solution is
+				fairly simple, we
+				just need to define more
+				closely what our dataset does. We'll make
 				it
-				so that it does return 100 values in the range from 1 to 100, and
-				we'll even add some test cases to ensure that it does. First lets
+				so that it does return 100
+				values
+				in the range from 1 to 100, and
+				we'll even add some test cases to ensure that
+				it does. First lets
 				alter the
 				<methodname>fetchResults</methodname>
 				method in our
@@ -604,11 +892,16 @@ public class IntegerDataProviderTest extends
 			</example>
 			<para>If you run the tests now you should pass with flying colors
 				even
-				though we only made very small changes. The test classes that
+				though
+				we only made very small changes. The test
+				classes that
 				can be
-				used to test the implementations provide fairly good code
+				used to test the
+				implementations provide fairly good code
 				coverage
-				and can only get better over time as more tests are added.
+				and can only get better over
+				time
+				as more tests are added.
 			</para>
 			<para>
 				The
@@ -617,9 +910,14 @@ public class IntegerDataProviderTest extends
 				the
 				<classname>DataProvider</classname>
 				implementation, it cannot test the quality of the results. For that,
-				we need to add our own tests to our class which we'll do now for the
-				constraint that the numbers should range from 1 to 100. We will test
-				it in two ways, paginated and non-paginated.
+				we need
+				to add our own tests to our class which
+				we'll do now for the
+				constraint that
+				the numbers should range from 1 to 100. We will test
+				it in two ways,
+				paginated
+				and non-paginated.
 			</para>
 
 			<example>
@@ -672,7 +970,8 @@ public class IntegerDataProviderTest extends
 </programlisting>
 			</example>
 			<para>Again, running these tests should provide a clean set of test
-				results.</para>
+				results.
+			</para>
 		</sect1>
 		<sect1>
 			<title>
@@ -681,7 +980,9 @@ public class IntegerDataProviderTest extends
 			</title>
 			<para>
 				We can now be pretty confident that our dataset works as expected
-				with dozens of test cases behind it. Now we can go back to our
+				with dozens
+				of test cases behind it. Now we can go
+				back to our
 				<classname>Main</classname>
 				class and start seeing how we access the data provided by this
 				class.
@@ -689,10 +990,16 @@ public class IntegerDataProviderTest extends
 			<para>
 				Data can be accessed from a provider in a number of ways,
 				either
-				paginated, non-paginated or using iterators (paginated or
-				non-paginated). In our original example, we simple listed the first
-				10 results. From the test code you might have seen a few more ways
-				of accessing the data. First lets change our demo application to use
+				paginated,
+				non-paginated or using iterators
+				(paginated or
+				non-paginated). In our original
+				example, we simple listed the first
+				10 results. From the test code you
+				might
+				have seen a few more ways
+				of accessing the data. First lets change our demo
+				application to use
 				an
 				<classname>ObjectDataset</classname>
 				instead of keeping separate
@@ -722,9 +1029,14 @@ public static void main(String[] args) {
 </programlisting>
 			</example>
 			<para>If you run this now, it should run the same as before except
-				for the fact that we changed the page size to 5 so we only return 5
-				rows at a time for brevity. Let's add a second call to fetch the
-				list of results and we'll see what happens.</para>
+				for the
+				fact that we changed the page size to 5 so
+				we only return 5
+				rows at a time for
+				brevity. Let's add a second call to fetch the
+				list of results and we'll see
+				what
+				happens.</para>
 			<example>
 				<title>
 					Changing our demo application to use an
@@ -765,29 +1077,44 @@ Value = 5
 			<para>
 				Unsurprisingly, we display the same list of numbers twice, but
 				what
-				is surprising is that we only generate the results the first
+				is
+				surprising is that we only generate the results
+				the first
 				time
-				they are requested. The second time we call for the results,
+				they are
+				requested. The second time we call for the results,
 				there is
-				no message about generating results. This is because the
+				no message about
+				generating
+				results. This is because the
 				<classname>ObjectDataset</classname>
 				caches the results and only invalidates them when the pagination
-				changes (i.e. the first result or page size is changed). You can
-				manually force the results to be refreshed by calling
+				changes
+				(i.e. the first result or page size is
+				changed). You can
+				manually force the
+				results to be refreshed by calling
 				<methodname>invalidateResults()</methodname>
 				on the dataset. Doing so after the first call would force the
-				dataset to re-fetch the data on the second call.
+				dataset to
+				re-fetch the data on the second call.
 			</para>
 			<para>
 				This is one of the benefits of using a dataset on a thicker client
-				or a stateful web app. The dataset can hold on to the results for
-				you until you are done with them. Using separate
+				or a
+				stateful web app. The dataset can hold on to
+				the results for
+				you until you are
+				done with them. Using separate
 				<classname>Paginator</classname>
 				and
 				<classname>DataProvider</classname>
 				instances can be useful in more stateless applications, or
-				frameworks like Wicket that uses a detachable model that keeps hold
-				of state, but lets you detach unwanted or re-fetchable state.
+				frameworks like
+				Wicket that uses a detachable model that
+				keeps hold
+				of state, but lets you
+				detach unwanted or re-fetchable state.
 			</para>
 			<sect2>
 				<title>I want it all</title>
@@ -803,7 +1130,9 @@ Value = 5
 					index to the end. When you create a
 					<classname>ObjectDataset</classname>
 					by default, it is set up to fetch results from the first row and is
-					not paginated so it will return all results from the beginning to
+					not
+					paginated so it will return all results from
+					the beginning to
 					the end.
 				</para>
 				<example>
@@ -845,7 +1174,9 @@ Value = 100
 					The dataset implements the
 					<classname>Iterable</classname>
 					interface which means that we can iterate over the dataset. If
-					pagination is in use, it is performed transparently as you iterate
+					pagination is
+					in use, it is performed transparently
+					as you iterate
 					through the dataset.
 				</para>
 				<example>
@@ -901,19 +1232,31 @@ Iterating over value 100
 </screen>
 				</figure>
 				<para>This could be useful in cases where you want to group fetches
-					into batches if fetches are expensive, or maybe even incorporate
-					some multi-threading to let one thread fetch data and other threads
-					to process result sets as they come in.</para>
+					into
+					batches if fetches are expensive, or maybe
+					even incorporate
+					some
+					multi-threading to let one thread fetch data and other threads
+					to process
+					result sets as they
+					come in.</para>
 			</sect2>
 			<sect2>
 				<title>Paging Datasets</title>
 				<para>Generally paging through a dataset is done using the next and
-					previous which changes the subset of data you are looking at.
-					Generally speaking, using the iterator is the best way to iterate
-					over every item in the dataset since paging is generally used to
-					move to a specific page as to iterate through the data. </para>
+					previous
+					which changes the subset of data you are
+					looking at.
+					Generally speaking,
+					using the iterator is the best way to iterate
+					over every item in the dataset
+					since
+					paging is generally used to
+					move to a specific page as to iterate
+					through the data. </para>
 				<para>Iterating manually is fraught with corner cases that could
-					lead to a number of errors.</para>
+					lead to a
+					number of errors.</para>
 
 				<example>
 					<title>Attempting manual iteration</title>
@@ -933,33 +1276,48 @@ while (ds.isNextAvailable()) {
 					the
 					<methodname>nextAvailable</methodname>
 					property is set to false and we exit the loop before we display it.
-					We could process the results after the loop but what happens when
-					you forget to add the code at the end? The best demonstration of
-					this is where the size of the result set is smaller than the page
-					size, and when we fetch the first page of results,
+					We could
+					process the results after the loop but
+					what happens when
+					you forget to add
+					the code at the end? The best demonstration of
+					this is where the size of the
+					result set is smaller than the page
+					size, and when we fetch the first page
+					of results,
 					<methodname>nextAvailable</methodname>
 					is false since this is the first and only page, and so we don't
-					display the list.
+					display the
+					list.
 				</para>
 				<para>
 					In general, use the dataset next/previous/first/last methods to
-					navigate the dataset by moving from page to page and the
+					navigate the
+					dataset by moving from page to page and
+					the
 					<classname>Iterator</classname>
 					implementation to go through the dataset item by item
 					<superscript>*</superscript>
 					. The iterator implementation handles all the corner cases in a
-					familiar and consistent manner.
+					familiar and
+					consistent manner.
 				</para>
 				<para>
 					Note that in the event of you reaching the end of the dataset
 					and
-					calling next, the active page will not change and you will
+					calling
+					next, the active page will not change and
+					you will
 					receive
-					the last result set back. Unless the dataset is empty,
+					the last result set
+					back. Unless the dataset is empty,
 					there will
-					always be results returned in the result list, and if
+					always be results returned in
+					the
+					result list, and if
 					there are no
-					results, an empty list should be returned. The results should never
+					results, an empty list should be
+					returned. The results should never
 					be
 					<code>null</code>
 					.
@@ -969,11 +1327,16 @@ while (ds.isNextAvailable()) {
 						<superscript>*</superscript>
 						We do use this kind of incorrect paging through data in
 						some of the
-						test cases, but only where we are not testing the
+						test
+						cases, but only where we are not testing
+						the
 						number of
-						results, but the actual result content, and we want to
+						results, but the
+						actual result content, and we want to
 						test the
-						first/next/previous/last methods as opposed to the
+						first/next/previous/last
+						methods as
+						opposed to the
 						iterator
 						implementation.
 					</para>
@@ -989,15 +1352,19 @@ while (ds.isNextAvailable()) {
 					and
 					<classname>DataProvider</classname>
 					. We can easily use these two classes separate very easily, there
-					is no complex glue code implemented by the
+					is no
+					complex glue code implemented by the
 					<classname>ObjectDataset</classname>
 					except where it has provided enhanced features. Using two
-					separately instantiated pagiantors and providers is very simple.
+					separately
+					instantiated pagiantors and providers is very
+					simple.
 				</para>
 
 				<example>
 					<title>Manually creating provider and pagination instances and
-						fetching results</title>
+						fetching
+						results</title>
 					<programlisting>
 <![CDATA[
 DataProvider<Integer> provider = new IntegerDataProvider();
@@ -1011,7 +1378,9 @@ showResults(results);
 					Each call to
 					<methodname>fetchResults</methodname>
 					executes the process to fetch the data. This can mean running a
-					database query or parsing a file. The results are not cached unlike
+					database
+					query or parsing a file. The results are
+					not cached unlike
 					the
 					<classname>ObjectDataset</classname>
 					. This is because the
@@ -1027,7 +1396,8 @@ showResults(results);
 				</para>
 				<para>
 					One important thing to bear in mind with using these components
-					manually is that the
+					manually is
+					that the
 					<classname>DataProvider</classname>
 					implementation is responsible for setting the
 					<code>nextAvailable</code>
@@ -1046,10 +1416,14 @@ showResults(results);
 				</para>
 				<para>One benefit of using these standalone components manually is
 					that you
-					can use multiple paginator instances to provide different
+					can use multiple paginator instances to
+					provide different
 					views of
-					the same dataset independent of each other. This can be
-					useful when you want application scoped data with local pagination.
+					the same
+					dataset independent of each other. This can be
+					useful when you want
+					application
+					scoped data with local pagination.
 				</para>
 				<example>
 					<title>Multiple views of the same data</title>
@@ -1073,8 +1447,11 @@ showResults(results2);
 </programlisting>
 				</example>
 				<para>Here we obtain two different sets of data from a single data
-					provider. This can let you re-use data providers that obtain data
-					from expensive data sources.</para>
+					provider.
+					This can let you re-use data providers
+					that obtain data
+					from expensive data
+					sources.</para>
 			</sect2>
 
 		</sect1>
@@ -1085,15 +1462,23 @@ showResults(results2);
 		<para>
 			The last chapter introduced you to a number of concepts
 			regarding how
-			to use basic data providers controlled by an instance
+			to use
+			basic data providers controlled by an
+			instance
 			of a paginator,
-			or abstracted through the object dataset
+			or abstracted
+			through the object dataset
 			implementations. Now we've
-			covered these fundamentals we can expand our knowledge by looking at
-			the different subclasses of the
+			covered these
+			fundamentals
+			we can expand our knowledge by looking at
+			the different subclasses
+			of the
 			<classname>DataProvider</classname>
 			interface and implementations for this is how we create datasets that
-			can attach to different datasources in a useful way.
+			can
+			attach to different datasources in a useful
+			way.
 		</para>
 		<para>
 			Most subclasses of the
@@ -1101,7 +1486,9 @@ showResults(results2);
 			are mirrored in some form of
 			<classname>ObjectDataset</classname>
 			subclass which acts as a thick client wrapper around the data
-			provider and internally uses an instance of that particular subclass.
+			provider and
+			internally uses an instance of that
+			particular subclass.
 		</para>
 		<sect1>
 			<title>
@@ -1113,7 +1500,7 @@ showResults(results2);
 				interface is the
 				<classname>ParameterizedDataProvider</classname>
 				that introduces methods for fetching data based on dynamic
-				parameters. 
+				parameters.
 			</para>
 		</sect1>
 
@@ -1127,11 +1514,16 @@ showResults(results2);
 				extends the
 				<classname>ParameterizedDataProvider</classname>
 				and adds the ability to define string based statements for fetching
-				and counting the number of rows of data. Since this extends the
+				and
+				counting the number of rows of data. Since
+				this extends the
 				<classname>ParameterizedDataProvider</classname>
 				we can let the user define statements that have parameters within
-				them. This obviously lends itself to easily providing the bulk of
-				features of a Sql or Ejbql or Hql data provider.
+				them. This
+				obviously lends itself to easily
+				providing the bulk of
+				features of a Sql or
+				Ejbql or Hql data provider.
 			</para>
 		</sect1>
 

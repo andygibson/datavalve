@@ -61,7 +61,19 @@ public class DefaultPaginator implements Paginator, Serializable {
 		this.orderKey = orderKey;
 	}
 
-	public void changeOrderKey(String orderKey) {
+	public void changeOrderKey(String orderKey) {		
+		if (this.orderKey == null) {
+			this.orderKey = orderKey;
+			return;			
+		}
+		//toggle it
+		if (this.orderKey.equals(orderKey)) {
+			this.orderAscending = !this.orderAscending;
+			return;
+		}
+		this.orderKey = orderKey;
+		this.orderAscending = true;
+		
 
 	}
 

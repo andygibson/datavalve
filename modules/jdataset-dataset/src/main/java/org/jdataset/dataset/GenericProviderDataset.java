@@ -24,9 +24,7 @@ import org.jdataset.Paginator;
  *            The type of object this dataset will end up returning
  * @param <P>
  *            The type of data provider used to fetch the data
- */
-
-//TODO rename subclasses to their shorter versions and remove the current implementations of QueryDataset etc.. 
+ */ 
 public class GenericProviderDataset<T, P extends DataProvider<T>> extends
 		AbstractDataset<T> {
 

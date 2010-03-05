@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ds="http://java.sun.com/jsf/composite/jdatasetcomp"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+
+			<h:panelGrid columns="2" style="border : 2px solid #000000;background : #f0f0f0;padding : 16px;margin : 8px">
+First Name : <h:inputText value="#{searchCriteria.firstName}" />
+Last Name : <h:inputText value="#{searchCriteria.lastName}" />
+Phone : <h:inputText value="#{searchCriteria.phone}" />
+			</h:panelGrid>
+			<h:commandButton value="Refresh" action="#{personSearch.refresh}">
+			<f:ajax execute="form" render="form" listener="#{personSearch.update}" />
+			</h:commandButton>
+			<h:dataTable value="#{personResults}" var="v_person">
+
+				<h:column>
+					<ui:include src="sortableHeader.xhtml">
+						<ui:param name="p_paginator" value="#{personSearch}" />
+						<ui:param name="p_key" value="id" />
+						<ui:param name="p_caption" value="Id" />
+					</ui:include>
+					#{v_person.id}
+				</h:column>
+
+
+
+				<h:column>
+					<ui:include src="sortableHeader.xhtml">
+						<ui:param name="p_paginator" value="#{personSearch}" />
+						<ui:param name="p_key" value="name" />
+						<ui:param name="p_caption" value="Name" />
+					</ui:include>
+					#{v_person.name}
+							
+			</h:column>
+
+				<h:column>
+					<ui:include src="sortableHeader.xhtml">
+						<ui:param name="p_paginator" value="#{personSearch}" />
+						<ui:param name="p_key" value="phone" />						
+						<ui:param name="p_caption" value="Phone Number" />
+					</ui:include>
+					#{v_person.phone}
+				</h:column>
+
+			</h:dataTable>
+			<h:inputText value="#{personSearch.orderKey}" />
+			<h:inputText value="#{personSearch.orderAscending}" />
+			<h:commandButton value="x" action="#{personSearch.testIt(4)}" />
+
+			<ds:span />
+			Value:#{searchCriteria.firstNameWildcard}:
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<f:facet name="header">
+
+		<h:commandLink action="#{p_paginator.changeOrderKey(p_key)}"
+			value="#{p_caption}">
+		</h:commandLink>
+
+
+		<h:graphicImage value="sort_asc.GIF"
+			rendered="#{(p_paginator.orderAscending) and (p_paginator.orderKey == p_key)}" />
+		<h:graphicImage value="sort_desc.GIF"
+			rendered="#{(!p_paginator.orderAscending) and (p_paginator.orderKey == p_key)}" />
+	</f:facet>
+
+</ui:composition>
+
+
+
+
+
+
+

@@ -22,11 +22,15 @@ public class HibernateDataProvider<T> extends AbstractQueryDataProvider<T> {
 
 	private Session session;
 
+	public HibernateDataProvider() {
+		super();
+	}
+	
 	public Session getSession() {
 		return session;
 	}
 
-	public void setSession(Session session) {
+	public void setSession(Session session) {		
 		this.session = session;
 	}
 

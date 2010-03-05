@@ -11,7 +11,11 @@ public class QueryDataset<T> extends
 		QueryDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
-
+	 	
+	public QueryDataset() {
+		super();
+	}
+	
 	public QueryDataset(QueryDataProvider<T> provider) {
 		super(provider);
 	}

@@ -60,8 +60,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 	 * 
 	 * @see org.jdataset.AbstractDataset#fetchResultCount()
 	 */
-	public final Integer fetchResultCount() {
-		// make this final since it uses the backing data to get the count
+	public Integer fetchResultCount() {
 		return Integer.valueOf(getBackingData().size());
 	}
 
@@ -71,7 +70,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 	 * 
 	 * @see InMemoryDataProvider#fetchBackingData()
 	 */
-	public final List<T> getBackingData() {
+	public  List<T> getBackingData() {
 		if (backingData == null) {
 			backingData = fetchBackingData();
 
@@ -106,7 +105,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 	 * @see org.jdataset.AbstractDataset#fetchResults()
 	 * 
 	 */
-	public final List<T> fetchResults(Paginator paginator) {
+	public List<T> fetchResults(Paginator paginator) {
 		// make this method final since
 
 		// make sure we fetch the data

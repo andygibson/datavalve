@@ -133,7 +133,7 @@ public abstract class AbstractJdbcDataProvider<T> extends
 	 *         firstRow + maxRows or to the end of the resultset if maxRows == 0
 	 * @throws SQLException
 	 */
-	protected final List<T> createListFromResultSet(ResultSet resultSet,
+	protected List<T> createListFromResultSet(ResultSet resultSet,
 			Integer firstRow, Integer maxRows) throws SQLException {
 		List<T> results = new ArrayList<T>();
 

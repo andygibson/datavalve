@@ -73,19 +73,19 @@ public abstract class AbstractQueryDataProvider<T> extends
 		return getOrderKeyMap().get(orderKeyValue);
 	}
 
-	protected final String getNextParamName() {
+	protected String getNextParamName() {
 		return "_param_" + String.valueOf(paramId++);
 	}
 
-	public final void addRestriction(String restriction) {
+	public void addRestriction(String restriction) {
 		getRestrictions().add(restriction);
 	}
 
-	public final boolean addRestriction(String syntax, Object value) {
+	public boolean addRestriction(String syntax, Object value) {
 		return addRestriction(syntax, value, value);
 	}
 
-	public final boolean addRestriction(String syntax, String testValue,
+	public boolean addRestriction(String syntax, String testValue,
 			String paramValue) {
 		if (testValue != null && testValue.length() != 0) {
 			return addRestriction(syntax, testValue, paramValue);
@@ -93,7 +93,7 @@ public abstract class AbstractQueryDataProvider<T> extends
 		return false;
 	}
 
-	public final boolean addRestriction(String syntax, Object testValue,
+	public boolean addRestriction(String syntax, Object testValue,
 			Object paramValue) {
 		if (testValue != null) {
 			String name = getNextParamName();

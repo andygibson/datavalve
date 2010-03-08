@@ -14,11 +14,11 @@ public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	//private static Logger log = LoggerFactory.getLogger(TextFileDataset.class);
+	// private static Logger log =
+	// LoggerFactory.getLogger(TextFileDataset.class);
 
 	private final String fileName;
 	private final File file;
-	private final int lineCount;
 
 	public TextFileProvider(String fileName) {
 		super();
@@ -29,8 +29,6 @@ public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
 			throw new IllegalArgumentException(String.format(
 					"File '%s' does not exist", fileName));
 		}
-
-		lineCount = countNumberOfLines(file);
 	}
 
 	private int countNumberOfLines(File file) {
@@ -52,13 +50,13 @@ public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
 		return countNumberOfLines(file);
 	}
 
-	//TODO change this implementation so it doesn't need to get the row count	
+	// TODO change this implementation so it doesn't need to get the row count
 	@Override
 	public List<T> fetchResults(Paginator paginator) {
-		int rowCount = paginator.getMaxRows() == null ? fetchResultCount()
-				: paginator.getMaxRows();
+		Integer rowCount = paginator.getMaxRows() == null ? null : paginator
+				.getMaxRows();
 		int firstResult = paginator.getFirstResult();
-		
+
 		BufferedReader reader;
 		List<T> results = new ArrayList<T>();
 		String line;
@@ -75,13 +73,16 @@ public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
 				}
 			}
 
-			while ((line = reader.readLine()) != null && rowCount != 0) {
+			while ((line = reader.readLine()) != null
+					&& (rowCount == null || rowCount != 0)) {
 				if (line != null) {
 					results.add(createObjectFromLine(line));
 				}
-				rowCount--;
+				if (rowCount != null) {
+					rowCount--;
+				}
 			}
-			//do we have any more lines?
+			// do we have any more lines?
 			paginator.setNextAvailable(reader.readLine() != null);
 
 		} catch (IOException e) {

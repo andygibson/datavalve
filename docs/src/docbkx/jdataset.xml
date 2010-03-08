@@ -73,7 +73,7 @@
 				emails about
 				when people are looking for JSF and
 				pagination.
-				However, this stil has
+				However, this still has
 				problems since it only works in Seam projects
 				but the same functionality is
 				needed
@@ -105,7 +105,8 @@
 				any kind of data
 				source, from Oracle, MySQL and MS Access to XML or file
 				based
-				datasets as long as there was a dataset implementation for it. When
+				datasets as long as there was a dataprovider implementation for it.
+				When
 				developing in Java, you typically have to code
 				against a common but
 				more
@@ -293,7 +294,7 @@ public interface DataProvider<T> {
 <![CDATA[
 if (searchCriteria.id != null  
   && searchCriteria.id.length() != 0) {
-    if (sql.length()!= null) {
+    if (sql.length()!= 0) {
       sql = sql + " AND ";
     }
     sql= sql+ "p.id = :id";
@@ -302,7 +303,7 @@ if (searchCriteria.id != null
 
 if (searchCriteria.firstName != null  
   && searchCriteria.firstName.length() != 0) {
-    if (sql.length()!= null) {
+    if (sql.length()!= 0) {
       sql = sql + " AND ";
     }
     sql= sql+ "p.firstName = :firstName";
@@ -311,12 +312,17 @@ if (searchCriteria.firstName != null
 
 if (searchCriteria.lastName != null  
   && searchCriteria.lastName.length() != 0) {
-    if (sql.length()!= null) {
+    if (sql.length()!= 0) {
       sql = sql + " AND ";
     }
     sql= sql+ "p.lastName = :lastName";
     paramsMap("lastName",searchCriteria.lastName);
 }
+
+if (sql.length() != 0) {
+  sql = " WHERE " + sql;
+}
+sql = [select statement] + sql;
 
 qry = createQuery(sql);
 for (String key : paramsMap.keySet) {
@@ -384,14 +390,16 @@ List<Person> results = qry.resultList();]]>
 					<title>Convert anything into a dataset</title>
 					<para>At the heart of JQA is a simple API which allows you to turn
 						anything
-						into a dataset that can be accessed and
+						into a source of data that can be accessed and
 						paginated from
-						reusable view code.
+						existing view
+						code.
 						This can range from custom datasources or
-						third party applications, to
+						third party applications to
 						text, csv
 						or binary file sources or
-						even just an in-memory list of objects.
+						even just a static in-memory list of
+						objects.
 					</para>
 				</sect3>
 			</sect2>
@@ -418,11 +426,9 @@ List<Person> results = qry.resultList();]]>
 				whether there is a previous or next page available.
 				Inversely, the
 				<classname>DataProvider</classname>
-				is the stateless part of the equation. It provides the data to the
-				end user
-				when requested based on the state of the
-				paginator passed
-				in.
+				is the stateless part of the equation. It provides the data based on the
+				state of the
+				paginator passed in.
 			</para>
 			<example>
 				<title>Fetching data from a provider</title>
@@ -440,15 +446,19 @@ List<Person> results = qry.resultList();]]>
 				that knows how
 				to fetch the data. We create an instance of a
 				<classname>Paginator</classname>
-				and when we fetch the results we pass that in to the datasource to
-				tell the
+				and when we fetch the results we pass that in to the data provider to
+				tell
+				the
 				provider which set of data to return. In
 				this case, we
-				returned all the data
+				returned all the
+				data
 				but by setting properties on the paginator we
-				can tell the provider just to
+				can tell the provider just
+				to
 				return
-				a subset.
+				a subset. The provider is also responsible for setting the flag in
+				the paginator indicating whether there are more results.
 			</para>
 			<example>
 				<title>Limiting the data fetched from a data provider</title>
@@ -480,10 +490,10 @@ List<Person> results = qry.resultList();]]>
 				a second time, the provider would go off and re-fetch the data executing
 				whatever process it does to fetch the data. It does not cache the data in
 				anyway and should be implemented statelessly such that one call to the
-				dataset is independent to any other calls to the dataset.
+				provider is independent of any other calls to the provider.
 			</para>
 			<para>
-				The third part of the interface is an
+				The third part of the API is an
 				<classname>ObjectDataset</classname>
 				which combines both the provider and paginator information into one
 				class and
@@ -497,7 +507,8 @@ List<Person> results = qry.resultList();]]>
 				<classname>EntityQuery</classname>
 				component in Seam. It also lets you iterate over the dataset easily and
 				doing so
-				will also take pagination into account.
+				will also take pagination into account. Datasets have the stateful
+				pagination content built in and refer to a data provider to supply the data.
 			</para>
 			<example>
 				<title>
@@ -522,12 +533,17 @@ List<Person> results = qry.resultList();]]>
 				<classname>ObjectDataset</classname>
 				incorporates its own
 				<classname>Paginator</classname>
-				and works on the data provider passed in to the constructor.
+				and works on the data provider passed in to the constructor. Repeated calls
+				to
+				<methodname>getResults()</methodname>
+				without changing the pagination information will cause the exact same
+				results to be returned since the current page of results is held by the
+				dataset.
 			</para>
 		</sect1>
 	</chapter>
 	<chapter>
-		<title>Using Database Driven Providers</title>
+		<title>Database Driven Providers</title>
 		<para>
 			While JQA offers a way to access many different types of data stores, in most
 			cases, you will want to fetch data from a database. JQA comes with data
@@ -543,8 +559,9 @@ List<Person> results = qry.resultList();]]>
 			<para>
 				Let's start by considering some simple cases of fetching data using a
 				data
-				driven query.
-				</para>
+				driven query. First we create the data provider that will fetch the data
+				for us, and then we create the dataset that we will use to access the data.
+			</para>
 			<example>
 				<title>
 					Fetching data from a database using JPA					
@@ -584,14 +601,19 @@ List<Person> results = qry.resultList();]]>
 			</example>
 
 
-			<para>It is often more convenient to specify restrictions using parameters
+			<para>
+				It is often more convenient to specify restrictions using parameters
 				and
-				JQA has a number of different mechanisms with which to specify
+				JQA
+				has a number of different mechanisms with which to specify
 				parameterized
 				restrictions. First we'll look at the straightforward adding of
 				a
 				parameter.
-		</para>
+				In this example, we pass the restriction with the keyword
+				<code>:param</code>
+				where the parameterized value is meant to go.
+			</para>
 
 			<example>
 				<title>
@@ -612,17 +634,18 @@ List<Person> results = qry.resultList();]]>
 				<code>null</code>
 				, such as search forms where the user has left values
 				blank. In these cases,
-				any restriction with null parameter should not be included.
+				any restriction with null parameter should not be included. In this example,
+				we only add the first and last name restrictions if the values are set.
 			</para>
 			<example>
 				<title>
-					Parameterized restrictions					
+					Parameterized Restrictions					
 				</title>
 				<programlisting>
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
   provider.addRestriction("p.firstName = :param",searchCriteria.firstName);
-  provider.addRestriction("or p.lastName = :param",searchCriteria.lastName);
+  provider.addRestriction("p.lastName = :param",searchCriteria.lastName);
 ]]>  
 				</programlisting>
 			</example>
@@ -633,37 +656,29 @@ List<Person> results = qry.resultList();]]>
 				that
 				in certain cases. However, many times you want to evaluate one value to
 				check
-				if is null but use another value for the parameter. We have a method
+				if is null but use another value for the actual parameter. We have a
+				method
 				for
 				that
 				too.
 			</para>
 			<example>
 				<title>
-					Parameterized restrictions					
+					Alternate Value Restrictions					
 				</title>
 				<programlisting>
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
   provider.addRestriction("p.firstName like :param",searchCriteria.firstName,searchCriteria.firstName+"%");
-  provider.addRestriction("or p.lastName like :param",searchCriteria.lastName,searchCriteria.lastName+"%");
+  provider.addRestriction("p.lastName like :param",searchCriteria.lastName,searchCriteria.lastName+"%");
 ]]>  
 				</programlisting>
 			</example>
 			<para>
 				What we do there is check whether the first/last name value is null and
 				if
-				so,
-				we do nothing, but otherwise we add the restriction and for the
-				parameter, we
-				use the value with the wildcard appended. Also note that we use
-				the
-				<code>OR</code>
-				expression in the second restriction which lets us find people where the
-				first or second restrictions apply. If there is no logical operator at the
-				start of the restriction then by default an
-				<code>AND</code>
-				expression is prefixed onto it.
+				so we ignore the restriction, but otherwise we add the restriction and we
+				use the value with a wildcard added as the parameter value. 
 			</para>
 			<para>This may seem a fairly broad set of ways to parameterize the your
 				queries, but it is only scratching the surface. </para>
@@ -673,16 +688,24 @@ List<Person> results = qry.resultList();]]>
 			<para>
 				The
 				<code>ParameterResolver</code>
-				interface can be used to attach code at run time that will resolve
-				parameters. When the query is executed the parameters are evaluated as the
-				query is built so any restrictions with null parameters can be excluded. We
-				can attach parameter resolvers to the provider so it will be used when the
-				provider tries to resolve the parameter for a restriction. This mechanism
-				allows us to attach an EL parameter resolver for environments where EL is in
-				use (such as JSF, or Seam applications).
+				interface can be used to implement objects that can be attached to the
+				dataprovider at run time to resolve
+				parameters. When the query is executed
+				the parameters are evaluated as the
+				query is built so any restrictions with
+				null parameters can be excluded. We
+				attach parameter resolvers to the
+				provider so it will be used when the
+				provider tries to resolve the parameter
+				for a restriction. This mechanism
+				allows us to attach an EL parameter
+				resolver for environments where EL is in
+				use (such as JSF, or Seam
+				applications).
 			</para>
-			<para>It also lets offers us different mechanisms for resolving values such
-				as using reflection onto a an object.</para>
+			<para>It also lets us different mechanisms for resolving values such
+				as using
+				reflection onto a an object.</para>
 			<example>
 				<title>
 					Parameter Resolving with Reflection					
@@ -736,9 +759,9 @@ public class SearchCriteria implements ParameterResolver {
 				</programlisting>
 			</example>
 			<para>
-				The Seam data provider classes use an EL based parameter resolver
-				by default
-				so you can simple use it the same way you would with an
+				The Seam and CDI data provider classes use an EL based parameter resolver
+				so
+				you can use it the same way you would with a Seam
 				<classname>EntityQuery</classname>
 				.
 			</para>
@@ -798,17 +821,28 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 				</programlisting>
 			</example>
 			<para>
-				Note that in this example, the order key map has two fields, last and
-				first
-				name to sort on. If this key is used, then both these fields will be
-				used to
-				order both ascending and descending. The order information consists of the
-				key value which indicates which key to use and whether it is meant to be
-				ascending or descending. Both of these attributes are on the
+				The order information consists of the
+				<code>orderKey</code>
+				attribute which indicates which order to use and tthe
+				<code>orderAscending</code>
+				attribute indicating whether it is meant to be
+				ascending or descending. Both
+				of these attributes are on the
 				<classname>Paginator</classname>
 				interface and are read from it when
 				<methodname>fetchResults</methodname>
 				is called on the provider.
+				Note that in this example, the ordering for the
+				key "name" has two fields, last
+				and
+				first
+				name to sort on. If this key is used
+				to order then both these fields
+				will be
+				used to
+				order and the framework takes
+				care of ascending/descending
+				issues.
 			</para>
 		</sect1>
 		<sect1>
@@ -823,21 +857,27 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 				<classname>QueryDataProvider</classname>
 				interface. Currently, there are
 				<classname>QueryDataProvider</classname>
-				implementations for SQL/JDBC, native Hibernate and JPA. The JPA versions
-				include both Ejbql and Native querying as do the Seam extensions for the JPA
+				implementations for SQL/JDBC, Hibernate and JPA. The JPA versions
+				include
+				both Ejbql and Native querying as do the Seam extensions for the JPA
 				providers.
 			</para>
 			<para>
 				You could easily return a hibernate data provider from the
 				<methodname>createPersonProvider</methodname>
-				without having to change any code since the mappings will be the same.
+				without having to change any code since the mappings will be the same. At
+				most you might have to change the base select statement or any complex where
+				clauses.
 			</para>
 		</sect1>
 		<sect1>
 			<title>Mapping SQL to Objects</title>
 			<para>One problem so far is that our data providers always deal with objects
-				while our sql based datasets are begin defined as a group of rows of values.
-				We still need some way to convert that raw data into an object that can be
+				natively because that is what Hibernate and JPA do.
+				Our sql based datasets
+				are fetching data defined as a group of rows of values instead of actual
+				objects being returned, so we still need some way to convert that raw data
+				into an object that can be
 				returned in our results.</para>
 			<para>
 				This can be done in one of two ways but both involve a
@@ -849,7 +889,8 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 				<classname>AbstractJdbcDataProvider</classname>
 				and override the
 				<methodname>createObjectFromResultSet</methodname>
-				method.
+				method. This uses the template pattern to provide the missing functionality
+				needed to convery SQL data into an actual object.
 			</para>
 			<example>
 				<title>
@@ -866,12 +907,25 @@ public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
 ]]>  
 				</programlisting>
 			</example>
-			
+			<para>
+				Some people prefer to use a strategy pattern over a template pattern so we
+				have an implementation for that also. The
+				<classname>ResultSetObjectMapper</classname>
+				interface provides a method to take a
+				<classname>
+					javax.sql.ResultSet
+				</classname>
+				and return an object for the current row in the results. The
+				<classname>JdbcDataProvider</classname>
+				class takes a reference to a
+				<classname>ResultSetObjectMapper</classname>
+				instance and uses it to convert the raw SQL rows to an object.
+			</para>
 		</sect1>
 
 	</chapter>
 	<chapter>
-		<title>Introducing the data provider</title>
+		<title>Implementing and Testing a Data Provider</title>
 		<para>This chapter looks at creating a simple data provider, testing
 			it and
 			seeing the different ways we can access the
@@ -1771,84 +1825,111 @@ showResults(results2);
 	<chapter>
 		<title>The JQA Architecture</title>
 		<para>
-			The last chapter introduced you to a number of concepts
-			regarding how
-			to use
-			basic data providers controlled by an
-			instance
-			of a paginator,
-			or abstracted
-			through the object dataset
-			implementations. Now we've
+			Now we've
 			covered these
-			fundamentals
-			we can expand our knowledge by looking at
-			the different subclasses
+			fundamentals of using JQA
+			we can look at
+			the different
+			subclasses
 			of the
 			<classname>DataProvider</classname>
-			interface and implementations for this is how we create datasets that
+			interface and implementations so we create datasets that
 			can
-			attach to different datasources in a useful
+			attach to
+			different datasources in a useful
 			way.
 		</para>
-		<para>
-			Most subclasses of the
-			<classname>DataProvider</classname>
-			are mirrored in some form of
-			<classname>ObjectDataset</classname>
-			subclass which acts as a thick client wrapper around the data
-			provider and
-			internally uses an instance of that
-			particular subclass.
-		</para>
 		<sect1>
-			<title>
-				<classname>ParameterizedDataProvider</classname>
-			</title>
+			<title>Data Provider Types</title>
 			<para>
-				The first subclass of the
+				Most subclasses of the
 				<classname>DataProvider</classname>
-				interface is the
-				<classname>ParameterizedDataProvider</classname>
-				that introduces methods for fetching data based on dynamic
-				parameters.
+				are mirrored in some form of
+				<classname>ObjectDataset</classname>
+				subclass which acts as a thick client wrapper around the data
+				provider and
+				internally uses an instance of that
+				particular subclass.
 			</para>
-		</sect1>
+			<sect2>
+				<title>
+					<classname>ParameterizedDataProvider</classname>
+				</title>
+				<para>
+					The first subclass of the
+					<classname>DataProvider</classname>
+					interface is the
+					<classname>ParameterizedDataProvider</classname>
+					that introduces methods for fetching data based on dynamic
+					parameters.
+				</para>
+			</sect2>
 
+			<sect2>
+				<title>
+					<classname>StatementDataProvider</classname>
+				</title>
+				<para>
+					The
+					<classname>StatementDataProvider</classname>
+					extends the
+					<classname>ParameterizedDataProvider</classname>
+					and adds the ability to define string based statements for fetching
+					and
+					counting the number of rows of data. Since
+					this extends the
+					<classname>ParameterizedDataProvider</classname>
+					we can let the user define statements that have parameters within
+					them. This
+					obviously lends itself to easily
+					providing the bulk of
+					features of a Sql or
+					Ejbql or Hql data provider.
+				</para>
+			</sect2>
+
+			<sect2>
+				<title>
+					<classname>QueryDataProvider</classname>
+				</title>
+				<para>
+					The
+					<classname>QueryDataProvider</classname>
+					extends the
+					<classname>StatementDataProvider</classname>
+					and adds the ability to define restrictions and ordering.
+				</para>
+			</sect2>
+		</sect1>
 		<sect1>
 			<title>
-				<classname>StatementDataProvider</classname>
+				<classname>ObjectDataset</classname>
+				Types
 			</title>
 			<para>
 				The
-				<classname>StatementDataProvider</classname>
-				extends the
-				<classname>ParameterizedDataProvider</classname>
-				and adds the ability to define string based statements for fetching
-				and
-				counting the number of rows of data. Since
-				this extends the
-				<classname>ParameterizedDataProvider</classname>
-				we can let the user define statements that have parameters within
-				them. This
-				obviously lends itself to easily
-				providing the bulk of
-				features of a Sql or
-				Ejbql or Hql data provider.
+				<classname>ObjectDataset</classname>
+				type is helps when using the data provider in a stateful manner. The dataset
+				holds the current page of results (or the whole result set if there are no
+				limits on the rows returned). The basic
+				<classname>Dataset</classname>
+				class takes a
+				<classname>DataProvider</classname>
+				implementation as its data provider. However, this can lead to code requiring a lot of casting if you don't use a basic <classname>DataProvider</classname> implementation.
 			</para>
-		</sect1>
-
-		<sect1>
-			<title>
-				<classname>QueryDataProvider</classname>
-			</title>
-			<para>
-				The
-				<classname>QueryDataProvider</classname>
-				extends the
-				<classname>StatementDataProvider</classname>
-				and adds the ability to define restrictions and ordering.
-			</para>
+				<example>
+					<title>Multiple views of the same data</title>
+					<programlisting>
+<![CDATA[
+		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
+		Dataset<Person> dataset = new Dataset<Person>(provider);		
+		// Won't work, getProvider returns a DataProvider, not a query data provider
+		//dataset.getProvider().init(Person.class, "p");
+		((JpaQueryProvider<Person>) dataset.getProvider()).init(Person.class, "p");
+]]>
+</programlisting>
+				</example>
+			<para>Rather than force the user to keep type casting the provider, there is a Gener</para>
 		</sect1>
 
 	</chapter>

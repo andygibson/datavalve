@@ -13,7 +13,6 @@ import org.jdataset.ParameterResolver;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.dataset.QueryDataset;
 import org.jdataset.provider.ParameterizedDataProvider;
-import org.jdataset.provider.QueryDataProvider;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
 import org.slf4j.Logger;
@@ -198,7 +197,6 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 			long id = 20;
 
 			public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
-				System.out.println("Resolving parameter");
 				if (parameter.getName().equals("#{id}")) {
 					parameter.setValue(id++);
 					return true;
@@ -328,21 +326,5 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 		assertEquals(2, results.size());
 		assertEquals(3l, results.get(0).getId().longValue());
 		assertEquals(4l, results.get(1).getId().longValue());
-	}
-	
-	public void testDocumentationExample() {
-		
-		JpaDataProvider<Person> provider = new JpaQueryProvider<Person>(em);
-		JpaDataset<Person> ds = new JpaDataset<Person>(provider);		
-		
-		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
-		dataset.init(Person.class, "p");
-		
-		List<Person> results = dataset.getResultList();
-		for (Person p : results) {
-		System.out.println(p.getName());
-		}
-		
-	}
-	
+	}	
 }

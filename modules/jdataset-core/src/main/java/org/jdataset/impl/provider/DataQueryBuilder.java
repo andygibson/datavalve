@@ -132,8 +132,7 @@ public class DataQueryBuilder {
 			// necessary prefix ":" or blank if we are using ordered parameters
 
 			String prefixedNewName = getNewParameterNamePrefix() + newName;
-			System.out.println("Replacing " + param.getName() + " with "
-					+ prefixedNewName + " in expression " + line);
+			log.debug("Replacing {} with {} in expression");
 			String oldValue = param.getName();
 			oldValue = oldValue.replace("{", "\\{");
 			oldValue = oldValue.replace("}", "\\}");

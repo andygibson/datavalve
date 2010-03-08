@@ -755,7 +755,6 @@ public final class TestDataFactory {
 
 	public static Date getDate(Date minDate, Date maxDate) {
 		int seconds = (int) ((maxDate.getTime() - minDate.getTime()) / 1000);
-		System.out.println("Seconds = " + seconds);
 		seconds = random.nextInt(seconds);
 		Date result = new Date();
 		result.setTime(minDate.getTime() + (seconds * 1000));

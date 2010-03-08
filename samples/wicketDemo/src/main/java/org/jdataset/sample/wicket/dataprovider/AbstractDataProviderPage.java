@@ -44,37 +44,6 @@ public abstract class AbstractDataProviderPage extends WebPage {
 
 		ISortableDataProvider<Person> provider = new DatasetDataProvider<Person>(dataset);
 		
-/*		ISortableDataProvider dp = new SortableDataProvider() {
-
-			private static final long serialVersionUID = 1L;
-
-			public void detach() {
-				dataset.invalidateResultInfo();
-			}
-
-			public int size() {
-				return dataset.getResultCount();
-			}
-
-			public IModel model(Object object) {
-				return new CompoundPropertyModel(object);
-			}
-
-			public Iterator iterator(int first, int count) {
-				System.out.println("Setting record scope");
-				dataset.setFirstResult(first);
-				dataset.setMaxRows(count);				
-				if (getSort() != null) {
-					System.out.println("setting order to : "+getSort());
-					dataset.setOrderKey(getSort().getProperty());
-					dataset.setOrderAscending(getSort().isAscending());
-				} else {
-					dataset.setOrderKey(null);
-				}
-				return dataset.getResultList().iterator();
-			}
-		};*/
-
 		// create model for form labels		
 		add(new DatasetInfoPanel("infoPanel", dataset));
 

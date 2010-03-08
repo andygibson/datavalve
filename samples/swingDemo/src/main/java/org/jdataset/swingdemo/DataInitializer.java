@@ -9,20 +9,23 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.jdataset.swingdemo.model.Order;
 import org.jdataset.swingdemo.model.Person;
 import org.jdataset.testing.TestDataFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DataInitializer {
 
+	private static Logger log = LoggerFactory.getLogger(DataInitializer.class);
 	private SessionFactory sessionFactory;
 	private Session session;
 	private Connection connection;
 	public  static final int RECORD_COUNT = 1150;
+	
 
 	public void init() {
-		System.out.println("Starting up db");
+		log.debug("Starting up db");
 		
 		try {
-			Class.forName("org.hsqldb.jdbcDriver");
-			System.out.println("Got class");
+			Class.forName("org.hsqldb.jdbcDriver");		
 			connection = DriverManager.getConnection(
 					"jdbc:hsqldb:mem:swing-demo-jpa", "sa", "");
 		} catch (Exception ex) {

@@ -14,16 +14,11 @@ import org.jdataset.dataset.QueryDataset;
 import org.jdataset.provider.ParameterizedDataProvider;
 import org.jdataset.testing.TestDataFactory;
 import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class HibernateDatasetTest extends
 		AbstractObjectDatasetJUnitTest<Person> {
 
 	private static final long serialVersionUID = 1L;
-
-	private static Logger log = LoggerFactory
-			.getLogger(HibernateDatasetTest.class);
 
 	private SessionFactory sessionFactory;
 	private Session session;
@@ -201,9 +196,8 @@ public class HibernateDatasetTest extends
 
 	}
 
-	public void testParameterResolverRepeatsEval() {
-		System.out.println("Resolving ");
-		log.debug("Entering : resolver repeats eval test");		
+	public void testParameterResolverRepeatsEval() {		
+			
 		dataset.getRestrictions().add("p.id = #{id}");
 		dataset.getRestrictions().add("p.id = #{id}");
 
@@ -213,8 +207,7 @@ public class HibernateDatasetTest extends
 
 			public boolean resolveParameter(
 					ParameterizedDataProvider<? extends Object> dataset,
-					Parameter parameter) {
-				System.out.println("Resolving " + parameter);
+					Parameter parameter) {				
 				if (parameter.getName().equals("#{id}")) {
 					parameter.setValue(id++);
 					return true;
@@ -226,8 +219,6 @@ public class HibernateDatasetTest extends
 
 				boolean val = parameter.startsWith("#{")
 						&& parameter.endsWith("}");
-				System.out.println("Do we accept param " + parameter + " - "
-						+ val);
 				return val;
 			}
 

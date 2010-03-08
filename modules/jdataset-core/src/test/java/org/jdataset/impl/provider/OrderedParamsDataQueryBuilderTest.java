@@ -38,8 +38,7 @@ public class OrderedParamsDataQueryBuilderTest extends TestCase {
 		DataQuery query = builder.build();
 		
 		assertEquals("select x from y where a = ?", query.getStatement());
-		assertEquals(1, query.getParameters().size());
-		System.out.println("Value = "+query.getParameters().get(0));
+		assertEquals(1, query.getParameters().size());		
 		assertNull(query.getParameters().get(0).getValue());
 		assertEquals("?", query.getParameters().get(0).getName());
 		

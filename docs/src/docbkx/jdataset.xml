@@ -1915,11 +1915,14 @@ showResults(results2);
 				<classname>Dataset</classname>
 				class takes a
 				<classname>DataProvider</classname>
-				implementation as its data provider. However, this can lead to code requiring a lot of casting if you don't use a basic <classname>DataProvider</classname> implementation.
+				implementation as its data provider. However, this can lead to code
+				requiring a lot of casting if you don't use a basic
+				<classname>DataProvider</classname>
+				implementation.
 			</para>
-				<example>
-					<title>Multiple views of the same data</title>
-					<programlisting>
+			<example>
+				<title>Multiple views of the same data</title>
+				<programlisting>
 <![CDATA[
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
 		Dataset<Person> dataset = new Dataset<Person>(provider);		
@@ -1928,8 +1931,62 @@ showResults(results2);
 		((JpaQueryProvider<Person>) dataset.getProvider()).init(Person.class, "p");
 ]]>
 </programlisting>
-				</example>
-			<para>Rather than force the user to keep type casting the provider, there is a Gener</para>
+			</example>
+			<para>
+				Rather than force the user to keep type casting the provider, there is a
+				Generic implementation of the dataset that takes the type of data provider
+				it uses as a parameter. This lets you call the
+				<methodname>getProvider()</methodname>
+				in a type safe manner.
+			</para>
+			<example>
+				<title>Multiple views of the same data</title>
+				<programlisting>
+<![CDATA[
+		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
+		GenericProviderDataset<Person,QueryDataProvider<Person>> dataset = new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
+		dataset.getProvider().init(Person.class, "p");
+		dataset.getProvider().addRestriction("p.id = #{personSearch.id}");
+		dataset.getProvider().addParameterResolver(new MyParameterResolver());
+]]>
+</programlisting>
+			</example>
+			<para>This is further extended by creating implementations for the different
+				type of query interfaces we use.</para>
+			<example>
+				<title>Type safety with the QueryDataProvider</title>
+				<programlisting>
+<![CDATA[
+		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
+		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
+		dataset.getProvider().init(Person.class, "p");
+		dataset.getProvider().addRestriction("p.id = #{person.id}");
+]]>
+</programlisting>
+			</example>
+			<para>
+				We still maintain polymorphism because the
+				<classname>QueryDataset</classname>
+				implementation can take any data provider that implements the
+				<classname>QueryDataProvider</classname>
+				such as the JPA, Hibernate or SQL providers.
+			</para>
+			<para>In addition, these specialist dataset impementations also implement the appropriate data provider interfaces so you can save yourself the call to <methodname>getProvider()</methodname></para>
+			<example>
+				<title>Type safety with the QueryDataProvider</title>
+				<programlisting>
+<![CDATA[
+		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
+		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
+		dataset.init(Person.class, "p");
+		dataset.addRestriction("p.id = #{person.id}");
+		dataset.addParameterResolver(new MyParameterResolver());
+]]>
+</programlisting>
+			</example>
+			<para>This lets you treat these specialized object datasets as data providers. </para>
+			
+
 		</sect1>
 
 	</chapter>

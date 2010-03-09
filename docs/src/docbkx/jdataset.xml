@@ -209,7 +209,8 @@ public interface DataProvider<T> {
 				<para>
 					When we fetch the results, we pass in the paginator so the
 					<classname>DataProvider</classname>
-					implementation knows which rows to return.
+					implementation knows which rows to return and it can set the flag
+					indicating whether there are more results or not.
 				</para>
 			</sect2>
 			<sect2>
@@ -226,40 +227,25 @@ public interface DataProvider<T> {
 				<sect3>
 					<title>Interchangable query mechanisms</title>
 					<para>
-						Most projects only plan on using one data access mechanism
-						but by
-						coding to the JQA API, you can easily switch
-						implementation
-						later. You might
-						move from JPA to hibernate or even to plain JDBC
-						queries and your code that
-						uses
-						these queries, including
-						parameterized
-						queries, will remain the same.
+						Most projects plan on using only one data access mechanism but by
+						coding to the JQA API, you can switch implementations later. You
+						might move
+						from JPA to Hibernate or even to plain JDBC queries and most of
+						the code
+						that uses these queries, including parameterized queries, will
+						remain the
+						same. There may also be times where you need to access different types of
+						data stores such as a file based
+						datasource updated nightly which needs
+						accessing and displaying.  
 					</para>
-					<para>If you later need to introduce some new kind of data
-						store
-						into the
-						project, you can do so while using your
-						existing view code
-						to paginate and
-						order the data. Even if you can
-						never imagine
-						switching data access
-						mechanisms or
-						having to access
-						diverse data
-						stores, you may want to just
-						switch the query here
-						and there from a
-						pure ORM type query
-						to a JDBC SQL
-						query but still
-						want to interface
-						with the data the same way you do with
-						your
-						other queries.
+					<para>Regardless of where the different types of datastores come from, with
+						JQA you will be able to access them and control the results using your
+						existing view code to paginate and order the data. Even if you don't see
+						yourself switching data access mechanisms or having to access diverse data
+						stores, you may want to just switch the query here and there from a pure
+						ORM type query to a JDBC SQL query but still want to interface with the
+						data the same way you do with your other queries.
 					</para>
 				</sect3>
 
@@ -283,7 +269,7 @@ public interface DataProvider<T> {
 						don't want it
 						included in the query. Doing
 						this manually can lead to
-						problematic
+						messy
 						code that is hard to read, test and maintain.
 					</para>
 					<example>
@@ -292,6 +278,7 @@ public interface DataProvider<T> {
                     </title>
 						<programlisting role="JAVA">
 <![CDATA[
+String sql = "";
 if (searchCriteria.id != null  
   && searchCriteria.id.length() != 0) {
     if (sql.length()!= 0) {
@@ -334,16 +321,18 @@ List<Person> results = qry.resultList();
 					</programlisting>
 
 					</example>
-					<para>With JQA, you can define the query once, specify
+					<para>With JQA, you can define the query, specify
 						how the
 						parameters are
-						resolved and the query
+						resolved and the data provider
 						will take care of
 						generating
-						the right request so that
+						the right request
+						so that
 						the only
 						restrictions included in the
-						query are ones with parameter values
+						query are ones with parameter
+						values
 						assigned.</para>
 					<example>
 						<title>
@@ -365,7 +354,7 @@ List<Person> results = qry.resultList();]]>
 
 				<sect3>
 					<title>Flexible and Secure Ordering Abstraction</title>
-					<para>JQA lets you order your data based on order key values as
+					<para>JQA lets you order your data base on order key values as
 						opposed to
 						explicit table column values which could
 						be prone to SQL
@@ -382,9 +371,6 @@ List<Person> results = qry.resultList();]]>
 						SQL is
 						inserted into your query.
 					</para>
-					<para>There are even provisions for assisting sorting in non-SQL
-						based
-						queries using comparators.</para>
 				</sect3>
 				<sect3>
 					<title>Convert anything into a dataset</title>
@@ -404,35 +390,35 @@ List<Person> results = qry.resultList();]]>
 				</sect3>
 			</sect2>
 		</sect1>
-	</chapter>
-	<chapter>
-		<title>Architecture</title>
-		<para>
-			This section covers the architecture of the framework and how
-			they all
-			relate to each other.</para>
 		<sect1>
-			<title>Main API</title>
+			<title>Architecture</title>
 			<para>
-				The main API consists of the
-				<classname>Paginator</classname>
-				and
-				<classname>DataProvider</classname>
-				interfaces. The Paginator is like a bookmark for a dataset and holds
-				the
-				current record, page size and ordering
-				information as well as
-				flags indicating
-				whether there is a previous or next page available.
-				Inversely, the
-				<classname>DataProvider</classname>
-				is the stateless part of the equation. It provides the data based on the
-				state of the
-				paginator passed in.
-			</para>
-			<example>
-				<title>Fetching data from a provider</title>
-				<programlisting>
+				This section covers the architecture of the framework and how
+				they all
+				relate to each other.</para>
+			<sect2>
+				<title>Main API</title>
+				<para>
+					The main API consists of the
+					<classname>Paginator</classname>
+					and
+					<classname>DataProvider</classname>
+					interfaces. The Paginator is like a bookmark for a dataset and holds
+					the
+					current record, page size and ordering
+					information as well as
+					flags
+					indicating
+					whether there is a previous or next page available.
+					Inversely, the
+					<classname>DataProvider</classname>
+					is the stateless part of the equation. It provides the data based on the
+					state of the
+					paginator passed in.
+				</para>
+				<example>
+					<title>Fetching data from a provider</title>
+					<programlisting>
 <![CDATA[				
   DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
@@ -440,29 +426,29 @@ List<Person> results = qry.resultList();]]>
   Integer count = prov.getResultCount();  
 ]]>  
 				</programlisting>
-			</example>
-			<para>
-				This is a simple example where we create an instance of our custom provider
-				that knows how
-				to fetch the data. We create an instance of a
-				<classname>Paginator</classname>
-				and when we fetch the results we pass that in to the data provider to
-				tell
-				the
-				provider which set of data to return. In
-				this case, we
-				returned all the
-				data
-				but by setting properties on the paginator we
-				can tell the provider just
-				to
-				return
-				a subset. The provider is also responsible for setting the flag in
-				the paginator indicating whether there are more results.
-			</para>
-			<example>
-				<title>Limiting the data fetched from a data provider</title>
-				<programlisting>
+				</example>
+				<para>
+					This is a simple example where we create an instance of our custom provider
+					that knows how
+					to fetch the data. We create an instance of a
+					<classname>Paginator</classname>
+					and when we fetch the results we pass that in to the data provider to
+					tell
+					the
+					provider which set of data to return. In
+					this case, we
+					returned all the
+					data
+					but by setting properties on the paginator we
+					can tell the provider just
+					to
+					return
+					a subset. The provider is also responsible for setting the flag in
+					the paginator indicating whether there are more results.
+				</para>
+				<example>
+					<title>Limiting the data fetched from a data provider</title>
+					<programlisting>
 <![CDATA[				
   DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
@@ -473,49 +459,55 @@ List<Person> results = qry.resultList();]]>
     
 ]]>  
 				</programlisting>
-			</example>
-			<para>
-				Here we set the maximum number of rows to return to 10 and we want the first
-				result to start at item number 35. The implementation of the
-				<classname>CustomProvider</classname>
-				is responsible for returning the correct subset of data to the caller. It is
-				also responsible for setting the
-				<code>nextAvailable</code>
-				flag on the paginator. This keeps track of whether there are more results
-				available or not.
-			</para>
-			<para>
-				If you were to call
-				<methodname>fetchResults</methodname>
-				a second time, the provider would go off and re-fetch the data executing
-				whatever process it does to fetch the data. It does not cache the data in
-				anyway and should be implemented statelessly such that one call to the
-				provider is independent of any other calls to the provider.
-			</para>
-			<para>
-				The third part of the API is an
-				<classname>ObjectDataset</classname>
-				which combines both the provider and paginator information into one
-				class and
-				can be used to manage the fetched data.
-				This component
-				should be considered
-				stateful as it holds on to the results and
-				caches them. This piece is very
-				similar
-				to the
-				<classname>EntityQuery</classname>
-				component in Seam. It also lets you iterate over the dataset easily and
-				doing so
-				will also take pagination into account. Datasets have the stateful
-				pagination content built in and refer to a data provider to supply the data.
-			</para>
-			<example>
-				<title>
-					Using an
+				</example>
+				<para>
+					Here we set the maximum number of rows to return to 10 and we want the
+					first
+					result to start at item number 35. The implementation of the
+					<classname>CustomProvider</classname>
+					is responsible for returning the correct subset of data to the caller. It
+					is
+					also responsible for setting the
+					<code>nextAvailable</code>
+					flag on the paginator. This keeps track of whether there are more results
+					available or not.
+				</para>
+				<para>
+					If you were to call
+					<methodname>fetchResults</methodname>
+					a second time, the provider would go off and re-fetch the data executing
+					whatever process it does to fetch the data. It does not cache the data in
+					anyway and should be implemented statelessly such that one call to the
+					provider is independent of any other calls to the provider.
+				</para>
+				<para>
+					The third part of the API is an
 					<classname>ObjectDataset</classname>
-				</title>
-				<programlisting>
+					which combines both the provider and paginator information into one
+					class
+					and
+					can be used to manage the fetched data.
+					This component
+					should be
+					considered
+					stateful as it holds on to the results and
+					caches them. This piece
+					is very
+					similar
+					to the
+					<classname>EntityQuery</classname>
+					component in Seam. It also lets you iterate over the dataset easily and
+					doing so
+					will also take pagination into account. Datasets have the stateful
+					pagination content built in and refer to a data provider to supply the
+					data.
+				</para>
+				<example>
+					<title>
+						Using an
+						<classname>ObjectDataset</classname>
+					</title>
+					<programlisting>
 <![CDATA[				
   DataProvider provider = new CustomDataProvider();
   Dataset<SomeClass> dataset = new Dataset(provider);
@@ -527,19 +519,20 @@ List<Person> results = qry.resultList();]]>
   }
 ]]>  
 				</programlisting>
-			</example>
-			<para>
-				The
-				<classname>ObjectDataset</classname>
-				incorporates its own
-				<classname>Paginator</classname>
-				and works on the data provider passed in to the constructor. Repeated calls
-				to
-				<methodname>getResults()</methodname>
-				without changing the pagination information will cause the exact same
-				results to be returned since the current page of results is held by the
-				dataset.
-			</para>
+				</example>
+				<para>
+					The
+					<classname>ObjectDataset</classname>
+					incorporates its own
+					<classname>Paginator</classname>
+					and works on the data provider passed in to the constructor. Repeated calls
+					to
+					<methodname>getResults()</methodname>
+					without changing the pagination information will cause the exact same
+					results to be returned since the current page of results is held by the
+					dataset.
+				</para>
+			</sect2>
 		</sect1>
 	</chapter>
 	<chapter>
@@ -571,7 +564,8 @@ List<Person> results = qry.resultList();]]>
 
   QueryProvider<Person> provider = new JpaDataProvider<Person>(em);
   QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
-  dataset.init(Person.class, "p");
+  provider.setSelectStatement("select p from Person p");
+  provider.setCountStatement("select count(p) from Person p");
   List<Person> results = dataset.getResultList();
   for (Person p : results) {
     System.out.println(p.getName());
@@ -585,7 +579,9 @@ List<Person> results = qry.resultList();]]>
 			<para>
 				We can add restrictions to the query so we only return a set of rows
 				that we
-				want. In this case, we want to return a specific person.
+				want. In this case, we want to return a specific person. The above
+				code to create and initialize the data provider has neem rolled into a
+				method to return the person data provider.
 		</para>
 
 			<example>
@@ -602,28 +598,39 @@ List<Person> results = qry.resultList();]]>
 
 
 			<para>
-				It is often more convenient to specify restrictions using parameters
+				It is often more convenient to specify limitations using parameters
 				and
 				JQA
 				has a number of different mechanisms with which to specify
 				parameterized
-				restrictions. First we'll look at the straightforward adding of
-				a
-				parameter.
-				In this example, we pass the restriction with the keyword
+				restrictions. First we'll look at adding
+				constant parameters. We can add the
+				restriction with the keyword
 				<code>:param</code>
-				where the parameterized value is meant to go.
+				where the parameterized value is meant to go and pass the parameter with the
+				restriction. We can also add the restriction with the name of the parameter
+				and set the parameter on the data provider separately.
+				The first two syntaxes
+				rename the parameter and puts the values in the internal parameter map. The
+				last syntax keeps the parameter name you passed in and is useful if you
+				anticpate changing that parameter since you know what name it has.
 			</para>
 
 			<example>
 				<title>
-					Parameterized restrictions					
+					Restricting Results with Constant Parameters					
 				</title>
 				<programlisting>
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
+  
+  //add parameter using :param keyword in restriction
   provider.addRestriction("p.id = :param",4);
-  provider.addRestriction("or p.id = :param",88);
+  provider.addRestriction("p.firstName = :param","John");
+  
+  //add parameter manually
+  provider.addRestriction("or p.lastName = :lastNameParam");
+  provider.addParameter("lastNameParam","Smith");
 ]]>  
 				</programlisting>
 			</example>
@@ -639,7 +646,7 @@ List<Person> results = qry.resultList();]]>
 			</para>
 			<example>
 				<title>
-					Parameterized Restrictions					
+					Restricting with non-constant parameters					
 				</title>
 				<programlisting>
 <![CDATA[  
@@ -654,17 +661,18 @@ List<Person> results = qry.resultList();]]>
 				<code>if value != null then add parameter</code>
 				" code for each line, although it is certainly possible that you can do
 				that
-				in certain cases. However, many times you want to evaluate one value to
-				check
-				if is null but use another value for the actual parameter. We have a
-				method
-				for
-				that
-				too.
+				in certain cases. There is also an overloaded version of this function
+				specifically for strings which will check not only for null values but for a
+				length of zero.
+			</para>
+			<para>
+				Many times you want to evaluate one value to see if is null but use
+				another value for the actual parameter to query with. We have a method for
+				that too.
 			</para>
 			<example>
 				<title>
-					Alternate Value Restrictions					
+					Alternate Value Parameters					
 				</title>
 				<programlisting>
 <![CDATA[  
@@ -676,12 +684,12 @@ List<Person> results = qry.resultList();]]>
 			</example>
 			<para>
 				What we do there is check whether the first/last name value is null and
-				if
-				so we ignore the restriction, but otherwise we add the restriction and we
+				if so we ignore the restriction, but otherwise we add the restriction and we
 				use the value with a wildcard added as the parameter value. 
 			</para>
 			<para>This may seem a fairly broad set of ways to parameterize the your
-				queries, but it is only scratching the surface. </para>
+				queries, but is only the first way of two parameter definition mechanisms
+				with the second being the use of parameter resolvers.</para>
 		</sect1>
 		<sect1>
 			<title>Parameter Resolvers</title>
@@ -689,23 +697,28 @@ List<Person> results = qry.resultList();]]>
 				The
 				<code>ParameterResolver</code>
 				interface can be used to implement objects that can be attached to the
-				dataprovider at run time to resolve
+				data
+				provider at run time to resolve
 				parameters. When the query is executed
-				the parameters are evaluated as the
+				the
+				parameters are evaluated as the
 				query is built so any restrictions with
-				null parameters can be excluded. We
+				null
+				parameters can be excluded. We
 				attach parameter resolvers to the
-				provider so it will be used when the
+				provider so
+				it will be used when the
 				provider tries to resolve the parameter
-				for a restriction. This mechanism
+				for a
+				restriction. This mechanism
 				allows us to attach an EL parameter
-				resolver for environments where EL is in
-				use (such as JSF, or Seam
-				applications).
+				resolver for
+				environments where EL is in
+				use.
 			</para>
-			<para>It also lets us different mechanisms for resolving values such
-				as using
-				reflection onto a an object.</para>
+			<para>It also lets use different mechanisms for resolving values such as
+				using reflection onto a an object, or even returning parameter values based
+				on the name directly.</para>
 			<example>
 				<title>
 					Parameter Resolving with Reflection					
@@ -719,7 +732,7 @@ List<Person> results = qry.resultList();]]>
 ]]>  
 				</programlisting>
 			</example>
-			<para>We can also bake the parameter resolver into the object itself by
+			<para>We can also bake the parameter resolver into the object directly by
 				making it implement the parameter resolver interface.</para>
 			<example>
 				<title>
@@ -759,8 +772,7 @@ public class SearchCriteria implements ParameterResolver {
 				</programlisting>
 			</example>
 			<para>
-				The Seam and CDI data provider classes use an EL based parameter resolver
-				so
+				The Seam and CDI data provider classes use an EL based parameter resolver so
 				you can use it the same way you would with a Seam
 				<classname>EntityQuery</classname>
 				.
@@ -776,7 +788,7 @@ public class SearchCriteria implements ParameterResolver {
 pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
   public MyPostsQueryBean() {
     setSelectStatement("select p from Posts p left join fetch p.comments");
-    setSelectStatement("select count(p) from Posts p");    
+    setCountStatement("select count(p) from Posts p");    
     addRestriction("p.author.id = #{loggedInUser.id}");
   }
 }
@@ -788,7 +800,7 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 				<classname>SeamJPaQueryDataset</classname>
 				or a
 				<classname>SeamJpaNativeDataset</classname>
-				so you can use with a Ejbql or Native query for fetching data. Also, there
+				so you can use either a Ejbql or Native query for fetching data. Also, there
 				is an adapter class that can be used instead which adds on the additional
 				methods needed to make the class compatible with
 				<classname>EntityQuery</classname>
@@ -797,9 +809,13 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 		</sect1>
 		<sect1>
 			<title>Order in the house</title>
-			<para>JQA also features key based ordering so rather than specify ordering as
-				a set of fields on the dataset, you can specify ordering using a key that
-				maps to one or more fields.</para>
+			<para>
+				JQA also features key based ordering so rather than specify ordering as
+				a set
+				of fields on the dataset, you can specify ordering using a key that
+				maps to
+				one or more fields. 
+			</para>
 			<example>
 				<title>
 					Ordering on the data
@@ -823,33 +839,45 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 			<para>
 				The order information consists of the
 				<code>orderKey</code>
-				attribute which indicates which order to use and tthe
+				attribute that indicates the order to use and the
 				<code>orderAscending</code>
-				attribute indicating whether it is meant to be
+				attribute indicates whether it is meant to be
 				ascending or descending. Both
 				of these attributes are on the
 				<classname>Paginator</classname>
-				interface and are read from it when
+				interface and are read when it is passed into the
 				<methodname>fetchResults</methodname>
-				is called on the provider.
+				method.
 				Note that in this example, the ordering for the
-				key "name" has two fields, last
+				key "name" has two
+				fields, last
 				and
 				first
 				name to sort on. If this key is used
-				to order then both these fields
+				to order then both
+				these fields
 				will be
 				used to
 				order and the framework takes
-				care of ascending/descending
+				care of
+				ascending/descending
 				issues.
+			</para>
+			<para>
+				By abstracting the ordering mechanism we can use
+				the same
+				idea for defining
+				ordering on non-database data providers. The key for
+				example might map to a
+				<classname>Comparator</classname>
+				instance that can be used to sort the in-memory dataset.
 			</para>
 		</sect1>
 		<sect1>
 			<title>Polymorphism</title>
 			<para>
 				One of the best features here is that in order to switch from Hibernate to
-				JPA, or another JPA implementation, all we need to change is our
+				JPA, or another data driven implementation, all we need to change is our
 				<methodname>createPersonProvider()</methodname>
 				method. Following good principles, we have been coding to an interface and
 				not an actual class type so we are not locked in to using a concrete class,
@@ -863,10 +891,11 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 				providers.
 			</para>
 			<para>
-				You could easily return a hibernate data provider from the
+				You could easily return a Hibernate data provider from the
 				<methodname>createPersonProvider</methodname>
 				without having to change any code since the mappings will be the same. At
-				most you might have to change the base select statement or any complex where
+				most you might have to change the base select/count statement or any complex
+				where
 				clauses.
 			</para>
 		</sect1>
@@ -874,9 +903,10 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 			<title>Mapping SQL to Objects</title>
 			<para>One problem so far is that our data providers always deal with objects
 				natively because that is what Hibernate and JPA do.
-				Our sql based datasets
-				are fetching data defined as a group of rows of values instead of actual
-				objects being returned, so we still need some way to convert that raw data
+				Our SQL based datasets
+				are fetching data as a set of rows of values instead of actual
+				objects so we
+				still need some way to convert that raw data
 				into an object that can be
 				returned in our results.</para>
 			<para>
@@ -898,6 +928,7 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 				</title>
 				<programlisting>
 <![CDATA[
+
 public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
   public T createObjectFromResultSet(ResultSet resultSet) throws SQLException {
     return new Person(resultSet.getLong(1), resultSet.getString(2),
@@ -921,6 +952,31 @@ public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
 				<classname>ResultSetObjectMapper</classname>
 				instance and uses it to convert the raw SQL rows to an object.
 			</para>
+
+			<example>
+				<title>
+					SQL to Object mapping using an external mapper.
+				</title>
+				<programlisting>
+<![CDATA[
+public class PersonObjectMapper implements ResultSetObjectMapper<Person> {
+
+    public Person createObjectFromResultSet(ResultSet resultSet) throws SQLException {
+	return new Person(resultSet.getLong(1),resultSet.getString(1),resultSet.getString(2));
+    }
+		
+}
+
+
+public QueryDataProvider<Person> createDataProvider() {
+  JdbcDataProvider<Person> prov = new JdbcDataProvider<Person>();
+  prov.setResultSetObjectMapper(new PersonObjectMapper());
+  return prov;
+}]]>  
+				</programlisting>
+			</example>
+			<para>This kind of construction can be taken care of by any dependency
+				injection framework you are using.</para>
 		</sect1>
 
 	</chapter>
@@ -1925,9 +1981,12 @@ showResults(results2);
 				<programlisting>
 <![CDATA[
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-		Dataset<Person> dataset = new Dataset<Person>(provider);		
+		Dataset<Person> dataset = new Dataset<Person>(provider);
+				
 		// Won't work, getProvider returns a DataProvider, not a query data provider
+		// DataProvider doesn't have the query data provider methods on there.
 		//dataset.getProvider().init(Person.class, "p");
+		
 		((JpaQueryProvider<Person>) dataset.getProvider()).init(Person.class, "p");
 ]]>
 </programlisting>
@@ -1971,7 +2030,11 @@ showResults(results2);
 				<classname>QueryDataProvider</classname>
 				such as the JPA, Hibernate or SQL providers.
 			</para>
-			<para>In addition, these specialist dataset impementations also implement the appropriate data provider interfaces so you can save yourself the call to <methodname>getProvider()</methodname></para>
+			<para>
+				In addition, these specialist dataset impementations also implement the
+				appropriate data provider interfaces so you can save yourself the call to
+				<methodname>getProvider()</methodname>
+			</para>
 			<example>
 				<title>Type safety with the QueryDataProvider</title>
 				<programlisting>
@@ -1984,8 +2047,9 @@ showResults(results2);
 ]]>
 </programlisting>
 			</example>
-			<para>This lets you treat these specialized object datasets as data providers. </para>
-			
+			<para>This lets you treat these specialized object datasets as data
+				providers. </para>
+
 
 		</sect1>
 

@@ -1080,7 +1080,7 @@ public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 				is the responsibility of the
 				data
 				provider because only it
-				knows whethere there are more results.
+				knows whether there are more results.
 			</para>
 			<para>Next, we'll create a client for this provider as a simple class
 				that
@@ -1330,15 +1330,18 @@ public class IntegerDataProviderTest extends
 				can only test how well the dataset lives up to its implementation of
 				the
 				<classname>DataProvider</classname>
-				implementation, it cannot test the quality of the results. For that,
+				interface, it cannot test the quality of the results. For that,
 				we need
-				to add our own tests to our class which
+				to add
+				our own tests to our class which
 				we'll do now for the
 				constraint that
-				the numbers should range from 1 to 100. We will test
+				the
+				numbers should range from 1 to 100. We will test
 				it in two ways,
 				paginated
-				and non-paginated.
+				and
+				non-paginated.
 			</para>
 
 			<example>
@@ -1415,7 +1418,7 @@ public class IntegerDataProviderTest extends
 				non-paginated or using iterators
 				(paginated or
 				non-paginated). In our original
-				example, we simple listed the first
+				example, we simply listed the first
 				10 results. From the test code you
 				might
 				have seen a few more ways
@@ -1772,14 +1775,14 @@ while (ds.isNextAvailable()) {
 					<classname>Paginator</classname>
 					and
 					<classname>DataProvider</classname>
-					. We can easily use these two classes separate very easily, there
+					. It is easy to use these two classes separately since there
 					is no
-					complex glue code implemented by the
+					complex
+					glue code implemented by the
 					<classname>ObjectDataset</classname>
 					except where it has provided enhanced features. Using two
 					separately
-					instantiated pagiantors and providers is very
-					simple.
+					instantiated pagiantors and providers is straightforward :
 				</para>
 
 				<example>
@@ -1810,10 +1813,6 @@ showResults(results);
 					<classname>Paginator</classname>
 					instances are the raw building blocks that make up the
 					<classname>ObjectDataset</classname>
-					. In fact, as we'll see in the next chapter, these two classes,
-					particularly the
-					<classname>DataProvider</classname>
-					is the building block for most of the framework.
 				</para>
 				<para>
 					One important thing to bear in mind with using these components
@@ -1917,7 +1916,11 @@ showResults(results2);
 					interface is the
 					<classname>ParameterizedDataProvider</classname>
 					that introduces methods for fetching data based on dynamic
-					parameters.
+					parameters. This
+					interface was conceived as a way to provide parameterization features on
+					datasets that were non-sql based. For example, in a data provider that
+					features file listings, you could have a directory parameter that indicates
+					the directory to list files from.
 				</para>
 			</sect2>
 
@@ -1943,7 +1946,26 @@ showResults(results2);
 					Ejbql or Hql data provider.
 				</para>
 			</sect2>
-
+			<sect2>
+				<title>
+					<classname>AbstractQlDataProvider</classname>
+				</title>
+				<para>
+					While this class isn't a part of the interface hierarchy, it is an
+					important step on the concrete class implementations. It implements the
+					generation of the query using a Sql like query language using the
+					<classname>DataQueryBuilder</classname>
+					which takes the statements and the restrictions, resolves the parameters
+					and generates the final query. This query is then executed in the
+					subclasses using the particular data access mechanism specific to that
+					implementation.
+					This class assumes only that there is a select and a count
+					statement, and uses
+					that to generate the query. The restrictions are
+					introduced to the
+					hierarchy and used in the query building later.
+				</para>
+			</sect2>
 			<sect2>
 				<title>
 					<classname>QueryDataProvider</classname>
@@ -1953,7 +1975,9 @@ showResults(results2);
 					<classname>QueryDataProvider</classname>
 					extends the
 					<classname>StatementDataProvider</classname>
-					and adds the ability to define restrictions and ordering.
+					and adds the ability to define restrictions and ordering. This class is
+					really intended for targeting data stores that have a SQL-like query
+					language which can be parameterized.
 				</para>
 			</sect2>
 		</sect1>
@@ -1963,10 +1987,11 @@ showResults(results2);
 				Types
 			</title>
 			<para>
-				The
 				<classname>ObjectDataset</classname>
-				type is helps when using the data provider in a stateful manner. The dataset
-				holds the current page of results (or the whole result set if there are no
+				instances can help when using the data provider in a stateful manner. The
+				dataset
+				holds the current page of results (or the whole result set if there
+				are no
 				limits on the rows returned). The basic
 				<classname>Dataset</classname>
 				class takes a
@@ -1977,7 +2002,7 @@ showResults(results2);
 				implementation.
 			</para>
 			<example>
-				<title>Multiple views of the same data</title>
+				<title>Poorly typed provider and dataset useage</title>
 				<programlisting>
 <![CDATA[
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
@@ -1985,21 +2010,21 @@ showResults(results2);
 				
 		// Won't work, getProvider returns a DataProvider, not a query data provider
 		// DataProvider doesn't have the query data provider methods on there.
-		//dataset.getProvider().init(Person.class, "p");
+		//dataset.getProvider().addRestriction("p.id = :param",300);
 		
-		((JpaQueryProvider<Person>) dataset.getProvider()).init(Person.class, "p");
+		((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction("p.id = :param",300);
 ]]>
 </programlisting>
 			</example>
 			<para>
 				Rather than force the user to keep type casting the provider, there is a
-				Generic implementation of the dataset that takes the type of data provider
+				generic implementation of the dataset that takes the type of data provider
 				it uses as a parameter. This lets you call the
 				<methodname>getProvider()</methodname>
 				in a type safe manner.
 			</para>
 			<example>
-				<title>Multiple views of the same data</title>
+				<title>Strongly types data provider and dataset usage</title>
 				<programlisting>
 <![CDATA[
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
@@ -2010,8 +2035,19 @@ showResults(results2);
 ]]>
 </programlisting>
 			</example>
-			<para>This is further extended by creating implementations for the different
-				type of query interfaces we use.</para>
+			<para>
+				This is further extended by creating implementations for the different
+				type
+				of query interfaces we use. In this example, rather than create a
+				<classname>GenericProviderDataset</classname>
+				with the provider class type as a generic parameter to the type, we can
+				create a
+				<classname>QueryDataset</classname>
+				type that extends the
+				<classname>GenericProviderDataset</classname>
+				and sets the provider type parameter in its declaration to
+				<classname>QueryDataProvider&lt;T&gt;</classname>
+			</para>
 			<example>
 				<title>Type safety with the QueryDataProvider</title>
 				<programlisting>
@@ -2047,12 +2083,164 @@ showResults(results2);
 ]]>
 </programlisting>
 			</example>
-			<para>This lets you treat these specialized object datasets as data
-				providers. </para>
+		</sect1>
+		<sect1>
+			<title>Extending Dataset for custom providers</title>
+			<para>
+				When you create a new data provider implementation it is also good
+				practice
+				to implement a dataset wrapper for it so your users do not have to
+				implement
+				their own, or keep using the generic versions. Doing so is very simple, just
+				create a new dataset class that extends the
+				<classname>GenericProviderDataset</classname>
+				and uses your own custom provider type as the type parameter.
+			</para>
+			<example>
+				<title>Writing datasets for custom providers</title>
+				<programlisting>
+<![CDATA[
+class MyCustomProvider<T> extends AbstractQueryDataProvider<T> {
 
+        ...
+        ...          
+  		
+  		//this is specific to this implementation
+  		public void setWidgetConnection(WidgetConnection connection) {
+  		  this.connection = conn
+  		}
+}
+
+class MyCustomProviderDataset<T> extends GenericProviderDataset<T,MyCustomProvider<T>> {
+   
+   public MyCustomProviderDataset() {
+     super();
+   }
+   
+   public MyCustomProviderDataset(MyCustomProvider<T> provider) {
+     super(provider);
+   }
+}
+]]>
+</programlisting>
+			</example>
+			<para>The dataset name should consist of the provider class name with the
+				word dataset appended on the end to make it easy to remember. By including
+				this class, it is easier to use datasets for custom data providers,
+				especially for custom attributes on your new custom provider.</para>
+
+			<example>
+				<title>Using your new data provider dataset</title>
+				<programlisting>
+<![CDATA[
+		MyCustomProvider<Person> provider = new MyCustomProvider<Person>();
+		MyCustomProviderDataset<Person> ds = new MyCustomProviderDataset<Person>(provider);
+		ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());
+]]>
+</programlisting>
+			</example>
+
+			<para>Note that while this provides accessibility to implementation specific
+				functions, it does make your code more type specific and tightly bound. This
+				has the effect of losing the ability to use polymorphism and making your
+				code more tightly coupled to specific classes. </para>
+			<para>To avoid this problem, only use more concrete class types in factory
+				methods and return a more generalized provider or dataset type from the
+				factory to the main application. This shouldn't be a problem since coding to
+				concerete classes in the main application means your code won't be portable
+				anyway if you start using specific methods in the custom provider or
+				dataset.</para>
+
+			<example>
+				<title>Using your new data provider dataset</title>
+				<programlisting>
+<![CDATA[
+   QueryProvider<Person> buildProvider() {
+     MyCustomProvider<Person> result = new MyCustomProvider<Person>();
+     result.setWidgetConnection(xyz);
+     return result;     
+   }
+   
+   QueryDataset<Person> buildDataset() {
+     MyCustomProvider<Person> provider = buildProvider();
+     MyCustomProviderDataset<Person> ds = new MyCustomProviderDataset<Person>();
+     ds.getProvider().setWidgetConnection(ConnectionFactory.newConnection);
+     return ds;
+   }
+   
+   
+   ...
+   ...
+   //assign the dataset using the generic dataset
+   QueryProvider<Person> p = buildProvider();   
+   QueryDataset<Person> ds = new QueryDataset<Person>(p);
+   ds.getProvider().addRestriction("p.id = :param",id);
+   
+   
+   //you can even assign custom datasets the the generic query dataset type
+   QueryDataset<Person> ds2 = buildDataset(); 
+]]>
+</programlisting>
+			</example>
 
 		</sect1>
+	</chapter>
+	<chapter>
+		<title>Non-Database Drive Providers</title>
+		<para>There are a number of places you can choose to fetch data from and
+			usually you are on your own regarding how you get that data into your
+			application. JQA provides the ability to access non-databse data sources and
+			fetch contents as pojos. It does by abstracting the concepts of fetching data
+			to a level that is above retrieving it from the database. As a result, there
+			are a number of different implementations for fetching data without a
+			database while letting you benefit from using the same interfaces to fetch
+			and control the data to be displayed.</para>
+		<sect1>
+			<title>In memory based datastores</title>
+			<para>
+				The simplest form of datastore is one which just keeps the objects in
+				memory
+				and are returned to the user when requested. An in memory data store
+				subclasses the
+				<classname>InMemoryDataProvider</classname>
+				class and implements the abstract method to return the backing data. The
+				backing data is the complete list of results that the data provider is
+				paginating.
+			</para>
+			<example>
+				<title>Simple implementation of our Integer date provider.</title>
+				<programlisting>
+<![CDATA[
+   QueryProvider<Person> buildProvider() {
+     MyCustomProvider<Person> result = new MyCustomProvider<Person>();
+     result.setWidgetConnection(xyz);
+     return result;     
+   }
+   
+   QueryDataset<Person> buildDataset() {
+     MyCustomProvider<Person> provider = buildProvider();
+     MyCustomProviderDataset<Person> ds = new MyCustomProviderDataset<Person>();
+     ds.getProvider().setWidgetConnection(ConnectionFactory.newConnection);
+     return ds;
+   }
+   
+   
+   ...
+   ...
+   //assign the dataset using the generic dataset
+   QueryProvider<Person> p = buildProvider();   
+   QueryDataset<Person> ds = new QueryDataset<Person>(p);
+   ds.getProvider().addRestriction("p.id = :param",id);
+   
+   
+   //you can even assign custom datasets the the generic query dataset type
+   QueryDataset<Person> ds2 = buildDataset(); 
+]]>
+</programlisting>
+			</example>
 
+			
+		</sect1>
 	</chapter>
 </book>
 	

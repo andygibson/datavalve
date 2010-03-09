@@ -2008,11 +2008,13 @@ showResults(results2);
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
 		Dataset<Person> dataset = new Dataset<Person>(provider);
 				
-		// Won't work, getProvider returns a DataProvider, not a query data provider
-		// DataProvider doesn't have the query data provider methods on there.
+		// Won't work, getProvider returns a DataProvider, 
+		// not a query data provider.  DataProvider doesn't have the query data 
+		// provider methods on there.
 		//dataset.getProvider().addRestriction("p.id = :param",300);
 		
-		((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction("p.id = :param",300);
+		((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction(
+		  "p.id = :param",300);
 ]]>
 </programlisting>
 			</example>
@@ -2024,11 +2026,14 @@ showResults(results2);
 				in a type safe manner.
 			</para>
 			<example>
-				<title>Strongly types data provider and dataset usage</title>
+				<title>Strongly typed data provider and dataset usage</title>
 				<programlisting>
 <![CDATA[
-		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-		GenericProviderDataset<Person,QueryDataProvider<Person>> dataset = new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
+		QueryDataProvider<Person> provider;
+		GenericProviderDataset<Person,QueryDataProvider<Person>> dataset;
+		
+		provider = new JpaQueryProvider<Person>();
+		dataset = new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
 		dataset.getProvider().init(Person.class, "p");
 		dataset.getProvider().addRestriction("p.id = #{personSearch.id}");
 		dataset.getProvider().addParameterResolver(new MyParameterResolver());

@@ -28,13 +28,14 @@ import org.jdataset.impl.provider.jpa.JpaQueryProvider;
  * 
  * @see SeamJpaNativeDataset
  */
+//TODO is this right that we subclass the jpa dataset and not the query dataset?
 public class SeamJpaDataset<T> extends JpaDataset<T> {
 
 	private static final long serialVersionUID = 1L;
 	
 	private final JpaDataProvider<T> jpaProvider;
 	
-	protected SeamJpaDataset(JpaDataProvider<T> jpaProvider) {
+	protected SeamJpaDataset(JpaQueryProvider<T> jpaProvider) {
 		super(jpaProvider);
 		this.jpaProvider = jpaProvider;		
 		jpaProvider.addParameterResolver(new SeamParameterResolver());

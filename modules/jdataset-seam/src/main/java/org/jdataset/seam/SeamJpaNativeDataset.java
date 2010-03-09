@@ -25,6 +25,7 @@ import org.jdataset.impl.provider.jpa.JpaNativeProvider;
  * 
  * @see SeamJpaNativeDataset
  */
+//TODO is this right that we subclass query dataset?
 public class SeamJpaNativeDataset<T> extends QueryDataset<T> {
 
 	private static final long serialVersionUID = 1L;

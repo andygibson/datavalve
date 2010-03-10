@@ -71,11 +71,13 @@
 					url="http://www.andygibson.net/blog/index.php/2008/10/02/codeless-ajax-ordered-and-paginated-tables-in-seam/">blogged about it </ulink>
 				and it still remains a popular article today and one I get most
 				emails about
-				when people are looking for JSF and
+				when people are looking for info on JSF and
 				pagination.
-				However, this still has
+				However, this still
+				has
 				problems since it only works in Seam projects
-				but the same functionality is
+				but the same functionality
+				is
 				needed
 				in Wicket, Spring, JSP and even
 				Swing and console apps. Other
@@ -120,11 +122,13 @@
 				a uniform way, but it was beyond the
 				scope of the
 				frameworks to provide it,
-				and the scope of what they did provide was
+				and the what they did provide was
 				usually limited to their own
-				framework. Without a uniform data
+				framework.
+				Without a uniform data
 				access mechanism developers have to write
-				and re-write their front
+				and re-write
+				their front
 				and back ends
 				every time they start a new project or
 				want to re-use
@@ -677,8 +681,13 @@ List<Person> results = qry.resultList();]]>
 				<programlisting>
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
-  provider.addRestriction("p.firstName like :param",searchCriteria.firstName,searchCriteria.firstName+"%");
-  provider.addRestriction("p.lastName like :param",searchCriteria.lastName,searchCriteria.lastName+"%");
+  
+  provider.addRestriction("p.firstName like :param",
+    searchCriteria.firstName,searchCriteria.firstName+"%");
+    
+  provider.addRestriction("p.lastName like :param",
+    searchCriteria.lastName,searchCriteria.lastName+"%");
+    
 ]]>  
 				</programlisting>
 			</example>
@@ -961,8 +970,12 @@ public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
 <![CDATA[
 public class PersonObjectMapper implements ResultSetObjectMapper<Person> {
 
-    public Person createObjectFromResultSet(ResultSet resultSet) throws SQLException {
-	return new Person(resultSet.getLong(1),resultSet.getString(1),resultSet.getString(2));
+    public Person createObjectFromResultSet(ResultSet resultSet) 
+      throws SQLException {
+      
+	  return new Person(resultSet.getLong(1),resultSet.getString(1),
+	    resultSet.getString(2));
+	    
     }
 		
 }
@@ -1311,18 +1324,36 @@ public class IntegerDataProviderTest extends
 	}]]>
 </programlisting>
 			</example>
-			<para>If you run the tests now you should pass with flying colors
+			<para>
+				If you run the tests now you should almost pass with flying colors
 				even
 				though
-				we only made very small changes. The test
-				classes that
-				can be
-				used to test the
-				implementations provide fairly good code
-				coverage
+				we only made very small changes. The test that failed is the
+				serialization test to determine if a dataset holding our data provider can
+				be serialized. In this case, it cannot because we have not implemented the
+				<classname>Serializable</classname>
+				interface in the dataprovider. If you add this interface to the
+				<classname>IntegerDataProvider</classname>
+				class name and rerun the tests, it should pass with no problems. The
+				serializable test is there as a helper because so many frameworks now depend
+				on serializable components (Spring MVC, Wicket, CDI and Seam) and raises
+				errors if there are serializable issues. If you do not need the dataset to
+				be serializable or it cannot be made serializable, you can turn off this
+				test by overriding the
+				<methodname>includeSerializationTest()</methodname>
+				and returning false.
+
+				The base test
+				classes provide fairly good code coverage
 				and can only get better over
 				time
-				as more tests are added.
+				as more tests are added. Even
+				without writing
+				any test
+				cases yourself you are already off to a good start
+				in determining how
+				well
+				you data provider code is written.
 			</para>
 			<para>
 				The
@@ -2007,12 +2038,15 @@ showResults(results2);
 <![CDATA[
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
 		Dataset<Person> dataset = new Dataset<Person>(provider);
-				
+			
+		//	
 		// Won't work, getProvider returns a DataProvider, 
-		// not a query data provider.  DataProvider doesn't have the query data 
-		// provider methods on there.
+		// not a query data provider.  DataProvider doesn't 
+		// have the query data provider methods on there.
+		//
 		//dataset.getProvider().addRestriction("p.id = :param",300);
 		
+		// Casting required
 		((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction(
 		  "p.id = :param",300);
 ]]>
@@ -2033,7 +2067,8 @@ showResults(results2);
 		GenericProviderDataset<Person,QueryDataProvider<Person>> dataset;
 		
 		provider = new JpaQueryProvider<Person>();
-		dataset = new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
+		dataset = 
+		  new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
 		dataset.getProvider().init(Person.class, "p");
 		dataset.getProvider().addRestriction("p.id = #{personSearch.id}");
 		dataset.getProvider().addParameterResolver(new MyParameterResolver());
@@ -2090,7 +2125,7 @@ showResults(results2);
 			</example>
 		</sect1>
 		<sect1>
-			<title>Extending Dataset for custom providers</title>
+			<title>Extending Datasets for custom providers</title>
 			<para>
 				When you create a new data provider implementation it is also good
 				practice
@@ -2106,17 +2141,16 @@ showResults(results2);
 				<programlisting>
 <![CDATA[
 class MyCustomProvider<T> extends AbstractQueryDataProvider<T> {
-
         ...
-        ...          
-  		
+        ...           		
   		//this is specific to this implementation
   		public void setWidgetConnection(WidgetConnection connection) {
   		  this.connection = conn
   		}
 }
 
-class MyCustomProviderDataset<T> extends GenericProviderDataset<T,MyCustomProvider<T>> {
+class MyCustomProviderDataset<T> 
+    extends GenericProviderDataset<T,MyCustomProvider<T>> {
    
    public MyCustomProviderDataset() {
      super();
@@ -2139,7 +2173,8 @@ class MyCustomProviderDataset<T> extends GenericProviderDataset<T,MyCustomProvid
 				<programlisting>
 <![CDATA[
 		MyCustomProvider<Person> provider = new MyCustomProvider<Person>();
-		MyCustomProviderDataset<Person> ds = new MyCustomProviderDataset<Person>(provider);
+		MyCustomProviderDataset<Person> ds = 
+		  new MyCustomProviderDataset<Person>(provider);
 		ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());
 ]]>
 </programlisting>
@@ -2177,8 +2212,8 @@ class MyCustomProviderDataset<T> extends GenericProviderDataset<T,MyCustomProvid
    ...
    ...
    //assign the dataset using the generic dataset
-   QueryProvider<Person> p = buildProvider();   
-   QueryDataset<Person> ds = new QueryDataset<Person>(p);
+   QueryProvider<Person> provider = buildProvider();   
+   QueryDataset<Person> ds = new QueryDataset<Person>(provider);
    ds.getProvider().addRestriction("p.id = :param",id);
    
    
@@ -2191,7 +2226,7 @@ class MyCustomProviderDataset<T> extends GenericProviderDataset<T,MyCustomProvid
 		</sect1>
 	</chapter>
 	<chapter>
-		<title>Non-Database Drive Providers</title>
+		<title>Non-Database Providers</title>
 		<para>There are a number of places you can choose to fetch data from and
 			usually you are on your own regarding how you get that data into your
 			application. JQA provides the ability to access non-databse data sources and
@@ -2201,50 +2236,296 @@ class MyCustomProviderDataset<T> extends GenericProviderDataset<T,MyCustomProvid
 			database while letting you benefit from using the same interfaces to fetch
 			and control the data to be displayed.</para>
 		<sect1>
-			<title>In memory based datastores</title>
+			<title>In-memory based datastores</title>
 			<para>
 				The simplest form of datastore is one which just keeps the objects in
 				memory
-				and are returned to the user when requested. An in memory data store
+				and are returned to the user when requested. An in-memory data store
 				subclasses the
 				<classname>InMemoryDataProvider</classname>
 				class and implements the abstract method to return the backing data. The
 				backing data is the complete list of results that the data provider is
-				paginating.
+				paginating. Here is our
+				<classname>IntegerDataProvider</classname>
+				reimplemented using the in-memory data provider. All we need to do is
+				override the method to return the backing data and return our list of
+				integers
+				from 1 to 100.
 			</para>
 			<example>
-				<title>Simple implementation of our Integer date provider.</title>
+				<title>in-memory implementation of our Integer provider.</title>
 				<programlisting>
 <![CDATA[
-   QueryProvider<Person> buildProvider() {
-     MyCustomProvider<Person> result = new MyCustomProvider<Person>();
-     result.setWidgetConnection(xyz);
-     return result;     
-   }
-   
-   QueryDataset<Person> buildDataset() {
-     MyCustomProvider<Person> provider = buildProvider();
-     MyCustomProviderDataset<Person> ds = new MyCustomProviderDataset<Person>();
-     ds.getProvider().setWidgetConnection(ConnectionFactory.newConnection);
-     return ds;
-   }
-   
-   
-   ...
-   ...
-   //assign the dataset using the generic dataset
-   QueryProvider<Person> p = buildProvider();   
-   QueryDataset<Person> ds = new QueryDataset<Person>(p);
-   ds.getProvider().addRestriction("p.id = :param",id);
-   
-   
-   //you can even assign custom datasets the the generic query dataset type
-   QueryDataset<Person> ds2 = buildDataset(); 
+public class InMemoryIntegerProvider 
+    extends InMemoryDataProvider<Integer> implements Serializable {
+	
+	@Override
+	protected List<Integer> fetchBackingData() {
+		List<Integer> result = new ArrayList<Integer>();
+		for (int i = 1;i <=100;i++) {
+			result.add(i);
+		}
+		return result;
+	}
+
+}
+]]>
+</programlisting>
+			</example>
+			<para>
+				We can also easily test this using our
+				<classname>IntegerDataProviderTest</classname>
+				class that we used to test the integer data provider last time by
+				subclassing it and overriding the
+				<methodname>buildObjectDataset</methodname>
+				method. This time we return an instance of our new in-memory data provider.
+			</para>
+			<example>
+				<title>Testing our in-memory Integer data provider.</title>
+				<programlisting>
+<![CDATA[
+public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
+
+	@Override
+	public ObjectDataset<Integer> buildObjectDataset() {	
+		DataProvider<Integer> provider = new InMemoryIntegerProvider();		
+		return new Dataset<Integer>(provider);
+
+	}	
+}
 ]]>
 </programlisting>
 			</example>
 
-			
+			<para>
+				In our previous implementation of the Integer data provider we
+				neglected
+				to
+				include sorting, so this
+				time we'll add sorting into this
+				implementation.
+				Sorting for in-memory
+				datasets is done using comparators. Like
+				data driven
+				providers, in-memory
+				datasets have an order key map except that it
+				associates
+				a comparator with
+				each key. Because our Integer data provider is a
+				simple
+				case, we'll look at an in-memory data provider containing people. Our
+				<classname>Person</classname>
+				class has an id, a first name and a last name and we want to sort on either
+				the id or the name (last and then first combined).
+			</para>
+			<example>
+				<title>In-memory Integer data provider.</title>
+				<programlisting>
+<![CDATA[
+public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
+
+	private List<Person> backingList;
+	private static final int PERSON_COUNT = 100;
+
+	private class PersonIdComparator implements Comparator<Person>,
+			Serializable {
+
+		public int compare(Person o1, Person o2) {
+			return (int) (o1.getId() - o2.getId());
+		}
+	}
+
+	private class PersonNameComparator implements Comparator<Person>,
+			Serializable {
+
+		public int compare(Person o1, Person o2) {
+			int val = o1.getLastName().compareToIgnoreCase(o2.getLastName());
+			//if first names match, then try comparing by the first name			
+			if (val == 0) {
+				val = o1.getFirstName().compareToIgnoreCase(o2.getFirstName());
+			}
+			return val;
+		}
+	}
+
+	public InMemoryPersonProvider() {
+		//add the order keys by default in the constructor
+		getOrderKeyMap().put("id", new PersonIdComparator());
+		getOrderKeyMap().put("name", new PersonNameComparator());
+	}
+
+	@Override
+	protected List<Person> fetchBackingData() {
+		//generate some random test data
+		if (backingList == null) {
+			backingList = new ArrayList(PERSON_COUNT);
+			for (int i = 0; i < PERSON_COUNT; i++) {
+				Person p = new Person(new Long(i + 1), TestDataFactory
+						.getFirstName(), TestDataFactory.getLastName());
+				backingList.add(p);
+			}
+		}
+		return backingList;
+	}
+
+}
+]]>
+</programlisting>
+			</example>
+			<para>
+				Again, we can subclass the
+				<classname>AbstractObjectDatasetJUnitTest</classname>
+				to create new test cases for this class. We can also add in additional tests
+				for testing that the ordering is working correctly.
+			</para>
+
+			<example>
+				<title>Testing the InMemoryPersonProvider</title>
+				<programlisting>
+<![CDATA[
+public class InMemoryPersonProviderTest 
+    extends AbstractObjectDatasetJUnitTest<Person> {
+
+	@Override
+	public ObjectDataset<Person> buildObjectDataset() {
+		InMemoryPersonProvider provider = new InMemoryPersonProvider();
+		return new Dataset<Person>(provider);
+	}
+
+	@Override
+	public int getDataRowCount() {
+		return 100;
+	}
+
+	public void testIdOrdering() {
+		ObjectDataset<Person> ds = buildObjectDataset();
+		ds.setOrderKey("id");
+		ds.setOrderAscending(false);
+		ds.setMaxRows(10);
+		//check descending
+		Long id = null;
+		
+		for (Person p : ds) {
+			if (id != null) {
+				assertTrue("Next Id is not less than the last",p.getId() < id);
+			}
+			id = p.getId();
+		}
+		
+		
+		//now reverse the ordering
+		ds.setOrderAscending(true);
+		id = null;
+		for (Person p : ds) {
+			if (id != null) {
+				assertTrue("Next Id is not greater than the last",p.getId() > id);
+			}
+			id = p.getId();
+		}
+		
+	}
+]]>
+</programlisting>
+			</example>
+			<para>
+				In this test case, we toggle the ordering to ensure that the ordering
+				is
+				working as we switch from one order to the next. One caveat with ordering
+				in
+				memory datasets is that the ordering takes place on the backing data list
+				in
+				the
+				data provider. Therefore, you can't directly have multiple paginators
+				that fetch independent views of the data since they would all
+				have to share
+				the same sort order. You could do this if there was no ordering, or they
+				used the same order, or you could use a
+				<classname>InMemoryAdapterProvider</classname>
+			</para>
+			<para>
+				The
+				<classname>InMemoryAdapterProvider</classname>
+				is an in-memory data provider that works by wrapping a
+				<classname>DataProvider</classname>
+				(any kind, not just the in-memory kind) from which it sucks up all the data
+				and puts it in its own in-memory list. This can be used to create an
+				independent view of an in-memory dataset with indendent sorting.
+			</para>
+			<example>
+				<title>Multiple views using an in-memory adapter.</title>
+				<programlisting>
+<![CDATA[
+		InMemoryPersonProvider provider = new InMemoryPersonProvider();
+		InMemoryAdapterProvider<Person> providerAdapter = 
+		    new InMemoryAdapterProvider<Person>(provider);
+		
+		ObjectDataset<Person> ds = new Dataset<Person>(provider);
+		ObjectDataset<Person> ds2 = new Dataset<Person>(providerAdapter);
+		
+		//shared data, independent ordering and paging
+		ds.setOrderKey("name");
+		ds2.setOrderKey("id");
+		
+]]>
+</programlisting>
+			</example>
+			<para>
+				The
+				<classname>InMemoryAdapterProvider</classname>
+				can wrap any data provider and act as a local cache. It will automatically
+				pick up the order key comparators if it wraps an
+				<classname>InMemoryDataProvider</classname>
+				.
+			</para>
+
+
+
+
+
+			<para>
+				In our integer in-memory data provider, we only have one comparator to order
+				by
+				which is for comparing two integers. In this scenario, we could just
+				override the
+				<methodname>translateOrderKey</methodname>
+				method to return the single comparator in our dataset. The saves us from
+				making the user assign an order key value, it will always be sorted by this
+				comparator.
+			</para>
+			<example>
+				<title>Sorting by the Integer data provider.</title>
+				<programlisting>
+<![CDATA[
+public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer> 
+         implements Serializable {
+
+	private transient Comparator<Integer> comparator = new Comparator<Integer>() {
+		public int compare(Integer o1, Integer o2) {
+			return o1-o2;
+        }				
+	};
+	
+	@Override
+	protected List<Integer> fetchBackingData() {
+		List<Integer> result = new ArrayList<Integer>();
+		for (int i = 1;i <=100;i++) {
+			result.add(i);
+		}
+		return result;
+	}
+
+	@Override
+	protected Comparator<Integer> translateOrderKey(String key) {	
+		return comparator;
+	}
+}
+]]>
+</programlisting>
+			</example>
+			<para>Note also that in this case, the comparator field is marked transient
+				since it is not
+				serializable. 
+			</para>
 		</sect1>
 	</chapter>
 </book>

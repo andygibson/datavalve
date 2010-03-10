@@ -176,12 +176,14 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		return orderKey;
 	}
 
-	public void setOrderKey(String orderKey) {
-		if (this.orderKey == null) {
-			this.orderKey = orderKey;
+	public void setOrderKey(String orderKey) {		
+		if (this.orderKey == null) {			
 			if (orderKey == null) {
 				return;
 			}
+			this.orderKey = orderKey;
+			invalidateResults();
+			return;
 		}
 
 		// this.order key is not null

@@ -43,8 +43,9 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 		Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static Logger log = LoggerFactory.getLogger(InMemoryDataProvider.class);
+
+	private static Logger log = LoggerFactory
+			.getLogger(InMemoryDataProvider.class);
 
 	private Map<String, Comparator<T>> orderKeyMap = new HashMap<String, Comparator<T>>();
 	private Comparator<T> activeSortOrder;
@@ -70,7 +71,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 	 * 
 	 * @see InMemoryDataProvider#fetchBackingData()
 	 */
-	public  List<T> getBackingData() {
+	public List<T> getBackingData() {
 		if (backingData == null) {
 			backingData = fetchBackingData();
 
@@ -113,6 +114,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 		// check sorting hasn't changed
 		defineOrdering(paginator.getOrderKey());
 		defineOrderDirection(paginator.isOrderAscending());
+		sort();
 
 		int startPos = paginator.getFirstResult();
 		if (startPos > backingData.size()) {
@@ -139,13 +141,16 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 		return orderKeyMap;
 	}
 
+	protected boolean isSorted() {
+		return activeSortOrder != null;
+	}
+
 	private void defineOrderDirection(boolean ascending) {
-		
 		if (ascending != orderedAscendingFlag) {
 			orderedAscendingFlag = ascending;
 			// flip the list
-			log.debug("Flipping list for sort order");
-			Collections.reverse(getBackingData());
+			// log.debug("Flipping list for sort order");
+			// Collections.reverse(getBackingData());
 		}
 	}
 
@@ -155,7 +160,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 			return;
 		}
 
-		Comparator<T> sorter = getOrderKeyMap().get(key);
+		Comparator<T> sorter = translateOrderKey(key);
 
 		// if there is no matching sort order, just clear it and leave the order
 		// as is.
@@ -169,16 +174,24 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 			return;
 		}
 		// when we changed the order, it defaults to ascending
-		orderedAscendingFlag = true;
+		// orderedAscendingFlag = true;
 		activeSortOrder = sorter;
-		sort();
+		// sort();
+	}
+
+	protected Comparator<T> translateOrderKey(String key) {
+		return getOrderKeyMap().get(key);
 	}
 
 	public void sort() {
+		if (isSorted()) {
+			log.debug("Sorting list using {}  ", activeSortOrder);
 
-		log.debug("Sorting list using #0  ", activeSortOrder);
-		
-		Collections.sort(getBackingData(), activeSortOrder);
+			Collections.sort(getBackingData(), activeSortOrder);
+			if (!orderedAscendingFlag) {
+				Collections.reverse(getBackingData());
+			}
+		}
 	}
 
 }

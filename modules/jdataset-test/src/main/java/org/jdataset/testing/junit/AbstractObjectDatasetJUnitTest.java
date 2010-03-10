@@ -2,6 +2,7 @@ package org.jdataset.testing.junit;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
@@ -52,9 +53,10 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	 */
 	public void testRowCount() {
 		boolean hasEnoughRows = getDataRowCount() >= 30;
-		assertTrue(
-				"you must have at least 30 rows of data to use the built-in Object dataset tests",
-				hasEnoughRows);
+		if (!hasEnoughRows) {
+			throw new RuntimeException(
+					"you must have at least 30 rows of data to use the built-in Object dataset tests");
+		}
 	}
 
 	public void testBuilder() {
@@ -114,9 +116,9 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	public void testActualResultCount() {
 		ObjectDataset<T> ds = buildObjectDataset();
 		List<T> results = ds.getResultList();
-		
-		assertEquals(ds.getResultCount().intValue(),results.size());
-		assertEquals(getDataRowCount(),results.size());
+
+		assertEquals(ds.getResultCount().intValue(), results.size());
+		assertEquals(getDataRowCount(), results.size());
 	}
 
 	public void testNextDifferentResults() {
@@ -460,7 +462,11 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 
 		try {
 			oos = new ObjectOutputStream(bas);
-			oos.writeObject(dataset);
+			try {
+				oos.writeObject(dataset);
+			} catch (NotSerializableException e) {
+				fail("Dataset is not serializable : " + e.getMessage());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -468,13 +474,13 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 	}
 
 	public void testSerialization() {
-		if (isSerializable()) {
+		if (includeSerializationTest()) {
 			ObjectDataset<T> ds = buildObjectDataset();
 			performSerializationTest(ds);
 		}
 	}
 
-	public boolean isSerializable() {
+	public boolean includeSerializationTest() {
 		return true;
 	}
 

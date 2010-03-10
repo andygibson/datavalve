@@ -297,7 +297,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	}
 
 	@Override
-	public boolean isSerializable() {
+	public boolean includeSerializationTest() {
 		return false;
 	}
 }

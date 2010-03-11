@@ -232,7 +232,7 @@
 					<!-- Delete this block to have Jetty run default port (8080) -->
 					<connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>9090</port>
+							<port>8080</port>
 						</connector>
 					</connectors>
 					<!-- force friendly name instead of artifact name + version -->
@@ -259,7 +259,7 @@
 				<configuration>
 					<path>/${project.build.finalName}</path>
 					<!-- Embedded port -->
-					<port>9090</port>
+					<port>8080</port>
 					<!--
 						The default authentication credentials for remote deployment are username
 						"admin" with no password To override credentials, define a server in

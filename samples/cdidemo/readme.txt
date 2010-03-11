@@ -1,18 +1,33 @@
+CDI Demo
+================
 
-                                 cdidemo 
+ This is a demo for jdatasets using JSF and CDI and mainly demonstrates sortable
+columns and a search form.
+ 
+To Run 
+================
 
- Source archetype: weld-jsf-servlet-minimal
+1) First type 'mvn install' in the <install>/modules directory to install 
+JDataset into maven.
 
- What is it?
- ===========
+2) in the cdidemo folder, to start the server type :
 
- This is your project! It's a barebones, deployable Maven 2 project to help you
- get your foot in the door developing with Java EE 6. Specifically, this
- project is setup to allow you to create a JSF 2.0 and CDI 1.0 application that
- can run on Servlet Containers like Tomcat 6 and Jetty 6. You may be satisfied
- with this combination in the long run, or you may eventually migrate to a true
- Java EE 6 environment to leverage EJB 3.1, JPA 2.0 and other platform
- technologies.
+mvn jetty:run
+ 
+3) Point your browser to 
+
+ http://localhost:8080/cdidemo
+
+What is it?
+================
+
+This demo features the use of jdatasets in a CDI and JSF environment with 
+hibernate. It uses CDI injection to pass the hibernate session into the data 
+provider and then to pass the data provider into the person search dataset. The 
+person results are named and used in the results display using an EL expression.
+This project also includes an Expression Parameter Resolver to demonstrate how 
+easily it can be to extend the data providers for new environments. This 
+expression parameter resolver will probably end up in its own package eventually.     
 
  System requirements
  ===================
@@ -22,30 +37,36 @@
  Container. The embedded Jetty and Tomcat containers get downloaded
  automatically by the Maven commands.
 
- If you want to deploy the application to a standalone Servlet Container, then
- you will need to set one up.
 
- Please note that Maven 2 project needs to use the JBoss Maven repository
- because there are certain Java EE API JARs that are not yet publised to the
- Maven Central Repository (see https://jira.jboss.org/jira/browse/WELD-222)
 
- Deploying the application
+
+
+CDI Demo
+================ 
+
+ What is it?
+ ===========
+
+ This is a demo for jdatasets using JSF and CDI and mainly demonstrates the sortable columns concepts.  
+ 
+ System requirements
+ ===================
+
+ All you need to run this project is Java 5.0 (Java SDK 1.5) or greator and
+ Maven 2.0.10 or greater. This application is setup to be run on a Servlet
+ Container. The embedded Jetty and Tomcat containers get downloaded
+ automatically by the Maven commands.
+
+ To Run
  =========================
-
- You can deploy the application without moving any files around using the
- embedded Jetty or Tomcat containers.
 
  To run the application using embedded Jetty, execute this command:
 
   mvn jetty:run
 
- To run the application using embedded Tomcat, execute this command:
-
-  mvn compile tomcat:run
-
  The application will be running at the following URL:
  
-  http://localhost:9090/cdidemo
+  http://localhost:8080/cdidemo
 
  To run the application on a standalone container, first execute this command:
 
@@ -88,4 +109,5 @@
  -  Forums:            http://seamframework.org/Community/WeldUsers
  JSR-299 overview:     http://seamframework.org/Weld
  JSF community site:   http://www.javaserverfaces.org
+
 

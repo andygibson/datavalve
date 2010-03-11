@@ -18,7 +18,7 @@ public class DataInitializer {
 	private SessionFactory sessionFactory;
 	private Session session;
 	private Connection connection;
-	public  static final int RECORD_COUNT = 1150;
+	public  static final int RECORD_COUNT = 2000;
 	
 
 	public void init() {
@@ -43,14 +43,11 @@ public class DataInitializer {
 	private void generateTestData() {
 
 		session.getTransaction().begin();
+		
 		for (int i = 0; i < RECORD_COUNT; i++) {
 			Person p = new Person(TestDataFactory.getFirstName(),
 					TestDataFactory.getLastName(),TestDataFactory.getNumberText(10));
 		   
-			for (int or = 0; or < 10; or++) {
-				Order order = new Order(i * 10 + or, p);
-				session.persist(order);
-			}
 			session.persist(p);
 		}
 		session.getTransaction().commit();

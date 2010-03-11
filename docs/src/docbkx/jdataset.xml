@@ -2527,6 +2527,41 @@ public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer>
 				serializable. 
 			</para>
 		</sect1>
+		<sect1>
+			<title>Odds and Ends</title>
+			<para>This sections covers any additional info not included anywhere else.
+			</para>
+			<sect2>
+				<title>IndexedDataProviderCache</title>
+				<para>
+					The
+					<classname>IndexedDataProviderCache</classname>
+					provides random access to provider data with look ahead caching to optimize
+					querying and take advantage of data coherence. The best example of this is
+					in the swing table which is included in one of the examples. A swing table
+					model knows the number of rows of data that exist (which could be thousands
+					or millions) and lets the user scroll across the whole dataset. This means
+					that the user can select any record from the available dataset at any point
+					in time. In this event, it would be fetched from the data provider and
+					returned to the user. However, the user will probably end up fetching the
+					next x number of objects from the dataset as the next x number of rows in
+					the table are displayed. For this reason, the cache not only fetches the
+					requested row, but the next n number of rows where n is the batch size
+					defined by an attribute on the cache. The
+					<classname>IndexedDataProviderCache</classname>
+					keeps hold of these items since they may well be reused when the table is
+					repainted or the user starts to scroll backwards or forwards a few records
+					at a time. This cache is limited in size, and records will start to be
+					ejected on a least recently used basis. The
+					<classname>IndexedDataProviderCache</classname>
+					can be used to randomly browse thousands of records in a Swing table with
+					no startup time and efficient memory use since it doesn't read all the data
+					in at once. (The delay at the start is due to
+					the creation of the database,
+					not the loading of all the data).
+				</para>				
+			</sect2>
+		</sect1>
 	</chapter>
 </book>
 	

@@ -14,7 +14,7 @@ import org.jdataset.Paginator;
  * perform a look ahead prefetch so the next set of results are probably loaded
  * in.
  * <p>
- * The {@link IndexedDataCache#loadValues(Integer, int)} method is used as a template
+ * The {@link IndexedDataProviderCache#loadValues(Integer, int)} method is used as a template
  * to load the values with a look ahead. 
  * 
  * 
@@ -25,7 +25,7 @@ import org.jdataset.Paginator;
  * @param <V>
  *            Value type used in the map
  */
-public class IndexedDataCache<V> {
+public class IndexedDataProviderCache<V> {
 
 	private final DataProvider<V> provider;
 	private final Paginator paginator;
@@ -33,11 +33,11 @@ public class IndexedDataCache<V> {
 
 	private Map<Integer, V> map;
 
-	public IndexedDataCache(DataProvider<V> provider, Paginator paginator) {
+	public IndexedDataProviderCache(DataProvider<V> provider, Paginator paginator) {
 		this(provider, paginator, 100, 25);
 	}
 
-	public IndexedDataCache(DataProvider<V> provider, Paginator paginator,
+	public IndexedDataProviderCache(DataProvider<V> provider, Paginator paginator,
 			int maxEntries, int initialSize) {
 
 		this.provider = provider;

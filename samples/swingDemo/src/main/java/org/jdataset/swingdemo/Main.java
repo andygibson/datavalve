@@ -23,6 +23,7 @@ public class Main extends JFrame {
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setSize(300, 300);
 		main.setVisible(true);
+		main.setTitle("IndexedDataProviderCache demo");
 	}
 
 	public Main() {

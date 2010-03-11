@@ -6,7 +6,7 @@ import javax.swing.table.TableModel;
 import org.jdataset.DataProvider;
 import org.jdataset.Paginator;
 import org.jdataset.impl.DefaultPaginator;
-import org.jdataset.util.IndexedDataCache;
+import org.jdataset.util.IndexedDataProviderCache;
 
 /**
  * Abstract class that implements a {@link TableModel} and allows for cached
@@ -22,14 +22,14 @@ public abstract class ProviderTableModel<T> extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
 
-	private IndexedDataCache<T> cache;
+	private IndexedDataProviderCache<T> cache;
 	private final Paginator paginator = new DefaultPaginator();
 	private final DataProvider<T> provider;
 
 	public ProviderTableModel(DataProvider<T> provider) {
 		super(0,0);
 		this.provider = provider;
-		cache = new IndexedDataCache<T>(provider, paginator);
+		cache = new IndexedDataProviderCache<T>(provider, paginator);
 	}
 
 	@Override

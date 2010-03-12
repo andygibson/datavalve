@@ -2,8 +2,6 @@ package org.jdataset.impl.provider.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class JdbcDataProvider<T> extends AbstractJdbcDataProvider<T> {
 
@@ -15,9 +13,7 @@ public class JdbcDataProvider<T> extends AbstractJdbcDataProvider<T> {
 	public T createObjectFromResultSet(ResultSet resultSet) throws SQLException {
 		if (resultSetObjectMapper == null) {
 			throw new IllegalStateException("Result set object mapper is null");
-		}
-		Map<String,String> x = new HashMap<String,String>();		
-		
+		}		
 		return resultSetObjectMapper.createObjectFromResultSet(resultSet);
 	}
 	

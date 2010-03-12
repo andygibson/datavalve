@@ -61,3 +61,19 @@ h3.title {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
+
+.hl-keyword {
+  font-weight : bold;
+  color : #7F0055;
+}
+
+.hl-comment {
+  font-weight : bolder;
+  font-style : italic;
+  color : #3F7F5F;
+}
+
+
+.hl-string {
+  color : blue;	
+}

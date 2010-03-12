@@ -88,10 +88,13 @@
 					<sectionLabelIncludesComponentLabel>1</sectionLabelIncludesComponentLabel>
 					<chunkFirstSections>0</chunkFirstSections>
 					<chunkSectionDepth>0</chunkSectionDepth>
-					<htmlStylesheet>style.css</htmlStylesheet>
+					<htmlCustomization>${docbook.source}/resources/xsl/htmlCustom.xsl</htmlCustomization>
+					<foCustomization>${docbook.source}/resources/xsl/foCustom.xsl</foCustomization>
 					<keepRelativeImageUris>1</keepRelativeImageUris>
 					<bodyFontFamily>sans-serif</bodyFontFamily>
-					<sectionAutolabelMaxDepth>3</sectionAutolabelMaxDepth>					
+					
+					<sectionAutolabelMaxDepth>3</sectionAutolabelMaxDepth>
+					<highlightSource>1</highlightSource>					
 
 				</configuration>
 			</plugin>

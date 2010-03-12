@@ -200,8 +200,8 @@
 						The
 						<classname>DataProvider</classname>
 						interface
-					</title>
-					<programlisting role="JAVA">
+					</title>					
+					<programlisting role="JAVA" language="java">
 <![CDATA[
 public interface DataProvider<T> {
 	Integer fetchResultCount();
@@ -280,7 +280,7 @@ public interface DataProvider<T> {
 						<title>
 							Coding search queries the hard way.
                     </title>
-						<programlisting role="JAVA">
+						<programlisting role="JAVA" language="java">
 <![CDATA[
 String sql = "";
 if (searchCriteria.id != null  
@@ -1025,7 +1025,7 @@ public QueryDataProvider<Person> createDataProvider() {
 				<title>
 					<code>IntegerDataProvider.java</code>
 				</title>
-				<programlisting role="JAVA">
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 
@@ -1103,7 +1103,7 @@ public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 				<title>
 					<code>IntegerDataProvider.java</code>
 				</title>
-				<programlisting role="JAVA">
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class Main {
 
@@ -1154,7 +1154,7 @@ public class Main {
 				<title>
 					Execution Results
 				</title>
-				<programlisting role="JAVA">
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 Generating results from 0 to 9
 Result Size = 10
@@ -1234,7 +1234,7 @@ Value = 9
 				<title>
 					<code>IntegerDataProvider.java</code>
 				</title>
-				<programlisting role="JAVA">
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class IntegerDataProviderTest extends 
   AbstractObjectDatasetJUnitTest<Integer> {
@@ -1305,7 +1305,7 @@ public class IntegerDataProviderTest extends
 					method in
 					<code>IntegerDataProvider.java</code>
 				</title>
-				<programlisting role="JAVA">
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 	public List<Integer> fetchResults(Paginator paginator) {
 		
@@ -1381,7 +1381,7 @@ public class IntegerDataProviderTest extends
 					<classname>IntegerDataProviderTest.java</classname>
 					to validate the results returned.
 				</title>
-				<programlisting role="JAVA">
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 	public void testResultsPaginated() {
 		ObjectDataset<Integer> ds = buildObjectDataset();
@@ -1471,7 +1471,7 @@ public class IntegerDataProviderTest extends
 					Changing our demo application to use an
 					<classname>ObjectDataset</classname>
 				</title>
-				<programlisting role="JAVA">
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public static void main(String[] args) {
 	ObjectDataset<Integer> ds = new Dataset<Integer>(new IntegerDataProvider());
@@ -1497,7 +1497,7 @@ public static void main(String[] args) {
 					Changing our demo application to use an
 					<classname>ObjectDataset</classname>
 				</title>
-				<programlisting role="JAVA">
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();

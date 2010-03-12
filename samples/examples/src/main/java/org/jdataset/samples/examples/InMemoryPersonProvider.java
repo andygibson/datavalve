@@ -10,6 +10,8 @@ import org.jdataset.testing.TestDataFactory;
 
 public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 
+	private static final long serialVersionUID = 1L;
+	
 	private List<Person> backingList;
 	public static final int PERSON_COUNT = 30;
 
@@ -53,7 +55,7 @@ public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 		getOrderKeyMap().put("name", new PersonNameComparator());
 		//generate some random test data
 		if (backingList == null) {
-			backingList = new ArrayList(PERSON_COUNT);
+			backingList = new ArrayList<Person>(PERSON_COUNT);
 			for (int i = 0; i < PERSON_COUNT; i++) {
 				Person p = new Person(new Long(i + 1), TestDataFactory
 						.getFirstName(), TestDataFactory.getLastName());

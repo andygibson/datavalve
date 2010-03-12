@@ -342,7 +342,7 @@ List<Person> results = qry.resultList();
 						<title>
 							Coding search queries the easy way.
                     </title>
-						<programlisting role="XML">
+						<programlisting role="JAVA" language="java">
 <![CDATA[
 qry.addRestriction("p.id = :id");
 qry.addRestriction("p.firstName = :firstName");
@@ -422,7 +422,7 @@ List<Person> results = qry.resultList();]]>
 				</para>
 				<example>
 					<title>Fetching data from a provider</title>
-					<programlisting>
+					<programlisting role="JAVA" language="java">
 <![CDATA[				
   DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
@@ -452,7 +452,7 @@ List<Person> results = qry.resultList();]]>
 				</para>
 				<example>
 					<title>Limiting the data fetched from a data provider</title>
-					<programlisting>
+					<programlisting role="JAVA" language="java">
 <![CDATA[				
   DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
@@ -511,7 +511,7 @@ List<Person> results = qry.resultList();]]>
 						Using an
 						<classname>ObjectDataset</classname>
 					</title>
-					<programlisting>
+					<programlisting role="JAVA" language="java">
 <![CDATA[				
   DataProvider provider = new CustomDataProvider();
   Dataset<SomeClass> dataset = new Dataset(provider);
@@ -563,7 +563,7 @@ List<Person> results = qry.resultList();]]>
 				<title>
 					Fetching data from a database using JPA					
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 
   QueryProvider<Person> provider = new JpaDataProvider<Person>(em);
@@ -592,7 +592,7 @@ List<Person> results = qry.resultList();]]>
 				<title>
 					Restricting the data fetched					
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
   provider.addRestriction("p.id = 4");  
@@ -624,7 +624,7 @@ List<Person> results = qry.resultList();]]>
 				<title>
 					Restricting Results with Constant Parameters					
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
   
@@ -652,7 +652,7 @@ List<Person> results = qry.resultList();]]>
 				<title>
 					Restricting with non-constant parameters					
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
   provider.addRestriction("p.firstName = :param",searchCriteria.firstName);
@@ -678,7 +678,7 @@ List<Person> results = qry.resultList();]]>
 				<title>
 					Alternate Value Parameters					
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
   
@@ -732,7 +732,7 @@ List<Person> results = qry.resultList();]]>
 				<title>
 					Parameter Resolving with Reflection					
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();
   provider.addRestriction("p.firstName like :firstName");
@@ -747,7 +747,7 @@ List<Person> results = qry.resultList();]]>
 				<title>
 					Built in parameter resolution					
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[  
 public class SearchCriteria implements ParameterResolver {
 
@@ -791,7 +791,7 @@ public class SearchCriteria implements ParameterResolver {
 				<title>
 					Using the Seam data provider 					
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[  
 @Name("myPostsQuery")
 pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
@@ -829,7 +829,7 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 				<title>
 					Ordering on the data
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[  
   QueryDataProvider<Person> provider = createPersonProvider();  
   provider.addRestriction("p.lastName = 'SMITH'");
@@ -935,7 +935,7 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 				<title>
 					Implementing the SQL to Object mapping
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 
 public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
@@ -966,7 +966,7 @@ public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
 				<title>
 					SQL to Object mapping using an external mapper.
 				</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class PersonObjectMapper implements ResultSetObjectMapper<Person> {
 
@@ -1592,7 +1592,7 @@ Value = 5
 				</para>
 				<example>
 					<title>Returning all results</title>
-					<programlisting>
+					<programlisting role="JAVA" language="java">
 <![CDATA[
 public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();
@@ -1636,7 +1636,7 @@ Value = 100
 				</para>
 				<example>
 					<title>Returning all results</title>
-					<programlisting>
+					<programlisting role="JAVA" language="java">
 <![CDATA[
 public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();
@@ -1715,7 +1715,7 @@ Iterating over value 100
 
 				<example>
 					<title>Attempting manual iteration</title>
-					<programlisting>
+					<programlisting role="JAVA" language="java">
 <![CDATA[
 //BROKEN CODE, DO NOT USE
 while (ds.isNextAvailable()) {
@@ -1820,7 +1820,7 @@ while (ds.isNextAvailable()) {
 					<title>Manually creating provider and pagination instances and
 						fetching
 						results</title>
-					<programlisting>
+					<programlisting role="JAVA" language="java">
 <![CDATA[
 DataProvider<Integer> provider = new IntegerDataProvider();
 Paginator paginator = new SimplePaginator(10);
@@ -1878,7 +1878,7 @@ showResults(results);
 				</para>
 				<example>
 					<title>Multiple views of the same data</title>
-					<programlisting>
+					<programlisting role="JAVA" language="java">
 <![CDATA[
 DataProvider<Integer> provider = new IntegerDataProvider();
 Paginator paginator1 = new DefaultPaginator(10);
@@ -2034,7 +2034,7 @@ showResults(results2);
 			</para>
 			<example>
 				<title>Poorly typed provider and dataset useage</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
 		Dataset<Person> dataset = new Dataset<Person>(provider);
@@ -2061,7 +2061,7 @@ showResults(results2);
 			</para>
 			<example>
 				<title>Strongly typed data provider and dataset usage</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 		QueryDataProvider<Person> provider;
 		GenericProviderDataset<Person,QueryDataProvider<Person>> dataset;
@@ -2090,7 +2090,7 @@ showResults(results2);
 			</para>
 			<example>
 				<title>Type safety with the QueryDataProvider</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
 		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
@@ -2113,7 +2113,7 @@ showResults(results2);
 			</para>
 			<example>
 				<title>Type safety with the QueryDataProvider</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
 		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
@@ -2138,7 +2138,7 @@ showResults(results2);
 			</para>
 			<example>
 				<title>Writing datasets for custom providers</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 class MyCustomProvider<T> extends AbstractQueryDataProvider<T> {
         ...
@@ -2170,7 +2170,7 @@ class MyCustomProviderDataset<T>
 
 			<example>
 				<title>Using your new data provider dataset</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 		MyCustomProvider<Person> provider = new MyCustomProvider<Person>();
 		MyCustomProviderDataset<Person> ds = 
@@ -2193,7 +2193,7 @@ class MyCustomProviderDataset<T>
 
 			<example>
 				<title>Using your new data provider dataset</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
    QueryProvider<Person> buildProvider() {
      MyCustomProvider<Person> result = new MyCustomProvider<Person>();
@@ -2254,7 +2254,7 @@ class MyCustomProviderDataset<T>
 			</para>
 			<example>
 				<title>in-memory implementation of our Integer provider.</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class InMemoryIntegerProvider 
     extends InMemoryDataProvider<Integer> implements Serializable {
@@ -2282,7 +2282,7 @@ public class InMemoryIntegerProvider
 			</para>
 			<example>
 				<title>Testing our in-memory Integer data provider.</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 
@@ -2320,7 +2320,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 			</para>
 			<example>
 				<title>In-memory Integer data provider.</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 
@@ -2381,7 +2381,7 @@ public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 
 			<example>
 				<title>Testing the InMemoryPersonProvider</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class InMemoryPersonProviderTest 
     extends AbstractObjectDatasetJUnitTest<Person> {
@@ -2453,7 +2453,7 @@ public class InMemoryPersonProviderTest
 			</para>
 			<example>
 				<title>Multiple views using an in-memory adapter.</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 		InMemoryPersonProvider provider = new InMemoryPersonProvider();
 		InMemoryAdapterProvider<Person> providerAdapter = 
@@ -2494,7 +2494,7 @@ public class InMemoryPersonProviderTest
 			</para>
 			<example>
 				<title>Sorting by the Integer data provider.</title>
-				<programlisting>
+				<programlisting role="JAVA" language="java">
 <![CDATA[
 public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer> 
          implements Serializable {

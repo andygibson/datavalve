@@ -2,8 +2,8 @@
 "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 
 <book>
-	<title>JDataset Reference Guide</title>
-	<titleabbrev>JDataset Ref</titleabbrev>
+	<title>JADA Reference Guide</title>
+	<titleabbrev>JADA Ref</titleabbrev>
 	<bookinfo>
 		<author>
 			<personname>
@@ -135,7 +135,7 @@
 				some existing code from a different view technology.
 			</para>
 			<figure>
-				<title>Projects without using JDatasets</title>
+				<title>Projects without using JADA</title>
 				<mediaobject>
 					<imageobject role="fo">
 						<imagedata align="center" fileref="../img/app_without_jds.png"
@@ -164,7 +164,7 @@
 				with queries that are interchangeable. 
 			</para>
 			<figure>
-				<title>Projects using JDatasets</title>
+				<title>Projects using JADA</title>
 				<mediaobject>
 					<imageobject role="fo">
 						<imagedata align="center" fileref="../img/app_with_jds.png"
@@ -200,14 +200,12 @@
 						The
 						<classname>DataProvider</classname>
 						interface
-					</title>					
+					</title>
 					<programlisting role="JAVA" language="java">
-<![CDATA[
-public interface DataProvider<T> {
-	Integer fetchResultCount();
-	List<T> fetchResults(Paginator paginator);
-}
-]]>
+<![CDATA[public interface DataProvider<T> {
+  Integer fetchResultCount();
+  List<T> fetchResults(Paginator paginator);
+}]]>
 					</programlisting>
 				</example>
 				<para>
@@ -281,8 +279,7 @@ public interface DataProvider<T> {
 							Coding search queries the hard way.
                     </title>
 						<programlisting role="JAVA" language="java">
-<![CDATA[
-String sql = "";
+<![CDATA[String sql = "";
 if (searchCriteria.id != null  
   && searchCriteria.id.length() != 0) {
     if (sql.length()!= 0) {
@@ -320,8 +317,7 @@ for (String key : paramsMap.keySet) {
   qry.setParameter(key,paramsMap.get(key))
 }
 
-List<Person> results = qry.resultList();
-]]>
+List<Person> results = qry.resultList();]]>
 					</programlisting>
 
 					</example>
@@ -343,8 +339,7 @@ List<Person> results = qry.resultList();
 							Coding search queries the easy way.
                     </title>
 						<programlisting role="JAVA" language="java">
-<![CDATA[
-qry.addRestriction("p.id = :id");
+<![CDATA[qry.addRestriction("p.id = :id");
 qry.addRestriction("p.firstName = :firstName");
 qry.addRestriction("p.lastName = :lastName");
 ParameterResolver resolver = 
@@ -423,12 +418,10 @@ List<Person> results = qry.resultList();]]>
 				<example>
 					<title>Fetching data from a provider</title>
 					<programlisting role="JAVA" language="java">
-<![CDATA[				
-  DataProvider prov = new CustomDataProvider();
+<![CDATA[  DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
   List<ResultClass> results = prov.fetchResults(paginator);
-  Integer count = prov.getResultCount();  
-]]>  
+  Integer count = prov.getResultCount();]]>  
 				</programlisting>
 				</example>
 				<para>
@@ -452,16 +445,13 @@ List<Person> results = qry.resultList();]]>
 				</para>
 				<example>
 					<title>Limiting the data fetched from a data provider</title>
-					<programlisting role="JAVA" language="java">
-<![CDATA[				
-  DataProvider prov = new CustomDataProvider();
+					<programlisting role="JAVA" language="java">				
+<![CDATA[  DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
   paginator.setMaxRows(10);
   paginator.setFirstResult(35);
   List<ResultClass> results = prov.fetchResults(paginator);
-  Integer count = prov.fetchResultCount();
-    
-]]>  
+  Integer count = prov.fetchResultCount();]]>  
 				</programlisting>
 				</example>
 				<para>
@@ -512,16 +502,14 @@ List<Person> results = qry.resultList();]]>
 						<classname>ObjectDataset</classname>
 					</title>
 					<programlisting role="JAVA" language="java">
-<![CDATA[				
-  DataProvider provider = new CustomDataProvider();
+<![CDATA[  DataProvider provider = new CustomDataProvider();
   Dataset<SomeClass> dataset = new Dataset(provider);
   dataset.setMaxRows(10);
   dataset.setFirstResult(35);
   List<ResultClass> results = dataset.getResults();
   for (SomeClass item : dataset) {
     ...some code...
-  }
-]]>  
+  }]]>  
 				</programlisting>
 				</example>
 				<para>
@@ -564,17 +552,14 @@ List<Person> results = qry.resultList();]]>
 					Fetching data from a database using JPA					
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-
-  QueryProvider<Person> provider = new JpaDataProvider<Person>(em);
-  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
-  provider.setSelectStatement("select p from Person p");
-  provider.setCountStatement("select count(p) from Person p");
-  List<Person> results = dataset.getResultList();
-  for (Person p : results) {
-    System.out.println(p.getName());
-  }
-]]>  
+<![CDATA[QueryProvider<Person> provider = new JpaDataProvider<Person>(em);
+QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
+provider.setSelectStatement("select p from Person p");
+provider.setCountStatement("select count(p) from Person p");
+List<Person> results = dataset.getResultList();
+for (Person p : results) {
+  System.out.println(p.getName());
+}]]>  
 				</programlisting>
 			</example>
 		</sect1>
@@ -593,10 +578,8 @@ List<Person> results = qry.resultList();]]>
 					Restricting the data fetched					
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[  
-  QueryDataProvider<Person> provider = createPersonProvider();
-  provider.addRestriction("p.id = 4");  
-]]>  
+<![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
+provider.addRestriction("p.id = 4");  ]]>  
 				</programlisting>
 			</example>
 
@@ -625,17 +608,15 @@ List<Person> results = qry.resultList();]]>
 					Restricting Results with Constant Parameters					
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[  
-  QueryDataProvider<Person> provider = createPersonProvider();
+<![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
   
-  //add parameter using :param keyword in restriction
-  provider.addRestriction("p.id = :param",4);
-  provider.addRestriction("p.firstName = :param","John");
+//add parameter using :param keyword in restriction
+provider.addRestriction("p.id = :param",4);
+provider.addRestriction("p.firstName = :param","John");
   
-  //add parameter manually
-  provider.addRestriction("or p.lastName = :lastNameParam");
-  provider.addParameter("lastNameParam","Smith");
-]]>  
+//add parameter manually
+provider.addRestriction("or p.lastName = :lastNameParam");
+provider.addParameter("lastNameParam","Smith");]]>  
 				</programlisting>
 			</example>
 			<para>
@@ -653,11 +634,9 @@ List<Person> results = qry.resultList();]]>
 					Restricting with non-constant parameters					
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[  
-  QueryDataProvider<Person> provider = createPersonProvider();
-  provider.addRestriction("p.firstName = :param",searchCriteria.firstName);
-  provider.addRestriction("p.lastName = :param",searchCriteria.lastName);
-]]>  
+<![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
+provider.addRestriction("p.firstName = :param",searchCriteria.firstName);
+provider.addRestriction("p.lastName = :param",searchCriteria.lastName);]]>  
 				</programlisting>
 			</example>
 			<para>
@@ -679,16 +658,13 @@ List<Person> results = qry.resultList();]]>
 					Alternate Value Parameters					
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[  
-  QueryDataProvider<Person> provider = createPersonProvider();
+<![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
   
-  provider.addRestriction("p.firstName like :param",
-    searchCriteria.firstName,searchCriteria.firstName+"%");
+provider.addRestriction("p.firstName like :param",
+  searchCriteria.firstName,searchCriteria.firstName+"%");
     
-  provider.addRestriction("p.lastName like :param",
-    searchCriteria.lastName,searchCriteria.lastName+"%");
-    
-]]>  
+provider.addRestriction("p.lastName like :param",
+  searchCriteria.lastName,searchCriteria.lastName+"%");]]>  
 				</programlisting>
 			</example>
 			<para>
@@ -733,12 +709,10 @@ List<Person> results = qry.resultList();]]>
 					Parameter Resolving with Reflection					
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[  
-  QueryDataProvider<Person> provider = createPersonProvider();
-  provider.addRestriction("p.firstName like :firstName");
-  provider.addRestriction("or p.lastName like :lastName");
-  provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));
-]]>  
+<![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
+provider.addRestriction("p.firstName like :firstName");
+provider.addRestriction("or p.lastName like :lastName");
+provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]]>  
 				</programlisting>
 			</example>
 			<para>We can also bake the parameter resolver into the object directly by
@@ -748,36 +722,31 @@ List<Person> results = qry.resultList();]]>
 					Built in parameter resolution					
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[  
-public class SearchCriteria implements ParameterResolver {
+<![CDATA[public class SearchCriteria implements ParameterResolver {
 
-    //return values with wildcards
-	boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
-			Parameter parameter) {
-			if ("firstName".equals(parameter.getName())) {			  
-			  return firstName == null ? null : firstName+"%";
-			}
-			if ("lastName".equals(parameter.getName())) {			  
-			  return lastName == null ? null : lastName+"%";
-			}
-			return null;
-    }
-
-	boolean acceptParameter(String name) {
-	  return name.startsWith(":");
+  //return values with wildcards
+  boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
+    Parameter parameter) {
+    if ("firstName".equals(parameter.getName())) {			  
+	  return firstName == null ? null : firstName+"%";
 	}
+	if ("lastName".equals(parameter.getName())) {			  
+	  return lastName == null ? null : lastName+"%";
+	}
+	return null;
+  }
 
+  boolean acceptParameter(String name) {
+	return name.startsWith(":");
+  }
 }
-
 ...
 ...
 ...
-
   QueryDataProvider<Person> provider = createPersonProvider();
   provider.addRestriction("p.firstName = :firstName");
   provider.addRestriction("or p.lastName = :lastName");
-  provider.addParameterResolver(searchCriteria);
-]]>  
+  provider.addParameterResolver(searchCriteria);]]>  
 				</programlisting>
 			</example>
 			<para>
@@ -792,16 +761,14 @@ public class SearchCriteria implements ParameterResolver {
 					Using the Seam data provider 					
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[  
-@Name("myPostsQuery")
-pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
+<![CDATA[@Name("myPostsQuery")
+public class MyPostsQueryBean extends SeamJpaQueryDataset{
   public MyPostsQueryBean() {
     setSelectStatement("select p from Posts p left join fetch p.comments");
     setCountStatement("select count(p) from Posts p");    
     addRestriction("p.author.id = #{loggedInUser.id}");
   }
-}
-]]>  
+}]]>  
 				</programlisting>
 			</example>
 			<para>
@@ -830,19 +797,17 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 					Ordering on the data
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[  
-  QueryDataProvider<Person> provider = createPersonProvider();  
-  provider.addRestriction("p.lastName = 'SMITH'");
-  provider.getOrderKeyMap().put("name","p.lastName,p.firstName");
-  provider.getOrderKeyMap().put("age","p.dateOfBirth");
-  provider.getOrderKeyMap().put("id","p.id");
-  //now set the order
-  Paginator paginator = new DefaultPaginator();
-  paginator.setOrderKey("name");  //order by the persons name
-  paginator.setOrderAscending(false);
+<![CDATA[QueryDataProvider<Person> provider = createPersonProvider();  
+provider.addRestriction("p.lastName = 'SMITH'");
+provider.getOrderKeyMap().put("name","p.lastName,p.firstName");
+provider.getOrderKeyMap().put("age","p.dateOfBirth");
+provider.getOrderKeyMap().put("id","p.id");
+//now set the order
+Paginator paginator = new DefaultPaginator();
+paginator.setOrderKey("name");  //order by the persons name
+paginator.setOrderAscending(false);
   
-  List<Person> orderedList = provider.fetchResults(paginator):
-]]>  
+List<Person> orderedList = provider.fetchResults(paginator):]]>  
 				</programlisting>
 			</example>
 			<para>
@@ -936,15 +901,13 @@ pulic class MyPostsQueryBean extends SeamJpaQueryDataset{
 					Implementing the SQL to Object mapping
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-
-public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
+<![CDATA[public class PersonDataProvider extends 
+    AbstractJdbcDataprovider<Person> {
   public T createObjectFromResultSet(ResultSet resultSet) throws SQLException {
     return new Person(resultSet.getLong(1), resultSet.getString(2),
 	    resultSet.getString(3));
   }
-}  
-]]>  
+}  ]]>  
 				</programlisting>
 			</example>
 			<para>
@@ -967,19 +930,15 @@ public class PersonDataProvider extends AbstractJdbcDataprovider<Person> {
 					SQL to Object mapping using an external mapper.
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class PersonObjectMapper implements ResultSetObjectMapper<Person> {
+<![CDATA[public class PersonObjectMapper implements 
+    ResultSetObjectMapper<Person> {
 
-    public Person createObjectFromResultSet(ResultSet resultSet) 
-      throws SQLException {
-      
-	  return new Person(resultSet.getLong(1),resultSet.getString(1),
-	    resultSet.getString(2));
-	    
+  public Person createObjectFromResultSet(ResultSet resultSet) 
+    throws SQLException {      
+    return new Person(resultSet.getLong(1),resultSet.getString(1),
+	  resultSet.getString(2));	    
     }
-		
 }
-
 
 public QueryDataProvider<Person> createDataProvider() {
   JdbcDataProvider<Person> prov = new JdbcDataProvider<Person>();
@@ -1026,30 +985,29 @@ public QueryDataProvider<Person> createDataProvider() {
 					<code>IntegerDataProvider.java</code>
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
+<![CDATA[public class IntegerDataProvider implements DataProvider<Integer>,
+    Serializable {
 
-	public Integer fetchResultCount() {
-		return 100;
-	}
+  public Integer fetchResultCount() {
+    return 100;
+  }
 
-	public List<Integer> fetchResults(Paginator paginator) {
+  public List<Integer> fetchResults(Paginator paginator) {
 		
-		int start = paginator.getFirstResult();
+    int start = paginator.getFirstResult();
 		
-		int end = paginator.includeAllResults() ? 100 : 
-		  Math.min(100, start+paginator.getMaxRows().intValue()-1);
+	int end = paginator.includeAllResults() ? 100 : 
+	  Math.min(100, start+paginator.getMaxRows().intValue()-1);
 		
-		List<Integer> results = new ArrayList<Integer>();
-		System.out.println("Generating results from "+start+" to "+end);
-		while (start <= end) {
-			results.add(start++);			
-		}
-		paginator.setNextAvailable(end < 100);
-		return results;
+	List<Integer> results = new ArrayList<Integer>();
+	System.out.println("Generating results from "+start+" to "+end);
+	while (start <= end) {
+	  results.add(start++);			
 	}
-}
-]]>
+	paginator.setNextAvailable(end < 100);
+	return results;
+  }
+}]]>
 			</programlisting>
 			</example>
 			<para>
@@ -1104,8 +1062,7 @@ public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 					<code>IntegerDataProvider.java</code>
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class Main {
+<![CDATA[public class Main {
 
 	public static void main(String[] args) {
 		Paginator paginator = new DefaultPaginator(10);
@@ -1122,8 +1079,7 @@ public class Main {
 			System.out.println("Value = " + i);
 		}
 	}
-}	
-]]>
+}]]>
 </programlisting>
 			</example>
 
@@ -1150,13 +1106,12 @@ public class Main {
 				expected list of numbers from 0 to 9
 				with a page size of 10.
 			</para>
-			<example>
+			<figure>
 				<title>
 					Execution Results
 				</title>
-				<programlisting role="JAVA" language="java">
-<![CDATA[
-Generating results from 0 to 9
+				<screen>
+<![CDATA[Generating results from 0 to 9
 Result Size = 10
 Value = 0
 Value = 1
@@ -1167,10 +1122,9 @@ Value = 5
 Value = 6
 Value = 7
 Value = 8
-Value = 9
-]]>
-</programlisting>
-			</example>
+Value = 9]]>
+</screen>
+			</figure>
 			<para>
 				So everthing looks fine, this is the result we expected so we
 				must
@@ -1235,8 +1189,7 @@ Value = 9
 					<code>IntegerDataProvider.java</code>
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class IntegerDataProviderTest extends 
+<![CDATA[public class IntegerDataProviderTest extends 
   AbstractObjectDatasetJUnitTest<Integer> {
 
 	@Override
@@ -1250,8 +1203,7 @@ public class IntegerDataProviderTest extends
 		return 100;
 	}
 
-}
-]]>
+}]]>
 </programlisting>
 			</example>
 			<para>If you run this test case now, you will see things light up
@@ -1263,18 +1215,6 @@ public class IntegerDataProviderTest extends
 				not only
 				looked ok, but worked fine when we ran it. 
 	</para>
-			<figure>
-				<title>Oh Noes! Epic Fail</title>
-				<mediaobject>
-					<imageobject role="fo">
-						<imagedata align="center" fileref="../img/test_fail.png"
-							scalefit="1" />
-					</imageobject>
-					<imageobject role="html">
-						<imagedata align="center" fileref="../img/test_fail.png" />
-					</imageobject>
-				</mediaobject>
-			</figure>
 			<para>
 				The problem is subtle but involves on the old gotcha there are 101
 				numbers
@@ -1307,21 +1247,21 @@ public class IntegerDataProviderTest extends
 				</title>
 				<programlisting role="JAVA" language="java">
 <![CDATA[
-	public List<Integer> fetchResults(Paginator paginator) {
+public List<Integer> fetchResults(Paginator paginator) {
 		
-		int start = paginator.getFirstResult()+1; //results start from 1
+  int start = paginator.getFirstResult()+1; //results start from 1
 		
-		int end = paginator.includeAllResults() ? 100 : 
-		  Math.min(100, start+paginator.getMaxRows().intValue()-1);
+  int end = paginator.includeAllResults() ? 100 : 
+  Math.min(100, start+paginator.getMaxRows().intValue()-1);
 		
-		List<Integer> results = new ArrayList<Integer>();
-		System.out.println("Generating results from "+start+" to "+(end));
-		while (start <= end) {
-			results.add(start++);			
-		}
-		paginator.setNextAvailable(end < 100);
-		return results;
-	}]]>
+  List<Integer> results = new ArrayList<Integer>();
+  System.out.println("Generating results from "+start+" to "+(end));
+  while (start <= end) {
+    results.add(start++);			
+  }
+  paginator.setNextAvailable(end < 100);
+  return results;
+}]]>
 </programlisting>
 			</example>
 			<para>
@@ -1383,45 +1323,42 @@ public class IntegerDataProviderTest extends
 				</title>
 				<programlisting role="JAVA" language="java">
 <![CDATA[
-	public void testResultsPaginated() {
-		ObjectDataset<Integer> ds = buildObjectDataset();
-		ds.setMaxRows(10);
-		Integer expected = 1;
-		while (ds.isNextAvailable()) {
-			List<Integer> results = ds.getResultList();
-			for (Integer i : results) {
-				assertEquals(expected, i);
-				expected = expected + 1;
-			}
-			ds.next();
-		}
+public void testResultsPaginated() {
+  ObjectDataset<Integer> ds = buildObjectDataset();
+  ds.setMaxRows(10);
+  Integer expected = 1;
+  while (ds.isNextAvailable()) {
+    List<Integer> results = ds.getResultList();
+    for (Integer i : results) {
+      assertEquals(expected, i);
+      expected = expected + 1;
+    }
+    ds.next();
+  }
 
-	}
+}
 
-	public void testResultsIterated() {
-		ObjectDataset<Integer> ds = buildObjectDataset();
-		ds.setMaxRows(10);
-		Integer expected = 1;
-		for (Integer i : ds) {
-			assertEquals(expected, i);
-			expected = expected + 1;
-		}
-	}
+public void testResultsIterated() {
+  ObjectDataset<Integer> ds = buildObjectDataset();
+  ds.setMaxRows(10);
+  Integer expected = 1;
+  for (Integer i : ds) {
+    assertEquals(expected, i);
+    expected = expected + 1;
+  }
+}
 
-	public void testResultsNonPaginated() {
-		ObjectDataset<Integer> ds = buildObjectDataset();
-		ds.setMaxRows(null);
-		Integer expected = 1;
-
-		List<Integer> results = ds.getResultList();
-		assertEquals(100, results.size()); //check size
-		for (Integer i : results) {
-			assertEquals(expected, i);
-			expected = expected + 1;
-		}
-	}
-
-]]>
+public void testResultsNonPaginated() {
+  ObjectDataset<Integer> ds = buildObjectDataset();
+  ds.setMaxRows(null);
+  Integer expected = 1;
+  List<Integer> results = ds.getResultList();
+  assertEquals(100, results.size()); //check size
+  for (Integer i : results) {
+    assertEquals(expected, i);
+    expected = expected + 1;
+  }
+}]]>
 </programlisting>
 			</example>
 			<para>Again, running these tests should provide a clean set of test
@@ -1472,15 +1409,13 @@ public class IntegerDataProviderTest extends
 					<classname>ObjectDataset</classname>
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public static void main(String[] args) {
+<![CDATA[public static void main(String[] args) {
 	ObjectDataset<Integer> ds = new Dataset<Integer>(new IntegerDataProvider());
 	ds.setMaxRows(5);
 
 	List<Integer> results = ds.getResultList();		
 	showResults(results);			
-}
-]]>
+}]]>
 </programlisting>
 			</example>
 			<para>If you run this now, it should run the same as before except
@@ -1498,8 +1433,7 @@ public static void main(String[] args) {
 					<classname>ObjectDataset</classname>
 				</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public static void main(String[] args) {
+<![CDATA[public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();
 	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
 	ds.setMaxRows(5);
@@ -1507,8 +1441,7 @@ public static void main(String[] args) {
 	List<Integer> results = ds.getResultList();		
 	showResults(results);
 	showResults(ds.getResultList());			
-}
-]]>
+}]]>
 </programlisting>
 			</example>
 			<figure>
@@ -1593,13 +1526,11 @@ Value = 5
 				<example>
 					<title>Returning all results</title>
 					<programlisting role="JAVA" language="java">
-<![CDATA[
-public static void main(String[] args) {
+<![CDATA[public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();
 	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
 	showResults(ds.getResultList());			
-}
-]]>
+}]]>
 </programlisting>
 				</example>
 				<figure>
@@ -1637,16 +1568,14 @@ Value = 100
 				<example>
 					<title>Returning all results</title>
 					<programlisting role="JAVA" language="java">
-<![CDATA[
-public static void main(String[] args) {
+<![CDATA[public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();
 	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
 	ds.setMaxRows(5);
 	for (Integer i : ds) {
 		System.out.println("Iterating over value "+i);
 	}		
-}
-]]>
+}]]>
 </programlisting>
 				</example>
 				<figure>
@@ -1716,14 +1645,12 @@ Iterating over value 100
 				<example>
 					<title>Attempting manual iteration</title>
 					<programlisting role="JAVA" language="java">
-<![CDATA[
-//BROKEN CODE, DO NOT USE
+<![CDATA[//BROKEN CODE, DO NOT USE
 while (ds.isNextAvailable()) {
 	List<Integer> res = ds.getResultList();
 	showResults(res);
 	ds.next();
-}
-]]>
+}]]>
 </programlisting>
 				</example>
 				<para>
@@ -1821,12 +1748,10 @@ while (ds.isNextAvailable()) {
 						fetching
 						results</title>
 					<programlisting role="JAVA" language="java">
-<![CDATA[
-DataProvider<Integer> provider = new IntegerDataProvider();
+<![CDATA[DataProvider<Integer> provider = new IntegerDataProvider();
 Paginator paginator = new SimplePaginator(10);
 List<Integer> results = provider.fetchResults(paginator);
-showResults(results); 			
-]]>
+showResults(results); 			]]>
 </programlisting>
 				</example>
 				<para>
@@ -1879,8 +1804,7 @@ showResults(results);
 				<example>
 					<title>Multiple views of the same data</title>
 					<programlisting role="JAVA" language="java">
-<![CDATA[
-DataProvider<Integer> provider = new IntegerDataProvider();
+<![CDATA[DataProvider<Integer> provider = new IntegerDataProvider();
 Paginator paginator1 = new DefaultPaginator(10);
 Paginator paginator2 = new DefaultPaginator(15);
 paginator1.setFirstResult(20);
@@ -1893,8 +1817,7 @@ List<Integer> results2 = provider.fetchResults(paginator2);
 System.out.println("Result Set 1");
 showResults(results1); 			
 System.out.println("Result Set 2");
-showResults(results2);
-]]>
+showResults(results2);]]>
 </programlisting>
 				</example>
 				<para>Here we obtain two different sets of data from a single data
@@ -1909,11 +1832,11 @@ showResults(results2);
 	</chapter>
 
 	<chapter>
-		<title>The JQA Architecture</title>
+		<title>The JADA Architecture</title>
 		<para>
 			Now we've
 			covered these
-			fundamentals of using JQA
+			fundamentals of using JADA
 			we can look at
 			the different
 			subclasses
@@ -2035,21 +1958,19 @@ showResults(results2);
 			<example>
 				<title>Poorly typed provider and dataset useage</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-		Dataset<Person> dataset = new Dataset<Person>(provider);
+<![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
+  Dataset<Person> dataset = new Dataset<Person>(provider);
 			
-		//	
-		// Won't work, getProvider returns a DataProvider, 
-		// not a query data provider.  DataProvider doesn't 
-		// have the query data provider methods on there.
-		//
-		//dataset.getProvider().addRestriction("p.id = :param",300);
-		
-		// Casting required
-		((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction(
-		  "p.id = :param",300);
-]]>
+  //	
+  // Won't work, getProvider returns a DataProvider, 
+  // not a query data provider.  DataProvider doesn't 
+  // have the query data provider methods on there.
+  //
+  //dataset.getProvider().addRestriction("p.id = :param",300);
+
+  // Casting required
+  ((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction(
+      "p.id = :param",300);]]>
 </programlisting>
 			</example>
 			<para>
@@ -2062,17 +1983,14 @@ showResults(results2);
 			<example>
 				<title>Strongly typed data provider and dataset usage</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-		QueryDataProvider<Person> provider;
-		GenericProviderDataset<Person,QueryDataProvider<Person>> dataset;
-		
-		provider = new JpaQueryProvider<Person>();
-		dataset = 
-		  new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
-		dataset.getProvider().init(Person.class, "p");
-		dataset.getProvider().addRestriction("p.id = #{personSearch.id}");
-		dataset.getProvider().addParameterResolver(new MyParameterResolver());
-]]>
+<![CDATA[QueryDataProvider<Person> provider;
+GenericProviderDataset<Person,QueryDataProvider<Person>> dataset;
+	
+provider = new JpaQueryProvider<Person>();
+dataset = new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
+dataset.getProvider().init(Person.class, "p");
+dataset.getProvider().addRestriction("p.id = #{personSearch.id}");
+dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
 </programlisting>
 			</example>
 			<para>
@@ -2091,12 +2009,10 @@ showResults(results2);
 			<example>
 				<title>Type safety with the QueryDataProvider</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
-		dataset.getProvider().init(Person.class, "p");
-		dataset.getProvider().addRestriction("p.id = #{person.id}");
-]]>
+<![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
+  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
+  dataset.getProvider().init(Person.class, "p");
+  dataset.getProvider().addRestriction("p.id = #{person.id}");]]>
 </programlisting>
 			</example>
 			<para>
@@ -2114,13 +2030,11 @@ showResults(results2);
 			<example>
 				<title>Type safety with the QueryDataProvider</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-		QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-		QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
-		dataset.init(Person.class, "p");
-		dataset.addRestriction("p.id = #{person.id}");
-		dataset.addParameterResolver(new MyParameterResolver());
-]]>
+<![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
+  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
+  dataset.init(Person.class, "p");
+  dataset.addRestriction("p.id = #{person.id}");
+  dataset.addParameterResolver(new MyParameterResolver());]]>
 </programlisting>
 			</example>
 		</sect1>
@@ -2139,14 +2053,13 @@ showResults(results2);
 			<example>
 				<title>Writing datasets for custom providers</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-class MyCustomProvider<T> extends AbstractQueryDataProvider<T> {
+<![CDATA[class MyCustomProvider<T> extends AbstractQueryDataProvider<T> {
         ...
         ...           		
-  		//this is specific to this implementation
-  		public void setWidgetConnection(WidgetConnection connection) {
-  		  this.connection = conn
-  		}
+  //this is specific to this implementation
+  public void setWidgetConnection(WidgetConnection connection) {
+    this.connection = conn
+  }
 }
 
 class MyCustomProviderDataset<T> 
@@ -2159,8 +2072,7 @@ class MyCustomProviderDataset<T>
    public MyCustomProviderDataset(MyCustomProvider<T> provider) {
      super(provider);
    }
-}
-]]>
+}]]>
 </programlisting>
 			</example>
 			<para>The dataset name should consist of the provider class name with the
@@ -2171,12 +2083,9 @@ class MyCustomProviderDataset<T>
 			<example>
 				<title>Using your new data provider dataset</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-		MyCustomProvider<Person> provider = new MyCustomProvider<Person>();
-		MyCustomProviderDataset<Person> ds = 
-		  new MyCustomProviderDataset<Person>(provider);
-		ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());
-]]>
+<![CDATA[MyCustomProvider<Person> provider = new MyCustomProvider<Person>();
+MyCustomProviderDataset<Person> ds = new MyCustomProviderDataset<Person>(provider);
+ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
 </programlisting>
 			</example>
 
@@ -2194,12 +2103,11 @@ class MyCustomProviderDataset<T>
 			<example>
 				<title>Using your new data provider dataset</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-   QueryProvider<Person> buildProvider() {
-     MyCustomProvider<Person> result = new MyCustomProvider<Person>();
-     result.setWidgetConnection(xyz);
-     return result;     
-   }
+<![CDATA[  QueryProvider<Person> buildProvider() {
+    MyCustomProvider<Person> result = new MyCustomProvider<Person>();
+    result.setWidgetConnection(xyz);
+    return result;     
+  }
    
    QueryDataset<Person> buildDataset() {
      MyCustomProvider<Person> provider = buildProvider();
@@ -2229,7 +2137,7 @@ class MyCustomProviderDataset<T>
 		<title>Non-Database Providers</title>
 		<para>There are a number of places you can choose to fetch data from and
 			usually you are on your own regarding how you get that data into your
-			application. JQA provides the ability to access non-databse data sources and
+			application. JADA provides the ability to access non-databse data sources and
 			fetch contents as pojos. It does by abstracting the concepts of fetching data
 			to a level that is above retrieving it from the database. As a result, there
 			are a number of different implementations for fetching data without a
@@ -2255,8 +2163,7 @@ class MyCustomProviderDataset<T>
 			<example>
 				<title>in-memory implementation of our Integer provider.</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class InMemoryIntegerProvider 
+<![CDATA[public class InMemoryIntegerProvider 
     extends InMemoryDataProvider<Integer> implements Serializable {
 	
 	@Override
@@ -2268,8 +2175,7 @@ public class InMemoryIntegerProvider
 		return result;
 	}
 
-}
-]]>
+}]]>
 </programlisting>
 			</example>
 			<para>
@@ -2292,8 +2198,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 		return new Dataset<Integer>(provider);
 
 	}	
-}
-]]>
+}]]>
 </programlisting>
 			</example>
 
@@ -2321,14 +2226,12 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 			<example>
 				<title>In-memory Integer data provider.</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
+<![CDATA[public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 
-	private List<Person> backingList;
-	private static final int PERSON_COUNT = 100;
+  private List<Person> backingList;
+  private static final int PERSON_COUNT = 100;
 
-	private class PersonIdComparator implements Comparator<Person>,
-			Serializable {
+  private class PersonIdComparator implements Comparator<Person>,Serializable {
 
 		public int compare(Person o1, Person o2) {
 			return (int) (o1.getId() - o2.getId());
@@ -2368,8 +2271,7 @@ public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 		return backingList;
 	}
 
-}
-]]>
+}]]>
 </programlisting>
 			</example>
 			<para>
@@ -2382,8 +2284,7 @@ public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 			<example>
 				<title>Testing the InMemoryPersonProvider</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class InMemoryPersonProviderTest 
+<![CDATA[public class InMemoryPersonProviderTest 
     extends AbstractObjectDatasetJUnitTest<Person> {
 
 	@Override
@@ -2424,7 +2325,7 @@ public class InMemoryPersonProviderTest
 		}
 		
 	}
-]]>
+}]]>
 </programlisting>
 			</example>
 			<para>
@@ -2454,19 +2355,16 @@ public class InMemoryPersonProviderTest
 			<example>
 				<title>Multiple views using an in-memory adapter.</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-		InMemoryPersonProvider provider = new InMemoryPersonProvider();
-		InMemoryAdapterProvider<Person> providerAdapter = 
-		    new InMemoryAdapterProvider<Person>(provider);
+<![CDATA[  InMemoryPersonProvider provider = new InMemoryPersonProvider();
+  InMemoryAdapterProvider<Person> providerAdapter = 
+    new InMemoryAdapterProvider<Person>(provider);
 		
-		ObjectDataset<Person> ds = new Dataset<Person>(provider);
-		ObjectDataset<Person> ds2 = new Dataset<Person>(providerAdapter);
+  ObjectDataset<Person> ds = new Dataset<Person>(provider);
+  ObjectDataset<Person> ds2 = new Dataset<Person>(providerAdapter);
 		
-		//shared data, independent ordering and paging
-		ds.setOrderKey("name");
-		ds2.setOrderKey("id");
-		
-]]>
+  //shared data, independent ordering and paging
+  ds.setOrderKey("name");
+  ds2.setOrderKey("id");]]>
 </programlisting>
 			</example>
 			<para>
@@ -2495,31 +2393,29 @@ public class InMemoryPersonProviderTest
 			<example>
 				<title>Sorting by the Integer data provider.</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer> 
-         implements Serializable {
+<![CDATA[public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer> 
+    implements Serializable {
 
-	private transient Comparator<Integer> comparator = new Comparator<Integer>() {
-		public int compare(Integer o1, Integer o2) {
-			return o1-o2;
-        }				
-	};
+  private transient Comparator<Integer> comparator = new Comparator<Integer>() {
+    public int compare(Integer o1, Integer o2) {
+      return o1-o2;
+    }				
+};
 	
-	@Override
-	protected List<Integer> fetchBackingData() {
-		List<Integer> result = new ArrayList<Integer>();
-		for (int i = 1;i <=100;i++) {
-			result.add(i);
-		}
-		return result;
-	}
+  @Override
+  protected List<Integer> fetchBackingData() {
+    List<Integer> result = new ArrayList<Integer>();
+    for (int i = 1;i <=100;i++) {
+      result.add(i);
+    }
+    return result;
+  }
 
-	@Override
-	protected Comparator<Integer> translateOrderKey(String key) {	
-		return comparator;
-	}
-}
-]]>
+  @Override
+  protected Comparator<Integer> translateOrderKey(String key) {	
+    return comparator;
+  }
+}]]>
 </programlisting>
 			</example>
 			<para>Note also that in this case, the comparator field is marked transient
@@ -2559,9 +2455,8 @@ public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer>
 					in at once. (The delay at the start is due to
 					the creation of the database,
 					not the loading of all the data).
-				</para>				
+				</para>
 			</sect2>
 		</sect1>
 	</chapter>
 </book>
-	

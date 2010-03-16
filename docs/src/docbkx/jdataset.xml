@@ -19,23 +19,18 @@
 	<chapter id="Introduction">
 		<title>Introduction</title>
 		<para>
-			The purpose behind this framework is to let developers access
-			diverse
-			sources of data in an easy and consistent
-			manner. It also
-			aims to augment the
-			functionalities of existing data access
-			mechanisms such as JDBC, Hibernate and
-			JPA
-			in a reusable manner.
+			The purpose behind this framework is to let developers access diverse sources of
+			data in a consistent manner that leverages the similarities between the
+			different data sources to create common interfaces to access the data. It
+			also aims to augment the functionalities of existing data access mechanisms,
+			again leveraging the similarities between providers to create common
+			extensions.
 		</para>
 		<sect1>
 			<title>The Itch</title>
 			<para>
-				When starting a new data driven application you typically need
-				some
-				mechanism to query data with the following
-				capabilities:
+				When starting a new data driven application developers typically need
+				some mechanism to query data with the following capabilities:
 		</para>
 			<itemizedlist>
 				<listitem>
@@ -48,48 +43,33 @@
 					<para>Lazy Loading of data</para>
 				</listitem>
 				<listitem>
-					<para>Optional restrictions in the query for when parameter values
-						are
+					<para>Optional restrictions in the query for when parameter values are
 						missing</para>
 				</listitem>
 				<listitem>
 					<para>The ability to apply a common front end to the back end query
-						mechanism so you can reuse both pieces to
-						implement forms in
-						minutes.</para>
+						mechanism so you can reuse both pieces to implement forms in minutes.
+					</para>
 				</listitem>
 			</itemizedlist>
 			<para>
 				As a long time Seam user, Seam provides most of this with the
 				<classname>EntityQuery</classname>
-				that can be used to run queries using JPA but it isn't perfect. I
-				extended
+				that can be used to run queries using JPA but it isn't perfect. I extended
 				the Seam
 				<classname>EntityQuery</classname>
 				and
 				<ulink
 					url="http://www.andygibson.net/blog/index.php/2008/10/02/codeless-ajax-ordered-and-paginated-tables-in-seam/">blogged about it </ulink>
-				and it still remains a popular article today and one I get most
-				emails about
-				when people are looking for info on JSF and
-				pagination.
-				However, this still
-				has
-				problems since it only works in Seam projects
-				but the same functionality
-				is
-				needed
-				in Wicket, Spring, JSP and even
-				Swing and console apps. Other
-				frameworks such as Wicket provided an
-				interface for
-				handling ordered paginated
-				datasets, but the
-				implementation was
-				usually up to the user as this was beyond
-				the
-				scope of
-				Wicket.
+				and it still remains a popular article today when people are looking for
+				info on JSF and pagination.
+				However, this still has problems since it only
+				works in Seam projects but the same functionality
+				is needed in Wicket,
+				Spring, JSP and even Swing and console apps. Other frameworks such as Wicket
+				provided an interface for
+				handling ordered paginated datasets, but the
+				implementation is up to the user as this is beyond the scope of Wicket.
 			</para>
 
 			<para>The other source of inspiration is from Borland Delphi which
@@ -112,27 +92,21 @@
 				developing in Java, you typically have to code
 				against a common but
 				more
-				precise back end such as a JDBC query and write new interfaces
+				specific back end such as a JDBC query and write new interfaces
 				for different
 				view
 				technologies.
 			</para>
-			<para>It seems that all these frameworks recognized the need to
-				access data in
-				a uniform way, but it was beyond the
+			<para>It seems that all these frameworks recognized the need for
+				controlled
+				data access but it was beyond the
 				scope of the
-				frameworks to provide it,
-				and the what they did provide was
-				usually limited to their own
-				framework.
-				Without a uniform data
-				access mechanism developers have to write
-				and re-write
-				their front
-				and back ends
-				every time they start a new project or
-				want to re-use
-				some existing code from a different view technology.
+				frameworks to provide it.
+				Typically what was provided as limited to their own frameworks as one would
+				expect.
+				Without a uniform data access mechanism developers have to write and
+				re-write their front and back ends
+				every time they start a new project.
 			</para>
 			<figure>
 				<title>Projects without using JADA</title>
@@ -161,7 +135,12 @@
 				parameters. This lets us write common view
 				code that
 				can interface
-				with queries that are interchangeable. 
+				with queries that are interchangeable. The
+				goal of this
+				project is to bridge the gaps between these different view and
+				data access
+				frameworks to create re-usable data access and view
+				components. 
 			</para>
 			<figure>
 				<title>Projects using JADA</title>
@@ -178,22 +157,21 @@
 			<sect2>
 				<title>Architecture</title>
 				<para>
-					JQA is organized into two main interfaces called
+					JADA is organized into two main interfaces called
 					<classname>Paginator</classname>
 					and
 					<classname>DataProvider</classname>
 					. The
 					<classname>Paginator</classname>
-					holds the state about our dataset such as the order information,
+					defines the state about our dataset such as the order information,
 					the page
-					size and the current page. The
+					size and the result we are up to. The
 					<classname>DataProvider</classname>
 					interface defines two simple methods which are used to fetch the
 					total
-					number of rows in the dataset, and a (sub)set
+					number of rows in the complete list of data, and a (sub)set
 					of the items in
-					the
-					dataset.
+					the dataset.
 				</para>
 				<example>
 					<title>
@@ -211,8 +189,9 @@
 				<para>
 					When we fetch the results, we pass in the paginator so the
 					<classname>DataProvider</classname>
-					implementation knows which rows to return and it can set the flag
-					indicating whether there are more results or not.
+					implementation knows how many rows to return and where to start returning
+					them from, and it can set the flag on the paginator indicating whether
+					there are more results or not.
 				</para>
 			</sect2>
 			<sect2>
@@ -230,19 +209,23 @@
 					<title>Interchangable query mechanisms</title>
 					<para>
 						Most projects plan on using only one data access mechanism but by
-						coding to the JQA API, you can switch implementations later. You
-						might move
+						coding to the JADA API, you can switch implementations later. You
+						might
+						move
 						from JPA to Hibernate or even to plain JDBC queries and most of
-						the code
+						the
+						code
 						that uses these queries, including parameterized queries, will
-						remain the
-						same. There may also be times where you need to access different types of
+						remain
+						the
+						same. There may also be times where you need to access different types
+						of
 						data stores such as a file based
 						datasource updated nightly which needs
 						accessing and displaying.  
 					</para>
 					<para>Regardless of where the different types of datastores come from, with
-						JQA you will be able to access them and control the results using your
+						JADA you will be able to access them and control the results using your
 						existing view code to paginate and order the data. Even if you don't see
 						yourself switching data access mechanisms or having to access diverse data
 						stores, you may want to just switch the query here and there from a pure
@@ -253,7 +236,7 @@
 
 				<sect3>
 					<title>Easy Querying</title>
-					<para>JQA makes it easier to query for the data
+					<para>JADA makes it easier to query for the data
 						you need. It
 						features
 						flexible parameter definition by setting the
@@ -321,7 +304,7 @@ List<Person> results = qry.resultList();]]>
 					</programlisting>
 
 					</example>
-					<para>With JQA, you can define the query, specify
+					<para>With JADA, you can define the query, specify
 						how the
 						parameters are
 						resolved and the data provider
@@ -353,7 +336,7 @@ List<Person> results = qry.resultList();]]>
 
 				<sect3>
 					<title>Flexible and Secure Ordering Abstraction</title>
-					<para>JQA lets you order your data base on order key values as
+					<para>JADA lets you order your data base on order key values as
 						opposed to
 						explicit table column values which could
 						be prone to SQL
@@ -373,17 +356,19 @@ List<Person> results = qry.resultList();]]>
 				</sect3>
 				<sect3>
 					<title>Convert anything into a dataset</title>
-					<para>At the heart of JQA is a simple API which allows you to turn
+					<para>At the heart of JADA is a simple API which allows you to turn
 						anything
 						into a source of data that can be accessed and
 						paginated from
 						existing view
 						code.
 						This can range from custom datasources or
-						third party applications to
+						third party
+						applications to
 						text, csv
 						or binary file sources or
-						even just a static in-memory list of
+						even just a static
+						in-memory list of
 						objects.
 					</para>
 				</sect3>
@@ -530,8 +515,9 @@ List<Person> results = qry.resultList();]]>
 	<chapter>
 		<title>Database Driven Providers</title>
 		<para>
-			While JQA offers a way to access many different types of data stores, in most
-			cases, you will want to fetch data from a database. JQA comes with data
+			While JADA offers a way to access many different types of data stores, in
+			most
+			cases, you will want to fetch data from a database. JADA comes with data
 			providers for fetching data using JPA, Hibernate or just plain SQL via JDBC.
 			These different providers are based off and implement the
 			<classname>QueryDataProvider</classname>
@@ -587,7 +573,7 @@ provider.addRestriction("p.id = 4");  ]]>
 			<para>
 				It is often more convenient to specify limitations using parameters
 				and
-				JQA
+				JADA
 				has a number of different mechanisms with which to specify
 				parameterized
 				restrictions. First we'll look at adding
@@ -772,7 +758,7 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
 				</programlisting>
 			</example>
 			<para>
-				On the subject of Seam, with JQA you can subclass either a
+				On the subject of Seam, with JADA you can subclass either a
 				<classname>SeamJPaQueryDataset</classname>
 				or a
 				<classname>SeamJpaNativeDataset</classname>
@@ -786,7 +772,8 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
 		<sect1>
 			<title>Order in the house</title>
 			<para>
-				JQA also features key based ordering so rather than specify ordering as
+				JADA also features key based ordering so rather than specify ordering
+				as
 				a set
 				of fields on the dataset, you can specify ordering using a key that
 				maps to
@@ -2136,95 +2123,73 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
 	<chapter>
 		<title>Non-Database Providers</title>
 		<para>There are a number of places you can choose to fetch data from and
-			usually you are on your own regarding how you get that data into your
-			application. JADA provides the ability to access non-databse data sources and
-			fetch contents as pojos. It does by abstracting the concepts of fetching data
-			to a level that is above retrieving it from the database. As a result, there
-			are a number of different implementations for fetching data without a
-			database while letting you benefit from using the same interfaces to fetch
-			and control the data to be displayed.</para>
-		<sect1>
+			usually you have no common way to get that data into your
+			application. JADA
+			provides the ability to access non-database data sources and
+			fetch contents as
+			pojos. It does this by abstracting the concepts of fetching data
+			to a level
+			that is
+			above retrieving it from the database. As a result, there
+			are a number
+			of
+			different implementations for fetching data without a
+			database while letting
+			you benefit from using the same interfaces to fetch
+			and control the data to be
+			displayed.</para>
+		<sect1 id="InMemoryDataProvider">
 			<title>In-memory based datastores</title>
 			<para>
 				The simplest form of datastore is one which just keeps the objects in
 				memory
-				and are returned to the user when requested. An in-memory data store
+				and are the whole set, or subset is returned to the user when requested. An
+				in-memory data store
 				subclasses the
 				<classname>InMemoryDataProvider</classname>
 				class and implements the abstract method to return the backing data. The
-				backing data is the complete list of results that the data provider is
-				paginating. Here is our
-				<classname>IntegerDataProvider</classname>
-				reimplemented using the in-memory data provider. All we need to do is
-				override the method to return the backing data and return our list of
-				integers
-				from 1 to 100.
+				backing data is the complete list of in-memory results that the data
+				provider is
+				paginating. Here is a data provider that contains a list of
+				persons
 			</para>
 			<example>
-				<title>in-memory implementation of our Integer provider.</title>
+				<title>In-memory Person data provider.</title>
 				<programlisting role="JAVA" language="java">
-<![CDATA[public class InMemoryIntegerProvider 
-    extends InMemoryDataProvider<Integer> implements Serializable {
-	
+<![CDATA[public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
+
+  private List<Person> backingList;
+  private static final int PERSON_COUNT = 100;
+
 	@Override
-	protected List<Integer> fetchBackingData() {
-		List<Integer> result = new ArrayList<Integer>();
-		for (int i = 1;i <=100;i++) {
-			result.add(i);
+	protected List<Person> fetchBackingData() {
+		//generate some random test data
+		if (backingList == null) {
+			backingList = new ArrayList(PERSON_COUNT);
+			for (int i = 0; i < PERSON_COUNT; i++) {
+				Person p = new Person(new Long(i + 1), TestDataFactory
+						.getFirstName(), TestDataFactory.getLastName());
+				backingList.add(p);
+			}
 		}
-		return result;
+		return backingList;
 	}
 
 }]]>
 </programlisting>
 			</example>
 			<para>
-				We can also easily test this using our
-				<classname>IntegerDataProviderTest</classname>
-				class that we used to test the integer data provider last time by
-				subclassing it and overriding the
-				<methodname>buildObjectDataset</methodname>
-				method. This time we return an instance of our new in-memory data provider.
+				We can now iterate through the data from this provider as though it were a
+				database driven provider.
+				<classname>InMemorydataProvider</classname>
+				result sets can also be sorted by the use of
+				<classname>Comparator</classname>
+				implementations. Like the database driven providers, the in memory providers
+				have an order key map except the key is mapped to a comparator instance
+				which is used to order the data in the list.
 			</para>
 			<example>
-				<title>Testing our in-memory Integer data provider.</title>
-				<programlisting role="JAVA" language="java">
-<![CDATA[
-public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
-
-	@Override
-	public ObjectDataset<Integer> buildObjectDataset() {	
-		DataProvider<Integer> provider = new InMemoryIntegerProvider();		
-		return new Dataset<Integer>(provider);
-
-	}	
-}]]>
-</programlisting>
-			</example>
-
-			<para>
-				In our previous implementation of the Integer data provider we
-				neglected
-				to
-				include sorting, so this
-				time we'll add sorting into this
-				implementation.
-				Sorting for in-memory
-				datasets is done using comparators. Like
-				data driven
-				providers, in-memory
-				datasets have an order key map except that it
-				associates
-				a comparator with
-				each key. Because our Integer data provider is a
-				simple
-				case, we'll look at an in-memory data provider containing people. Our
-				<classname>Person</classname>
-				class has an id, a first name and a last name and we want to sort on either
-				the id or the name (last and then first combined).
-			</para>
-			<example>
-				<title>In-memory Integer data provider.</title>
+				<title>In-memory Person data provider.</title>
 				<programlisting role="JAVA" language="java">
 <![CDATA[public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 
@@ -2243,7 +2208,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 
 		public int compare(Person o1, Person o2) {
 			int val = o1.getLastName().compareToIgnoreCase(o2.getLastName());
-			//if first names match, then try comparing by the first name			
+			//if last names match, then try comparing by the first name			
 			if (val == 0) {
 				val = o1.getFirstName().compareToIgnoreCase(o2.getFirstName());
 			}
@@ -2329,28 +2294,42 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 </programlisting>
 			</example>
 			<para>
-				In this test case, we toggle the ordering to ensure that the ordering
-				is
-				working as we switch from one order to the next. One caveat with ordering
+				In this test case, we toggle the ordering to ensure that the ordering is
+				working as we switch from one order to the next. One caveat with ordering in
+				memory providers is that the ordering takes place on the backing data list
 				in
-				memory datasets is that the ordering takes place on the backing data list
-				in
-				the
-				data provider. Therefore, you can't directly have multiple paginators
-				that fetch independent views of the data since they would all
-				have to share
-				the same sort order. You could do this if there was no ordering, or they
-				used the same order, or you could use a
+				the data provider. Therefore, you can't directly have multiple paginators
+				that fetch independent views of the data since they would all have to share
+				the same sort order. You could do this if there was no ordering or they
+				used
+				the same order. However to get around this you could use a
 				<classname>InMemoryAdapterProvider</classname>
 			</para>
+		</sect1>
+		<sect1 id="InMemoryAdapterProvider">
+			<title>
+				<classname>InMemoryAdapterProvider</classname>
+			</title>
 			<para>
 				The
 				<classname>InMemoryAdapterProvider</classname>
-				is an in-memory data provider that works by wrapping a
+				wraps an existing
 				<classname>DataProvider</classname>
 				(any kind, not just the in-memory kind) from which it sucks up all the data
-				and puts it in its own in-memory list. This can be used to create an
-				independent view of an in-memory dataset with indendent sorting.
+				and puts it in its own in-memory list. This can be used to either make a
+				data provider a fast in-memory provider, or create an
+				independent view of an
+				in-memory dataset with indendent sorting.
+			</para>
+			<para>
+				While the
+				<classname>InMemoryAdapterProvider</classname>
+				keeps a separate list of the data elements, it does not keep its own copy of
+				the actual data which is shared with the original provider. This lets you
+				use a single copy of the all data, but lets you have independent lists of
+				the data. Obviously, care must be taken when using this on a database since
+				it will
+				load all the data from the source data provider into memory.
 			</para>
 			<example>
 				<title>Multiple views using an in-memory adapter.</title>
@@ -2370,28 +2349,82 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 			<para>
 				The
 				<classname>InMemoryAdapterProvider</classname>
-				can wrap any data provider and act as a local cache. It will automatically
-				pick up the order key comparators if it wraps an
+				will automatically pick up the order key comparators if it wraps an
 				<classname>InMemoryDataProvider</classname>
-				.
+				which it does in this case.
 			</para>
 
 
 
-
-
+		</sect1>
+		<sect1>
+			<title>
+				<classname>IntegerDataProvider</classname>
+				revisited
+			</title>
 			<para>
-				In our integer in-memory data provider, we only have one comparator to order
-				by
-				which is for comparing two integers. In this scenario, we could just
-				override the
-				<methodname>translateOrderKey</methodname>
-				method to return the single comparator in our dataset. The saves us from
-				making the user assign an order key value, it will always be sorted by this
-				comparator.
+				Here is our
+				<classname>IntegerDataProvider</classname>
+				reimplemented using the in-memory data provider. All we need to do is
+				override the method to return the backing data and return our list of
+				integers
+				from 1 to 100.
 			</para>
 			<example>
-				<title>Sorting by the Integer data provider.</title>
+				<title>in-memory implementation of our Integer provider.</title>
+				<programlisting role="JAVA" language="java">
+<![CDATA[public class InMemoryIntegerProvider 
+    extends InMemoryDataProvider<Integer> implements Serializable {
+	
+	@Override
+	protected List<Integer> fetchBackingData() {
+		List<Integer> result = new ArrayList<Integer>();
+		for (int i = 1;i <=100;i++) {
+			result.add(i);
+		}
+		return result;
+	}
+
+}]]>
+</programlisting>
+			</example>
+			<para>
+				We can also easily test this using our
+				<classname>IntegerDataProviderTest</classname>
+				class that we used to test the integer data provider last time by
+				subclassing it and overriding the
+				<methodname>buildObjectDataset</methodname>
+				method. This time we return an instance of our in-memory Integer data
+				provider.
+			</para>
+			<example>
+				<title>Testing our in-memory Integer data provider.</title>
+				<programlisting role="JAVA" language="java">
+<![CDATA[
+public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
+
+	@Override
+	public ObjectDataset<Integer> buildObjectDataset() {	
+		DataProvider<Integer> provider = new InMemoryIntegerProvider();		
+		return new Dataset<Integer>(provider);
+
+	}	
+}]]>
+</programlisting>
+			</example>
+
+			<para>
+				In our previous implementation of the Integer data provider we neglected to
+				include sorting, so this time we'll add sorting into this implementation.
+				Since our integer in-memory data provider only has one comparator to order
+				by (for comparing two integers), we could just override the
+				<methodname>translateOrderKey</methodname>
+				method to return the single comparator in our dataset. The saves us from
+				making the user assign an order key value, and it will always be sorted by
+				this comparator.
+			</para>
+			<example>
+				<title>Sorting the Integer data provider.</title>
 				<programlisting role="JAVA" language="java">
 <![CDATA[public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer> 
     implements Serializable {
@@ -2419,44 +2452,98 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 </programlisting>
 			</example>
 			<para>Note also that in this case, the comparator field is marked transient
-				since it is not
-				serializable. 
+				since it is not serializable. 
 			</para>
 		</sect1>
 		<sect1>
-			<title>Odds and Ends</title>
-			<para>This sections covers any additional info not included anywhere else.
+			<title>File Base Data Providers</title>
+			<para>
+				One common need is to base a set of data of one or more files which can
+				be
+				either text based, comma delimited, xml or some proprietary format. JADA
+				again provides the same interface to access these data sources. At the root
+				of file based data providers, we have the
+				<classname>AbstractFileBasedProvider</classname>
+				which takes a filename in its constructor and creates the
+				<classname>File</classname>
+				instance. This is subclassed into different implementations.
 			</para>
 			<sect2>
-				<title>IndexedDataProviderCache</title>
+				<title>TextFileProvider</title>
 				<para>
 					The
-					<classname>IndexedDataProviderCache</classname>
-					provides random access to provider data with look ahead caching to optimize
-					querying and take advantage of data coherence. The best example of this is
-					in the swing table which is included in one of the examples. A swing table
-					model knows the number of rows of data that exist (which could be thousands
-					or millions) and lets the user scroll across the whole dataset. This means
-					that the user can select any record from the available dataset at any point
-					in time. In this event, it would be fetched from the data provider and
-					returned to the user. However, the user will probably end up fetching the
-					next x number of objects from the dataset as the next x number of rows in
-					the table are displayed. For this reason, the cache not only fetches the
-					requested row, but the next n number of rows where n is the batch size
-					defined by an attribute on the cache. The
-					<classname>IndexedDataProviderCache</classname>
-					keeps hold of these items since they may well be reused when the table is
-					repainted or the user starts to scroll backwards or forwards a few records
-					at a time. This cache is limited in size, and records will start to be
-					ejected on a least recently used basis. The
-					<classname>IndexedDataProviderCache</classname>
-					can be used to randomly browse thousands of records in a Swing table with
-					no startup time and efficient memory use since it doesn't read all the data
-					in at once. (The delay at the start is due to
-					the creation of the database,
-					not the loading of all the data).
+					<classname>TextFileProvider</classname>
+					is the base class for data providers using text files as the data source.
+					It treats each line in the file as a row of data and calls the abstract
+					method
+					<methodname>createObjectFromLine(String line)</methodname>
+					to generate an instance of the object data for each row in the file. This
+					is further extended in the
+					<classname>CommandDelimitedProvider</classname>
+					which assumes that each row of text is a row of comma delimited data. For
+					each row of data, the provider splits up the data elements and passed them
+					as a string array to the abstract method
+					<methodname>createObjectFromColumns(String[] columns)</methodname>
+					. Subclasses need to implement this method to return the specific type of
+					entity that this data provider returns.
 				</para>
 			</sect2>
 		</sect1>
+
+	</chapter>
+	<chapter>
+		<title>Odds and Ends</title>
+
+		<para>This sections covers any additional info not included anywhere else.
+		</para>
+		<sect1 id="IndexedDataProviderCache">
+			<title>IndexedDataProviderCache</title>
+			<para>
+				The
+				<classname>IndexedDataProviderCache</classname>
+				provides random access to provider data with look ahead caching to optimize
+				querying and take advantage of data coherence. The best example of this is
+				in the swing table which is included in one of the examples. A swing table
+				model knows the number of rows of data that exist (which could be thousands
+				or millions) and lets the user scroll across the whole dataset. This means
+				that the user can select any record from the available dataset at any point
+				in time. In this event, it would be fetched from the data provider and
+				returned to the user. However, the user will probably end up fetching the
+				next x number of objects from the dataset as the next x number of rows in
+				the table are displayed. For this reason, the cache not only fetches the
+				requested row, but the next n number of rows where n is the batch size
+				defined by an attribute on the cache. The
+				<classname>IndexedDataProviderCache</classname>
+				keeps hold of these items since they may well be reused when the table is
+				repainted or the user starts to scroll backwards or forwards a few records
+				at a time. This cache is limited in size, and records will start to be
+				ejected on a least recently used basis. The
+				<classname>IndexedDataProviderCache</classname>
+				can be used to randomly browse thousands of records in a Swing table with
+				no
+				startup time and efficient memory use since it doesn't read all the data
+				in
+				at once. (The delay at the start is due to
+				the creation of the database,
+				not
+				the loading of all the data).
+			</para>
+		</sect1>
+		<sect1>
+			<title>Don't call record count</title>
+			<para>
+				As much as possible, you should not call the
+				<methodname>fetchRecordCount</methodname>
+				from within the data provider. The most likely place you will use it is to
+				determine whether there are more results to be returned. This can be an
+				expensive function to count all records or rows of data from the source that
+				should be called as little as possible. In the database driven queries
+				included, an extra row is added to the results when the data is queried so
+				we know that if the extra row is there, there are more results available.
+				This extra row is then taken off the final results that are returned to the
+				user.
+			</para>
+		</sect1>
+
 	</chapter>
 </book>

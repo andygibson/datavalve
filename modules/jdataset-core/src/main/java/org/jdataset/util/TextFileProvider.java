@@ -10,25 +10,12 @@ import java.util.List;
 import org.jdataset.Paginator;
 import org.jdataset.impl.provider.AbstractDataProvider;
 
-public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
+public abstract class TextFileProvider<T> extends AbstractFileBasedProvider<T> {
 
 	private static final long serialVersionUID = 1L;
-
-	// private static Logger log =
-	// LoggerFactory.getLogger(TextFileDataset.class);
-
-	private final String fileName;
-	private final File file;
-
+	
 	public TextFileProvider(String fileName) {
-		super();
-		this.file = new File(fileName);
-		this.fileName = fileName;
-
-		if (!file.exists()) {
-			throw new IllegalArgumentException(String.format(
-					"File '%s' does not exist", fileName));
-		}
+		super(fileName);	
 	}
 
 	private int countNumberOfLines(File file) {
@@ -47,7 +34,7 @@ public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
 
 	@Override
 	public Integer fetchResultCount() {
-		return countNumberOfLines(file);
+		return countNumberOfLines(getFile());
 	}
 
 	// TODO change this implementation so it doesn't need to get the row count
@@ -61,7 +48,7 @@ public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
 		List<T> results = new ArrayList<T>();
 		String line;
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new FileReader(getFile()));
 
 			// Put this 'if' in as an extra measure, we don't want to use a
 			// readline if firstresult = 0 since we want to start at the
@@ -93,9 +80,4 @@ public abstract class TextFileProvider<T> extends AbstractDataProvider<T> {
 	}
 
 	protected abstract T createObjectFromLine(String line);
-
-	public String getFileName() {
-		return fileName;
-	}
-
 }

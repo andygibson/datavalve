@@ -20,25 +20,17 @@
         <title>Introduction</title>
         <para>
             The purpose of this framework is to let developers use diverse
-            sources of
-            data in a consistent manner that leverages the
-            similarities to
-            create common
-            interfaces to access them. It also aims
-            to augment the
-            functions of existing
-            data access mechanisms, again
-            leveraging the
-            similarities between providers to
-            create common
+            sources of data in a consistent manner that leverages the
+            similarities to create common interfaces to access them. It also
+            aims to augment the functions of existing data access mechanisms,
+            again leveraging the similarities between providers to create common
             extensions.
 		</para>
         <sect1>
             <title>The Itch</title>
             <para>
                 When starting a new data driven application developers
-                typically need
-                some mechanism to query data with the following
+                typically need some mechanism to query data with the following
                 capabilities:
 		</para>
             <itemizedlist>
@@ -53,15 +45,12 @@
                 </listitem>
                 <listitem>
                     <para>Optional restrictions in the query for when parameter
-                        values are
-                        missing</para>
+                        values are missing</para>
                 </listitem>
                 <listitem>
                     <para>The ability to apply a common front end to the back
-                        end data access
-                        mechanism so you can reuse both the front
-                        and back end to implement forms
-                        in minutes.
+                        end data access mechanism so you can reuse both the
+                        front and back end to implement forms in minutes.
 					</para>
                 </listitem>
             </itemizedlist>
@@ -69,71 +58,40 @@
                 As a long time Seam user, Seam provides most of this with the
                 <classname>EntityQuery</classname>
                 that can be used to run queries using JPA but it isn't perfect.
-                I extended
-                the Seam
+                I extended the Seam
                 <classname>EntityQuery</classname>
                 and
                 <ulink
                     url="http://www.andygibson.net/blog/index.php/2008/10/02/codeless-ajax-ordered-and-paginated-tables-in-seam/">blogged about it </ulink>
                 and it still remains a popular article today when people are
-                looking for
-                info on JSF and pagination.
-                However, this still has
-                problems since it only
-                works in Seam projects but the same
-                functionality
-                is needed in Wicket,
-                Spring, JSP and even Swing and
-                console apps. Other frameworks such as Wicket
-                provided an visual
-                code and an interface for
-                handling ordered paginated
-                datasets, but
-                the
-                implementation is up to the user as this is beyond the
-                scope
-                of Wicket.
+                looking for info on JSF and pagination. However, this still has
+                problems since it only works in Seam projects but the same
+                functionality is needed in Wicket, Spring, JSP and even Swing
+                and console apps. Other frameworks such as Wicket provided an
+                visual code and an interface for handling ordered paginated
+                datasets, but the implementation is up to the user as this is
+                beyond the scope of Wicket.
             </para>
 
             <para>The other source of inspiration is from Borland Delphi which
-                worked on
-                the idea that a common data access
-                interface meant that
-                data driven components
-                could access data without considering
-                where
-                it came from. A standard query
-                interface means we can create
-                a
-                reusable front end. Third party Delphi
-                component developers
-                could
-                create data access
-                components that would work with
-                any kind
-                of data
-                source, from Oracle, MySQL and MS Access to XML or file
-                based
-                datasets as long as there was a dataprovider implementation
-                for it.
-                When
-                developing in Java, you typically have to code
-                against a common but
-                more
-                specific back end such as a JDBC query
-                and write new interfaces
-                for different
-                view
-                technologies. If you
-                write the front end code for say JPA or Hibernate
-                and you need to
-                access an alternative data source then typically you cannot
-                re-use your existing code for the new source.</para>
+                worked on the idea that a common data access interface meant
+                that data driven components could access data without
+                considering where it came from. A standard query interface means
+                we can create a reusable front end. Third party Delphi component
+                developers could create data access components that would work
+                with any kind of data source, from Oracle, MySQL and MS Access
+                to XML or file based datasets as long as there was a data
+                provider implementation for it. When developing in Java, you
+                typically have to code against a common but more specific back
+                end such as a JDBC query and write new interfaces for different
+                view technologies. If you write the front end code for say JPA
+                or Hibernate and you need to access an alternative data source
+                then typically you cannot re-use your existing code for the new
+                source.</para>
             <para>It seems that all these frameworks recognized the need for
-                controlled
-                data access but it was beyond the scope of the
+                controlled data access but it was beyond the scope of the
                 frameworks to provide it.
-   </para>
+            </para>
             <figure>
                 <title>Projects without using JADA</title>
                 <mediaobject>
@@ -153,20 +111,12 @@
         <sect1>
             <title>The Solution</title>
             <para>So, I scratched my own itch and created this project that
-                defines a
-                common API for querying diverse data sources
-                with
-                pagination and optionally
-                with ordering, restrictions and
-                parameters. This lets us write common view
-                code that
-                can interface
-                with queries that are interchangeable. The
-                goal of this
-                project is
-                to bridge the gaps between these different view and
-                data access
-                frameworks. 
+                defines a common API for querying diverse data sources with
+                pagination and optionally with ordering, restrictions and
+                parameters. This lets us write common view code that can
+                interface with queries that are interchangeable. The goal of
+                this project is to bridge the gaps between these different view
+                and data access frameworks. 
 			</para>
             <figure>
                 <title>Projects using JADA</title>
@@ -190,17 +140,11 @@
                 . The
                 <classname>Paginator</classname>
                 defines the state about our dataset such as the order
-                information,
-                the page
-                size and the result we are up to. The
+                information, the page size and the result we are up to. The
                 <classname>DataProvider</classname>
                 interface defines two simple methods which are used to fetch the
-                total
-                number
-                of rows in the complete list of data, and a (sub)set
-                of the items in
-                the
-                dataset.
+                total number of rows in the complete list of data, and a
+                (sub)set of the items in the dataset.
             </para>
             <example>
                 <title>
@@ -219,111 +163,60 @@
                 When we fetch the results, we pass in the paginator so the
                 <classname>DataProvider</classname>
                 implementation knows how many rows to return and where in the
-                dataset to
-                start returning
-                rows from and it can also set the flag
-                on the paginator
-                indicating whether
-                there
-                are more results or not.
+                dataset to start returning rows from and it can also set the
+                flag on the paginator indicating whether there are more results
+                or not.
             </para>
         </sect1>
         <sect1>
             <title>Benefits of Java Query Adapters</title>
             <para>
                 Even if you still plan on using a single data access mechanism
-                (i.e.
-                Hibernate or JPA) there are still
-                advantages to using JADA.
+                (i.e. Hibernate or JPA) there are still advantages to using
+                JADA.
             </para>
 
             <sect2>
                 <title>Interchangable query mechanisms</title>
-                <para>
-                    Most projects plan on using only one data access mechanism
-                    but by
-                    coding to the JADA API, you can switch implementations
-                    later. You
-                    might
-                    move
-                    from JPA to Hibernate or even to plain
-                    JDBC queries and most of
-                    the
-                    code
-                    that
-                    uses these queries,
-                    including parameterized queries and ordering, will
-                    remain
-                    the
-                    same.
-                    There may also be times where you need to access
-                    different
-                    types
-                    of
-                    data
-                    stores such as a file based
-                    datasource
-                    which needs
-                    accessing,
-                    paginating
-                    and displaying.  
-					</para>
+                <para>Most projects plan on using only one data access mechanism
+                    but by coding to the JADA API, you can switch
+                    implementations later. You might move from JPA to Hibernate
+                    or even to plain JDBC queries and most of the code that uses
+                    these queries, including parameterized queries and ordering,
+                    will remain the same. There may also be times where you need
+                    to access different types of data stores such as a file
+                    based datasource which needs accessing, paginating and
+                    displaying.</para>
                 <para>Regardless of where the different types of datastores come
-                    from, with
-                    JADA you will be able to access them and control
-                    the results using your
-                    existing view code to paginate and
-                    order the data. Even if
-                    you don't see
-                    yourself switching data
-                    access mechanisms or having to access diverse data
-                    stores,
-                    you may want to just switch the query here and there from a
-                    pure
-                    ORM type query to a JDBC SQL query but still want to
-                    interface with the
-                    data and use the features available in
-                    your other queries.
-					</para>
+                    from, with JADA you will be able to access them and control
+                    the results using your existing view code to paginate and
+                    order the data. Even if you don't see yourself switching
+                    data access mechanisms or having to access diverse data
+                    stores, you may want to just switch the query here and there
+                    from a pure ORM type query to a JDBC SQL query but still
+                    want to interface with the data and use the features
+                    available in your other queries. </para>
             </sect2>
 
             <sect2>
                 <title>Easy Querying</title>
-                <para>JADA makes it easier to query for the data
-                    you need. It
-                    features
-                    flexible parameter definition by setting the
-                    value
-                    manually, using EL
-                    expressions, extracting the values using
-                    reflection or your own custom
-                    parameter resolver.
-                    Parameters
-                    that
-                    don't have a value assigned can
-                    optionally be left out of
-                    the
-                    query which can be useful when you are
-                    writing
-                    search forms
-                    where
-                    the user may leave out search criteria and you
-                    don't
-                    want
-                    it
-                    included in the query. Doing
-                    this manually can lead to
-                    messy
-                    code that is
-                    hard to read, test and maintain.
-					</para>
+                <para>JADA makes it easier to query for the data you need. It
+                    features flexible parameter definition by setting the value
+                    manually, using EL expressions, extracting the values using
+                    reflection or your own custom parameter resolver. Parameters
+                    that don't have a value assigned can optionally be left out
+                    of the query which can be useful when you are writing search
+                    forms where the user may leave out search criteria and you
+                    don't want it included in the query. Doing this manually can
+                    lead to messy code that is hard to read, test and maintain.
+                </para>
                 <example>
                     <title>
                         Coding search queries the hard way.
                     </title>
                     <programlisting role="JAVA" language="java">
 <![CDATA[String sql = "";
-if (searchCriteria.id != null  
+if (searchCriteria.id != null
   && searchCriteria.id.length() != 0) {
     if (sql.length()!= 0) {
       sql = sql + " AND ";
@@ -332,7 +225,7 @@ if (searchCriteria.id != null
     paramsMap("id",searchCriteria.id);
 }
 
-if (searchCriteria.firstName != null  
+if (searchCriteria.firstName != null
   && searchCriteria.firstName.length() != 0) {
     if (sql.length()!= 0) {
       sql = sql + " AND ";
@@ -341,7 +234,7 @@ if (searchCriteria.firstName != null
     paramsMap("firstName",searchCriteria.firstName);
 }
 
-if (searchCriteria.lastName != null  
+if (searchCriteria.lastName != null
   && searchCriteria.lastName.length() != 0) {
     if (sql.length()!= 0) {
       sql = sql + " AND ";
@@ -364,22 +257,11 @@ List<Person> results = qry.resultList();]]>
 					</programlisting>
 
                 </example>
-                <para>With JADA, you can define the query, specify
-                    how the
-                    parameters are
-                    resolved and the data provider
-                    will take care
-                    of
-                    generating
-                    the right request
-                    so that
-                    the only
-                    restrictions
-                    included in the
-                    query are ones with parameter
-                    values
-                    assigned.
-                </para>
+                <para>With JADA, you can define the query, specify how the
+                    parameters are resolved and the data provider will take care
+                    of generating the right request so that the only
+                    restrictions included in the query are ones with parameter
+                    values assigned. </para>
                 <example>
                     <title>
                         Coding search queries the easy way.
@@ -388,7 +270,7 @@ List<Person> results = qry.resultList();]]>
 <![CDATA[qry.addRestriction("p.id = :id");
 qry.addRestriction("p.firstName = :firstName");
 qry.addRestriction("p.lastName = :lastName");
-ParameterResolver resolver = 
+ParameterResolver resolver =
   new ReflectionParameterResolver(searchCriteria));
 qry.addParameterResolver(resolver);
 List<Person> results = qry.resultList();]]>
@@ -401,49 +283,23 @@ List<Person> results = qry.resultList();]]>
                 <title>Flexible and Secure Ordering Abstraction</title>
                 <para>
                     JADA lets you order your data based on order key values as
-                    opposed to
-                    explicit table column values which could
-                    be prone
-                    to SQL
-                    injection attacks.
-                    By using an
+                    opposed to explicit table column values which could be prone
+                    to SQL injection attacks. By using an
                     <code>orderKey</code>
-                    value which is translated
-                    server side into a sorting
-                    representation, you can
-                    control what
-                    values are used
-                    for
-                    setting the
-                    order of
-                    the dataset ensuring no
-                    harmful
-                    SQL is
+                    value which is translated server side into a sorting
+                    representation, you can control what values are used for
+                    setting the order of the dataset ensuring no harmful SQL is
                     inserted into your query.
                 </para>
             </sect2>
             <sect2>
                 <title>Convert anything into a dataset</title>
                 <para>At the heart of JADA is a simple API which allows you to
-                    turn
-                    anything
-                    into a source of data that can be accessed and
-                    paginated from
-                    existing view
-                    code.
-                    This can range from custom
-                    datasources or
-                    third party
-                    applications to
-                    text, csv, remote
-                    data points,
-                    binary files or
-                    even just a static
-                    in-memory
-                    list
-                    of
-                    objects.
-					</para>
+                    turn anything into a source of data that can be accessed and
+                    paginated from existing view code. This can range from
+                    custom datasources or third party applications to text, csv,
+                    remote data points, binary files or even just a static
+                    in-memory list of objects.</para>
             </sect2>
 
         </sect1>
@@ -461,22 +317,13 @@ List<Person> results = qry.resultList();]]>
                     and
                     <classname>DataProvider</classname>
                     interfaces. The Paginator is like a bookmark for a dataset
-                    and holds
-                    the
-                    current record, page size and ordering
-                    information as well as
-                    flags
-                    indicating
-                    whether there is a
-                    previous or next page available.
-                    The
+                    and holds the current record, page size and ordering
+                    information as well as flags indicating whether there is a
+                    previous or next page available. The
                     <classname>DataProvider</classname>
                     is the stateless part of the equation. It provides the data
-                    based on the
-                    state of the
-                    paginator passed in. For each type
-                    of data store you want to
-                    access, we write a
+                    based on the state of the paginator passed in. For each type
+                    of data store you want to access, we write a
                     <classname>DataProvider</classname>
                     implementation for it.
                 </para>
@@ -486,32 +333,20 @@ List<Person> results = qry.resultList();]]>
 <![CDATA[  DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
   List<ResultClass> results = prov.fetchResults(paginator);
-  Integer count = prov.getResultCount();]]>  
+  Integer count = prov.getResultCount();]]>
 				</programlisting>
                 </example>
                 <para>
                     This is a simple example where we create an instance of our
-                    custom provider
-                    that knows how
-                    to fetch the data. We create an
-                    instance of a
+                    custom provider that knows how to fetch the data. We create
+                    an instance of a
                     <classname>Paginator</classname>
                     and when we fetch the results we pass that in to the data
-                    provider to
-                    tell
-                    the
-                    provider which set of data to return. In
-                    this case, we
-                    returned all the
-                    data
-                    but by setting properties
-                    on the paginator we
-                    can tell the provider just
-                    to
-                    return
-                    a
-                    subset and which row to start from. The provider is also
-                    responsible for setting the
+                    provider to tell the provider which set of data to return.
+                    In this case, we returned all the data but by setting
+                    properties on the paginator we can tell the provider just to
+                    return a subset and which row to start from. The provider is
+                    also responsible for setting the
                     <code>nextAvailable</code>
                     flag on the paginator to indicate if there are more results
                     available.
@@ -519,20 +354,18 @@ List<Person> results = qry.resultList();]]>
                 <example>
                     <title>Limiting the data fetched from a data provider
                     </title>
-                    <programlisting role="JAVA" language="java">				
+                    <programlisting role="JAVA" language="java">
 <![CDATA[  DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
   paginator.setMaxRows(10);
   paginator.setFirstResult(35);
   List<ResultClass> results = prov.fetchResults(paginator);
-  Integer count = prov.fetchResultCount();]]>  
+  Integer count = prov.fetchResultCount();]]>
 				</programlisting>
                 </example>
                 <para>
                     Here we set the maximum number of rows to return to 10 and
-                    we want the
-                    first
-                    result to start at item number 35. The
+                    we want the first result to start at item number 35. The
                     implementation of the
                     <classname>CustomProvider</classname>
                     is responsible for returning the correct subset of data to
@@ -542,36 +375,22 @@ List<Person> results = qry.resultList();]]>
                     If you were to call
                     <methodname>fetchResults</methodname>
                     a second time, the provider would go off and re-fetch the
-                    data executing
-                    whatever process it does to fetch the data. It
-                    does not cache the data in
-                    anyway and should be implemented
-                    statelessly such that one call to the
-                    provider is independent
-                    of any other calls to the provider.
+                    data executing whatever process it does to fetch the data.
+                    It does not cache the data in anyway and should be
+                    implemented statelessly such that one call to the provider
+                    is independent of any other calls to the provider.
                 </para>
                 <para>
                     The third part of the API is an
                     <classname>ObjectDataset</classname>
                     which combines both the provider and paginator information
-                    into one
-                    class
-                    and
-                    can be used to manage the fetched data.
-                    This
-                    component
-                    should be
-                    considered
-                    stateful as it holds on to the
-                    results and
-                    caches them. It also
-                    implements the
+                    into one class and can be used to manage the fetched data.
+                    This component should be considered stateful as it holds on
+                    to the results and caches them. It also implements the
                     <classname>Iterable</classname>
                     interface to let you iterate over the dataset while taking
-                    pagination into
-                    account, so while you iterate over each item,
-                    they are loaded in a batch at
-                    a time based on the
+                    pagination into account, so while you iterate over each
+                    item, they are loaded in a batch at a time based on the
                     <code>maxRows</code>
                     attribute. Datasets implement the
                     <classname>Paginator</classname>
@@ -579,15 +398,11 @@ List<Person> results = qry.resultList();]]>
                     Datasets have a
                     <code>provider</code>
                     attribute that is used to fetch the actual data so we can
-                    re-use our
-                    dataset implementation for any kind of data
-                    provider. When you change the
-                    active page, or the page size
-                    or the first result return, this invalidates
-                    the interal copy
-                    of the current data and causes it to be re-fetched from
-                    the
-                    provider when it is next requested.
+                    re-use our dataset implementation for any kind of data
+                    provider. When you change the active page, or the page size
+                    or the first result return, this invalidates the interal
+                    copy of the current data and causes it to be re-fetched from
+                    the provider when it is next requested.
                 </para>
                 <example>
                     <title>
@@ -621,36 +436,25 @@ List<Person> results = qry.resultList();]]>
         <title>Database Driven Providers</title>
         <para>
             While JADA offers a way to access many different types of data
-            stores, in
-            most cases, you will want to fetch data from a database.
-            JADA comes with data
-            providers for fetching data using JPA, Hibernate
-            or just plain SQL
-            via JDBC.
-            These different providers are based off
-            and implement the
+            stores, in most cases, you will want to fetch data from a database.
+            JADA comes with data providers for fetching data using JPA,
+            Hibernate or just plain SQL via JDBC. These different providers are
+            based off and implement the
             <classname>QueryDataProvider</classname>
             interface. This interface adds features such as ordering,
-            restrictions and
-            parameters. Since they implement the same
-            interface,
-            they can be interchanges
-            with very little code changes if any.
+            restrictions and parameters. Since they implement the same
+            interface, they can be interchanges with very little code changes if
+            any.
         </para>
         <sect1>
             <title>Simple Fetches</title>
-            <para>
-                Let's start by considering some simple cases of fetching data
-                using a
-                data
-                driven query. First we create the data provider that
-                will fetch the data
-                for us and then we create the dataset that we
-                will use to access the data.
-            </para>
+            <para>Let's start by considering some simple cases of fetching data
+                using a data driven query. First we create the data provider
+                that will fetch the data for us and then we create the dataset
+                that we will use to access the data.</para>
             <example>
                 <title>
-                    Fetching data from a database using JPA					
+                    Fetching data from a database using JPA
 				</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryProvider<Person> provider = new JpaDataProvider<Person>(em);
@@ -660,100 +464,78 @@ provider.setCountStatement("select count(p) from Person p");
 List<Person> results = dataset.getResultList();
 for (Person p : results) {
   System.out.println(p.getName());
-}]]>  
+}]]>
 				</programlisting>
             </example>
         </sect1>
         <sect1>
             <title>Restricting Results</title>
-            <para>
-                We can add restrictions to the query so we only return a set
-                of rows
-                that we
-                want. In this case, we want to return a specific
-                person. The above
-                code to create and initialize the data provider
-                has beem rolled into a
-                method to return the person data provider.
-            </para>
+            <para>We can add restrictions to the query so we only return a set
+                of rows that we want. In this case, we want to return a specific
+                person. The above code to create and initialize the data
+                provider has beem rolled into a method to return the person data
+                provider.</para>
 
             <example>
                 <title>
-                    Restricting the data fetched					
+                    Restricting the data fetched
 				</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
-provider.addRestriction("p.id = 4");  ]]>  
+provider.addRestriction("p.id = 4");  ]]>
 				</programlisting>
             </example>
 
 
             <para>
                 It is often more convenient to specify limitations using
-                parameters
-                and
-                JADA
-                has a number of different mechanisms with which
-                to specify
-                parameterized
-                restrictions. First we'll look at adding
-                constant parameters. We can add the
-                restriction using the keyword
+                parameters and JADA has a number of different mechanisms with
+                which to specify parameterized restrictions. First we'll look at
+                adding constant parameters. We can add the restriction using the
+                keyword
                 <code>:param</code>
                 where the parameterized value is meant to go and pass the value
-                with the
-                restriction. We can also add the restriction with the
-                name of the parameter
-                and set the parameter on the data provider
-                separately.
-                The first two syntaxes
-                rename the parameter and puts
-                the values in the internal parameter map. The
-                last syntax keeps
-                the parameter name you passed in and is useful if you
-                anticpate
-                changing that parameter since you know what name it
-                can be
+                with the restriction. We can also add the restriction with the
+                name of the parameter and set the parameter on the data provider
+                separately. The first two syntaxes rename the parameter and puts
+                the values in the internal parameter map. The last syntax keeps
+                the parameter name you passed in and is useful if you anticpate
+                changing that parameter since you know what name it can be
                 referenced by.
             </para>
-
             <example>
                 <title>
-                    Restricting Results with Constant Parameters					
+                    Restricting Results with Constant Parameters
 				</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
-  
+
 //add parameter using :param keyword in restriction
 provider.addRestriction("p.id = :param",4);
 provider.addRestriction("p.firstName = :param","John");
-  
+
 //add parameter manually
 provider.addRestriction("or p.lastName = :lastNameParam");
-provider.addParameter("lastNameParam","Smith");]]>  
+provider.addParameter("lastNameParam","Smith");]]>
 				</programlisting>
             </example>
             <para>
                 In many cases, we don't want to include restrictions where the
-                value we are
-                comparing is
+                value we are comparing is
                 <code>null</code>
-                , such as search forms where the user has left values
-                blank. In
-                these cases,
-                any restriction with null parameter should not be
-                included. In this example,
-                we only add the first and last name
+                such as search forms where the user has left values blank. In
+                these cases, any restriction with null parameter should not be
+                included. In this example, we only add the first and last name
                 restrictions if the values are set.
             </para>
             <example>
                 <title>
-                    Restricting with variable parameters					
+                    Restricting with variable parameters
 				</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 provider.addRestriction("p.firstName = :param",searchCriteria.firstName);
-provider.addRestriction("p.lastName = :param",searchCriteria.lastName);]]>  
+provider.addRestriction("p.lastName = :param",searchCriteria.lastName);]]>
 				</programlisting>
             </example>
             <para>
@@ -761,49 +543,38 @@ provider.addRestriction("p.lastName = :param",searchCriteria.lastName);]]>
                 your own "
                 <code>if value != null then add parameter</code>
                 " code for each line, although it is certainly possible that you
-                can do
-                that
-                in certain cases. There is also an overloaded version
-                of this function
-                specifically for strings which will check not
-                only for null
-                values but for a
-                length of zero.
+                can do that in certain cases. There is also an overloaded
+                version of this function specifically for strings which will
+                check not only for null values but for a length of zero.
             </para>
             <para>
                 Many times you want to evaluate one value to see if is null
-                but use
-                another value for the actual parameter to query with. We
-                have a method for
-                that too.
+                but use another value for the actual parameter to query with. We
+                have a method for that too.
 			</para>
             <example>
                 <title>
-                    Alternate Value Parameters					
+                    Alternate Value Parameters
 				</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
-  
+
 provider.addRestriction("p.firstName like :param",
   searchCriteria.firstName,searchCriteria.firstName+"%");
-    
+
 provider.addRestriction("p.lastName like :param",
-  searchCriteria.lastName,searchCriteria.lastName+"%");]]>  
+  searchCriteria.lastName,searchCriteria.lastName+"%");]]>
 				</programlisting>
             </example>
             <para>
                 What we do there is check whether the first/last name value is
-                null and
-                if so we ignore the restriction, but otherwise we add
-                the restriction and we
-                use the value with a wildcard added as the
-                parameter value.
+                null and if so we ignore the restriction, but otherwise we add
+                the restriction and we use the value with a wildcard added as
+                the parameter value.
             </para>
             <para>This may seem a fairly broad set of ways to parameterize the
-                your
-                queries, but is only the first way of two parameter
-                definition mechanisms
-                with the second being the use of parameter
+                your queries, but is only the first way of two parameter
+                definition mechanisms with the second being the use of parameter
                 resolvers.</para>
         </sect1>
         <sect1>
@@ -812,37 +583,28 @@ provider.addRestriction("p.lastName like :param",
                 The
                 <code>ParameterResolver</code>
                 interface can be used to implement objects that can be attached
-                to data
-                providers at run time to resolve parameters. When the
-                query is executed the
-                parameters are evaluated as the query is
-                built so any
-                restrictions with
+                to data providers at run time to resolve parameters. When the
+                query is executed the parameters are evaluated as the query is
+                built so any restrictions with
                 <code>null</code>
                 parameters can be excluded. We attach parameter resolvers to the
-                provider so
-                it will be used when the provider tries to resolve
-                the parameter for a
-                restriction. This mechanism allows us to
-                attach an EL parameter
-                resolver for
-                environments where EL is in
+                provider so it will be used when the provider tries to resolve
+                the parameter for a restriction. This mechanism allows us to
+                attach an EL parameter resolver for environments where EL is in
                 use.
             </para>
             <para>It also lets use different mechanisms for resolving values
-                such as
-                using reflection onto a an object, or even returning
-                parameter values based
-                on the name directly.</para>
+                such as using reflection onto a an object, or even returning
+                parameter values based on the name directly.</para>
             <example>
                 <title>
-                    Parameter Resolving with Reflection					
+                    Parameter Resolving with Reflection
 				</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 provider.addRestriction("p.firstName like :firstName");
 provider.addRestriction("or p.lastName like :lastName");
-provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]]>  
+provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]]>
 				</programlisting>
             </example>
             <para>We can also bake the parameter resolver into the object
@@ -850,7 +612,7 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
                 interface.</para>
             <example>
                 <title>
-                    Built in parameter resolution					
+                    Built in parameter resolution
 				</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[public class SearchCriteria implements ParameterResolver {
@@ -858,10 +620,10 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
   //return values with wildcards
   boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
     Parameter parameter) {
-    if ("firstName".equals(parameter.getName())) {			  
+    if ("firstName".equals(parameter.getName())) {
 	  return firstName == null ? null : firstName+"%";
 	}
-	if ("lastName".equals(parameter.getName())) {			  
+	if ("lastName".equals(parameter.getName())) {
 	  return lastName == null ? null : lastName+"%";
 	}
 	return null;
@@ -877,7 +639,7 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
   QueryDataProvider<Person> provider = createPersonProvider();
   provider.addRestriction("p.firstName = :firstName");
   provider.addRestriction("or p.lastName = :lastName");
-  provider.addParameterResolver(searchCriteria);]]>  
+  provider.addParameterResolver(searchCriteria);]]>
 				</programlisting>
             </example>
             <para>
@@ -909,33 +671,26 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
                 or a
                 <classname>SeamJpaNativeDataset</classname>
                 so you can use either a Ejbql or Native query for fetching data.
-                Also, there
-                is an adapter class that can be used instead which
-                adds on the additional
-                methods needed to make the class
+                Also, there is an adapter class that can be used instead which
+                adds on the additional methods needed to make the class
                 compatible with
                 <classname>EntityQuery</classname>
                 based classes.
             </para>
         </sect1>
         <sect1>
-            <title>Order in the house</title>
+            <title>
+                Order in the house</title>
             <para>
                 JADA also features key based ordering so rather than specify
-                ordering
-                as
-                a set
-                of fields on the dataset, you can specify
-                ordering using a key that
-                maps to
-                one or more fields. 
-			</para>
+                ordering as a set of fields on the dataset, you can specify
+                ordering using a key that maps to one or more fields. </para>
             <example>
                 <title>
                     Ordering on the data
 				</title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[QueryDataProvider<Person> provider = createPersonProvider();  
+<![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 provider.addRestriction("p.lastName = 'SMITH'");
 provider.getOrderKeyMap().put("name","p.lastName,p.firstName");
 provider.getOrderKeyMap().put("age","p.dateOfBirth");

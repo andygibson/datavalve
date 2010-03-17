@@ -25,14 +25,14 @@
             aims to augment the functions of existing data access mechanisms,
             again leveraging the similarities between providers to create common
             extensions.
-		</para>
+        </para>
         <sect1>
             <title>The Itch</title>
             <para>
                 When starting a new data driven application developers
                 typically need some mechanism to query data with the following
                 capabilities:
-		</para>
+        </para>
             <itemizedlist>
                 <listitem>
                     <para>Pagination of large datasets</para>
@@ -51,7 +51,7 @@
                     <para>The ability to apply a common front end to the back
                         end data access mechanism so you can reuse both the
                         front and back end to implement forms in minutes.
-					</para>
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>
@@ -117,7 +117,7 @@
                 interface with queries that are interchangeable. The goal of
                 this project is to bridge the gaps between these different view
                 and data access frameworks. 
-			</para>
+            </para>
             <figure>
                 <title>Projects using JADA</title>
                 <mediaobject>
@@ -157,7 +157,7 @@
   Integer fetchResultCount();
   List<T> fetchResults(Paginator paginator);
 }]]>
-					</programlisting>
+                    </programlisting>
             </example>
             <para>
                 When we fetch the results, we pass in the paginator so the
@@ -254,7 +254,7 @@ for (String key : paramsMap.keySet) {
 }
 
 List<Person> results = qry.resultList();]]>
-					</programlisting>
+                    </programlisting>
 
                 </example>
                 <para>With JADA, you can define the query, specify how the
@@ -274,7 +274,7 @@ ParameterResolver resolver =
   new ReflectionParameterResolver(searchCriteria));
 qry.addParameterResolver(resolver);
 List<Person> results = qry.resultList();]]>
-					</programlisting>
+                    </programlisting>
                 </example>
             </sect2>
 
@@ -334,7 +334,7 @@ List<Person> results = qry.resultList();]]>
   Paginator paginator = new DefaultPaginator();
   List<ResultClass> results = prov.fetchResults(paginator);
   Integer count = prov.getResultCount();]]>
-				</programlisting>
+                </programlisting>
                 </example>
                 <para>
                     This is a simple example where we create an instance of our
@@ -361,7 +361,7 @@ List<Person> results = qry.resultList();]]>
   paginator.setFirstResult(35);
   List<ResultClass> results = prov.fetchResults(paginator);
   Integer count = prov.fetchResultCount();]]>
-				</programlisting>
+                </programlisting>
                 </example>
                 <para>
                     Here we set the maximum number of rows to return to 10 and
@@ -418,7 +418,7 @@ List<Person> results = qry.resultList();]]>
   for (SomeClass item : dataset) {
     ...some code...
   }]]>  
-				</programlisting>
+                </programlisting>
                 </example>
                 <para>
                     Repeated calls to
@@ -455,7 +455,7 @@ List<Person> results = qry.resultList();]]>
             <example>
                 <title>
                     Fetching data from a database using JPA
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryProvider<Person> provider = new JpaDataProvider<Person>(em);
 QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
@@ -465,7 +465,7 @@ List<Person> results = dataset.getResultList();
 for (Person p : results) {
   System.out.println(p.getName());
 }]]>
-				</programlisting>
+                </programlisting>
             </example>
         </sect1>
         <sect1>
@@ -479,11 +479,11 @@ for (Person p : results) {
             <example>
                 <title>
                     Restricting the data fetched
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 provider.addRestriction("p.id = 4");  ]]>
-				</programlisting>
+                </programlisting>
             </example>
 
 
@@ -506,7 +506,7 @@ provider.addRestriction("p.id = 4");  ]]>
             <example>
                 <title>
                     Restricting Results with Constant Parameters
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 
@@ -517,7 +517,7 @@ provider.addRestriction("p.firstName = :param","John");
 //add parameter manually
 provider.addRestriction("or p.lastName = :lastNameParam");
 provider.addParameter("lastNameParam","Smith");]]>
-				</programlisting>
+                </programlisting>
             </example>
             <para>
                 In many cases, we don't want to include restrictions where the
@@ -531,12 +531,12 @@ provider.addParameter("lastNameParam","Smith");]]>
             <example>
                 <title>
                     Restricting with variable parameters
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 provider.addRestriction("p.firstName = :param",searchCriteria.firstName);
 provider.addRestriction("p.lastName = :param",searchCriteria.lastName);]]>
-				</programlisting>
+                </programlisting>
             </example>
             <para>
                 These are really just helper methods so you don't have to do
@@ -551,11 +551,11 @@ provider.addRestriction("p.lastName = :param",searchCriteria.lastName);]]>
                 Many times you want to evaluate one value to see if is null
                 but use another value for the actual parameter to query with. We
                 have a method for that too.
-			</para>
+            </para>
             <example>
                 <title>
                     Alternate Value Parameters
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 
@@ -564,7 +564,7 @@ provider.addRestriction("p.firstName like :param",
 
 provider.addRestriction("p.lastName like :param",
   searchCriteria.lastName,searchCriteria.lastName+"%");]]>
-				</programlisting>
+                </programlisting>
             </example>
             <para>
                 What we do there is check whether the first/last name value is
@@ -599,13 +599,13 @@ provider.addRestriction("p.lastName like :param",
             <example>
                 <title>
                     Parameter Resolving with Reflection
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 provider.addRestriction("p.firstName like :firstName");
 provider.addRestriction("or p.lastName like :lastName");
 provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]]>
-				</programlisting>
+                </programlisting>
             </example>
             <para>We can also bake the parameter resolver into the object
                 directly by making it implement the parameter resolver
@@ -613,7 +613,7 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
             <example>
                 <title>
                     Built in parameter resolution
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[public class SearchCriteria implements ParameterResolver {
 
@@ -621,16 +621,16 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
   boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
     Parameter parameter) {
     if ("firstName".equals(parameter.getName())) {
-	  return firstName == null ? null : firstName+"%";
-	}
-	if ("lastName".equals(parameter.getName())) {
-	  return lastName == null ? null : lastName+"%";
-	}
-	return null;
+      return firstName == null ? null : firstName+"%";
+    }
+    if ("lastName".equals(parameter.getName())) {
+      return lastName == null ? null : lastName+"%";
+    }
+    return null;
   }
 
   boolean acceptParameter(String name) {
-	return name.startsWith(":");
+    return name.startsWith(":");
   }
 }
 ...
@@ -640,7 +640,7 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
   provider.addRestriction("p.firstName = :firstName");
   provider.addRestriction("or p.lastName = :lastName");
   provider.addParameterResolver(searchCriteria);]]>
-				</programlisting>
+                </programlisting>
             </example>
             <para>
                 The Seam and CDI data provider classes use an EL based parameter
@@ -652,8 +652,8 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
 
             <example>
                 <title>
-                    Using the Seam data provider 					
-				</title>
+                    Using the Seam data provider                    
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[@Name("myPostsQuery")
 public class MyPostsQueryBean extends SeamJpaQueryDataset{
@@ -663,7 +663,7 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
     addRestriction("p.author.id = #{loggedInUser.id}");
   }
 }]]>  
-				</programlisting>
+                </programlisting>
             </example>
             <para>
                 On the subject of Seam, with JADA you can subclass either a
@@ -679,8 +679,7 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
             </para>
         </sect1>
         <sect1>
-            <title>
-                Order in the house</title>
+            <title>Order in the house</title>
             <para>
                 JADA also features key based ordering so rather than specify
                 ordering as a set of fields on the dataset, you can specify
@@ -688,7 +687,7 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
             <example>
                 <title>
                     Ordering on the data
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 provider.addRestriction("p.lastName = 'SMITH'");
@@ -699,47 +698,31 @@ provider.getOrderKeyMap().put("id","p.id");
 Paginator paginator = new DefaultPaginator();
 paginator.setOrderKey("name");  //order by the persons name
 paginator.setOrderAscending(false);
-  
-List<Person> orderedList = provider.fetchResults(paginator):]]>  
-				</programlisting>
+
+List<Person> orderedList = provider.fetchResults(paginator):]]>
+                </programlisting>
             </example>
             <para>
                 The order information consists of the
                 <code>orderKey</code>
                 attribute that indicates the order to use and the
                 <code>orderAscending</code>
-                attribute indicates whether it is meant to be
-                ascending or
-                descending. Both
-                of these attributes are on the
+                attribute indicates whether it is meant to be ascending or
+                descending. Both of these attributes are on the
                 <classname>Paginator</classname>
                 interface and are read when it is passed into the
                 <methodname>fetchResults</methodname>
                 method.
-                Note that in this example, the ordering for the
-                key "name"
-                has two
-                fields, last
-                and
-                first
-                name to sort on. If this key is used
-                to order then both
-                these fields
-                will be
-                used to
-                order and the
-                framework takes
-                care of
-                ascending/descending
+                Note that in this example, the ordering for the key
+                "name" has two fields, last and first name to sort on. If this
+                key is used to order then both these fields will be used to
+                order and the framework takes care of ascending/descending
                 issues.
             </para>
             <para>
-                By abstracting the ordering mechanism we can use
-                the same
-                idea for
-                defining
-                ordering on non-database data providers. The key for
-                example might map to a
+                By abstracting the ordering mechanism we can use the same idea
+                for defining ordering on non-database data providers. The key
+                for example might map to a
                 <classname>Comparator</classname>
                 instance that can be used to sort the in-memory dataset.
             </para>
@@ -748,50 +731,35 @@ List<Person> orderedList = provider.fetchResults(paginator):]]>
             <title>Polymorphism</title>
             <para>
                 One of the best features here is that in order to switch from
-                Hibernate to
-                JPA, or another data driven implementation, all we
+                Hibernate to JPA, or another data driven implementation, all we
                 need to change is our
                 <methodname>createPersonProvider()</methodname>
                 method. Following good principles, we have been coding to an
-                interface and
-                not an actual class type so we are not locked in to
-                using a concrete class,
-                but any class that implements the
+                interface and not an actual class type so we are not locked in
+                to using a concrete class, but any class that implements the
                 <classname>QueryDataProvider</classname>
                 interface. Currently, there are
                 <classname>QueryDataProvider</classname>
                 implementations for SQL/JDBC, Hibernate and JPA. The JPA
-                versions
-                include
-                both Ejbql and Native querying as do the Seam
-                extensions for the JPA
-                providers.
+                versions include both Ejbql and Native querying as do the Seam
+                extensions for the JPA providers.
             </para>
             <para>
                 You could easily return a Hibernate data provider from the
                 <methodname>createPersonProvider</methodname>
                 without having to change any code since the mappings will be the
-                same. At
-                most you might have to change the base select/count
-                statement or any complex
-                where
-                clauses.
+                same. At most you might have to change the base select/count
+                statement or any complex where clauses.
             </para>
         </sect1>
         <sect1>
             <title>Mapping SQL to Objects</title>
             <para>One problem so far is that our data providers always deal with
-                objects
-                natively because that is what Hibernate and JPA do.
-                Our
-                SQL based datasets
-                are fetching data as a set of rows of values
-                instead of actual
-                objects so we
-                still need some way to convert
-                that raw data
-                into an object that can be
-                returned in our results.
+                objects natively because that is what Hibernate and JPA do. Our
+                SQL based datasets are fetching data as a set of rows of values
+                instead of actual objects so we still need some way to convert
+                that raw data into an object that can be returned in our
+                results.
             </para>
             <para>
                 This can be done in one of two ways but both involve a
@@ -805,32 +773,28 @@ List<Person> orderedList = provider.fetchResults(paginator):]]>
                 and override the
                 <methodname>createObjectFromResultSet</methodname>
                 method. This uses the template pattern to provide the missing
-                functionality
-                needed to convery SQL data into an actual object.
+                functionality needed to convery SQL data into an actual object.
             </para>
             <example>
                 <title>
                     Implementing the SQL to Object mapping
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[public class PersonDataProvider extends 
+<![CDATA[public class PersonDataProvider extends
     AbstractJdbcDataprovider<Person> {
   public T createObjectFromResultSet(ResultSet resultSet) throws SQLException {
     return new Person(resultSet.getLong(1), resultSet.getString(2),
-	    resultSet.getString(3));
+        resultSet.getString(3));
   }
-}  ]]>  
-				</programlisting>
+}  ]]>
+                </programlisting>
             </example>
             <para>
                 Some people prefer to use a strategy pattern over a template
-                pattern so we
-                have an implementation for that also. The
+                pattern so we have an implementation for that also. The
                 <classname>ResultSetObjectMapper</classname>
                 interface provides a method to take a
-                <classname>
-                    javax.sql.ResultSet
-				</classname>
+                <classname>javax.sql.ResultSet</classname>
                 and return an object for the current row in the results. The
                 <classname>JdbcDataProvider</classname>
                 class takes a reference to a
@@ -841,15 +805,15 @@ List<Person> orderedList = provider.fetchResults(paginator):]]>
             <example>
                 <title>
                     SQL to Object mapping using an external mapper.
-				</title>
+                </title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[public class PersonObjectMapper implements 
+<![CDATA[public class PersonObjectMapper implements
     ResultSetObjectMapper<Person> {
 
-  public Person createObjectFromResultSet(ResultSet resultSet) 
-    throws SQLException {      
+  public Person createObjectFromResultSet(ResultSet resultSet)
+    throws SQLException {
     return new Person(resultSet.getLong(1),resultSet.getString(1),
-	  resultSet.getString(2));	    
+      resultSet.getString(2));
     }
 }
 
@@ -857,8 +821,8 @@ public QueryDataProvider<Person> createDataProvider() {
   JdbcDataProvider<Person> prov = new JdbcDataProvider<Person>();
   prov.setResultSetObjectMapper(new PersonObjectMapper());
   return prov;
-}]]>  
-				</programlisting>
+}]]>
+                </programlisting>
             </example>
             <para>This kind of construction can be taken care of by any
                 dependency
@@ -868,11 +832,8 @@ public QueryDataProvider<Person> createDataProvider() {
     </chapter>
     <chapter>
         <title>Implementing and Testing a Data Provider</title>
-        <para>This chapter looks at creating a simple data provider, testing
-            it
-            and
-            seeing the different ways we can access the
-            data in it.</para>
+        <para>This chapter looks at creating a simple data provider, testing it
+            and seeing the different ways we can access the data in it.</para>
         <sect1>
             <title>
                 Our first
@@ -880,21 +841,9 @@ public QueryDataProvider<Person> createDataProvider() {
             </title>
             <para>
                 Let us start by seeing how the different parts and pieces
-                connect by
-                creating a new provider that
-                lists the
-                numbers
-                from 1 to
-                100 and
-                we
-                will access
-                it in different ways. We'll start
-                by
-                writing
-                our data
-                provider
-                that implements
-                the
+                connect by creating a new provider that lists the numbers from 1
+                to 100 and we will access it in different ways. We'll start by
+                writing our data provider that implements the
                 <classname>DataProvider&lt;Integer&gt;</classname>
                 interface.
             </para>
@@ -911,50 +860,39 @@ public QueryDataProvider<Person> createDataProvider() {
   }
 
   public List<Integer> fetchResults(Paginator paginator) {
-		
+
     int start = paginator.getFirstResult();
-		
-	int end = paginator.includeAllResults() ? 100 : 
-	  Math.min(100, start+paginator.getMaxRows().intValue()-1);
-		
-	List<Integer> results = new ArrayList<Integer>();
-	System.out.println("Generating results from "+start+" to "+end);
-	while (start <= end) {
-	  results.add(start++);			
-	}
-	paginator.setNextAvailable(end < 100);
-	return results;
+
+    int end = paginator.includeAllResults() ? 100 :
+      Math.min(100, start+paginator.getMaxRows().intValue()-1);
+
+    List<Integer> results = new ArrayList<Integer>();
+    System.out.println("Generating results from "+start+" to "+end);
+    while (start <= end) {
+      results.add(start++);
+    }
+    paginator.setNextAvailable(end < 100);
+    return results;
   }
 }]]>
-			</programlisting>
+            </programlisting>
             </example>
             <para>
                 The
                 <methodname>fetchResultCount()</methodname>
                 method returns a constant value of 100 in this case because we
-                are
-                dealing
-                with a fixed range of integers. Typically
-                though, this
-                will
-                return the number
-                of items in the complete dataset and is
-                used to
-                determine the number pages
-                available.
+                are dealing with a fixed range of integers. Typically though,
+                this will return the number of items in the complete dataset and
+                is used to determine the number pages available.
             </para>
             <para>
                 The
                 <methodname>fetchResults</methodname>
                 methods takes a paginator and generates the list of integers to
-                return to the
-                user. The list is based on two things,
-                the
+                return to the user. The list is based on two things, the
                 <code>firstResult</code>
                 value that determines which page we are on and therefore where
-                to
-                start
-                counting from, and the
+                to start counting from, and the
                 <code>maxRows</code>
                 value that determines how many results to return. If
                 <code>maxRows</code>
@@ -962,29 +900,14 @@ public QueryDataProvider<Person> createDataProvider() {
                 utility method
                 <methodname>includeAllResults</methodname>
                 to make it easier to check this. Once we have determined the
-                start
-                and end
-                points to count from and to, we build the
-                list of
-                results,
-                and before
-                returning it, we set the flag for indicating
-                whether
-                there
-                are more results
-                available. This
-                is the responsibility
-                of the
-                data
-                provider because only it
-                knows whether there are more
-                results.
+                start and end points to count from and to, we build the list of
+                results, and before returning it, we set the flag for indicating
+                whether there are more results available. This is the
+                responsibility of the data provider because only it knows
+                whether there are more results.
             </para>
             <para>Next, we'll create a client for this provider as a simple
-                class
-                that
-                just fetches the results and lists them.
-			</para>
+                class that just fetches the results and lists them.</para>
             <example>
                 <title>
                     <code>IntegerDataProvider.java</code>
@@ -992,21 +915,21 @@ public QueryDataProvider<Person> createDataProvider() {
                 <programlisting role="JAVA" language="java">
 <![CDATA[public class Main {
 
-	public static void main(String[] args) {
-		Paginator paginator = new DefaultPaginator(10);
-		DataProvider<Integer> provider = new IntegerDataProvider();		
+    public static void main(String[] args) {
+        Paginator paginator = new DefaultPaginator(10);
+        DataProvider<Integer> provider = new IntegerDataProvider();
 
-		List<Integer> results = provider.fetchResults(paginator);
-		showResults(results);
-	}
+        List<Integer> results = provider.fetchResults(paginator);
+        showResults(results);
+    }
 
-	public static void showResults(List<Integer> results) {
-		System.out.println("Result Size = " + results.size());
+    public static void showResults(List<Integer> results) {
+        System.out.println("Result Size = " + results.size());
 
-		for (Integer i : results) {
-			System.out.println("Value = " + i);
-		}
-	}
+        for (Integer i : results) {
+            System.out.println("Value = " + i);
+        }
+    }
 }]]>
 </programlisting>
             </example>
@@ -1019,29 +942,20 @@ public QueryDataProvider<Person> createDataProvider() {
                 instance that implements the
                 <classname>Paginator</classname>
                 interface. We pass our initial page size into the constructor so
-                we
-                will
-                start by returning 10 rows at a time. We
-                then create an
-                instance
-                of our data
-                provider, and call the
+                we will start by returning 10 rows at a time. We then create an
+                instance of our data provider, and call the
                 <methodname>fetchResults</methodname>
                 method to return the first page of results. We then pass the
-                results
-                to the
+                results to the
                 <methodname>showResults</methodname>
                 method which just displays the number of results. If we run
-                this, we
-                get the
-                expected list of numbers from 0 to 9
-                with a page
-                size of 10.
+                this, we get the expected list of numbers from 0 to 9 with a
+                page size of 10.
             </para>
             <figure>
                 <title>
                     Execution Results
-				</title>
+                </title>
                 <screen>
 <![CDATA[Generating results from 0 to 9
 Result Size = 10
@@ -1057,27 +971,12 @@ Value = 8
 Value = 9]]>
 </screen>
             </figure>
-            <para>
-                So everthing looks fine, this is the result we expected so we
-                must
-                have
-                a
-                working dataset right? Well not so fast.
-                Let's create a
-                test case
-                for
-                it first.
-                Since we are working with well defined
-                interfaces we can
-                define a test case
-                that
-                tests the interface and
-                make
-                sure our
-                implementation is meeting the
-                contract defined by the
-                interface.
-			</para>
+            <para>So everthing looks fine, this is the result we expected so we
+                must have a working dataset right? Well not so fast. Let's
+                create a test case for it first. Since we are working with well
+                defined interfaces we can define a test case that tests the
+                interface and make sure our implementation is meeting the
+                contract defined by the interface.</para>
         </sect1>
         <sect1>
             <title>
@@ -1086,37 +985,28 @@ Value = 9]]>
             </title>
             <para>
                 Create a new class (in the test packages if applicable) and
-                create
-                it
-                as a
-                subclass of
-                <classname>package
-                    org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest
+                create it as a subclass of
+                <classname>org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest
                 </classname>
-                . This class defines two methods which needs to be implemented
-                in
+                This class defines two methods which needs to be implemented in
                 subclasses. The
                 <methodname>getDataRowCount()</methodname>
                 returns the number of rows expected in the dataset and the
                 <methodname>buildObjectDataset</methodname>
                 method returns an instance of an
                 <classname>ObjectDataset</classname>
-                . An
+                An
                 <classname>ObjectDataset</classname>
                 is a class that combines a
                 <classname>Paginator</classname>
                 and a
                 <classname>DataProvider</classname>
                 implementation in one class for convenience. We can easily
-                create
-                one
-                by
-                creating an instance of a
+                create one by creating an instance of a
                 <classname>org.jdataset.impl.Dataset</classname>
                 and pass it an instance of our
                 <classname>IntegerDataProvider</classname>
                 which the dataset will use to obtain data.
-                .
             </para>
 
             <example>
@@ -1124,54 +1014,34 @@ Value = 9]]>
                     <code>IntegerDataProvider.java</code>
                 </title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[public class IntegerDataProviderTest extends 
+<![CDATA[public class IntegerDataProviderTest extends
   AbstractObjectDatasetJUnitTest<Integer> {
 
-	@Override
-	public ObjectDataset<Integer> buildObjectDataset() {
-	    DataProvider<Integer> provider = new IntegerDataProvider();
-		return new Dataset<Integer>(provider);		
-	}
+    @Override
+    public ObjectDataset<Integer> buildObjectDataset() {
+        DataProvider<Integer> provider = new IntegerDataProvider();
+        return new Dataset<Integer>(provider);
+    }
 
-	@Override
-	public int getDataRowCount() {
-		return 100;
-	}
+    @Override
+    public int getDataRowCount() {
+        return 100;
+    }
 
 }]]>
 </programlisting>
             </example>
             <para>If you run this test case now, you will see things light up
-                like
-                a
-                Christmas tree. We have a lot of tests failing
-                in some code
-                that
-                not only
-                looked ok, but worked fine when we ran it. 
-	</para>
+                like a Christmas tree. We have a lot of tests failing in some
+                code that not only looked ok, but worked fine when we ran it.
+            </para>
             <para>
                 The problem is subtle but involves on the old gotcha there are
-                101
-                numbers
-                from
-                0 to 100 inclusive. The solution is
-                fairly simple,
-                we
-                just need to define
-                more
-                closely what our dataset does. We'll
-                make
-                it
-                so that it does return 100
-                values
-                in the range from 1 to
-                100, and
-                we'll even add some test cases to
-                ensure that
-                it does.
-                First lets
-                alter the
+                101 numbers from 0 to 100 inclusive. The solution is fairly
+                simple, we just need to define more closely what our dataset
+                does. We'll make it so that it does return 100 values in the
+                range from 1 to 100, and we'll even add some test cases to
+                ensure that it does. First lets alter the
                 <methodname>fetchResults</methodname>
                 method in our
                 <classname>IntegerDataProvider</classname>
@@ -1188,16 +1058,16 @@ Value = 9]]>
                 <programlisting role="JAVA" language="java">
 <![CDATA[
 public List<Integer> fetchResults(Paginator paginator) {
-		
+
   int start = paginator.getFirstResult()+1; //results start from 1
-		
-  int end = paginator.includeAllResults() ? 100 : 
+
+  int end = paginator.includeAllResults() ? 100 :
   Math.min(100, start+paginator.getMaxRows().intValue()-1);
-		
+
   List<Integer> results = new ArrayList<Integer>();
   System.out.println("Generating results from "+start+" to "+(end));
   while (start <= end) {
-    results.add(start++);			
+    results.add(start++);
   }
   paginator.setNextAvailable(end < 100);
   return results;
@@ -1206,71 +1076,39 @@ public List<Integer> fetchResults(Paginator paginator) {
             </example>
             <para>
                 If you run the tests now you should almost pass with flying
-                colors
-                even
-                though
-                we only made very small changes. The test that
-                failed is the
-                serialization test to determine if a dataset
-                holding our data provider can
-                be serialized. In this case, it
+                colors even though we only made very small changes. The test
+                that failed is the serialization test to determine if a dataset
+                holding our data provider can be serialized. In this case, it
                 cannot because we have not implemented the
                 <classname>Serializable</classname>
                 interface in the dataprovider. If you add this interface to the
                 <classname>IntegerDataProvider</classname>
                 class name and rerun the tests, it should pass with no problems.
-                The
-                serializable test is there as a helper because so many
-                frameworks now depend
-                on serializable components (Spring MVC,
-                Wicket, CDI and Seam) and raises
-                errors if there are serializable
-                issues. If you do not need the
-                dataset to
-                be serializable or it
-                cannot be made serializable, you can turn off this
-                test by
-                overriding the
+                The serializable test is there as a helper because so many
+                frameworks now depend on serializable components (Spring MVC,
+                Wicket, CDI and Seam) and raises errors if there are
+                serializable issues. If you do not need the dataset to be
+                serializable or it cannot be made serializable, you can turn off
+                this test by overriding the
                 <methodname>includeSerializationTest()</methodname>
                 and returning false.
-
-                The base test
-                classes provide fairly good
-                code coverage
-                and can only get better over
-                time
-                as more tests are
-                added. Even
-                without writing
-                any test
-                cases yourself you are already
-                off to a good start
-                in determining how
-                well
-                you data provider code
-                is written.
+            </para>
+            <para>The base test classes provide fairly good code coverage and
+                can only get better over time as more tests are added. Even
+                without writing any test cases yourself you are already off to a
+                good start in determining how well you data provider code is
+                written.
             </para>
             <para>
                 The
                 <classname>AbstractObjectDatasetJUnitTest</classname>
                 can only test how well the dataset lives up to its
-                implementation of
-                the
+                implementation of the
                 <classname>DataProvider</classname>
                 interface, it cannot test the quality of the results. For that,
-                we need
-                to add
-                our own tests to our class which
-                we'll do now for
-                the
-                constraint that
-                the
-                numbers should range from 1 to 100. We will
-                test
-                it in two ways,
-                paginated
-                and
-                non-paginated.
+                we need to add our own tests to our class which we'll do now for
+                the constraint that the numbers should range from 1 to 100. We
+                will test it in two ways, paginated and non-paginated.
             </para>
 
             <example>
@@ -1330,31 +1168,19 @@ public void testResultsNonPaginated() {
             </title>
             <para>
                 We can now be pretty confident that our dataset works as
-                expected
-                with dozens
-                of test cases behind it. Now we can go
-                back to
-                our
+                expected with dozens of test cases behind it. Now we can go back
+                to our
                 <classname>Main</classname>
                 class and start seeing how we access the data provided by this
                 class.
             </para>
             <para>
-                Data can be accessed from a provider in a number of ways,
-                either
-                paginated,
-                non-paginated or using iterators
-                (paginated or
-                non-paginated). In our original
-                example, we simply listed the
-                first
-                10 results. From the test code you
-                might
-                have seen a few more
-                ways
-                of accessing the data. First lets change our demo
-                application to use
-                an
+                Data can be accessed from a provider in a number of ways, either
+                paginated, non-paginated or using iterators paginated or
+                non-paginated). In our original example, we simply listed the
+                first 10 results. From the test code you might have seen a few
+                more ways of accessing the data. First lets change our demo
+                application to use an
                 <classname>ObjectDataset</classname>
                 instead of keeping separate
                 <classname>Paginator</classname>
@@ -1363,8 +1189,7 @@ public void testResultsNonPaginated() {
                 references. The
                 <classname>ObjectDataset</classname>
                 combines these two interfaces and provides some benefits as
-                we'll
-                see.
+                we'll see.
             </para>
             <example>
                 <title>
@@ -1373,24 +1198,18 @@ public void testResultsNonPaginated() {
                 </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[public static void main(String[] args) {
-	ObjectDataset<Integer> ds = new Dataset<Integer>(new IntegerDataProvider());
-	ds.setMaxRows(5);
+    ObjectDataset<Integer> ds = new Dataset<Integer>(new IntegerDataProvider());
+    ds.setMaxRows(5);
 
-	List<Integer> results = ds.getResultList();		
-	showResults(results);			
+    List<Integer> results = ds.getResultList();
+    showResults(results);
 }]]>
 </programlisting>
             </example>
             <para>If you run this now, it should run the same as before except
-                for the
-                fact that we changed the page size to 5 so
-                we only return
-                5
-                rows at a time for
-                brevity. Let's add a second call to fetch the
-                list of results and we'll see
-                what
-                happens.</para>
+                for the fact that we changed the page size to 5 so we only
+                return 5 rows at a time for brevity. Let's add a second call to
+                fetch the list of results and we'll see what happens.</para>
             <example>
                 <title>
                     Changing our demo application to use an
@@ -1399,18 +1218,18 @@ public void testResultsNonPaginated() {
                 <programlisting role="JAVA" language="java">
 <![CDATA[public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();
-	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
-	ds.setMaxRows(5);
+    ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
+    ds.setMaxRows(5);
 
-	List<Integer> results = ds.getResultList();		
-	showResults(results);
-	showResults(ds.getResultList());			
+    List<Integer> results = ds.getResultList();
+    showResults(results);
+    showResults(ds.getResultList());
 }]]>
 </programlisting>
             </example>
             <figure>
                 <title>Demo application results</title>
-                <screen>			
+                <screen>            
 Generating results from 1 to 5
 Result Size = 5
 Value = 1
@@ -1428,48 +1247,29 @@ Value = 5
             </figure>
             <para>
                 Unsurprisingly, we display the same list of numbers twice, but
-                what
-                is
-                surprising is that we only generate the results
-                the first
-                time
-                they are
-                requested. The second time we call for the results,
-                there is
-                no message about
-                generating
-                results. This is because the
+                what is surprising is that we only generate the results the
+                first time they are requested. The second time we call for the
+                results, there is no message about generating results. This is
+                because the
                 <classname>ObjectDataset</classname>
                 caches the results and only invalidates them when the pagination
-                changes
-                (i.e. the first result or page size is
-                changed). You can
-                manually force the
-                results to be refreshed by calling
+                changes i.e. the first result or page size is changed). You can
+                manually force the results to be refreshed by calling
                 <methodname>invalidateResults()</methodname>
                 on the dataset. Doing so after the first call would force the
-                dataset to
-                re-fetch the data on the second call.
+                dataset to re-fetch the data on the second call.
             </para>
             <para>
                 This is one of the benefits of using a dataset on a thicker
-                client
-                or a
-                stateful web app. The dataset can hold on to
-                the
-                results for
-                you until you are
-                done with them. Using separate
+                client or a stateful web app. The dataset can hold on to the
+                results for you until you are done with them. Using separate
                 <classname>Paginator</classname>
                 and
                 <classname>DataProvider</classname>
                 instances can be useful in more stateless applications, or
-                frameworks like
-                Wicket that uses a detachable model that
-                keeps
-                hold
-                of state, but lets you
-                detach unwanted or re-fetchable state.
+                frameworks like Wicket that uses a detachable model that keeps
+                hold of state, but lets you detach unwanted or re-fetchable
+                state.
             </para>
             <sect2>
                 <title>I want it all</title>
@@ -1485,26 +1285,22 @@ Value = 5
                     index to the end. When you create a
                     <classname>ObjectDataset</classname>
                     by default, it is set up to fetch results from the first row
-                    and is
-                    not
-                    paginated so it will return all results from
-                    the
-                    beginning to
-                    the end.
+                    and is not paginated so it will return all results from the
+                    beginning to the end.
                 </para>
                 <example>
                     <title>Returning all results</title>
                     <programlisting role="JAVA" language="java">
 <![CDATA[public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();
-	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
-	showResults(ds.getResultList());			
+    ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
+    showResults(ds.getResultList());
 }]]>
 </programlisting>
                 </example>
                 <figure>
                     <title>Returning all results</title>
-                    <screen>			
+                    <screen>
 Generating results from 1 to 100
 Result Size = 100
 Value = 1
@@ -1529,23 +1325,19 @@ Value = 100
                     The dataset implements the
                     <classname>Iterable</classname>
                     interface which means that we can iterate over the dataset.
-                    If
-                    pagination is
-                    in use, it is performed transparently
-                    as you
-                    iterate
-                    through the dataset.
+                    If pagination is in use, it is performed transparently as
+                    you iterate through the dataset.
                 </para>
                 <example>
                     <title>Returning all results</title>
                     <programlisting role="JAVA" language="java">
 <![CDATA[public static void main(String[] args) {
     DataProvider<Integer> provider = new IntegerDataProvider();
-	ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
-	ds.setMaxRows(5);
-	for (Integer i : ds) {
-		System.out.println("Iterating over value "+i);
-	}		
+    ObjectDataset<Integer> ds = new Dataset<Integer>(provider);
+    ds.setMaxRows(5);
+    for (Integer i : ds) {
+        System.out.println("Iterating over value "+i);
+    }       
 }]]>
 </programlisting>
                 </example>
@@ -1583,114 +1375,68 @@ Iterating over value 96
 Iterating over value 97
 Iterating over value 98
 Iterating over value 99
-Iterating over value 100							
+Iterating over value 100                            
 </screen>
                 </figure>
                 <para>This could be useful in cases where you want to group
-                    fetches
-                    into
-                    batches if fetches are expensive, or maybe
-                    even
-                    incorporate
-                    some
-                    multi-threading to let one thread fetch data
-                    and other threads
-                    to process
-                    result sets as they
-                    come in.
+                    fetches into batches if fetches are expensive, or maybe even
+                    incorporate some multi-threading to let one thread fetch
+                    data and other threads to process result sets as they come
+                    in.
                 </para>
             </sect2>
             <sect2>
                 <title>Paging Datasets</title>
                 <para>Generally paging through a dataset is done using the next
-                    and
-                    previous
-                    which changes the subset of data you are
-                    looking
-                    at.
-                    Generally speaking,
-                    using the iterator is the best way to
-                    iterate
-                    over every item in the dataset
-                    since
-                    paging is
-                    generally used to
-                    move to a specific page as to iterate
-                    through the data. </para>
+                    and previous which changes the subset of data you are
+                    looking at. Generally speaking, using the iterator is the
+                    best way to iterate over every item in the dataset since
+                    paging is generally used to move to a specific page as to
+                    iterate through the data. </para>
                 <para>Iterating manually is fraught with corner cases that could
-                    lead to a
-                    number of errors.</para>
+                    lead to a number of errors.</para>
 
                 <example>
                     <title>Attempting manual iteration</title>
                     <programlisting role="JAVA" language="java">
 <![CDATA[//BROKEN CODE, DO NOT USE
 while (ds.isNextAvailable()) {
-	List<Integer> res = ds.getResultList();
-	showResults(res);
-	ds.next();
+    List<Integer> res = ds.getResultList();
+    showResults(res);
+    ds.next();
 }]]>
 </programlisting>
                 </example>
                 <para>
                     What happens here is that when we move to the last page
-                    using next,
-                    the
+                    using next, the
                     <methodname>nextAvailable</methodname>
                     property is set to false and we exit the loop before we
-                    display it.
-                    We could
-                    process the results after the loop but
-                    what happens when
-                    you forget to add
-                    the code at the end? The
-                    best demonstration of
-                    this is where the size of the
-                    result set
-                    is smaller than the page
-                    size, and when we fetch the first
-                    page
-                    of results,
+                    display it. We could process the results after the loop but
+                    what happens when you forget to add the code at the end? The
+                    best demonstration of this is where the size of the result
+                    set is smaller than the page size, and when we fetch the
+                    first page of results,
                     <methodname>nextAvailable</methodname>
                     is false since this is the first and only page, and so we
-                    don't
-                    display the
-                    list.
+                    don't display the list.
                 </para>
                 <para>
                     In general, use the dataset next/previous/first/last methods
-                    to
-                    navigate the
-                    dataset by moving from page to page and
-                    the
+                    to navigate the dataset by moving from page to page and the
                     <classname>Iterator</classname>
                     implementation to go through the dataset item by item
                     <superscript>*</superscript>
                     . The iterator implementation handles all the corner cases
-                    in a
-                    familiar and
-                    consistent manner.
+                    in a familiar and consistent manner.
                 </para>
                 <para>
                     Note that in the event of you reaching the end of the
-                    dataset
-                    and
-                    calling
-                    next, the active page will not change and
-                    you will
-                    receive
-                    the last result set
-                    back. Unless the dataset
-                    is empty,
-                    there will
-                    always be results returned in
-                    the
-                    result
-                    list, and if
-                    there are no
-                    results, an empty list should be
-                    returned. The results should never
-                    be
+                    dataset and calling next, the active page will not change
+                    and you will receive the last result set back. Unless the
+                    dataset is empty, there will always be results returned in
+                    the result list, and if there are no results, an empty list
+                    should be returned. The results should never be
                     <code>null</code>
                     .
                 </para>
@@ -1698,27 +1444,18 @@ while (ds.isNextAvailable()) {
                     <para>
                         <superscript>*</superscript>
                         We do use this kind of incorrect paging through data in
-                        some of the
-                        test
-                        cases, but only where we are not testing
-                        the
-                        number of
-                        results, but the
-                        actual result content, and
-                        we want to
-                        test the
-                        first/next/previous/last
-                        methods as
-                        opposed to the
-                        iterator
-                        implementation.
+                        some of the test cases, but only where we are not
+                        testing the number of results, but the actual result
+                        content, and we want to test the
+                        first/next/previous/last methods as opposed to the
+                        iterator implementation.
                     </para>
                 </note>
             </sect2>
             <sect2>
                 <title>Manually Fetching Data</title>
                 <para>
-                    As we discussed initially, the
+                    The
                     <classname>ObjectDataset</classname>
                     is a helper construct that manages the two key interfaces of
                     the
@@ -1726,13 +1463,10 @@ while (ds.isNextAvailable()) {
                     and
                     <classname>DataProvider</classname>
                     . It is easy to use these two classes separately since there
-                    is no
-                    complex
-                    glue code implemented by the
+                    is no complex glue code implemented by the
                     <classname>ObjectDataset</classname>
                     except where it has provided enhanced features. Using two
-                    separately
-                    instantiated pagiantors and providers is
+                    separately instantiated pagiantors and providers is
                     straightforward :
                 </para>
 
@@ -1745,18 +1479,15 @@ while (ds.isNextAvailable()) {
 <![CDATA[DataProvider<Integer> provider = new IntegerDataProvider();
 Paginator paginator = new SimplePaginator(10);
 List<Integer> results = provider.fetchResults(paginator);
-showResults(results); 			]]>
+showResults(results);           ]]>
 </programlisting>
                 </example>
                 <para>
                     Each call to
                     <methodname>fetchResults</methodname>
                     executes the process to fetch the data. This can mean
-                    running a
-                    database
-                    query or parsing a file. The results are
-                    not cached unlike
-                    the
+                    running a database query or parsing a file. The results are
+                    not cached unlike the
                     <classname>ObjectDataset</classname>
                     . This is because the
                     <classname>DataProvider</classname>
@@ -1767,9 +1498,7 @@ showResults(results); 			]]>
                 </para>
                 <para>
                     One important thing to bear in mind with using these
-                    components
-                    manually is
-                    that the
+                    components manually is that the
                     <classname>DataProvider</classname>
                     implementation is responsible for setting the
                     <code>nextAvailable</code>
@@ -1781,28 +1510,18 @@ showResults(results); 			]]>
                     the
                     <methodname>isNextAvailable</methodname>
                     value is false so you cannot create a new paginator instance
-                    and
-                    call the
+                    and call the
                     <methodname>next()</methodname>
                     method since it, as well as other functions, depends on the
                     <code>nextAvailable</code>
                     flag.
                 </para>
                 <para>One benefit of using these standalone components manually
-                    is
-                    that you
-                    can use multiple paginator instances to
-                    provide
-                    different
-                    views of
-                    the same
-                    dataset independent of each other.
-                    This can be
-                    useful when you want
-                    application
-                    scoped data with
-                    local pagination.
-				</para>
+                    is that you can use multiple paginator instances to provide
+                    different views of the same dataset independent of each
+                    other. This can be useful when you want application scoped
+                    data with local pagination.
+                </para>
                 <example>
                     <title>Multiple views of the same data</title>
                     <programlisting role="JAVA" language="java">
@@ -1811,25 +1530,20 @@ Paginator paginator1 = new DefaultPaginator(10);
 Paginator paginator2 = new DefaultPaginator(15);
 paginator1.setFirstResult(20);
 paginator2.setFirstResult(30);
-		
+
 System.out.println("First result = "+paginator1.getFirstResult());
-		
+
 List<Integer> results1 = provider.fetchResults(paginator1);
 List<Integer> results2 = provider.fetchResults(paginator2);
 System.out.println("Result Set 1");
-showResults(results1); 			
+showResults(results1);
 System.out.println("Result Set 2");
 showResults(results2);]]>
 </programlisting>
                 </example>
                 <para>Here we obtain two different sets of data from a single
-                    data
-                    provider.
-                    This can let you re-use data providers
-                    that
-                    obtain data
-                    from expensive data
-                    sources.</para>
+                    data provider. This can let you re-use data providers that
+                    obtain data from expensive data sources.</para>
             </sect2>
 
         </sect1>
@@ -1838,20 +1552,11 @@ showResults(results2);]]>
     <chapter>
         <title>The JADA Architecture</title>
         <para>
-            Now we've
-            covered these
-            fundamentals of using JADA
-            we can look at
-            the
-            different
-            subclasses
-            of the
+            Now we've covered these fundamentals of using JADA we can look at
+            the different subclasses of the
             <classname>DataProvider</classname>
-            interface and implementations so we create datasets that
-            can
-            attach to
-            different datasources in a useful
-            way.
+            interface and implementations so we create datasets that can attach
+            to different datasources in a useful way.
         </para>
         <sect1>
             <title>Data Provider Types</title>
@@ -1861,9 +1566,7 @@ showResults(results2);]]>
                 are mirrored in some form of
                 <classname>ObjectDataset</classname>
                 subclass which acts as a thick client wrapper around the data
-                provider and
-                internally uses an instance of that
-                particular
+                provider and internally uses an instance of that particular
                 subclass.
             </para>
             <sect2>
@@ -1876,15 +1579,11 @@ showResults(results2);]]>
                     interface is the
                     <classname>ParameterizedDataProvider</classname>
                     that introduces methods for fetching data based on dynamic
-                    parameters. This
-                    interface was conceived as a way to provide
-                    parameterization features on
-                    datasets that were non-sql
-                    based. For example, in a data provider that
-                    features file
+                    parameters. This interface was conceived as a way to provide
+                    parameterization features on datasets that were non-sql
+                    based. For example, in a data provider that features file
                     listings, you could have a directory parameter that
-                    indicates
-                    the directory to list files from.
+                    indicates the directory to list files from.
                 </para>
             </sect2>
 
@@ -1898,20 +1597,12 @@ showResults(results2);]]>
                     extends the
                     <classname>ParameterizedDataProvider</classname>
                     and adds the ability to define string based statements for
-                    fetching
-                    and
-                    counting the number of rows of data. Since
-                    this
+                    fetching and counting the number of rows of data. Since this
                     extends the
                     <classname>ParameterizedDataProvider</classname>
                     we can let the user define statements that have parameters
-                    within
-                    them. This
-                    obviously lends itself to easily
-                    providing
-                    the bulk of
-                    features of a Sql or
-                    Ejbql or Hql data provider.
+                    within them. This obviously lends itself to easily providing
+                    the bulk of features of a Sql or Ejbql or Hql data provider.
                 </para>
             </sect2>
             <sect2>
@@ -1920,26 +1611,17 @@ showResults(results2);]]>
                 </title>
                 <para>
                     While this class isn't a part of the interface hierarchy, it
-                    is an
-                    important step on the concrete class implementations.
-                    It implements the
-                    generation of the query using a Sql like
+                    is an important step on the concrete class implementations.
+                    It implements the generation of the query using a Sql like
                     query language using the
                     <classname>DataQueryBuilder</classname>
                     which takes the statements and the restrictions, resolves
-                    the parameters
-                    and generates the final query. This query is
-                    then executed in the
-                    subclasses using the particular data
-                    access mechanism specific to that
-                    implementation.
-                    This class
-                    assumes only that there is a select and a count
-                    statement,
-                    and uses
-                    that to generate the query. The restrictions are
-                    introduced to the
-                    hierarchy and used in the query building
+                    the parameters and generates the final query. This query is
+                    then executed in the subclasses using the particular data
+                    access mechanism specific to that implementation. This class
+                    assumes only that there is a select and a count statement,
+                    and uses that to generate the query. The restrictions are
+                    introduced to the hierarchy and used in the query building
                     later.
                 </para>
             </sect2>
@@ -1953,10 +1635,8 @@ showResults(results2);]]>
                     extends the
                     <classname>StatementDataProvider</classname>
                     and adds the ability to define restrictions and ordering.
-                    This class is
-                    really intended for targeting data stores that
-                    have a SQL-like query
-                    language which can be parameterized.
+                    This class is really intended for targeting data stores that
+                    have a SQL-like query language which can be parameterized.
                 </para>
             </sect2>
         </sect1>
@@ -1968,19 +1648,14 @@ showResults(results2);]]>
             <para>
                 <classname>ObjectDataset</classname>
                 instances can help when using the data provider in a stateful
-                manner. The
-                dataset
-                holds the current page of results (or the
-                whole result set if there
-                are no
-                limits on the rows returned). The
-                basic
+                manner. The dataset holds the current page of results (or the
+                whole result set if there are no limits on the rows returned).
+                The basic
                 <classname>Dataset</classname>
                 class takes a
                 <classname>DataProvider</classname>
                 implementation as its data provider. However, this can lead to
-                code
-                requiring a lot of casting if you don't use a basic
+                code requiring a lot of casting if you don't use a basic
                 <classname>DataProvider</classname>
                 implementation.
             </para>
@@ -1989,10 +1664,10 @@ showResults(results2);]]>
                 <programlisting role="JAVA" language="java">
 <![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
   Dataset<Person> dataset = new Dataset<Person>(provider);
-			
-  //	
-  // Won't work, getProvider returns a DataProvider, 
-  // not a query data provider.  DataProvider doesn't 
+
+  //
+  // Won't work, getProvider returns a DataProvider,
+  // not a query data provider.  DataProvider doesn't
   // have the query data provider methods on there.
   //
   //dataset.getProvider().addRestriction("p.id = :param",300);
@@ -2004,10 +1679,8 @@ showResults(results2);]]>
             </example>
             <para>
                 Rather than force the user to keep type casting the provider,
-                there is a
-                generic implementation of the dataset that takes the
-                type of data provider
-                it uses as a parameter. This lets you call
+                there is a generic implementation of the dataset that takes the
+                type of data provider it uses as a parameter. This lets you call
                 the
                 <methodname>getProvider()</methodname>
                 in a type safe manner.
@@ -2017,7 +1690,7 @@ showResults(results2);]]>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider;
 GenericProviderDataset<Person,QueryDataProvider<Person>> dataset;
-	
+
 provider = new JpaQueryProvider<Person>();
 dataset = new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
 dataset.getProvider().init(Person.class, "p");
@@ -2027,14 +1700,11 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
             </example>
             <para>
                 This is further extended by creating implementations for the
-                different
-                type
-                of query interfaces we use. In this example, rather
-                than create a
+                different type of query interfaces we use. In this example,
+                rather than create a
                 <classname>GenericProviderDataset</classname>
                 with the provider class type as a generic parameter to the type,
-                we can
-                create a
+                we can create a
                 <classname>QueryDataset</classname>
                 type that extends the
                 <classname>GenericProviderDataset</classname>
@@ -2045,7 +1715,7 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 <title>Type safety with the QueryDataProvider</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
+  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
   dataset.getProvider().init(Person.class, "p");
   dataset.getProvider().addRestriction("p.id = #{person.id}");]]>
 </programlisting>
@@ -2059,8 +1729,7 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
             </para>
             <para>
                 In addition, these specialist dataset impementations also
-                implement the
-                appropriate data provider interfaces so you can
+                implement the appropriate data provider interfaces so you can
                 save yourself the call to
                 <methodname>getProvider()</methodname>
             </para>
@@ -2068,7 +1737,7 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 <title>Type safety with the QueryDataProvider</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);		
+  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
   dataset.init(Person.class, "p");
   dataset.addRestriction("p.id = #{person.id}");
   dataset.addParameterResolver(new MyParameterResolver());]]>
@@ -2079,15 +1748,10 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
             <title>Extending Datasets for custom providers</title>
             <para>
                 When you create a new data provider implementation it is also
-                good
-                practice
-                to implement a dataset wrapper for it so your users
-                do not have to
-                implement
-                their own, or keep using the generic
-                versions. Doing so is very simple, just
-                create a new dataset
-                class that extends the
+                good practice to implement a dataset wrapper for it so your
+                users do not have to implement their own, or keep using the
+                generic versions. Doing so is very simple, just create a new
+                dataset class that extends the
                 <classname>GenericProviderDataset</classname>
                 and uses your own custom provider type as the type parameter.
             </para>
@@ -2096,7 +1760,7 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 <programlisting role="JAVA" language="java">
 <![CDATA[class MyCustomProvider<T> extends AbstractQueryDataProvider<T> {
         ...
-        ...           		
+        ...                 
   //this is specific to this implementation
   public void setWidgetConnection(WidgetConnection connection) {
     this.connection = conn
@@ -2117,14 +1781,10 @@ class MyCustomProviderDataset<T>
 </programlisting>
             </example>
             <para>The dataset name should consist of the provider class name
-                with the
-                word dataset appended on the end to make it easy to
-                remember. By including
-                this class, it is easier to use datasets
-                for custom data providers,
-                especially for custom attributes on
+                with the word dataset appended on the end to make it easy to
+                remember. By including this class, it is easier to use datasets
+                for custom data providers, especially for custom attributes on
                 your new custom provider.</para>
-
             <example>
                 <title>Using your new data provider dataset</title>
                 <programlisting role="JAVA" language="java">
@@ -2135,25 +1795,17 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
             </example>
 
             <para>Note that while this provides accessibility to implementation
-                specific
-                functions, it does make your code more type specific and
-                tightly bound. This
-                has the effect of losing the ability to use
-                polymorphism and making your
-                code more tightly coupled to
+                specific functions, it does make your code more type specific
+                and tightly bound. This has the effect of losing the ability to
+                use polymorphism and making your code more tightly coupled to
                 specific classes. </para>
             <para>To avoid this problem, only use more concrete class types in
-                factory
-                methods and return a more generalized provider or dataset
-                type from the
-                factory to the main application. This shouldn't be
-                a problem since coding to
-                concerete classes in the main
-                application means your code won't
-                be portable
-                anyway if you start
-                using specific methods in the custom provider or
-                dataset.</para>
+                factory methods and return a more generalized provider or
+                dataset type from the factory to the main application. This
+                shouldn't be a problem since coding to concerete classes in the
+                main application means your code won't be portable anyway if you
+                start using specific methods in the custom provider or dataset.
+            </para>
 
             <example>
                 <title>Using your new data provider dataset</title>
@@ -2161,17 +1813,17 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
 <![CDATA[  QueryProvider<Person> buildProvider() {
     MyCustomProvider<Person> result = new MyCustomProvider<Person>();
     result.setWidgetConnection(xyz);
-    return result;     
+    return result;
   }
-   
+
    QueryDataset<Person> buildDataset() {
      MyCustomProvider<Person> provider = buildProvider();
      MyCustomProviderDataset<Person> ds = new MyCustomProviderDataset<Person>();
      ds.getProvider().setWidgetConnection(ConnectionFactory.newConnection);
      return ds;
    }
-   
-   
+
+
    ...
    ...
    //assign the dataset using the generic dataset
@@ -2192,44 +1844,25 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
         <title>Non-Database Providers</title>
         <para>There are a number of places you can choose to fetch data from and
             usually you have no common way to get that data into your
-            application. JADA
-            provides the ability to access non-database data
-            sources and
-            fetch contents as
-            pojos. It does this by abstracting the
-            concepts of fetching data
-            to a level
-            that is
-            above retrieving it from
-            the database. As a result, there
-            are a number
-            of
-            different
-            implementations for fetching data without a
-            database while letting
-            you benefit from using the same interfaces to fetch
-            and control the
-            data to be
-            displayed.</para>
+            application. JADA provides the ability to access non-database data
+            sources and fetch contents as pojos. It does this by abstracting the
+            concepts of fetching data to a level that is above retrieving it
+            from the database. As a result, there are a number of different
+            implementations for fetching data without a database while letting
+            you benefit from using the same interfaces to fetch and control the
+            data to be displayed.</para>
         <sect1 id="InMemoryDataProvider">
             <title>In-memory based datastores</title>
             <para>
                 The simplest form of datastore is one which just keeps the
-                objects in
-                memory
-                and are the whole set, or subset is returned to
-                the user when requested. An
-                in-memory data store
-                subclasses the
+                objects in memory and are the whole set, or subset is returned
+                to the user when requested. An in-memory data store subclasses
+                the
                 <classname>InMemoryDataProvider</classname>
                 class and implements the abstract method to return the backing
-                data. The
-                backing data is the complete list of in-memory results
-                that the data
-                provider is
-                paginating. Here is a data provider that
-                contains a list of
-                persons
+                data. The backing data is the complete list of in-memory results
+                that the data provider is paginating. Here is a data provider
+                that contains a list of persons
             </para>
             <example>
                 <title>In-memory Person data provider.</title>
@@ -2239,35 +1872,32 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
   private List<Person> backingList;
   private static final int PERSON_COUNT = 100;
 
-	@Override
-	protected List<Person> fetchBackingData() {
-		//generate some random test data
-		if (backingList == null) {
-			backingList = new ArrayList(PERSON_COUNT);
-			for (int i = 0; i < PERSON_COUNT; i++) {
-				Person p = new Person(new Long(i + 1), TestDataFactory
-						.getFirstName(), TestDataFactory.getLastName());
-				backingList.add(p);
-			}
-		}
-		return backingList;
-	}
+    @Override
+    protected List<Person> fetchBackingData() {
+        //generate some random test data
+        if (backingList == null) {
+            backingList = new ArrayList(PERSON_COUNT);
+            for (int i = 0; i < PERSON_COUNT; i++) {
+                Person p = new Person(new Long(i + 1), TestDataFactory
+                        .getFirstName(), TestDataFactory.getLastName());
+                backingList.add(p);
+            }
+        }
+        return backingList;
+    }
 
 }]]>
 </programlisting>
             </example>
             <para>
                 We can now iterate through the data from this provider as though
-                it were a
-                database driven provider.
+                it were a database driven provider.
                 <classname>InMemorydataProvider</classname>
                 result sets can also be sorted by the use of
                 <classname>Comparator</classname>
                 implementations. Like the database driven providers, the in
-                memory providers
-                have an order key map except the key is mapped
-                to a comparator instance
-                which is used to order the data in the
+                memory providers have an order key map except the key is mapped
+                to a comparator instance which is used to order the data in the
                 list.
             </para>
             <example>
@@ -2280,43 +1910,43 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
 
   private class PersonIdComparator implements Comparator<Person>,Serializable {
 
-		public int compare(Person o1, Person o2) {
-			return (int) (o1.getId() - o2.getId());
-		}
-	}
+        public int compare(Person o1, Person o2) {
+            return (int) (o1.getId() - o2.getId());
+        }
+    }
 
-	private class PersonNameComparator implements Comparator<Person>,
-			Serializable {
+    private class PersonNameComparator implements Comparator<Person>,
+            Serializable {
 
-		public int compare(Person o1, Person o2) {
-			int val = o1.getLastName().compareToIgnoreCase(o2.getLastName());
-			//if last names match, then try comparing by the first name			
-			if (val == 0) {
-				val = o1.getFirstName().compareToIgnoreCase(o2.getFirstName());
-			}
-			return val;
-		}
-	}
+        public int compare(Person o1, Person o2) {
+            int val = o1.getLastName().compareToIgnoreCase(o2.getLastName());
+            //if last names match, then try comparing by the first name         
+            if (val == 0) {
+                val = o1.getFirstName().compareToIgnoreCase(o2.getFirstName());
+            }
+            return val;
+        }
+    }
 
-	public InMemoryPersonProvider() {
-		//add the order keys by default in the constructor
-		getOrderKeyMap().put("id", new PersonIdComparator());
-		getOrderKeyMap().put("name", new PersonNameComparator());
-	}
+    public InMemoryPersonProvider() {
+        //add the order keys by default in the constructor
+        getOrderKeyMap().put("id", new PersonIdComparator());
+        getOrderKeyMap().put("name", new PersonNameComparator());
+    }
 
-	@Override
-	protected List<Person> fetchBackingData() {
-		//generate some random test data
-		if (backingList == null) {
-			backingList = new ArrayList(PERSON_COUNT);
-			for (int i = 0; i < PERSON_COUNT; i++) {
-				Person p = new Person(new Long(i + 1), TestDataFactory
-						.getFirstName(), TestDataFactory.getLastName());
-				backingList.add(p);
-			}
-		}
-		return backingList;
-	}
+    @Override
+    protected List<Person> fetchBackingData() {
+        //generate some random test data
+        if (backingList == null) {
+            backingList = new ArrayList(PERSON_COUNT);
+            for (int i = 0; i < PERSON_COUNT; i++) {
+                Person p = new Person(new Long(i + 1), TestDataFactory
+                        .getFirstName(), TestDataFactory.getLastName());
+                backingList.add(p);
+            }
+        }
+        return backingList;
+    }
 
 }]]>
 </programlisting>
@@ -2325,76 +1955,69 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 Again, we can subclass the
                 <classname>AbstractObjectDatasetJUnitTest</classname>
                 to create new test cases for this class. We can also add in
-                additional tests
-                for testing that the ordering is working
+                additional tests for testing that the ordering is working
                 correctly.
             </para>
 
             <example>
                 <title>Testing the InMemoryPersonProvider</title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[public class InMemoryPersonProviderTest 
+<![CDATA[public class InMemoryPersonProviderTest
     extends AbstractObjectDatasetJUnitTest<Person> {
 
-	@Override
-	public ObjectDataset<Person> buildObjectDataset() {
-		InMemoryPersonProvider provider = new InMemoryPersonProvider();
-		return new Dataset<Person>(provider);
-	}
+    @Override
+    public ObjectDataset<Person> buildObjectDataset() {
+        InMemoryPersonProvider provider = new InMemoryPersonProvider();
+        return new Dataset<Person>(provider);
+    }
 
-	@Override
-	public int getDataRowCount() {
-		return 100;
-	}
+    @Override
+    public int getDataRowCount() {
+        return 100;
+    }
 
-	public void testIdOrdering() {
-		ObjectDataset<Person> ds = buildObjectDataset();
-		ds.setOrderKey("id");
-		ds.setOrderAscending(false);
-		ds.setMaxRows(10);
-		//check descending
-		Long id = null;
-		
-		for (Person p : ds) {
-			if (id != null) {
-				assertTrue("Next Id is not less than the last",p.getId() < id);
-			}
-			id = p.getId();
-		}
-		
-		
-		//now reverse the ordering
-		ds.setOrderAscending(true);
-		id = null;
-		for (Person p : ds) {
-			if (id != null) {
-				assertTrue("Next Id is not greater than the last",p.getId() > id);
-			}
-			id = p.getId();
-		}
-		
-	}
+    public void testIdOrdering() {
+        ObjectDataset<Person> ds = buildObjectDataset();
+        ds.setOrderKey("id");
+        ds.setOrderAscending(false);
+        ds.setMaxRows(10);
+        //check descending
+        Long id = null;
+
+        for (Person p : ds) {
+            if (id != null) {
+                assertTrue("Next Id is not less than the last",p.getId() < id);
+            }
+            id = p.getId();
+        }
+
+
+        //now reverse the ordering
+        ds.setOrderAscending(true);
+        id = null;
+        for (Person p : ds) {
+            if (id != null) {
+                assertTrue("Next Id is not greater than the last",p.getId() > id);
+            }
+            id = p.getId();
+        }
+
+    }
 }]]>
 </programlisting>
             </example>
             <para>
                 In this test case, we toggle the ordering to ensure that the
-                ordering is
-                working as we switch from one order to the next. One
-                caveat with ordering in
-                memory providers is that the ordering
-                takes place on the backing data list
-                in
-                the data provider.
-                Therefore, you can't directly have multiple paginators
-                that fetch
-                independent views of the data since they would all have to share
-                the same sort order. You could do this if there was no ordering
-                or they
-                used
-                the same order. However to get around this you could
-                use a
+                ordering is working as we switch from one order to the next. One
+                caveat with ordering in memory providers is that the ordering
+                takes place on the backing data list in the data provider.
+                Therefore, you can't directly have multiple paginators that
+                fetch independent views of the data since they would all have to
+                share the same sort order. You could do this if there was no
+                ordering or they used the same order. However to get around this
+                you could use an
                 <classname>InMemoryAdapterProvider</classname>
+                .
             </para>
         </sect1>
         <sect1 id="InMemoryAdapterProvider">
@@ -2407,40 +2030,31 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 wraps an existing
                 <classname>DataProvider</classname>
                 (any kind, not just the in-memory kind) from which it sucks up
-                all the data
-                and puts it in its own in-memory list. This can be
-                used to either make a
-                data provider a fast in-memory provider, or
-                create an
-                independent view of an
-                in-memory dataset with indendent
-                sorting.
+                all the data and puts it in its own in-memory list. This can be
+                used to either make a data provider a fast in-memory provider,
+                or create an independent view of an in-memory dataset with
+                indendent sorting.
             </para>
             <para>
                 While the
                 <classname>InMemoryAdapterProvider</classname>
                 keeps a separate list of the data elements, it does not keep its
-                own copy of
-                the actual data which is shared with the original
-                provider. This lets you
-                use a single copy of the all data, but
-                lets you have independent lists of
-                the data. Obviously, care must
-                be taken when using this on a database since
-                it will
-                load all the
-                data from the source data provider into memory.
+                own copy of the actual data which is shared with the original
+                provider. This lets you use a single copy of the all data, but
+                lets you have independent lists of the data. Obviously, care
+                must be taken when using this on a database since it will load
+                all the data from the source data provider into memory.
             </para>
             <example>
                 <title>Multiple views using an in-memory adapter.</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[  InMemoryPersonProvider provider = new InMemoryPersonProvider();
-  InMemoryAdapterProvider<Person> providerAdapter = 
+  InMemoryAdapterProvider<Person> providerAdapter =
     new InMemoryAdapterProvider<Person>(provider);
-		
+
   ObjectDataset<Person> ds = new Dataset<Person>(provider);
   ObjectDataset<Person> ds2 = new Dataset<Person>(providerAdapter);
-		
+
   //shared data, independent ordering and paging
   ds.setOrderKey("name");
   ds2.setOrderKey("id");]]>
@@ -2454,9 +2068,6 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 <classname>InMemoryDataProvider</classname>
                 which it does in this case.
             </para>
-
-
-
         </sect1>
         <sect1>
             <title>
@@ -2467,26 +2078,23 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 Here is our
                 <classname>IntegerDataProvider</classname>
                 reimplemented using the in-memory data provider. All we need to
-                do is
-                override the method to return the backing data and return
-                our list of
-                integers
-                from 1 to 100.
+                do is override the method to return the backing data and return
+                our list of integers from 1 to 100.
             </para>
             <example>
                 <title>in-memory implementation of our Integer provider.</title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[public class InMemoryIntegerProvider 
+<![CDATA[public class InMemoryIntegerProvider
     extends InMemoryDataProvider<Integer> implements Serializable {
-	
-	@Override
-	protected List<Integer> fetchBackingData() {
-		List<Integer> result = new ArrayList<Integer>();
-		for (int i = 1;i <=100;i++) {
-			result.add(i);
-		}
-		return result;
-	}
+
+    @Override
+    protected List<Integer> fetchBackingData() {
+        List<Integer> result = new ArrayList<Integer>();
+        for (int i = 1;i <=100;i++) {
+            result.add(i);
+        }
+        return result;
+    }
 
 }]]>
 </programlisting>
@@ -2495,12 +2103,10 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 We can also easily test this using our
                 <classname>IntegerDataProviderTest</classname>
                 class that we used to test the integer data provider last time
-                by
-                subclassing it and overriding the
+                by subclassing it and overriding the
                 <methodname>buildObjectDataset</methodname>
                 method. This time we return an instance of our in-memory Integer
-                data
-                provider.
+                data provider.
             </para>
             <example>
                 <title>Testing our in-memory Integer data provider.</title>
@@ -2508,44 +2114,39 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
 <![CDATA[
 public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 
-	@Override
-	public ObjectDataset<Integer> buildObjectDataset() {	
-		DataProvider<Integer> provider = new InMemoryIntegerProvider();		
-		return new Dataset<Integer>(provider);
+    @Override
+    public ObjectDataset<Integer> buildObjectDataset() {
+        DataProvider<Integer> provider = new InMemoryIntegerProvider();
+        return new Dataset<Integer>(provider);
 
-	}	
+    }
 }]]>
 </programlisting>
             </example>
 
             <para>
                 In our previous implementation of the Integer data provider we
-                neglected to
-                include sorting, so this time we'll add sorting into
-                this implementation.
-                Since our integer in-memory data provider
-                only has one comparator to order
-                by (for comparing two integers),
-                we could just override the
+                neglected to include sorting, so this time we'll add sorting
+                into this implementation. Since our integer in-memory data
+                provider only has one comparator to order by (for comparing two
+                integers), we could just override the
                 <methodname>translateOrderKey</methodname>
                 method to return the single comparator in our dataset. The saves
-                us from
-                making the user assign an order key value, and it will
-                always be sorted by
-                this comparator.
+                us from making the user assign an order key value, and it will
+                always be sorted by this comparator.
             </para>
             <example>
                 <title>Sorting the Integer data provider.</title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer> 
+<![CDATA[public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer>
     implements Serializable {
 
   private transient Comparator<Integer> comparator = new Comparator<Integer>() {
     public int compare(Integer o1, Integer o2) {
       return o1-o2;
-    }				
+    }
 };
-	
+
   @Override
   protected List<Integer> fetchBackingData() {
     List<Integer> result = new ArrayList<Integer>();
@@ -2556,7 +2157,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
   }
 
   @Override
-  protected Comparator<Integer> translateOrderKey(String key) {	
+  protected Comparator<Integer> translateOrderKey(String key) {
     return comparator;
   }
 }]]>
@@ -2564,20 +2165,16 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
             </example>
             <para>Note also that in this case, the comparator field is marked
                 transient
-                since it is not serializable. 
-			</para>
+                since it is not serializable.
+            </para>
         </sect1>
         <sect1>
             <title>File Base Data Providers</title>
             <para>
                 One common need is to base a set of data of one or more files
-                which can
-                be
-                either text based, comma delimited, xml or some
-                proprietary format. JADA
-                again provides the same interface to
-                access these data sources. At the root
-                of file based data
+                which can be either text based, comma delimited, xml or some
+                proprietary format. JADA again provides the same interface to
+                access these data sources. At the root of file based data
                 providers, we have the
                 <classname>AbstractFileBasedProvider</classname>
                 which takes a filename in its constructor and creates the
@@ -2590,26 +2187,20 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
                     The
                     <classname>TextFileProvider</classname>
                     is the base class for data providers using text files as the
-                    data source.
-                    It treats each line in the file as a row of data
-                    and calls the abstract
-                    method
+                    data source. It treats each line in the file as a row of
+                    data and calls the abstract method
                     <methodname>createObjectFromLine(String line)</methodname>
                     to generate an instance of the object data for each row in
-                    the file. This
-                    is further extended in the
+                    the file. This is further extended in the
                     <classname>CommandDelimitedProvider</classname>
                     which assumes that each row of text is a row of comma
-                    delimited data. For
-                    each row of data, the provider splits up
-                    the data elements and passed them
-                    as a string array to the
+                    delimited data. For each row of data, the provider splits up
+                    the data elements and passed them as a string array to the
                     abstract method
                     <methodname>createObjectFromColumns(String[] columns)
                     </methodname>
-                    . Subclasses need to implement this method to return the
-                    specific type of
-                    entity that this data provider returns.
+                    Subclasses need to implement this method to return the
+                    specific type of entity that this data provider returns.
                 </para>
             </sect2>
         </sect1>
@@ -2627,55 +2218,30 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
                 The
                 <classname>IndexedDataProviderCache</classname>
                 provides random access to provider data with look ahead caching
-                to optimize
-                querying and take advantage of data coherence. The
-                best example of this is
-                in the swing table which is included in
-                one of the examples. A swing table
-                model knows the number of rows
-                of data that exist (which could
-                be thousands
-                or millions) and lets
-                the user scroll across the whole dataset. This means
-                that the
-                user can select any record from the available dataset
-                at any
-                point
-                in time. In this event, it would be fetched from the data
-                provider and
-                returned to the user. However, the user will
-                probably end up
-                fetching the
-                next x number of objects from the
-                dataset as the next x number of rows in
-                the table are displayed.
-                For this reason, the cache not only fetches the
-                requested row,
-                but the next n number of rows where n is the
-                batch size
-                defined by
-                an attribute on the cache. The
+                to optimize querying and take advantage of data coherence. The
+                best example of this is in the swing table which is included in
+                one of the examples. A swing table model knows the number of
+                rows of data that exist (which could be thousands or millions)
+                and lets the user scroll across the whole dataset. This means
+                that the user can select any record from the available dataset
+                at any point in time. In this event, it would be fetched from
+                the data provider and returned to the user. However, the user
+                will probably end up fetching the next x number of objects from
+                the dataset as the next x number of rows in the table are
+                displayed. For this reason, the cache not only fetches the
+                requested row, but the next n number of rows where n is the
+                batch size defined by an attribute on the cache. The
                 <classname>IndexedDataProviderCache</classname>
                 keeps hold of these items since they may well be reused when the
-                table is
-                repainted or the user starts to scroll backwards or
-                forwards a few records
-                at a time. This cache is limited in size,
-                and records will start to be
-                ejected on a least recently used
+                table is repainted or the user starts to scroll backwards or
+                forwards a few records at a time. This cache is limited in size,
+                and records will start to be ejected on a least recently used
                 basis. The
                 <classname>IndexedDataProviderCache</classname>
                 can be used to randomly browse thousands of records in a Swing
-                table with
-                no
-                startup time and efficient memory use since it
-                doesn't read all the data
-                in
-                at once. (The delay at the start is
-                due to
-                the creation of the database,
-                not
-                the loading of all the
+                table with no startup time and efficient memory use since it
+                doesn't read all the data in at once. (The delay at the start is
+                due to the creation of the database, not the loading of all the
                 data).
             </para>
         </sect1>
@@ -2685,21 +2251,14 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
                 As much as possible, you should not call the
                 <methodname>fetchRecordCount</methodname>
                 from within the data provider. The most likely place you will
-                use it is to
-                determine whether there are more results to be
-                returned. This can be an
-                expensive function to count all records
-                or rows of data from the source that
-                should be called as little
-                as possible. In the database driven queries
-                included, an extra
-                row is added to the results when the data is queried so
-                we know
+                use it is to determine whether there are more results to be
+                returned. This can be an expensive function to count all records
+                or rows of data from the source that should be called as little
+                as possible. In the database driven queries included, an extra
+                row is added to the results when the data is queried so we know
                 that if the extra row is there, there are more results
-                available.
-                This extra row is then taken off the final results
-                that are returned to the
-                user.
+                available. This extra row is then taken off the final results
+                that are returned to the user.
             </para>
         </sect1>
 

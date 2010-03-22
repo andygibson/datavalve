@@ -19,7 +19,7 @@
     <chapter id="Introduction">
         <title>Introduction</title>
         <para>
-            The purpose of this framework is to let developers use diverse
+            The purpose of this framework is to let developers use different
             sources of data in a consistent manner that leverages the
             similarities to create common interfaces to access them. It also
             aims to augment the functions of existing data access mechanisms,
@@ -64,33 +64,32 @@
                 <ulink
                     url="http://www.andygibson.net/blog/index.php/2008/10/02/codeless-ajax-ordered-and-paginated-tables-in-seam/">blogged about it </ulink>
                 and it still remains a popular article today when people are
-                looking for info on JSF and pagination. However, this still has
-                problems since it only works in Seam projects but the same
-                functionality is needed in Wicket, Spring, JSP and even Swing
-                and console apps. Other frameworks such as Wicket provided an
-                visual code and an interface for handling ordered paginated
-                datasets, but the implementation is up to the user as this is
-                beyond the scope of Wicket.
+                looking for info on JSF and pagination. However this solution
+                only works in Seam projects but the same functionality is needed
+                in Wicket, Spring, JSP and even Swing and console apps. Other
+                frameworks such as Wicket provide a front end and back end
+                interface for handling ordered paginated datasets, but the
+                actual implementation is up to the user as this is beyond the
+                scope of Wicket.
             </para>
 
             <para>The other source of inspiration is from Borland Delphi which
                 worked on the idea that a common data access interface meant
                 that data driven components could access data without
-                considering where it came from. A standard query interface means
-                we can create a reusable front end. Third party Delphi component
-                developers could create data access components that would work
-                with any kind of data source, from Oracle, MySQL and MS Access
-                to XML or file based datasets as long as there was a data
-                provider implementation for it. When developing in Java, you
-                typically have to code against a common but more specific back
-                end such as a JDBC query and write new interfaces for different
-                view technologies. If you write the front end code for say JPA
-                or Hibernate and you need to access an alternative data source
-                then typically you cannot re-use your existing code for the new
-                source.</para>
+                considering where it came from. A standard data interface meant
+                that third party Delphi component developers could create data
+                access components that would work with any kind of data source,
+                from Oracle, MySQL and MS Access to XML or file based datasets
+                as long as there was a data provider implementation for it. When
+                developing in Java, you typically have to code against a common
+                but more specific back end such as a JDBC query and write new
+                interfaces for different view technologies. If you write the
+                front end code for say JPA or Hibernate and you need to access
+                an alternative data source then typically you cannot re-use your
+                existing code for the new data source.</para>
             <para>It seems that all these frameworks recognized the need for
                 controlled data access but it was beyond the scope of the
-                frameworks to provide it.
+                individual frameworks to provide a cross framework solution.
             </para>
             <figure>
                 <title>Projects without using JADA</title>
@@ -110,7 +109,7 @@
 
         <sect1>
             <title>The Solution</title>
-            <para>So, I scratched my own itch and created this project that
+            <para>So, I scratched my own itch and created this project which
                 defines a common API for querying diverse data sources with
                 pagination and optionally with ordering, restrictions and
                 parameters. This lets us write common view code that can
@@ -133,7 +132,7 @@
 
 
             <para>
-                JADA is organized into two main interfaces called
+                JADA is organized into two main interfaces :
                 <classname>Paginator</classname>
                 and
                 <classname>DataProvider</classname>
@@ -143,8 +142,8 @@
                 information, the page size and the result we are up to. The
                 <classname>DataProvider</classname>
                 interface defines two simple methods which are used to fetch the
-                total number of rows in the complete list of data, and a
-                (sub)set of the items in the dataset.
+                total number of rows in the complete list of data, and the list
+                (or a subset) of items in the dataset.
             </para>
             <example>
                 <title>
@@ -162,14 +161,14 @@
             <para>
                 When we fetch the results, we pass in the paginator so the
                 <classname>DataProvider</classname>
-                implementation knows how many rows to return and where in the
+                implementation knows how many rows to return, where in the
                 dataset to start returning rows from and it can also set the
                 flag on the paginator indicating whether there are more results
                 or not.
             </para>
         </sect1>
         <sect1>
-            <title>Benefits of Java Query Adapters</title>
+            <title>Benefits of JADA</title>
             <para>
                 Even if you still plan on using a single data access mechanism
                 (i.e. Hibernate or JPA) there are still advantages to using
@@ -192,7 +191,7 @@
                     the results using your existing view code to paginate and
                     order the data. Even if you don't see yourself switching
                     data access mechanisms or having to access diverse data
-                    stores, you may want to just switch the query here and there
+                    stores, you may want to just switch a query here and there
                     from a pure ORM type query to a JDBC SQL query but still
                     want to interface with the data and use the features
                     available in your other queries. </para>
@@ -317,7 +316,7 @@ List<Person> results = qry.resultList();]]>
                     and
                     <classname>DataProvider</classname>
                     interfaces. The Paginator is like a bookmark for a dataset
-                    and holds the current record, page size and ordering
+                    and holds the current record index, page size and ordering
                     information as well as flags indicating whether there is a
                     previous or next page available. The
                     <classname>DataProvider</classname>
@@ -467,14 +466,29 @@ for (Person p : results) {
 }]]>
                 </programlisting>
             </example>
+            <para>
+                We define a new
+                <classname>JpaDataProvider</classname>
+                and pass it our
+                <classname>EntityManager</classname>
+                in the constructor. We create a new
+                <classname>QueryDataset</classname>
+                that we use to access the data and return the results to us. We
+                could do this directly on the provider if we had created a
+                <classname>Paginator</classname>
+                instance to pass to it. Instead, we let the dataset
+                implementation take care of it. We define the select and count
+                statements separately since the select statments may contain
+                fetch information that is invalid in the count statement.
+            </para>
         </sect1>
         <sect1>
             <title>Restricting Results</title>
             <para>We can add restrictions to the query so we only return a set
-                of rows that we want. In this case, we want to return a specific
-                person. The above code to create and initialize the data
-                provider has beem rolled into a method to return the person data
-                provider.</para>
+                of rows that we want. In this case, we want to return people in
+                a a specific department. The above code to create and initialize
+                the data provider has beem rolled into a method to return the
+                person data provider.</para>
 
             <example>
                 <title>
@@ -482,7 +496,7 @@ for (Person p : results) {
                 </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
-provider.addRestriction("p.id = 4");  ]]>
+provider.addRestriction("p.department.id = 4");  ]]>
                 </programlisting>
             </example>
 
@@ -497,11 +511,11 @@ provider.addRestriction("p.id = 4");  ]]>
                 where the parameterized value is meant to go and pass the value
                 with the restriction. We can also add the restriction with the
                 name of the parameter and set the parameter on the data provider
-                separately. The first two syntaxes rename the parameter and puts
-                the values in the internal parameter map. The last syntax keeps
-                the parameter name you passed in and is useful if you anticpate
-                changing that parameter since you know what name it can be
-                referenced by.
+                separately. In the following example, the first two syntaxes
+                rename the parameter and put the values in the internal
+                parameter map. The last syntax keeps the parameter name you
+                passed in and is useful if you anticpate changing that parameter
+                since you know what name it can be referenced by.
             </para>
             <example>
                 <title>
@@ -511,17 +525,17 @@ provider.addRestriction("p.id = 4");  ]]>
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
 
 //add parameter using :param keyword in restriction
-provider.addRestriction("p.id = :param",4);
+provider.addRestriction("p.department.id = :param",4);
 provider.addRestriction("p.firstName = :param","John");
 
-//add parameter manually
+//add parameter manually 
 provider.addRestriction("or p.lastName = :lastNameParam");
 provider.addParameter("lastNameParam","Smith");]]>
                 </programlisting>
             </example>
             <para>
                 In many cases, we don't want to include restrictions where the
-                value we are comparing is
+                parameter value we are using is
                 <code>null</code>
                 such as search forms where the user has left values blank. In
                 these cases, any restriction with null parameter should not be
@@ -567,10 +581,10 @@ provider.addRestriction("p.lastName like :param",
                 </programlisting>
             </example>
             <para>
-                What we do there is check whether the first/last name value is
-                null and if so we ignore the restriction, but otherwise we add
-                the restriction and we use the value with a wildcard added as
-                the parameter value.
+                We check whether the first/last name value is null and if so
+                we ignore the restriction, but otherwise we add the restriction
+                and we use the value with a wildcard added as the parameter
+                value.
             </para>
             <para>This may seem a fairly broad set of ways to parameterize the
                 your queries, but is only the first way of two parameter
@@ -587,15 +601,13 @@ provider.addRestriction("p.lastName like :param",
                 query is executed the parameters are evaluated as the query is
                 built so any restrictions with
                 <code>null</code>
-                parameters can be excluded. We attach parameter resolvers to the
-                provider so it will be used when the provider tries to resolve
-                the parameter for a restriction. This mechanism allows us to
-                attach an EL parameter resolver for environments where EL is in
-                use.
+                parameters can be excluded. This mechanism allows us to use
+                different parameter resolvers depending on the environment i.e.
+                using an EL parameter resolver for EL environments.
             </para>
             <para>It also lets use different mechanisms for resolving values
                 such as using reflection onto a an object, or even returning
-                parameter values based on the name directly.</para>
+                parameter values based on the parameter name.</para>
             <example>
                 <title>
                     Parameter Resolving with Reflection
@@ -607,9 +619,10 @@ provider.addRestriction("or p.lastName like :lastName");
 provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]]>
                 </programlisting>
             </example>
-            <para>We can also bake the parameter resolver into the object
-                directly by making it implement the parameter resolver
-                interface.</para>
+            <para>We can also bake the parameter resolver into the criteria
+                object directly by making it implement the parameter resolver
+                interface. This kind of resolver executes faster than trying to
+                resolve EL expressions or use reflection. </para>
             <example>
                 <title>
                     Built in parameter resolution
@@ -665,18 +678,7 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
 }]]>  
                 </programlisting>
             </example>
-            <para>
-                On the subject of Seam, with JADA you can subclass either a
-                <classname>SeamJPaQueryDataset</classname>
-                or a
-                <classname>SeamJpaNativeDataset</classname>
-                so you can use either a Ejbql or Native query for fetching data.
-                Also, there is an adapter class that can be used instead which
-                adds on the additional methods needed to make the class
-                compatible with
-                <classname>EntityQuery</classname>
-                based classes.
-            </para>
+
         </sect1>
         <sect1>
             <title>Order in the house</title>
@@ -2260,6 +2262,29 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
                 available. This extra row is then taken off the final results
                 that are returned to the user.
             </para>
+        </sect1>
+        <sect1>
+            <title>Seam Usage</title>
+            <para>
+                With JADA you can subclass either a
+                <classname>SeamJPaQueryDataset</classname>
+                or a
+                <classname>SeamJpaNativeDataset</classname>
+                so you can use either a Ejbql or Native query for fetching data.
+                Also, there is an adapter class that can be used instead which
+                adds on the additional methods needed to make the class
+                compatible with
+                <classname>EntityQuery</classname>
+                based classes.
+            </para>
+        </sect1>
+        <sect1>
+            <title>Using your own parameter signature</title>
+            <para>You may decide you want to use a custom signature for
+                parameters in restrictions. By default ':' and '#{....}' are
+                supported for the default and EL parameter patterns. If you
+                decide to have a reflection parameter type starting with '$' you
+                will need to extends the Parameterfinder?????</para> error here because this is where we need to continue
         </sect1>
 
     </chapter>

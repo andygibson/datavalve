@@ -2,8 +2,8 @@
 "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 
 <book>
-    <title>JADA Reference Guide</title>
-    <titleabbrev>JADA Ref</titleabbrev>
+    <title>Spigot Reference Guide</title>
+    <titleabbrev>Spigot Ref</titleabbrev>
     <bookinfo>
         <author>
             <personname>
@@ -92,7 +92,7 @@
                 individual frameworks to provide a cross framework solution.
             </para>
             <figure>
-                <title>Projects without using JADA</title>
+                <title>Projects without using Spigot</title>
                 <mediaobject>
                     <imageobject role="fo">
                         <imagedata align="center" fileref="../img/app_without_jds.png"
@@ -118,7 +118,7 @@
                 and data access frameworks. 
             </para>
             <figure>
-                <title>Projects using JADA</title>
+                <title>Projects using Spigot</title>
                 <mediaobject>
                     <imageobject role="fo">
                         <imagedata align="center" fileref="../img/app_with_jds.png"
@@ -132,7 +132,7 @@
 
 
             <para>
-                JADA is organized into two main interfaces :
+                Spigot is organized into two main interfaces :
                 <classname>Paginator</classname>
                 and
                 <classname>DataProvider</classname>
@@ -168,17 +168,17 @@
             </para>
         </sect1>
         <sect1>
-            <title>Benefits of JADA</title>
+            <title>Benefits of Spigot</title>
             <para>
                 Even if you still plan on using a single data access mechanism
                 (i.e. Hibernate or JPA) there are still advantages to using
-                JADA.
+                Spigot.
             </para>
 
             <sect2>
                 <title>Interchangable query mechanisms</title>
                 <para>Most projects plan on using only one data access mechanism
-                    but by coding to the JADA API, you can switch
+                    but by coding to the Spigot API, you can switch
                     implementations later. You might move from JPA to Hibernate
                     or even to plain JDBC queries and most of the code that uses
                     these queries, including parameterized queries and ordering,
@@ -187,7 +187,7 @@
                     based datasource which needs accessing, paginating and
                     displaying.</para>
                 <para>Regardless of where the different types of datastores come
-                    from, with JADA you will be able to access them and control
+                    from, with Spigot you will be able to access them and control
                     the results using your existing view code to paginate and
                     order the data. Even if you don't see yourself switching
                     data access mechanisms or having to access diverse data
@@ -199,7 +199,7 @@
 
             <sect2>
                 <title>Easy Querying</title>
-                <para>JADA makes it easier to query for the data you need. It
+                <para>Spigot makes it easier to query for the data you need. It
                     features flexible parameter definition by setting the value
                     manually, using EL expressions, extracting the values using
                     reflection or your own custom parameter resolver. Parameters
@@ -256,7 +256,7 @@ List<Person> results = qry.resultList();]]>
                     </programlisting>
 
                 </example>
-                <para>With JADA, you can define the query, specify how the
+                <para>With Spigot, you can define the query, specify how the
                     parameters are resolved and the data provider will take care
                     of generating the right request so that the only
                     restrictions included in the query are ones with parameter
@@ -281,7 +281,7 @@ List<Person> results = qry.resultList();]]>
             <sect2>
                 <title>Flexible and Secure Ordering Abstraction</title>
                 <para>
-                    JADA lets you order your data based on order key values as
+                    Spigot lets you order your data based on order key values as
                     opposed to explicit table column values which could be prone
                     to SQL injection attacks. By using an
                     <code>orderKey</code>
@@ -293,7 +293,7 @@ List<Person> results = qry.resultList();]]>
             </sect2>
             <sect2>
                 <title>Convert anything into a dataset</title>
-                <para>At the heart of JADA is a simple API which allows you to
+                <para>At the heart of Spigot is a simple API which allows you to
                     turn anything into a source of data that can be accessed and
                     paginated from existing view code. This can range from
                     custom datasources or third party applications to text, csv,
@@ -434,9 +434,9 @@ List<Person> results = qry.resultList();]]>
     <chapter>
         <title>Database Driven Providers</title>
         <para>
-            While JADA offers a way to access many different types of data
+            While Spigot offers a way to access many different types of data
             stores, in most cases, you will want to fetch data from a database.
-            JADA comes with data providers for fetching data using JPA,
+            Spigot comes with data providers for fetching data using JPA,
             Hibernate or just plain SQL via JDBC. These different providers are
             based off and implement the
             <classname>QueryDataProvider</classname>
@@ -503,7 +503,7 @@ provider.addRestriction("p.department.id = 4");  ]]>
 
             <para>
                 It is often more convenient to specify limitations using
-                parameters and JADA has a number of different mechanisms with
+                parameters and Spigot has a number of different mechanisms with
                 which to specify parameterized restrictions. First we'll look at
                 adding constant parameters. We can add the restriction using the
                 keyword
@@ -683,7 +683,7 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
         <sect1>
             <title>Order in the house</title>
             <para>
-                JADA also features key based ordering so rather than specify
+                Spigot also features key based ordering so rather than specify
                 ordering as a set of fields on the dataset, you can specify
                 ordering using a key that maps to one or more fields. </para>
             <example>
@@ -1552,9 +1552,9 @@ showResults(results2);]]>
     </chapter>
 
     <chapter>
-        <title>The JADA Architecture</title>
+        <title>The Spigot Architecture</title>
         <para>
-            Now we've covered these fundamentals of using JADA we can look at
+            Now we've covered these fundamentals of using Spigot we can look at
             the different subclasses of the
             <classname>DataProvider</classname>
             interface and implementations so we create datasets that can attach
@@ -1580,11 +1580,10 @@ showResults(results2);]]>
                     <classname>DataProvider</classname>
                     interface is the
                     <classname>ParameterizedDataProvider</classname>
-                    that introduces methods for fetching data based on dynamic
-                    parameters. This interface was conceived as a way to provide
-                    parameterization features on datasets that were non-sql
-                    based. For example, in a data provider that features file
-                    listings, you could have a directory parameter that
+                    that introduces methods for using dynamic parameters to
+                    provide parameterization features on datasets that were
+                    non-sql based. For example, in a data provider that features
+                    file listings, you could have a directory parameter that
                     indicates the directory to list files from.
                 </para>
             </sect2>
@@ -1609,26 +1608,6 @@ showResults(results2);]]>
             </sect2>
             <sect2>
                 <title>
-                    <classname>AbstractQlDataProvider</classname>
-                </title>
-                <para>
-                    While this class isn't a part of the interface hierarchy, it
-                    is an important step on the concrete class implementations.
-                    It implements the generation of the query using a Sql like
-                    query language using the
-                    <classname>DataQueryBuilder</classname>
-                    which takes the statements and the restrictions, resolves
-                    the parameters and generates the final query. This query is
-                    then executed in the subclasses using the particular data
-                    access mechanism specific to that implementation. This class
-                    assumes only that there is a select and a count statement,
-                    and uses that to generate the query. The restrictions are
-                    introduced to the hierarchy and used in the query building
-                    later.
-                </para>
-            </sect2>
-            <sect2>
-                <title>
                     <classname>QueryDataProvider</classname>
                 </title>
                 <para>
@@ -1639,6 +1618,47 @@ showResults(results2);]]>
                     and adds the ability to define restrictions and ordering.
                     This class is really intended for targeting data stores that
                     have a SQL-like query language which can be parameterized.
+                </para>
+            </sect2>
+
+            <sect2>
+                <title>
+                    <classname>AbstractQlDataProvider</classname>
+                </title>
+                <para>
+                    This class provides the hooks for implementing the data
+                    fetch using a query language such as Sql or Ejbql. It does
+                    this by using an intermediate
+                    <code>DataQuery</code>
+                    object that contains the state of the query in an
+                    implementation-neutral manner. Subclasses then use the
+                    <classname>DataQuery</classname>
+                    to query the database using their specific data access
+                    mechanism.
+                </para>
+            </sect2>
+            <sect2>
+                <title>
+                    <classname>AbstractQueryDataProvider</classname>
+                </title>
+                <para>
+                    This class extends the
+                    <classname>AbstractQlDataProvider</classname>
+                    and implements the
+                    <classname>QueryDataProvider</classname>
+                    interface. It handles the creation of the
+                    <classname>DataQuery</classname>
+                    using a
+                    <classname>DataQueryBuilder</classname>
+                    instance. This builder takes a statement and restrictions
+                    and resolves the parameters and generates the final
+                    <classname>DataQuery</classname>
+                    . This query is then executed in the subclasses using the
+                    particular data access mechanism specific to that
+                    implementation. This class assumes only that there is a
+                    select and a count statement, and uses that to generate the
+                    query. The restrictions are introduced to the hierarchy and
+                    used in the query building later.
                 </para>
             </sect2>
         </sect1>
@@ -1706,7 +1726,7 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 rather than create a
                 <classname>GenericProviderDataset</classname>
                 with the provider class type as a generic parameter to the type,
-                we can create a
+                there is a
                 <classname>QueryDataset</classname>
                 type that extends the
                 <classname>GenericProviderDataset</classname>
@@ -1792,7 +1812,7 @@ class MyCustomProviderDataset<T>
                 <programlisting role="JAVA" language="java">
 <![CDATA[MyCustomProvider<Person> provider = new MyCustomProvider<Person>();
 MyCustomProviderDataset<Person> ds = new MyCustomProviderDataset<Person>(provider);
-ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
+ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
 </programlisting>
             </example>
 
@@ -1800,13 +1820,10 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 specific functions, it does make your code more type specific
                 and tightly bound. This has the effect of losing the ability to
                 use polymorphism and making your code more tightly coupled to
-                specific classes. </para>
-            <para>To avoid this problem, only use more concrete class types in
-                factory methods and return a more generalized provider or
-                dataset type from the factory to the main application. This
-                shouldn't be a problem since coding to concerete classes in the
-                main application means your code won't be portable anyway if you
-                start using specific methods in the custom provider or dataset.
+                specific classes. To avoid this problem, only use more concrete
+                class types in factory methods and return a more generalized
+                provider or dataset type from the factory to the main
+                application. 
             </para>
 
             <example>
@@ -1844,21 +1861,22 @@ ds.getConnection().setWidgetConnection(ConnectionFactory.createConnection());]]>
     </chapter>
     <chapter>
         <title>Non-Database Providers</title>
-        <para>There are a number of places you can choose to fetch data from and
-            usually you have no common way to get that data into your
-            application. JADA provides the ability to access non-database data
-            sources and fetch contents as pojos. It does this by abstracting the
-            concepts of fetching data to a level that is above retrieving it
-            from the database. As a result, there are a number of different
-            implementations for fetching data without a database while letting
-            you benefit from using the same interfaces to fetch and control the
-            data to be displayed.</para>
+        <para>There are a number different non-database sources you can choose
+            to fetch data from and usually you have no common way to get that
+            data into your application. Spigot provides the ability to fetch
+            contents from these sources and transform them to pojos. It does
+            this by abstracting the concepts of fetching data to a level that is
+            higher than retrieving it from the database. As a result, there are
+            a number of different implementations that fetch data without a
+            database while letting you benefit from using the same interfaces to
+            control the data access.</para>
         <sect1 id="InMemoryDataProvider">
             <title>In-memory based datastores</title>
             <para>
                 The simplest form of datastore is one which just keeps the
-                objects in memory and are the whole set, or subset is returned
-                to the user when requested. An in-memory data store subclasses
+                objects in memory and the whole set, or subset is returned
+                to the
+                user when requested. An in-memory data store subclasses
                 the
                 <classname>InMemoryDataProvider</classname>
                 class and implements the abstract method to return the backing
@@ -2171,11 +2189,11 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
             </para>
         </sect1>
         <sect1>
-            <title>File Base Data Providers</title>
+            <title>File Based Data Providers</title>
             <para>
                 One common need is to base a set of data of one or more files
                 which can be either text based, comma delimited, xml or some
-                proprietary format. JADA again provides the same interface to
+                proprietary format. Spigot again provides the same interface to
                 access these data sources. At the root of file based data
                 providers, we have the
                 <classname>AbstractFileBasedProvider</classname>
@@ -2266,7 +2284,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
         <sect1>
             <title>Seam Usage</title>
             <para>
-                With JADA you can subclass either a
+                With Spigot you can subclass either a
                 <classname>SeamJPaQueryDataset</classname>
                 or a
                 <classname>SeamJpaNativeDataset</classname>
@@ -2280,11 +2298,63 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
         </sect1>
         <sect1>
             <title>Using your own parameter signature</title>
-            <para>You may decide you want to use a custom signature for
-                parameters in restrictions. By default ':' and '#{....}' are
-                supported for the default and EL parameter patterns. If you
+            <para>
+                You may decide you want to use a custom signature for parameters
+                in restrictions in query providers. By default ':' and '#{....}'
+                are supported for the default and EL parameter patterns. If you
                 decide to have a reflection parameter type starting with '$' you
-                will need to extends the Parameterfinder?????</para> error here because this is where we need to continue
+                will need to implements you own
+                <classname>ParameterParser</classname>
+                or you can extend the
+                <classname>RegExParameterParser</classname>
+                and override the
+                <methodname>getRegEx()</methodname>
+                method to include '$' signs when parsing. This then needs to be
+                provided to the
+                <classname>DataQueryBuilder</classname>
+                implementation which can be done by overriding the
+                <methodname>createDataQueryBuilder</methodname>
+                to set your parameter parser on the query builder.
+            </para>
+            <example>
+                <title>Using our own parameter parser.</title>
+                <programlisting role="JAVA" language="java">
+<![CDATA[
+public class MyCustomJpaDataProvider<T> extends JpaDataProvider<T> {
+
+    @Override
+    protected DataQueryBuilder createDataQueryBuilder() {
+        DataQueryBuilder  result = super.createDataQueryBuilder();
+        result.setParameterParser(new MyCustomParameterParser());
+        return result;
+    }
+}]]>
+</programlisting>
+            </example>
+
+        </sect1>
+        <sect1>
+            <title>
+                Use of
+                <classname>ObjectDataset</classname>
+            </title>
+            <para>
+                For the most part, you might find yourself using the
+                <classname>ObjectDataset</classname>
+                most of the time. Even in something like JSF where you might
+                have a stateless page, when rendering the page, the method to
+                return the query results might be called a number of times by
+                the JSF page. If you used a data provider to return the results,
+                they would have to be regenerated on each call (unless you
+                manually held the results somewhere which is just as efficient).
+                Using a dataset to hold the results will make the results
+                stateful, at least for the scope of the request. This same
+                feature could be used in other stateless web environments. There
+                is little overhead in using an
+                <classname>ObjectDataset</classname>
+                implementation instead of separate provider and paginator
+                instances.
+            </para>
         </sect1>
 
     </chapter>

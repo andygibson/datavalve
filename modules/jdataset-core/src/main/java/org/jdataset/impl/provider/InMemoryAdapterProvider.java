@@ -85,6 +85,7 @@ public class InMemoryAdapterProvider<T> extends InMemoryDataProvider<T> implemen
 			//then try and automatically assign the order key information
 			if (provider instanceof InMemoryDataProvider<?>) {
 				InMemoryDataProvider<T> imProvider = (InMemoryDataProvider<T>) provider;
+				getOrderKeyMap().clear();
 				getOrderKeyMap().putAll(imProvider.getOrderKeyMap());
 			}
 			invalidateData();

@@ -105,8 +105,19 @@ public abstract class AbstractQueryDataProvider<T> extends
 		return false;
 	}
 
+	/**
+	 * Constructs and returns a {@link DataQueryBuilder} instance. Override this
+	 * to return alternative query builders that have different functions or to
+	 * change attributes in the one returned by default.
+	 * 
+	 * @return A DataQueryBuilder to use for creating the {@link DataQuery}
+	 */
+	protected DataQueryBuilder createDataQueryBuilder() {
+		return new DataQueryBuilder();
+	}
+
 	protected DataQuery buildDataQuery(String baseStatement,
-			boolean includeOrdering, Paginator paginator) {		
+			boolean includeOrdering, Paginator paginator) {
 		DataQueryBuilder builder = new DataQueryBuilder();
 		builder.setProvider(this);
 		builder.setBaseStatement(baseStatement);

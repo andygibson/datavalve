@@ -11,7 +11,8 @@ import org.jdataset.Paginator;
  * (Hql, Ejbql, Sql etc).
  * <p>
  * By using an internal query to hold the statement and the parameters, we can
- * utilize that in different ways in different sub classes.
+ * utilize that in different ways in different sub classes for different data
+ * access mechanisms
  * 
  * @author Andy Gibson
  * 
@@ -106,8 +107,8 @@ public abstract class AbstractQLDataProvider<T> extends
 
 	/**
 	 * Builds the {@link DataQuery} object from the base query statement and the
-	 * provider information. Pass the {@link Paginator} for order information
-	 * as well as a flag indicating whether ordering is included. We don't want
+	 * provider information. Pass the {@link Paginator} for order information as
+	 * well as a flag indicating whether ordering is included. We don't want
 	 * ordering on count statements so make sure it is false for those.
 	 * <p>
 	 * This method is all about taking the provider statements and restrictions

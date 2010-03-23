@@ -187,8 +187,10 @@
                     based datasource which needs accessing, paginating and
                     displaying.</para>
                 <para>Regardless of where the different types of datastores come
-                    from, with Spigot you will be able to access them and control
-                    the results using your existing view code to paginate and
+                    from, with Spigot you will be able to access them and
+                    control
+                    the results using your existing view code to paginate
+                    and
                     order the data. Even if you don't see yourself switching
                     data access mechanisms or having to access diverse data
                     stores, you may want to just switch a query here and there
@@ -679,7 +681,52 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
                 </programlisting>
             </example>
 
+
+            <sect2>
+                <title>Using your own parameter marker</title>
+                <para>
+                    You may decide you want to use a custom pattern for
+                    parameters
+                    in query providers restrictions. By default ':'
+                    and '#{....}'
+                    are supported for the default and EL parameter
+                    patterns. If you
+                    decide to have a reflection parameter type
+                    starting with '$' you
+                    will need to implements you own
+                    <classname>ParameterParser</classname>
+                    or you can extend the
+                    <classname>RegExParameterParser</classname>
+                    and override the
+                    <methodname>getRegEx()</methodname>
+                    method to include '$' signs when parsing. This then needs to
+                    be
+                    provided to the
+                    <classname>DataQueryBuilder</classname>
+                    implementation which can be done by overriding the
+                    <methodname>createDataQueryBuilder</methodname>
+                    method in the query data provider so you can set your
+                    parameter
+                    parser on the query builder.
+                </para>
+                <example>
+                    <title>Using our own parameter parser.</title>
+                    <programlisting role="JAVA" language="java">
+<![CDATA[
+public class MyCustomJpaDataProvider<T> extends JpaDataProvider<T> {
+
+    @Override
+    protected DataQueryBuilder createDataQueryBuilder() {
+        DataQueryBuilder  result = super.createDataQueryBuilder();
+        result.setParameterParser(new MyCustomParameterParser());
+        return result;
+    }
+}]]>
+</programlisting>
+                </example>
+            </sect2>
         </sect1>
+
         <sect1>
             <title>Order in the house</title>
             <para>
@@ -1767,6 +1814,39 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
             </example>
         </sect1>
         <sect1>
+            <title>
+                <classname>ObjectDataset</classname>
+                Usage
+            </title>
+            <para>
+                You might find yourself using the stateful
+                <classname>ObjectDataset</classname>
+                most of the time. Even in web applications where you
+                might have a
+                stateless page, when rendering the page, the method
+                to return the
+                query results might be called a number of times as it is
+                rendered. If you used a data provider to return the results,
+                they would have to be regenerated on each call (unless you
+                manually held the results somewhere).
+                Using a dataset to hold the
+                results will make the results
+                stateful, at least for the scope of
+                the request. This same
+                feature could be used in other stateless
+                web environments. There
+                is little overhead in using an
+                <classname>ObjectDataset</classname>
+                implementation instead of separate provider and paginator
+                instances.
+            </para>
+            <para>If you use Seam, Spring web flow, CDI or other frameworks that
+                allow state to last beyond the current request, or even just
+                putting it in the session, you can extend the life of the query
+                over multiple requests which will save you having to re-query
+                the data next time it is needed. </para>
+        </sect1>
+        <sect1>
             <title>Extending Datasets for custom providers</title>
             <para>
                 When you create a new data provider implementation it is also
@@ -2258,27 +2338,25 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
                 and records will start to be ejected on a least recently used
                 basis. The
                 <classname>IndexedDataProviderCache</classname>
-                can be used to randomly browse thousands of records in a Swing
-                table with no startup time and efficient memory use since it
-                doesn't read all the data in at once. (The delay at the start is
-                due to the creation of the database, not the loading of all the
-                data).
+                can be used to randomly browse thousands of records with no
+                startup time and efficient memory use since it doesn't read all
+                the data in at once. (The delay at the start is due to the
+                creation of the database, not the loading of all the data).
             </para>
         </sect1>
         <sect1>
             <title>Don't call record count</title>
             <para>
-                As much as possible, you should not call the
+                You should not avoid calling
                 <methodname>fetchRecordCount</methodname>
                 from within the data provider. The most likely place you will
-                use it is to determine whether there are more results to be
-                returned. This can be an expensive function to count all records
-                or rows of data from the source that should be called as little
-                as possible. In the database driven queries included, an extra
-                row is added to the results when the data is queried so we know
-                that if the extra row is there, there are more results
-                available. This extra row is then taken off the final results
-                that are returned to the user.
+                call it is to determine whether there are more results to be
+                returned. This can be an expensive call to count all records or
+                rows of data from the source that should be avoided if possible.
+                In the database data provider included, we fetch an extra row to
+                see if there are more results after the set of rows we want.
+                This extra row is then taken off the final results that are
+                returned to the user.
             </para>
         </sect1>
         <sect1>
@@ -2294,66 +2372,6 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
                 compatible with
                 <classname>EntityQuery</classname>
                 based classes.
-            </para>
-        </sect1>
-        <sect1>
-            <title>Using your own parameter signature</title>
-            <para>
-                You may decide you want to use a custom signature for parameters
-                in restrictions in query providers. By default ':' and '#{....}'
-                are supported for the default and EL parameter patterns. If you
-                decide to have a reflection parameter type starting with '$' you
-                will need to implements you own
-                <classname>ParameterParser</classname>
-                or you can extend the
-                <classname>RegExParameterParser</classname>
-                and override the
-                <methodname>getRegEx()</methodname>
-                method to include '$' signs when parsing. This then needs to be
-                provided to the
-                <classname>DataQueryBuilder</classname>
-                implementation which can be done by overriding the
-                <methodname>createDataQueryBuilder</methodname>
-                to set your parameter parser on the query builder.
-            </para>
-            <example>
-                <title>Using our own parameter parser.</title>
-                <programlisting role="JAVA" language="java">
-<![CDATA[
-public class MyCustomJpaDataProvider<T> extends JpaDataProvider<T> {
-
-    @Override
-    protected DataQueryBuilder createDataQueryBuilder() {
-        DataQueryBuilder  result = super.createDataQueryBuilder();
-        result.setParameterParser(new MyCustomParameterParser());
-        return result;
-    }
-}]]>
-</programlisting>
-            </example>
-
-        </sect1>
-        <sect1>
-            <title>
-                Use of
-                <classname>ObjectDataset</classname>
-            </title>
-            <para>
-                For the most part, you might find yourself using the
-                <classname>ObjectDataset</classname>
-                most of the time. Even in something like JSF where you might
-                have a stateless page, when rendering the page, the method to
-                return the query results might be called a number of times by
-                the JSF page. If you used a data provider to return the results,
-                they would have to be regenerated on each call (unless you
-                manually held the results somewhere which is just as efficient).
-                Using a dataset to hold the results will make the results
-                stateful, at least for the scope of the request. This same
-                feature could be used in other stateless web environments. There
-                is little overhead in using an
-                <classname>ObjectDataset</classname>
-                implementation instead of separate provider and paginator
-                instances.
             </para>
         </sect1>
 

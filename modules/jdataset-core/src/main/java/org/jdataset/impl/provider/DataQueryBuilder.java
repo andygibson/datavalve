@@ -64,6 +64,16 @@ public class DataQueryBuilder {
 
 	public DataQuery build() {
 
+		if (provider == null) {
+			throw new NullPointerException(
+					"Cannot build Data Query without setting the provider");
+		}
+
+		if (baseStatement == null || baseStatement.length() == 0) {
+			throw new IllegalArgumentException(
+					"Cannot build Data Query without a base statement");
+		}
+
 		clear();
 		DataQuery query = new DataQuery();
 
@@ -187,6 +197,13 @@ public class DataQueryBuilder {
 		}
 	}
 
+	/**
+	 * Returns a new parameter name based on whether this query is using ordered
+	 * parameters or named parameters. For ordered parameters, we always just
+	 * return a "?" but with named parameters, we return a new unique name.
+	 * 
+	 * @return A new parameter name
+	 */
 	protected String getNewParameterName() {
 		// return ? for jdbc type parameters
 		if (orderedParams) {
@@ -196,6 +213,12 @@ public class DataQueryBuilder {
 		}
 	}
 
+	/**
+	 * Returns the prefix for parameters which returns a colon if it is a named
+	 * parameter and an empty string if we are using ordered parameters.
+	 * 
+	 * @return prefix of the new parameter.
+	 */
 	protected String getNewParameterNamePrefix() {
 		return orderedParams ? "" : ":";
 	}

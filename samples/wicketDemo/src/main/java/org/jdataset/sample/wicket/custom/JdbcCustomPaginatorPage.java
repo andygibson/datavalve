@@ -8,7 +8,7 @@ import org.apache.wicket.PageParameters;
 import org.jdataset.dataset.Dataset;
 import org.jdataset.dataset.ObjectDataset;
 import org.jdataset.impl.provider.jdbc.AbstractJdbcDataProvider;
-import org.jdataset.provider.StatementDataProvider;
+import org.jdataset.provider.QueryDataProvider;
 import org.phonelist.model.Person;
 
 public class JdbcCustomPaginatorPage extends AbstractCustomPaginatorPage {
@@ -21,7 +21,7 @@ public class JdbcCustomPaginatorPage extends AbstractCustomPaginatorPage {
 	public ObjectDataset<Person> createDataset() {			
 		Connection connection = getWicketApp().getConnection();
 		
-        StatementDataProvider<Person> people = new AbstractJdbcDataProvider<Person>(connection) {
+        QueryDataProvider<Person> people = new AbstractJdbcDataProvider<Person>(connection) {
 
 			@Override
 			public Person createObjectFromResultSet(ResultSet resultSet)

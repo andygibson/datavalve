@@ -637,6 +637,28 @@ public final class TestDataFactory {
 			"MEDICAL SUPPLIES", "OFFICE SUPPLIES", "INSURANCE", "SOFTWARE",
 			"MOTORS", "CAFE", "SERVICES", "GYMNASIUM", "MOTOR SERVICES" };
 
+	private static String[] words = { "throw", "ball", "hat", "red", "worn",
+			"list", "words", "computer", "in", "out", "hot", "cold", "warp",
+			"speed", "captain", "assert", "hold", "room", "ship", "lost", "is",
+			"television", "show", "about", "plane", "crash", "island",
+			"monster", "trees", "banging", "smoke", "where", "are", "we",
+			"was", "asked", "no", "rescue", "came", "build", "fire", "waited",
+			"days", "moved", "to", "caves", "found", "with", "ghost", "dad",
+			"in", "white", "rabbit", "lock", "discovered", "hatch", "with",
+			"boon", "secretly", "hid", "it", "while", "trying", "to", "open",
+			"it", "until", "sidekick", "died", "as", "sacrifice", "island",
+			"demanded", "many", "had", "dreams", "or", "visions", "others",
+			"came", "took", "people", "who", "are", "they", "what", "do",
+			"they", "want", "light", "came", "on", "through", "window",
+			"leader", "is", "a", "good", "man", "numbers", "in", "room",
+			"enter", "keys", "computer", "end", "of", "world", "wicket",
+			"magnetic", "pull", "shepherd", "always", "wrong", "much",
+			"suspense", "what", "to", "do", "when", "it", "ends", "I", "will",
+			"have", "to", "find", "something", "else", "to", "pique", "my",
+			"interest", "or maybe", "write", "lots", "of", "code", "probably",
+			"should", "have", "generated", "this", "text", "automatically",
+			"so", "will", "from", "the", "web" };
+
 	private static String getRandomString(String[] values, int chance) {
 		if (random.nextInt(100) < chance) {
 			return values[random.nextInt(values.length)];
@@ -807,26 +829,33 @@ public final class TestDataFactory {
 		return getRandomText(maxLength, maxLength >> 1);
 	}
 
+	/**
+	 * Returns random text
+	 * 
+	 * @param maxLength
+	 * @param minLength
+	 * @return
+	 */
 	public static String getRandomText(int maxLength, int minLength) {
 		String res = "";
 		while (res.length() < minLength) {
 			res = res + generateWord() + " ";
 		}
-		while (res.length() < maxLength) {
+		String result = res;
+		int count = (maxLength - minLength) >> 3;
+		while (res.length() < maxLength && count > 0) {
+			result = res;
 			res = res + generateWord() + " ";
+			count--;
 		}
-		// in case we spilled over
-		if (res.length() > maxLength) {
-			res = res.substring(0, maxLength - 1);
-		}
-		return res.trim();
+		return result.trim();
 	}
 
 	/**
 	 * @return a random character
 	 */
 	public static char getRandomChar() {
-		return (char) (random.nextInt(2) + 'a');
+		return (char) (random.nextInt(26) + 'a');
 	}
 
 	/**
@@ -835,7 +864,7 @@ public final class TestDataFactory {
 	 * @return A work of max length 10
 	 */
 	public static String generateWord() {
-		return generateWord(1, 10);
+		return getRandomString(words);
 	}
 
 	/**

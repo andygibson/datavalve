@@ -24,7 +24,7 @@ import java.util.List;
 import org.jdataset.impl.InMemoryDataProvider;
 
 /**
- * @author GIBSOA01
+ * @author Andy Gibson
  *
  */
 public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer>

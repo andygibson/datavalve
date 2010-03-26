@@ -26,12 +26,12 @@ import javax.inject.Named;
 import org.fluttercode.spigot.dataset.QueryDataset;
 import org.fluttercode.spigot.jsfdemo.model.Person;
 
-@Named("personSearch")
-@RequestScoped
 /**
  * @author Andy Gibson
  * 
  */
+@Named("personSearch")
+@RequestScoped
 public class PersonSearchDataset extends QueryDataset<Person> {
 
 	private static final long serialVersionUID = 1L;
@@ -43,7 +43,7 @@ public class PersonSearchDataset extends QueryDataset<Person> {
 	@Inject
 	public PersonSearchDataset(PersonSearchProvider provider) {
 		super(provider);
-		setMaxRows(10);
+		setMaxRows(10);			
 	}
 
 	@Override
@@ -52,5 +52,5 @@ public class PersonSearchDataset extends QueryDataset<Person> {
 	public List<Person> getResultList() {
 		return super.getResultList();
 
-	}
+	}	
 }

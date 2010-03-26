@@ -1,14 +1,6 @@
 Spigot 0.9 Alpha build
 =========================
 
-Caution
-=======
-
-The packaging naming will very likely change somewhat in the next release and 
-the whole project will be renamed so don'be prepared.
-
-
-  
 System requirements
 =======================
 

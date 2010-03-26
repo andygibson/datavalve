@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.sample.wicket;
+package org.fluttercode.spigot.samples.wicket;
 
 import java.sql.Connection;
 
@@ -25,8 +25,8 @@ import javax.persistence.Persistence;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.hibernate.Session;
-import org.fluttercode.spigot.sample.wicket.search.SqlSearchPage;
-import org.phonelist.model.ModelBuilder;
+import org.fluttercode.spigot.samples.wicket.search.SqlSearchPage;
+import org.fluttercode.spigot.samples.wicketdemo.model.ModelBuilder;
 
 /**
  * Application object for your web application. If you want to run this

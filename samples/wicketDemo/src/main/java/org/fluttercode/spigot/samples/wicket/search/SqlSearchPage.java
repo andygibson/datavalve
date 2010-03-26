@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.sample.wicket.search;
+package org.fluttercode.spigot.samples.wicket.search;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,7 +24,7 @@ import org.apache.wicket.PageParameters;
 import org.fluttercode.spigot.dataset.ParameterizedDataset;
 import org.fluttercode.spigot.impl.provider.jdbc.AbstractJdbcDataProvider;
 import org.fluttercode.spigot.provider.QueryDataProvider;
-import org.phonelist.model.Person;
+import org.fluttercode.spigot.samples.wicketdemo.model.Person;
 
 /**
  * @author Andy Gibson

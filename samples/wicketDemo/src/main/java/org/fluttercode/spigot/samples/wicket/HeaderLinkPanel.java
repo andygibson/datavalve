@@ -14,18 +14,18 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.sample.wicket;
+package org.fluttercode.spigot.samples.wicket;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.fluttercode.spigot.sample.wicket.custom.FileCustomPaginatorPage;
-import org.fluttercode.spigot.sample.wicket.custom.JpaCustomPaginatorPage;
-import org.fluttercode.spigot.sample.wicket.custom.JdbcCustomPaginatorPage;
-import org.fluttercode.spigot.sample.wicket.dataprovider.JpaDataProviderPage;
-import org.fluttercode.spigot.sample.wicket.dataprovider.SqlDataProviderPage;
-import org.fluttercode.spigot.sample.wicket.search.JpaSearchPage;
-import org.fluttercode.spigot.sample.wicket.search.SqlSearchPage;
+import org.fluttercode.spigot.samples.wicket.custom.FileCustomPaginatorPage;
+import org.fluttercode.spigot.samples.wicket.custom.JpaCustomPaginatorPage;
+import org.fluttercode.spigot.samples.wicket.custom.JdbcCustomPaginatorPage;
+import org.fluttercode.spigot.samples.wicket.dataprovider.JpaDataProviderPage;
+import org.fluttercode.spigot.samples.wicket.dataprovider.SqlDataProviderPage;
+import org.fluttercode.spigot.samples.wicket.search.JpaSearchPage;
+import org.fluttercode.spigot.samples.wicket.search.SqlSearchPage;
 
 /**
  * @author Andy Gibson

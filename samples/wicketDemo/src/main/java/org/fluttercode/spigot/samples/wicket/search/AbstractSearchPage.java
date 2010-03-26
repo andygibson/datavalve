@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.sample.wicket.search;
+package org.fluttercode.spigot.samples.wicket.search;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
@@ -30,11 +30,11 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.fluttercode.spigot.dataset.ParameterizedDataset;
 import org.fluttercode.spigot.impl.params.ReflectionParameterResolver;
-import org.fluttercode.spigot.sample.wicket.DatasetInfoPanel;
-import org.fluttercode.spigot.sample.wicket.HeaderLinkPanel;
-import org.fluttercode.spigot.sample.wicket.WicketApplication;
+import org.fluttercode.spigot.samples.wicket.DatasetInfoPanel;
+import org.fluttercode.spigot.samples.wicket.HeaderLinkPanel;
+import org.fluttercode.spigot.samples.wicket.WicketApplication;
+import org.fluttercode.spigot.samples.wicketdemo.model.Person;
 import org.fluttercode.spigot.wicket.DatasetDataProvider;
-import org.phonelist.model.Person;
 
 /**
  * Homepage

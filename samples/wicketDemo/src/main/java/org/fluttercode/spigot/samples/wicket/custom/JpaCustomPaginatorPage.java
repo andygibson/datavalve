@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.sample.wicket.custom;
+package org.fluttercode.spigot.samples.wicket.custom;
 
 import org.apache.wicket.PageParameters;
 import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.impl.provider.jpa.JpaDataProvider;
 import org.fluttercode.spigot.impl.provider.jpa.JpaQueryProvider;
-import org.phonelist.model.Person;
+import org.fluttercode.spigot.samples.wicketdemo.model.Person;
 
 /**
  * @author Andy Gibson

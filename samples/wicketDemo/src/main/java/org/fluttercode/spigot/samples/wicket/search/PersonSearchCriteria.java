@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.sample.wicket.search;
+package org.fluttercode.spigot.samples.wicket.search;
 
 import java.io.Serializable;
 

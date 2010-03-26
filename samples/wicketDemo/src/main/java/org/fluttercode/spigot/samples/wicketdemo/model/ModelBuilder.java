@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.phonelist.model;
+package org.fluttercode.spigot.samples.wicketdemo.model;
 
 import javax.persistence.EntityManager;
 

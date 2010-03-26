@@ -18,7 +18,7 @@ package org.phonelist.model;
 
 import javax.persistence.EntityManager;
 
-import org.jdataset.testing.TestDataFactory;
+import org.fluttercode.spigot.testing.TestDataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

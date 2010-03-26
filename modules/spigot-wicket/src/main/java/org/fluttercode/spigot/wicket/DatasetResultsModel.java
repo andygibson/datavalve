@@ -14,12 +14,12 @@
 * limitations under the License.
 */
 
-package org.jdataset.wicket;
+package org.fluttercode.spigot.wicket;
 
 import java.util.List;
 
 import org.apache.wicket.model.IModel;
-import org.jdataset.dataset.ObjectDataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
 
 /**
  * @author Andy Gibson

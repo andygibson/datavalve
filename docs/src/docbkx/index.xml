@@ -12,7 +12,7 @@
             </personname>
         </author>
         <copyright>
-            <year>2009</year>
+            <year>2010</year>
             <holder>Andy Gibson</holder>
         </copyright>
     </bookinfo>
@@ -1035,7 +1035,7 @@ Value = 9]]>
             <para>
                 Create a new class (in the test packages if applicable) and
                 create it as a subclass of
-                <classname>org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest
+                <classname>org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest
                 </classname>
                 This class defines two methods which needs to be implemented in
                 subclasses. The
@@ -1052,7 +1052,7 @@ Value = 9]]>
                 <classname>DataProvider</classname>
                 implementation in one class for convenience. We can easily
                 create one by creating an instance of a
-                <classname>org.jdataset.impl.Dataset</classname>
+                <classname>org.fluttercode.spigot.impl.Dataset</classname>
                 and pass it an instance of our
                 <classname>IntegerDataProvider</classname>
                 which the dataset will use to obtain data.

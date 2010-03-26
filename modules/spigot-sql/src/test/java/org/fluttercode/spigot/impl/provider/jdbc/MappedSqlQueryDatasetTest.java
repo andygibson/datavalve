@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.jdbc;
+package org.fluttercode.spigot.impl.provider.jdbc;
 
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.dataset.QueryDataset;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.dataset.QueryDataset;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 
 /**
  * @author Andy Gibson

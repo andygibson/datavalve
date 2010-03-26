@@ -14,16 +14,16 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.hibernate;
+package org.fluttercode.spigot.impl.provider.hibernate;
 
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.jdataset.Parameter;
-import org.jdataset.impl.provider.AbstractQueryDataProvider;
-import org.jdataset.impl.provider.DataQuery;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.impl.provider.AbstractQueryDataProvider;
+import org.fluttercode.spigot.impl.provider.DataQuery;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 
 /**
  * A Hibernate based {@link QueryDataProvider}.

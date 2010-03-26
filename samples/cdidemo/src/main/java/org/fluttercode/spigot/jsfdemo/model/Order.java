@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.jsfdemo.model;
+package org.fluttercode.spigot.jsfdemo.model;
 
 import java.io.Serializable;
 

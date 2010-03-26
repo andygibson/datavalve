@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.hibernate;
+package org.fluttercode.spigot.impl.provider.hibernate;
 
 import java.io.Serializable;
 

@@ -14,13 +14,13 @@
 * limitations under the License.
 */
 
-package org.jdataset.dataset;
+package org.fluttercode.spigot.dataset;
 
 import java.util.List;
 import java.util.Map;
 
-import org.jdataset.ParameterResolver;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 
 /**
  * @author Andy Gibson

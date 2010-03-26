@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset;
+package org.fluttercode.spigot;
 
 /**
  * Interface for holding the stateful pagination information such as page size,

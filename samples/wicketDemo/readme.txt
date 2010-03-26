@@ -1,14 +1,14 @@
 Wicket Mega Demo
 ================
 
-This application demonstrates using JDataset to interface with different pieces
+This application demonstrates using Spigot to interface with different pieces
  of the wicket application. 
 
 To Run 
 ================
 
 1) First type 'mvn install' in the <install>/modules directory to install 
-JDataset into maven.
+Spigot into maven.
 
 2) in the wicketDemo folder, to start the server type :
 

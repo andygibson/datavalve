@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.samples.examples;
+package org.fluttercode.spigot.samples.examples;
 
 import java.io.Serializable;
 

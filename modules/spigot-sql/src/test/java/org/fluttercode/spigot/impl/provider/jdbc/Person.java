@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.jdbc;
+package org.fluttercode.spigot.impl.provider.jdbc;
 
 /**
  * @author Andy Gibson

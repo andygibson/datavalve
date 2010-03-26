@@ -14,9 +14,9 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.jpa;
+package org.fluttercode.spigot.impl.provider.jpa;
 
-import org.jdataset.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.dataset.GenericProviderDataset;
 
 /**
  * @author Andy Gibson

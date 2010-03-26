@@ -14,19 +14,19 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider;
+package org.fluttercode.spigot.impl.provider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdataset.DatasetEnvironment;
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.impl.params.ParameterParser;
-import org.jdataset.impl.params.RegexParameterParser;
-import org.jdataset.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.DatasetEnvironment;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.impl.params.ParameterParser;
+import org.fluttercode.spigot.impl.params.RegexParameterParser;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

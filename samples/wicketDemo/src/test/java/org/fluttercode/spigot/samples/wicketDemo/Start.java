@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.samples.wicketDemo;
+package org.fluttercode.spigot.samples.wicketDemo;
 
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;

@@ -14,16 +14,16 @@
 * limitations under the License.
 */
 
-package org.jdataset.jsfdemo;
+package org.fluttercode.spigot.jsfdemo;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.faces.context.FacesContext;
 
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

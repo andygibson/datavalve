@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.util;
+package org.fluttercode.spigot.util;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdataset.DataProvider;
-import org.jdataset.Paginator;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.Paginator;
 
 /**
  * Implementation of a data cache that is used to keep hold of a limited set of

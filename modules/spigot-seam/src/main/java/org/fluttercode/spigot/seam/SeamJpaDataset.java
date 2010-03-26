@@ -14,15 +14,15 @@
 * limitations under the License.
 */
 
-package org.jdataset.seam;
+package org.fluttercode.spigot.seam;
 
 import javax.persistence.EntityManager;
 
 import org.jboss.seam.annotations.In;
-import org.jdataset.dataset.QueryDataset;
-import org.jdataset.impl.provider.jpa.JpaDataProvider;
-import org.jdataset.impl.provider.jpa.JpaDataset;
-import org.jdataset.impl.provider.jpa.JpaQueryProvider;
+import org.fluttercode.spigot.dataset.QueryDataset;
+import org.fluttercode.spigot.impl.provider.jpa.JpaDataProvider;
+import org.fluttercode.spigot.impl.provider.jpa.JpaDataset;
+import org.fluttercode.spigot.impl.provider.jpa.JpaQueryProvider;
 
 /**
  * Dataset for use in the Seam environment annotated for Seam Managed

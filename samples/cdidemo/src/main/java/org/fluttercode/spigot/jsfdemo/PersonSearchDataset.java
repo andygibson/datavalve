@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.jsfdemo;
+package org.fluttercode.spigot.jsfdemo;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jdataset.dataset.QueryDataset;
-import org.jdataset.jsfdemo.model.Person;
+import org.fluttercode.spigot.dataset.QueryDataset;
+import org.fluttercode.spigot.jsfdemo.model.Person;
 
 @Named("personSearch")
 @RequestScoped

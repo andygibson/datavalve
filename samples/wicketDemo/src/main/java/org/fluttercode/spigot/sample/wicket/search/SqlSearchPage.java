@@ -14,16 +14,16 @@
 * limitations under the License.
 */
 
-package org.jdataset.sample.wicket.search;
+package org.fluttercode.spigot.sample.wicket.search;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.dataset.ParameterizedDataset;
-import org.jdataset.impl.provider.jdbc.AbstractJdbcDataProvider;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.dataset.ParameterizedDataset;
+import org.fluttercode.spigot.impl.provider.jdbc.AbstractJdbcDataProvider;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 import org.phonelist.model.Person;
 
 /**

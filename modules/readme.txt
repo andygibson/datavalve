@@ -1,4 +1,4 @@
-JDataset 0.9 Alpha build
+Spigot 0.9 Alpha build
 =========================
 
 Caution
@@ -36,7 +36,7 @@ Running the samples
 Navigate to the samples\ folder and there are several samples included. Each of 
 the samples builds their own databases using hsql so you don't have to set up 
 a datastore in a server and all the demos are self contained running in embedded
-jetty so there is no configuration needed other than to install the jdataset 
+jetty so there is no configuration needed other than to install the Spigot
 libraries in maven using the above step. 
 
 
@@ -62,7 +62,7 @@ swingdemo
 Uses the IndexedDataProviderCache to provide random access to the source data in
 a cohesive manner. This lets you browser thousands of rows of data efficiently.
 
-to run, type : mvn exec:java -Dexec.mainClass="org.jdataset.swingdemo.Main"
+to run, type : mvn exec:java -Dexec.mainClass="org.fluttercode.spigot.demo.swingdemo.Main"
 
 
 examples 

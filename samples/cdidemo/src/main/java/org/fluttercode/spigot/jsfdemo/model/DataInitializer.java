@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.jsfdemo.model;
+package org.fluttercode.spigot.jsfdemo.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,7 +25,7 @@ import javax.enterprise.inject.Produces;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.jdataset.testing.TestDataFactory;
+import org.fluttercode.spigot.testing.TestDataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

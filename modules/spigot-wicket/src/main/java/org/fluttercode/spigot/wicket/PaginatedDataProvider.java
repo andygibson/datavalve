@@ -14,16 +14,16 @@
 * limitations under the License.
 */
 
-package org.jdataset.wicket;
+package org.fluttercode.spigot.wicket;
 
 import java.util.Iterator;
 
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.jdataset.DataProvider;
-import org.jdataset.Paginator;
-import org.jdataset.impl.DefaultPaginator;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.impl.DefaultPaginator;
 
 /**
  * @author Andy Gibson

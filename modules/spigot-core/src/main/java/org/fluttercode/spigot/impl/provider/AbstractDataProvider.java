@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider;
+package org.fluttercode.spigot.impl.provider;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import org.jdataset.DataProvider;
-import org.jdataset.Paginator;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.Paginator;
 
 /**
  * @author Andy Gibson

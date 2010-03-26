@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.jsfdemo;
+package org.fluttercode.spigot.jsfdemo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;

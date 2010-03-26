@@ -14,16 +14,16 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider;
+package org.fluttercode.spigot.impl.provider;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdataset.DataProvider;
-import org.jdataset.Paginator;
-import org.jdataset.impl.DefaultPaginator;
-import org.jdataset.impl.InMemoryDataProvider;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.impl.DefaultPaginator;
+import org.fluttercode.spigot.impl.InMemoryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

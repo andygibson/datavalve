@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider;
+package org.fluttercode.spigot.impl.provider;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdataset.Paginator;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 
 /**
  * Abstract class for Query driven datasets that implements most of the methods

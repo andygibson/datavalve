@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.sample.wicket;
+package org.fluttercode.spigot.sample.wicket;
 
 import java.sql.Connection;
 
@@ -25,7 +25,7 @@ import javax.persistence.Persistence;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.hibernate.Session;
-import org.jdataset.sample.wicket.search.SqlSearchPage;
+import org.fluttercode.spigot.sample.wicket.search.SqlSearchPage;
 import org.phonelist.model.ModelBuilder;
 
 /**

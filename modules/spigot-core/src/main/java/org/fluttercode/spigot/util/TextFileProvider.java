@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.util;
+package org.fluttercode.spigot.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdataset.Paginator;
-import org.jdataset.impl.provider.AbstractDataProvider;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.impl.provider.AbstractDataProvider;
 
 /**
  * @author Andy Gibson

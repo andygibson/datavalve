@@ -14,13 +14,13 @@
 * limitations under the License.
 */
 
-package org.jdataset.dataset;
+package org.fluttercode.spigot.dataset;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.Paginator;
+import org.fluttercode.spigot.Paginator;
 
 /**
  * Decorator class that can be used to decorate an existing

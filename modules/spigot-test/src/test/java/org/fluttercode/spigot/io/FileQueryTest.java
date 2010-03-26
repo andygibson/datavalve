@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.io;
+package org.fluttercode.spigot.io;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,10 +22,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-import org.jdataset.dataset.GenericProviderDataset;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.impl.FileDataProvider;
-import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.fluttercode.spigot.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.impl.FileDataProvider;
+import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**
  * @author Andy Gibson

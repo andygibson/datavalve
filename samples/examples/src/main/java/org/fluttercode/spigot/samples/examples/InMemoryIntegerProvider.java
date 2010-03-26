@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.samples.examples;
+package org.fluttercode.spigot.samples.examples;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.jdataset.impl.InMemoryDataProvider;
+import org.fluttercode.spigot.impl.InMemoryDataProvider;
 
 /**
  * @author Andy Gibson

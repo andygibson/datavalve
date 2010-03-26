@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.wicket;
+package org.fluttercode.spigot.wicket;
 
 import java.util.Iterator;
 
@@ -22,7 +22,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDat
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.jdataset.dataset.ObjectDataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
 
 /**
  * This implements the {@link ISortableDataProvider} interface to provide a

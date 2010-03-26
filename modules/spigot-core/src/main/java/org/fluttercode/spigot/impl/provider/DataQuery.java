@@ -14,12 +14,12 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider;
+package org.fluttercode.spigot.impl.provider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdataset.Parameter;
+import org.fluttercode.spigot.Parameter;
 
 /**
  * @author Andy Gibson

@@ -14,9 +14,9 @@
 * limitations under the License.
 */
 
-package org.jdataset.dataset;
+package org.fluttercode.spigot.dataset;
 
-import org.jdataset.DataProvider;
+import org.fluttercode.spigot.DataProvider;
 
 /**
  * Concrete instance of the {@link GenericProviderDataset} that fixes the

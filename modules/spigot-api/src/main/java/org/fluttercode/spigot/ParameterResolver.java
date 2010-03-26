@@ -14,10 +14,10 @@
 * limitations under the License.
 */
 
-package org.jdataset;
+package org.fluttercode.spigot;
 
-import org.jdataset.provider.ParameterizedDataProvider;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 
 
 /**

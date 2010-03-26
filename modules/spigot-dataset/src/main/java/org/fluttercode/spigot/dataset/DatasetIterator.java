@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.dataset;
+package org.fluttercode.spigot.dataset;
 
 import java.util.Iterator;
 

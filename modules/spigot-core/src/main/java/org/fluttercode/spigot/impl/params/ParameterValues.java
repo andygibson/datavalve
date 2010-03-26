@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.params;
+package org.fluttercode.spigot.impl.params;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.Parameter;
+import org.fluttercode.spigot.Parameter;
 
 /**
  * Simple class that stores a list of Parameter instances

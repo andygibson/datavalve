@@ -1,6 +1,6 @@
-package org.jdataset.datafactory;
+package org.fluttercode.spigot.datafactory;
 
-import org.jdataset.testing.TestDataFactory;
+import org.fluttercode.spigot.testing.TestDataFactory;
 
 import junit.framework.TestCase;
 

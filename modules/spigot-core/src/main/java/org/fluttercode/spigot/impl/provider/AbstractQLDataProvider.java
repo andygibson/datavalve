@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider;
+package org.fluttercode.spigot.impl.provider;
 
 import java.util.List;
 
-import org.jdataset.Paginator;
+import org.fluttercode.spigot.Paginator;
 
 /**
  * Base class for any data provider that is driven by a Query Language. This

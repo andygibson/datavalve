@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.util;
+package org.fluttercode.spigot.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.jdataset.util.LazyList;
+import org.fluttercode.spigot.util.LazyList;
 
 /**
  * @author Andy Gibson

@@ -14,13 +14,13 @@
 * limitations under the License.
 */
 
-package org.jdataset.db;
+package org.fluttercode.spigot.db;
 
 import java.io.Serializable;
 
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 
 /**
  * @author Andy Gibson

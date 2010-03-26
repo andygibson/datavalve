@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.hibernate;
+package org.fluttercode.spigot.impl.provider.hibernate;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,13 +23,13 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.dataset.QueryDataset;
-import org.jdataset.provider.ParameterizedDataProvider;
-import org.jdataset.testing.TestDataFactory;
-import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.dataset.QueryDataset;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.testing.TestDataFactory;
+import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**
  * @author Andy Gibson

@@ -14,12 +14,12 @@
 * limitations under the License.
 */
 
-package org.jdataset.provider;
+package org.fluttercode.spigot.provider;
 
 import java.util.Map;
 
-import org.jdataset.DataProvider;
-import org.jdataset.ParameterResolver;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.ParameterResolver;
 
 /**
  * Extends the {@link ObjectDataset} interface to include parameterization of

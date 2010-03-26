@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.provider;
+package org.fluttercode.spigot.provider;
 
 
 

@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 
-package org.jdataset.text;
+package org.fluttercode.spigot.text;
 
 import java.io.Serializable;
 
-import org.jdataset.testing.TestDataFactory;
+import org.fluttercode.spigot.testing.TestDataFactory;
 
 /**
  * @author Andy Gibson

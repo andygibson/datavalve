@@ -14,9 +14,9 @@
 * limitations under the License.
 */
 
-package org.jdataset.text;
+package org.fluttercode.spigot.text;
 
-import org.jdataset.util.CommaDelimitedProvider;
+import org.fluttercode.spigot.util.CommaDelimitedProvider;
 
 
 /**

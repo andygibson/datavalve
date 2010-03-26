@@ -14,10 +14,10 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.hibernate;
+package org.fluttercode.spigot.impl.provider.hibernate;
 
-import org.jdataset.dataset.GenericProviderDataset;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 
 
 /**

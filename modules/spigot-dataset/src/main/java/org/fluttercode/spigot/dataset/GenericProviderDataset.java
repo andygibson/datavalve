@@ -14,12 +14,12 @@
 * limitations under the License.
 */
 
-package org.jdataset.dataset;
+package org.fluttercode.spigot.dataset;
 
 import java.util.List;
 
-import org.jdataset.DataProvider;
-import org.jdataset.Paginator;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.Paginator;
 
 /**
  * A Generic version of the provider dataset that extends the

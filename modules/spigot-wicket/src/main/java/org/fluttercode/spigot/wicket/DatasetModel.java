@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 
-package org.jdataset.wicket;
+package org.fluttercode.spigot.wicket;
 
 import org.apache.wicket.model.IModel;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.dataset.ObjectDatasetDecorator;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.dataset.ObjectDatasetDecorator;
 
 /**
  * Extends the {@link ObjectDatasetDecorator} class and implements the

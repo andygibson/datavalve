@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset;
+package org.fluttercode.spigot;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

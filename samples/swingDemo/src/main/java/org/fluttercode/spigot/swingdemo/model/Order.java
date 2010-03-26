@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.swingdemo.model;
+package org.fluttercode.spigot.swingdemo.model;
 
 import java.io.Serializable;
 

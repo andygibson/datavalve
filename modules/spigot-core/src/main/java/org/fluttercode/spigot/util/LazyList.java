@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.util;
+package org.fluttercode.spigot.util;
 
 import java.util.ArrayList;
 import java.util.Collection;

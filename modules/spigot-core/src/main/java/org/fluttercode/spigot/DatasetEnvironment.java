@@ -14,13 +14,13 @@
 * limitations under the License.
 */
 
-package org.jdataset;
+package org.fluttercode.spigot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdataset.impl.params.AbstractParameterResolver;
-import org.jdataset.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.impl.params.AbstractParameterResolver;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 
 /**
  * A singleton instance that provides a place to hold global configuration

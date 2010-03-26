@@ -14,17 +14,17 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.jpa;
+package org.fluttercode.spigot.impl.provider.jpa;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.jdataset.Parameter;
-import org.jdataset.impl.provider.AbstractQueryDataProvider;
-import org.jdataset.impl.provider.DataQuery;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.impl.provider.AbstractQueryDataProvider;
+import org.fluttercode.spigot.impl.provider.DataQuery;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 
 /**
  * Base class for a JPA based {@link QueryDataProvider}. Override and implement

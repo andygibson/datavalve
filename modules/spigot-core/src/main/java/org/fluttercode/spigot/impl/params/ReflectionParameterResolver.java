@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.params;
+package org.fluttercode.spigot.impl.params;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

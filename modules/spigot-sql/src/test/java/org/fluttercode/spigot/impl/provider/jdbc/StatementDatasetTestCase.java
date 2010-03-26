@@ -14,18 +14,18 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.jdbc;
+package org.fluttercode.spigot.impl.provider.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.dataset.StatementDataset;
-import org.jdataset.provider.ParameterizedDataProvider;
-import org.jdataset.provider.StatementDataProvider;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.dataset.StatementDataset;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.provider.StatementDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

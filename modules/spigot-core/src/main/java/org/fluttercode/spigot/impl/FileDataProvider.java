@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl;
+package org.fluttercode.spigot.impl;
 
 import java.io.File;
 import java.io.FileFilter;

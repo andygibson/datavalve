@@ -14,15 +14,15 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider;
+package org.fluttercode.spigot.impl.provider;
 
 import java.util.Collections;
 import java.util.List;
 
-import org.jdataset.Paginator;
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 
 /**
  * @author Andy Gibson

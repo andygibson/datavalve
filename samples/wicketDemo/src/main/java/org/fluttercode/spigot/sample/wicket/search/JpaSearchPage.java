@@ -14,12 +14,12 @@
 * limitations under the License.
 */
 
-package org.jdataset.sample.wicket.search;
+package org.fluttercode.spigot.sample.wicket.search;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.dataset.ParameterizedDataset;
-import org.jdataset.impl.provider.jpa.JpaDataProvider;
-import org.jdataset.impl.provider.jpa.JpaQueryProvider;
+import org.fluttercode.spigot.dataset.ParameterizedDataset;
+import org.fluttercode.spigot.impl.provider.jpa.JpaDataProvider;
+import org.fluttercode.spigot.impl.provider.jpa.JpaQueryProvider;
 import org.phonelist.model.Person;
 
 /**

@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 
-package org.jdataset.samples.examples;
+package org.fluttercode.spigot.samples.examples;
 
-import org.jdataset.DataProvider;
-import org.jdataset.dataset.Dataset;
-import org.jdataset.dataset.ObjectDataset;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.dataset.Dataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
 
 /**
  * @author Andy Gibson

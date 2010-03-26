@@ -14,19 +14,19 @@
 * limitations under the License.
 */
 
-package org.jdataset.db;
+package org.fluttercode.spigot.db;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdataset.Paginator;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.dataset.QueryDataset;
-import org.jdataset.impl.provider.AbstractQueryDataProvider;
-import org.jdataset.impl.provider.DataQuery;
-import org.jdataset.provider.QueryDataProvider;
-import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.dataset.QueryDataset;
+import org.fluttercode.spigot.impl.provider.AbstractQueryDataProvider;
+import org.fluttercode.spigot.impl.provider.DataQuery;
+import org.fluttercode.spigot.provider.QueryDataProvider;
+import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**
  * @author Andy Gibson

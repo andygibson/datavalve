@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl;
+package org.fluttercode.spigot.impl;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -23,9 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdataset.DataProvider;
-import org.jdataset.Paginator;
-import org.jdataset.util.LazyList;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.util.LazyList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,7 +75,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 	 * 
 	 * @see #getBackingData()
 	 * 
-	 * @see org.jdataset.AbstractDataset#fetchResultCount()
+	 * @see org.fluttercode.spigot.AbstractDataset#fetchResultCount()
 	 */
 	public Integer fetchResultCount() {
 		return Integer.valueOf(getBackingData().size());
@@ -119,7 +119,7 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 	 * Made final in this class because it relies on the
 	 * <code>fetchBackingDataList</code> method.
 	 * 
-	 * @see org.jdataset.AbstractDataset#fetchResults()
+	 * @see org.fluttercode.spigot.AbstractDataset#fetchResults()
 	 * 
 	 */
 	public List<T> fetchResults(Paginator paginator) {

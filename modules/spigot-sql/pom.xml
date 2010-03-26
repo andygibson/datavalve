@@ -1,19 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
-		<artifactId>jdataset</artifactId>
-		<groupId>org.jdataset</groupId>
+		<artifactId>spigot</artifactId>
+		<groupId>org.fluttercode.spigot</groupId>
 		<version>0.1-Alpha</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jdataset</groupId>
-	<artifactId>jdataset-sql</artifactId>
-	<name>jdataset-sql</name>
+	<groupId>org.fluttercode.spigot</groupId>
+	<artifactId>spigot-sql</artifactId>
+	<name>spigot-sql</name>
 	<version>0.1-Alpha</version>
 	<dependencies>
 		<dependency>
-			<groupId>org.jdataset</groupId>
-			<artifactId>jdataset-core</artifactId>
+			<groupId>org.fluttercode.spigot</groupId>
+			<artifactId>spigot-core</artifactId>
 			<version>0.1-Alpha</version>
 		</dependency>
 
@@ -24,8 +24,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jdataset</groupId>
-			<artifactId>jdataset-test</artifactId>
+			<groupId>org.fluttercode.spigot</groupId>
+			<artifactId>spigot-test</artifactId>
 			<version>0.1-Alpha</version>
 			<scope>test</scope>
 		</dependency>
@@ -47,8 +47,8 @@
 			<version>1.5.8</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jdataset</groupId>
-			<artifactId>jdataset-dataset</artifactId>
+			<groupId>org.fluttercode.spigot</groupId>
+			<artifactId>spigot-dataset</artifactId>
 			<version>0.1-Alpha</version>
 		</dependency>		
 	</dependencies>

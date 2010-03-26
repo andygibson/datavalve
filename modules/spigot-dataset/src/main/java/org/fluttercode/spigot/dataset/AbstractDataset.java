@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.dataset;
+package org.fluttercode.spigot.dataset;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jdataset.Paginator;
+import org.fluttercode.spigot.Paginator;
 
 /**
  * This is an abstract dataset that provides common implementation for most of

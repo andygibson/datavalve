@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.testing.junit;
+package org.fluttercode.spigot.testing.junit;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,22 +26,22 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.jdataset.dataset.ObjectDataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
 
 /**
  * This class appears in two different places. First, it appears in the test
- * code for the main jdataset-core module. It also appears in the main source in
- * the jdataset-test module where it can be subclassed to create a jdataset test
+ * code for the main spigot-core module. It also appears in the main source in
+ * the spigot-test module where it can be subclassed to create a spigot test
  * case with the basic tests for object datasets already built in. However,
- * because of cyclic dependencies, the jdataset-test module couldn't use the
- * jdataset-core module if the core module depended on the test module to get
+ * because of cyclic dependencies, the spigot-test module couldn't use the
+ * spigot-core module if the core module depended on the test module to get
  * the <code>AbstractObjectDatasetTest</code> class for its unit tests.
  * <p>
  * While this is ugly, there is only one published
- * <code>AbstractObjectDatasetTest</code> class and that is in the jdataset-test
+ * <code>AbstractObjectDatasetTest</code> class and that is in the spigot-test
  * module where other developers can subclass the test case to test their own
  * dataset implementations. The only other alternative would be to put the test
- * cases for the jdataset-core into their own module which would then also
+ * cases for the spigot-core into their own module which would then also
  * depend on the test module which we may do later.
  * </p>
  * <p>

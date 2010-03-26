@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl;
+package org.fluttercode.spigot.impl;
 
 import java.io.Serializable;
 
-import org.jdataset.Paginator;
+import org.fluttercode.spigot.Paginator;
 
 /**
  * Default and complete implementation of the {@link Paginator} interface.

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset;
+package org.fluttercode.spigot;
 
 /**
  * A value holder used to store resolved parameters. 

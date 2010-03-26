@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.jdbc;
+package org.fluttercode.spigot.impl.provider.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,8 +22,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.jdataset.testing.TestDataFactory;
-import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.fluttercode.spigot.testing.TestDataFactory;
+import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**
  * <p>

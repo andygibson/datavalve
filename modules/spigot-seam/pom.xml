@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
-		<artifactId>jdataset</artifactId>
-		<groupId>org.jdataset</groupId>
+		<artifactId>spigot</artifactId>
+		<groupId>org.fluttercode.spigot</groupId>
 		<version>0.1-Alpha</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jdataset</groupId>
-	<artifactId>jdataset-seam</artifactId>
-	<name>jdataset-seam</name>
+	<groupId>org.fluttercode.spigot</groupId>
+	<artifactId>spigot-seam</artifactId>
+	<name>spigot-seam</name>
 	<version>0.1-Alpha</version>
 	<repositories>
 		<repository>
@@ -30,8 +30,8 @@
 			<version>2.0.0.BETA1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jdataset</groupId>
-			<artifactId>jdataset-jpa</artifactId>
+			<groupId>org.fluttercode.spigot</groupId>
+			<artifactId>spigot-jpa</artifactId>
 			<version>0.1-Alpha</version>
 		</dependency>
 		<dependency>
@@ -46,8 +46,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.jdataset</groupId>
-			<artifactId>jdataset-dataset</artifactId>
+			<groupId>org.fluttercode.spigot</groupId>
+			<artifactId>spigot-dataset</artifactId>
 			<version>0.1-Alpha</version>
 		</dependency>		
 	</dependencies>

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider.jpa;
+package org.fluttercode.spigot.impl.provider.jpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

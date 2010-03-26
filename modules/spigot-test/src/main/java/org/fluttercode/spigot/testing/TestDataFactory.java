@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jdataset.testing;
+package org.fluttercode.spigot.testing;
 
 import java.util.Calendar;
 import java.util.Date;

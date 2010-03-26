@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.params;
+package org.fluttercode.spigot.impl.params;
 
 import junit.framework.TestCase;
 

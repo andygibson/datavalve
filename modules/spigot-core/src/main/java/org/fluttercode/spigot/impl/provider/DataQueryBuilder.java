@@ -14,17 +14,17 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.provider;
+package org.fluttercode.spigot.impl.provider;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jdataset.Parameter;
-import org.jdataset.impl.params.ParameterParser;
-import org.jdataset.impl.params.ParameterValues;
-import org.jdataset.impl.params.RegexParameterParser;
-import org.jdataset.provider.ParameterizedDataProvider;
-import org.jdataset.provider.QueryDataProvider;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.impl.params.ParameterParser;
+import org.fluttercode.spigot.impl.params.ParameterValues;
+import org.fluttercode.spigot.impl.params.RegexParameterParser;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

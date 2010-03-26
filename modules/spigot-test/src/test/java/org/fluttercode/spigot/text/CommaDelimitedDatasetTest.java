@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.text;
+package org.fluttercode.spigot.text;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,11 +22,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import org.jdataset.dataset.Dataset;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.testing.TestDataFactory;
-import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
-import org.jdataset.util.CommaDelimitedProvider;
+import org.fluttercode.spigot.dataset.Dataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.testing.TestDataFactory;
+import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.fluttercode.spigot.util.CommaDelimitedProvider;
 
 /**
  * @author Andy Gibson

@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.samples.examples;
+package org.fluttercode.spigot.samples.examples;
 
 import java.util.List;
 
-import org.jdataset.dataset.Dataset;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.impl.provider.InMemoryAdapterProvider;
-import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.fluttercode.spigot.dataset.Dataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.impl.provider.InMemoryAdapterProvider;
+import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

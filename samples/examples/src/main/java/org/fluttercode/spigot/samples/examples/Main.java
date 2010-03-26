@@ -14,13 +14,13 @@
 * limitations under the License.
 */
 
-package org.jdataset.samples.examples;
+package org.fluttercode.spigot.samples.examples;
 
 import java.util.List;
 
-import org.jdataset.DataProvider;
-import org.jdataset.Paginator;
-import org.jdataset.impl.DefaultPaginator;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.impl.DefaultPaginator;
 
 /**
  * @author Andy Gibson

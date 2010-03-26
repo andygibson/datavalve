@@ -2,13 +2,13 @@
 <!-- ====================================================================== 
      Jul 28, 2009 9:08:25 PM                                                        
 
-	jDataset Build file for creating the distribution.
+	Spigot Build file for creating the distribution.
                    
      Andy Gibson
      ====================================================================== -->
-<project name="jdataset" default="default">
+<project name="spigot-builder" default="default">
 	<description>
-            Build file to clean and build the jdataset projects and create the distribution  
+            Build file to clean and build the spigot projects and create the distribution  
     </description>
 
 	<!-- External Setup -->
@@ -135,19 +135,19 @@
 	</target>
 
 	<target name="zipIt">
-		<zip destfile="${release.dir}\jDataset-${version}.zip">
+		<zip destfile="${release.dir}\spigot-${version}.zip">
 			<fileset dir="${staging.dir}">
 				<include name="**/*.*" />
 			</fileset>
 		</zip>
 
-		<tar destfile="${release.dir}\jDataset-${version}.tar">
+		<tar destfile="${release.dir}\spigot-${version}.tar">
 			<fileset dir="${staging.dir}">
 				<include name="**/*.*" />
 			</fileset>
 		</tar>
-		<gzip destfile="${release.dir}\jDataset-${version}.tar.gz" src="${release.dir}\jDataset-${version}.tar" />
-		<delete file="${release.dir}\jDataset-${version}.tar" />
+		<gzip destfile="${release.dir}\spigot-${version}.tar.gz" src="${release.dir}\spigot-${version}.tar" />
+		<delete file="${release.dir}\spigot-${version}.tar" />
 
 	</target>
 

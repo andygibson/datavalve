@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.swingdemo;
+package org.fluttercode.spigot.swingdemo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,9 +22,9 @@ import java.sql.DriverManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.jdataset.swingdemo.model.Order;
-import org.jdataset.swingdemo.model.Person;
-import org.jdataset.testing.TestDataFactory;
+import org.fluttercode.spigot.swingdemo.model.Order;
+import org.fluttercode.spigot.swingdemo.model.Person;
+import org.fluttercode.spigot.testing.TestDataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

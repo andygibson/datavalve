@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.jdataset.testing.TestDataFactory;
+import org.fluttercode.spigot.testing.TestDataFactory;
 
 /**
  * @author Andy Gibson

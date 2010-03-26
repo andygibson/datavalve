@@ -14,19 +14,19 @@
 * limitations under the License.
 */
 
-package org.jdataset.seam.util;
+package org.fluttercode.spigot.seam.util;
 
 import java.util.List;
 
-import org.jdataset.seam.SeamJpaNativeDataset;
+import org.fluttercode.spigot.seam.SeamJpaNativeDataset;
 
 /**
  * This is a utility class that subclasses the SeamJpaNativeDataset and adds on
  * methods so the interface is the same as the default Seam entity query
- * interface. This class lets you slowly migrate to JDataset by replacing the
+ * interface. This class lets you slowly migrate to Spigot by replacing the
  * entity queries with this class and later changing it to a plain
  * SeamJpaNativeDataset once your user interface has migrated to the slightly
- * different JDataset interface.
+ * different Spigot interface.
  * 
  * @author Andy Gibson
  * 

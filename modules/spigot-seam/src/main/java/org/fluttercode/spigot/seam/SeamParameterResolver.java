@@ -14,19 +14,19 @@
 * limitations under the License.
 */
 
-package org.jdataset.seam;
+package org.fluttercode.spigot.seam;
 
 import java.io.Serializable;
 
 import org.jboss.seam.core.Expressions;
-import org.jdataset.Parameter;
-import org.jdataset.ParameterResolver;
-import org.jdataset.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A JDataset parameter resolver that determines the parameter value by treating
+ * A Spigot parameter resolver that determines the parameter value by treating
  * the parameter as an EL expression. It uses Seams Expression instance to
  * evaluate the expression.
  * 

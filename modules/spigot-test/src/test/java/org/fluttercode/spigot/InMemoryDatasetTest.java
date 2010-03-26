@@ -14,17 +14,17 @@
 * limitations under the License.
 */
 
-package org.jdataset;
+package org.fluttercode.spigot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.jdataset.dataset.GenericProviderDataset;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.impl.InMemoryDataProvider;
-import org.jdataset.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.fluttercode.spigot.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.impl.InMemoryDataProvider;
+import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**
  * @author Andy Gibson

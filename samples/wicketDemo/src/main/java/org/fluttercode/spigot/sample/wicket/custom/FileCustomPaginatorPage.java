@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.jdataset.sample.wicket.custom;
+package org.fluttercode.spigot.sample.wicket.custom;
 
 import java.net.URL;
 
 import org.apache.wicket.PageParameters;
-import org.jdataset.dataset.Dataset;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.util.CommaDelimitedProvider;
+import org.fluttercode.spigot.dataset.Dataset;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.util.CommaDelimitedProvider;
 import org.phonelist.model.Person;
 
 /**

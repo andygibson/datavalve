@@ -14,15 +14,15 @@
 * limitations under the License.
 */
 
-package org.jdataset.swing;
+package org.fluttercode.spigot.swing;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import org.jdataset.DataProvider;
-import org.jdataset.Paginator;
-import org.jdataset.impl.DefaultPaginator;
-import org.jdataset.util.IndexedDataProviderCache;
+import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.impl.DefaultPaginator;
+import org.fluttercode.spigot.util.IndexedDataProviderCache;
 
 /**
  * Abstract class that implements a {@link TableModel} and allows for cached

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.jdataset.sample.wicket.custom;
+package org.fluttercode.spigot.sample.wicket.custom;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
@@ -25,11 +25,11 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.jdataset.dataset.ObjectDataset;
-import org.jdataset.sample.wicket.DatasetInfoPanel;
-import org.jdataset.sample.wicket.HeaderLinkPanel;
-import org.jdataset.sample.wicket.WicketApplication;
-import org.jdataset.wicket.DatasetModel;
+import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.sample.wicket.DatasetInfoPanel;
+import org.fluttercode.spigot.sample.wicket.HeaderLinkPanel;
+import org.fluttercode.spigot.sample.wicket.WicketApplication;
+import org.fluttercode.spigot.wicket.DatasetModel;
 import org.phonelist.model.Person;
 
 /**

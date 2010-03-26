@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 
-package org.jdataset.impl.params;
+package org.fluttercode.spigot.impl.params;
 
 import java.io.Serializable;
 
-import org.jdataset.ParameterResolver;
+import org.fluttercode.spigot.ParameterResolver;
 
 /**
  * Abstract class that implements {@link ParameterResolver} and

@@ -13,11 +13,12 @@
 First Name : <h:inputText value="#{searchCriteria.firstName}" />
 Last Name : <h:inputText value="#{searchCriteria.lastName}" />
 Phone : <h:inputText value="#{searchCriteria.phone}" />
-			</h:panelGrid>
+
 			<h:commandButton value="Refresh" action="#{personSearch.refresh}">
 				<f:ajax execute="form" render="form" />
 			</h:commandButton>
-			<h:dataTable value="#{personResults}" var="v_person">
+			</h:panelGrid>			
+			<h:dataTable value="#{personResults}" var="v_person" styleClass="dataTable" columnClasses="smallCol,medCol,medCol">
 
 				<h:column>
 					<ui:include src="sortableHeader.xhtml">
@@ -53,15 +54,18 @@ Phone : <h:inputText value="#{searchCriteria.phone}" />
 			<h:inputHidden value="#{personSearch.orderKey}" />
 			<h:inputHidden value="#{personSearch.orderAscending}" />
 			<h:inputHidden value="#{personSearch.firstResult}" />
+			<h:panelGrid columns="3" style="width : 40%">
 			<h:commandLink value="Previous"				
 				action="#{personSearch.previous}">
 				<f:ajax execute="form" render="form" />
 			</h:commandLink>
+			<h:outputText value="Page #{personSearch.page}"/>
 			<h:commandLink value="Next" 
 				action="#{personSearch.next}">
 				<f:ajax execute="form" render="form" />
 			</h:commandLink>
-			<br />
+			</h:panelGrid>
+			
 			
 
 		</h:form>

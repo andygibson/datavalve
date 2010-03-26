@@ -24,9 +24,9 @@ attribute objects doesn't work in this cobbled together, non JEE 6 environment
 
 	<composite:implementation>
 		<h:commandLink action="#{cc.attrs.action}" value="#{cc.attrs.caption}" />
-		<h:graphicImage value="sort_asc.GIF"
+		<h:graphicImage value="sort_asc.png"
 			rendered="#{(cc.attrs.paginator.orderAscending) and (cc.attrs.paginator.orderKey == cc.attrs.key)}" />
-		<h:graphicImage value="sort_desc.GIF"
+		<h:graphicImage value="sort_desc.png"
 			rendered="#{(!cc.attrs.paginator.orderAscending) and (cc.attrs.paginator.orderKey == cc.attrs.key)}" />
 	</composite:implementation>
 

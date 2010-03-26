@@ -4,18 +4,15 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<f:facet name="header">
 
-<!--  currently unused since method calls with parameters using passed in 
-attribute objects doesn't work in this cobbled together, non JEE 6 environment
- (it works in glassfish) -->
  
 		<h:commandLink action="#{p_paginator.changeOrderKey(p_key)}"
 			value="#{p_caption}">
 		</h:commandLink>
 
 
-		<h:graphicImage value="sort_asc.GIF"
+		<h:graphicImage value="sort_asc.png"
 			rendered="#{(p_paginator.orderAscending) and (p_paginator.orderKey == p_key)}" />
-		<h:graphicImage value="sort_desc.GIF"
+		<h:graphicImage value="sort_desc.png"
 			rendered="#{(!p_paginator.orderAscending) and (p_paginator.orderKey == p_key)}" />
 	</f:facet>
 

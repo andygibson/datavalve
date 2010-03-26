@@ -1,4 +1,4 @@
-package org.fluttercode.spigot.jsfdemo;
+package org.fluttercode.spigot.samples.cdidemo;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

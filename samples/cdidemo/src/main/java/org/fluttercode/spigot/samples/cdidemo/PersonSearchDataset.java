@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fluttercode.spigot.jsfdemo;
+package org.fluttercode.spigot.samples.cdidemo;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.fluttercode.spigot.dataset.QueryDataset;
-import org.fluttercode.spigot.jsfdemo.model.Person;
+import org.fluttercode.spigot.samples.cdidemo.model.Person;
 
 /**
  * Request scoped dataset that holds the info regarding the first result and

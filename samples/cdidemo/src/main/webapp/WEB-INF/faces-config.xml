@@ -12,7 +12,7 @@
     -->
     <converter>
         <converter-id>personPhone</converter-id>
-        <converter-class>org.fluttercode.spigot.jsfdemo.PhoneConverter</converter-class>
+        <converter-class>org.fluttercode.spigot.samples.cdidemo.PhoneConverter</converter-class>
     </converter>
 
 </faces-config>

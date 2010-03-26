@@ -14,14 +14,14 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.jsfdemo;
+package org.fluttercode.spigot.samples.cdidemo;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.fluttercode.spigot.impl.provider.hibernate.HibernateDataProvider;
-import org.fluttercode.spigot.jsfdemo.model.Person;
+import org.fluttercode.spigot.samples.cdidemo.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

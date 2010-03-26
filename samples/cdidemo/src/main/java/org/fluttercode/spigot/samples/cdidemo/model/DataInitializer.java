@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.jsfdemo.model;
+package org.fluttercode.spigot.samples.cdidemo.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

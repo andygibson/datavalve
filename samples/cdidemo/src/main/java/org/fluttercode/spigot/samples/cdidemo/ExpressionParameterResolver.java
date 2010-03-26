@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fluttercode.spigot.jsfdemo;
+package org.fluttercode.spigot.samples.cdidemo;
 
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;

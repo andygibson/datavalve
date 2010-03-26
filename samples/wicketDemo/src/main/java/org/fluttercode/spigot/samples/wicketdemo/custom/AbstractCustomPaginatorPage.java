@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.samples.wicket.custom;
+package org.fluttercode.spigot.samples.wicketdemo.custom;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
@@ -26,9 +26,9 @@ import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.fluttercode.spigot.dataset.ObjectDataset;
-import org.fluttercode.spigot.samples.wicket.DatasetInfoPanel;
-import org.fluttercode.spigot.samples.wicket.HeaderLinkPanel;
-import org.fluttercode.spigot.samples.wicket.WicketApplication;
+import org.fluttercode.spigot.samples.wicketdemo.DatasetInfoPanel;
+import org.fluttercode.spigot.samples.wicketdemo.HeaderLinkPanel;
+import org.fluttercode.spigot.samples.wicketdemo.WicketApplication;
 import org.fluttercode.spigot.samples.wicketdemo.model.Person;
 import org.fluttercode.spigot.wicket.DatasetModel;
 

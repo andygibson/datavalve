@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.samples.wicket.custom;
+package org.fluttercode.spigot.samples.wicketdemo.custom;
 
 import java.net.URL;
 

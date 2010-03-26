@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.samples.wicket.dataprovider;
+package org.fluttercode.spigot.samples.wicketdemo.dataprovider;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.impl.provider.AbstractDataProvider;
 
 /**
  * @author Andy Gibson

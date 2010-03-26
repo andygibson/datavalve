@@ -17,9 +17,7 @@
 package org.fluttercode.spigot.util;
 
 import java.io.File;
-import java.util.List;
 
-import org.fluttercode.spigot.Paginator;
 import org.fluttercode.spigot.impl.provider.AbstractDataProvider;
 
 /**

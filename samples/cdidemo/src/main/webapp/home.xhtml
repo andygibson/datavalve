@@ -6,6 +6,8 @@
 	xmlns:ds="http://java.sun.com/jsf/composite/spigotcomp"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
+
+
 		<h:form id="form">
 
 			<h:panelGrid columns="2"
@@ -14,11 +16,12 @@ First Name : <h:inputText value="#{searchCriteria.firstName}" />
 Last Name : <h:inputText value="#{searchCriteria.lastName}" />
 Phone : <h:inputText value="#{searchCriteria.phone}" />
 
-			<h:commandButton value="Refresh" action="#{personSearch.refresh}">
-				<f:ajax execute="form" render="form" />
-			</h:commandButton>
-			</h:panelGrid>			
-			<h:dataTable value="#{personResults}" var="v_person" styleClass="dataTable" columnClasses="smallCol,medCol,medCol">
+				<h:commandButton value="Refresh" action="#{personSearch.refresh}">
+					<f:ajax execute="form" render="form" />
+				</h:commandButton>
+			</h:panelGrid>
+			<h:dataTable value="#{personResults}" var="v_person"
+				styleClass="dataTable" columnClasses="smallCol,medCol,medCol">
 
 				<h:column>
 					<ui:include src="sortableHeader.xhtml">
@@ -47,7 +50,7 @@ Phone : <h:inputText value="#{searchCriteria.phone}" />
 						<ui:param name="p_key" value="phone" />
 						<ui:param name="p_caption" value="Phone Number" />
 					</ui:include>
-					#{v_person.phone}
+					<h:outputText value="#{v_person.phone}"  converter="personPhone"/>
 				</h:column>
 
 			</h:dataTable>
@@ -55,18 +58,16 @@ Phone : <h:inputText value="#{searchCriteria.phone}" />
 			<h:inputHidden value="#{personSearch.orderAscending}" />
 			<h:inputHidden value="#{personSearch.firstResult}" />
 			<h:panelGrid columns="3" style="width : 40%">
-			<h:commandLink value="Previous"				
-				action="#{personSearch.previous}">
-				<f:ajax execute="form" render="form" />
-			</h:commandLink>
-			<h:outputText value="Page #{personSearch.page}"/>
-			<h:commandLink value="Next" 
-				action="#{personSearch.next}">
-				<f:ajax execute="form" render="form" />
-			</h:commandLink>
+				<h:commandLink value="Previous" action="#{personSearch.previous}">
+					<f:ajax execute="form" render="form" />
+				</h:commandLink>
+				<h:outputText value="Page #{personSearch.page}" />
+				<h:commandLink value="Next" action="#{personSearch.next}">
+					<f:ajax execute="form" render="form" />
+				</h:commandLink>
 			</h:panelGrid>
-			
-			
+
+
 
 		</h:form>
 	</ui:define>

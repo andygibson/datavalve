@@ -80,7 +80,7 @@ public class Person implements Serializable {
 	}
 
 	public String getName() {
-		return lastName + ", " + firstName;
+		return firstName + " " + lastName;
 	}
 
 	@Override

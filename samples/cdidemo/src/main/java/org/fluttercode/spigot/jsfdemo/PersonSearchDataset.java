@@ -27,6 +27,9 @@ import org.fluttercode.spigot.dataset.QueryDataset;
 import org.fluttercode.spigot.jsfdemo.model.Person;
 
 /**
+ * Request scoped dataset that holds the info regarding the first result and
+ * page size for the demo data. Values are popped into here using  
+ * 
  * @author Andy Gibson
  * 
  */

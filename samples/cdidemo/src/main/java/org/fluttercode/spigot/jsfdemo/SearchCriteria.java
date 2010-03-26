@@ -19,13 +19,12 @@ package org.fluttercode.spigot.jsfdemo;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-
-@Named("searchCriteria")
-@RequestScoped
 /**
  * @author Andy Gibson
- * 
+ *
  */
+@Named("searchCriteria")
+@RequestScoped
 public class SearchCriteria {
 
 	private String firstName;

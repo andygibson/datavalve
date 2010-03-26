@@ -8,13 +8,14 @@
 	<ui:define name="content">
 		<h:form id="form">
 
-			<h:panelGrid columns="2" style="border : 2px solid #000000;background : #f0f0f0;padding : 16px;margin : 8px">
+			<h:panelGrid columns="2"
+				style="border : 2px solid #000000;background : #f0f0f0;padding : 16px;margin : 8px">
 First Name : <h:inputText value="#{searchCriteria.firstName}" />
 Last Name : <h:inputText value="#{searchCriteria.lastName}" />
 Phone : <h:inputText value="#{searchCriteria.phone}" />
 			</h:panelGrid>
 			<h:commandButton value="Refresh" action="#{personSearch.refresh}">
-			<f:ajax execute="form" render="form" listener="#{personSearch.update}" />
+				<f:ajax execute="form" render="form" />
 			</h:commandButton>
 			<h:dataTable value="#{personResults}" var="v_person">
 
@@ -42,19 +43,16 @@ Phone : <h:inputText value="#{searchCriteria.phone}" />
 				<h:column>
 					<ui:include src="sortableHeader.xhtml">
 						<ui:param name="p_paginator" value="#{personSearch}" />
-						<ui:param name="p_key" value="phone" />						
+						<ui:param name="p_key" value="phone" />
 						<ui:param name="p_caption" value="Phone Number" />
 					</ui:include>
 					#{v_person.phone}
 				</h:column>
 
 			</h:dataTable>
-			<h:inputText value="#{personSearch.orderKey}" />
-			<h:inputText value="#{personSearch.orderAscending}" />
-			<h:commandButton value="x" action="#{personSearch.testIt(4)}" />
+			<h:inputHidden value="#{personSearch.orderKey}" />
+			<h:inputHidden value="#{personSearch.orderAscending}" />
 
-			<ds:span />
-			Value:#{searchCriteria.firstNameWildcard}:
 		</h:form>
 	</ui:define>
 </ui:composition>

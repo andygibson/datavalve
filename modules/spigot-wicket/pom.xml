@@ -4,13 +4,11 @@
 	<parent>
 		<artifactId>spigot</artifactId>
 		<groupId>org.fluttercode.spigot</groupId>
-		<version>0.1-Alpha</version>
+		<version>0.9-Beta</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.fluttercode.spigot</groupId>
 	<artifactId>spigot-wicket</artifactId>
 	<name>spigot-wicket</name>
-	<version>0.1-Alpha</version>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -22,7 +20,7 @@
 		<dependency>
 			<groupId>org.fluttercode.spigot</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>0.1-Alpha</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -39,12 +37,12 @@
 		<dependency>
 			<groupId>org.fluttercode.spigot</groupId>
 			<artifactId>spigot-core</artifactId>
-			<version>0.1-Alpha</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fluttercode.spigot</groupId>
 			<artifactId>spigot-dataset</artifactId>
-			<version>0.1-Alpha</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

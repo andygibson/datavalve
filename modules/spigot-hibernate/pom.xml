@@ -3,13 +3,11 @@
 	<parent>
 		<artifactId>spigot</artifactId>
 		<groupId>org.fluttercode.spigot</groupId>
-		<version>0.1-Alpha</version>
+		<version>0.9-Beta</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.fluttercode.spigot</groupId>
 	<artifactId>spigot-hibernate</artifactId>
 	<name>spigot-hibernate</name>
-	<version>0.1-Alpha</version>
 	<dependencies>
 
 		<dependency>
@@ -19,9 +17,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.fluttercode.spigot</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>spigot-core</artifactId>
-			<version>0.1-Alpha</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -41,9 +39,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.fluttercode.spigot</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>spigot-test</artifactId>
-			<version>0.1-Alpha</version>
+			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -70,9 +68,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.fluttercode.spigot</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>spigot-dataset</artifactId>
-			<version>0.1-Alpha</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

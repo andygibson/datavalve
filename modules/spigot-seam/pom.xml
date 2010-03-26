@@ -3,13 +3,11 @@
 	<parent>
 		<artifactId>spigot</artifactId>
 		<groupId>org.fluttercode.spigot</groupId>
-		<version>0.1-Alpha</version>
+		<version>0.9-Beta</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.fluttercode.spigot</groupId>
+	<modelVersion>4.0.0</modelVersion>	
 	<artifactId>spigot-seam</artifactId>
-	<name>spigot-seam</name>
-	<version>0.1-Alpha</version>
+	<name>spigot-seam</name>	
 	<repositories>
 		<repository>
 			<id>repository.jboss.org</id>
@@ -30,9 +28,9 @@
 			<version>2.0.0.BETA1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.fluttercode.spigot</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>spigot-jpa</artifactId>
-			<version>0.1-Alpha</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -46,9 +44,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.fluttercode.spigot</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>spigot-dataset</artifactId>
-			<version>0.1-Alpha</version>
+			<version>${project.version}</version>
 		</dependency>		
 	</dependencies>
 </project>

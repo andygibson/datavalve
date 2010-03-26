@@ -5,7 +5,7 @@
 
 	<persistence-unit name="testPU" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>org.phonelist.model.Person</class>
+		<class>org.fluttercode.spigot.samples.wicketdemo.model.Person</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.connection.url" value="jdbc:hsqldb:mem:unit-testing-jpa" />

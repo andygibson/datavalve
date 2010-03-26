@@ -29,6 +29,8 @@ import org.fluttercode.spigot.Paginator;
  */
 public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public Integer fetchResultCount() {
 		return 100;
 	}

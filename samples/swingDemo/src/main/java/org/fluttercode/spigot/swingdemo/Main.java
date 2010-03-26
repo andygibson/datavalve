@@ -35,6 +35,8 @@ import org.fluttercode.spigot.swingdemo.model.Person;
  */
 public class Main extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	
 	private JTable table;
 	private JScrollPane pane;
 
@@ -108,6 +110,8 @@ public class Main extends JFrame {
 		provider.init(Person.class, "p");
 
 		return new ProviderTableModel<Person>(provider) {
+			private static final long serialVersionUID = 1L;
+			
 			@Override
 			protected Object getColumnValue(Person object, int column) {
 				switch (column) {

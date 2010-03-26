@@ -30,8 +30,12 @@ import org.fluttercode.spigot.impl.InMemoryDataProvider;
 public class InMemoryIntegerProvider extends InMemoryDataProvider<Integer>
 		implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private class IntegerSorter implements Comparator<Integer>, Serializable {
 
+		private static final long serialVersionUID = 1L;
+		
 		public int compare(Integer o1, Integer o2) {
 			return o1 - o2;
 		}

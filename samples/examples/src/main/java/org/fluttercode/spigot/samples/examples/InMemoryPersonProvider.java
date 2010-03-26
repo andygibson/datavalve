@@ -44,6 +44,8 @@ public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 	public static class PersonIdComparator implements Comparator<Person>,
 			Serializable {
 
+		private static final long serialVersionUID = 1L;
+
 		public int compare(Person o1, Person o2) {
 			return (int) (o1.getId() - o2.getId());
 		}
@@ -59,6 +61,8 @@ public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 	public static  class PersonNameComparator implements Comparator<Person>,
 			Serializable {
 
+		private static final long serialVersionUID = 1L;
+		
 		public int compare(Person o1, Person o2) {
 			int val = o1.getLastName().compareToIgnoreCase(o2.getLastName());
 			//if first names match, then try comparing by the first name			

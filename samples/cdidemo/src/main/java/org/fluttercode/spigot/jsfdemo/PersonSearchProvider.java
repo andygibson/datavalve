@@ -25,13 +25,15 @@ import org.fluttercode.spigot.jsfdemo.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@RequestScoped
 /**
  * @author Andy Gibson
  * 
  */
+@RequestScoped
 public class PersonSearchProvider extends HibernateDataProvider<Person> {
 
+	private static final long serialVersionUID = 1L;
+	
 	private static final Logger log = LoggerFactory
 			.getLogger(PersonSearchProvider.class);
 

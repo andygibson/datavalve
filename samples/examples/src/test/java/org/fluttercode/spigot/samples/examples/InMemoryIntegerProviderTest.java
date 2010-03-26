@@ -26,6 +26,8 @@ import org.fluttercode.spigot.dataset.ObjectDataset;
  */
 public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {	
 		DataProvider<Integer> provider = new InMemoryIntegerProvider();		

@@ -32,6 +32,8 @@ import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 public class IntegerDataProviderTest extends
 		AbstractObjectDatasetJUnitTest<Integer> {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {
 		DataProvider<Integer> provider = new IntegerDataProvider();		

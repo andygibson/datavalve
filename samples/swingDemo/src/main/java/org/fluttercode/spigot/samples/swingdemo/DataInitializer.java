@@ -14,17 +14,17 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.swingdemo;
+package org.fluttercode.spigot.samples.swingdemo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.fluttercode.spigot.samples.swingdemo.model.Order;
+import org.fluttercode.spigot.samples.swingdemo.model.Person;
+import org.fluttercode.spigot.testing.TestDataFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.fluttercode.spigot.swingdemo.model.Order;
-import org.fluttercode.spigot.swingdemo.model.Person;
-import org.fluttercode.spigot.testing.TestDataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

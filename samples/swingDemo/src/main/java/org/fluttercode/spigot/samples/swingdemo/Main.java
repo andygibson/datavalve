@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.swingdemo;
+package org.fluttercode.spigot.samples.swingdemo;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -27,7 +27,7 @@ import javax.swing.table.TableColumnModel;
 import org.hibernate.Session;
 import org.fluttercode.spigot.impl.provider.hibernate.HibernateDataProvider;
 import org.fluttercode.spigot.swing.ProviderTableModel;
-import org.fluttercode.spigot.swingdemo.model.Person;
+import org.fluttercode.spigot.samples.swingdemo.model.Person;
 
 /**
  * @author Andy Gibson

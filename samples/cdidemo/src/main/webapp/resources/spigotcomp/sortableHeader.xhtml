@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -6,20 +7,23 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:composite="http://java.sun.com/jsf/composite">
-
+	
+<!--  currently unused since method calls with parameters using passed in 
+attribute objects doesn't work in this cobbled together, non JEE 6 environment
+ (it works in glassfish) -->
+ 
 <h:body>
 
 	<composite:interface>
 		<composite:attribute name="paginator" />
-		<composite:attribute name="key"  />
+		<composite:attribute name="key" />
 		<composite:attribute name="caption" />
 
 	</composite:interface>
 
 
 	<composite:implementation>
-            <h:commandLink action="#{cc.attrs.action}"
-			value="#{cc.attrs.caption}" />
+		<h:commandLink action="#{cc.attrs.action}" value="#{cc.attrs.caption}" />
 		<h:graphicImage value="sort_asc.GIF"
 			rendered="#{(cc.attrs.paginator.orderAscending) and (cc.attrs.paginator.orderKey == cc.attrs.key)}" />
 		<h:graphicImage value="sort_desc.GIF"

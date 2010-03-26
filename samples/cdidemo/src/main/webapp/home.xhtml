@@ -52,6 +52,17 @@ Phone : <h:inputText value="#{searchCriteria.phone}" />
 			</h:dataTable>
 			<h:inputHidden value="#{personSearch.orderKey}" />
 			<h:inputHidden value="#{personSearch.orderAscending}" />
+			<h:inputHidden value="#{personSearch.firstResult}" />
+			<h:commandLink value="Previous"				
+				action="#{personSearch.previous}">
+				<f:ajax execute="form" render="form" />
+			</h:commandLink>
+			<h:commandLink value="Next" 
+				action="#{personSearch.next}">
+				<f:ajax execute="form" render="form" />
+			</h:commandLink>
+			<br />
+			
 
 		</h:form>
 	</ui:define>

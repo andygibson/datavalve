@@ -52,9 +52,10 @@ swingdemo
 ==========
 
 Uses the IndexedDataProviderCache to provide random access to the source data in
-a cohesive manner. This lets you browser thousands of rows of data efficiently.
+a cohesive manner. This lets you browse thousands of rows of data efficiently. Also 
+implements clickable columns for sorting.
 
-to run, type : mvn exec:java -Dexec.mainClass="org.fluttercode.spigot.demo.swingdemo.Main"
+to run, type : mvn exec:java -Dexec.mainClass="org.fluttercode.spigot.samples.swingdemo.Main"
 
 
 examples 

@@ -21,7 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Implementation of an {@link AbstractJdbcQueryDataProvider} that returns the
+ * Implementation of an {@link AbstractJdbcDataProvider} that returns the
  * results as a set of {@link TableRow} objects that contain the columns as map
  * values. 
  * 

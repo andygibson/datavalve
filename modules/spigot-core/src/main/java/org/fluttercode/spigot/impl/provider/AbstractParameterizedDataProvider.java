@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extends the {@link AbstractDataset} to implement the
+ * Extends the {@link AbstractDataProvider} to implement the
  * {@link ParameterizedDataProvider} methods. This class adds handling for parameter
  * resolvers, holding a fixed parameter map, extracting parameters from text and
  * resolving parameters.

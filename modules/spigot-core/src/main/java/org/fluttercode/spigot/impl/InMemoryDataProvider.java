@@ -25,19 +25,20 @@ import java.util.Map;
 
 import org.fluttercode.spigot.DataProvider;
 import org.fluttercode.spigot.Paginator;
+import org.fluttercode.spigot.impl.provider.AbstractDataProvider;
 import org.fluttercode.spigot.util.LazyList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * <p>
- * Implementation of an {@link ObjectDataset} that holds its own data list in
+ * Implementation of a {@link DataProvider} that holds its own data list in
  * memory that is used to back the dataset. Introduces a new abstract method to
  * be overridden that allows subclasses to return the <code>List</code> that
  * backs this dataset.
  * </p>
  * <p>
- * This class can be used to provide an {@link ObjectDataset} interface to any
+ * This class can be used to provide an {@link DataProvider} interface to any
  * data even if it is held in any kind of list. For example, you can create a
  * paginated dataset from a list of <code>File</code> objects. If the content
  * you need is too big to be held in memory, then you could use a
@@ -115,13 +116,6 @@ public abstract class InMemoryDataProvider<T> implements DataProvider<T>,
 	 */
 	protected abstract List<T> fetchBackingData();
 
-	/**
-	 * Made final in this class because it relies on the
-	 * <code>fetchBackingDataList</code> method.
-	 * 
-	 * @see org.fluttercode.spigot.AbstractDataset#fetchResults()
-	 * 
-	 */
 	public List<T> fetchResults(Paginator paginator) {
 		// make this method final since
 

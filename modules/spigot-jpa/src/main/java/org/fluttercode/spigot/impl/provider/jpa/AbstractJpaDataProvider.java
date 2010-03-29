@@ -31,7 +31,7 @@ import org.fluttercode.spigot.provider.QueryDataProvider;
  * {@link #createJpaQuery(String)} to create a query of the type needed.
  * 
  * @see JpaDataProvider
- * @see JpaNativeDataProvider
+ * @see JpaNativeProvider
  * 
  * @author Andy Gibson
  * 
@@ -56,12 +56,12 @@ public abstract class AbstractJpaDataProvider<T> extends
 	 * Override to create the specific type of query to use.
 	 * 
 	 * @see JpaDataProvider
-	 * @see JpaNativeDataProvider
+	 * @see JpaNativeProvider
 	 * 
 	 * @param ql
 	 *            Statement the query must execute (could be EJBQL or Native
 	 *            depending on subclass)
-	 * @return {@link Query} object created from the
+	 * @return Query object created from the
 	 *         {@link AbstractJpaDataProvider#entityManager} and configured with
 	 *         the passed in sql.
 	 */

@@ -64,6 +64,7 @@ public class SqlSearchPage extends AbstractSearchPage {
 		provider.addRestriction("p.id = :id");
 		provider.getOrderKeyMap().put("id", "p.id");
 		provider.getOrderKeyMap().put("name", "p.last_Name,p.first_Name");
+		provider.getOrderKeyMap().put("phone", "p.phone");
 		return new ParameterizedDataset<Person>(provider);
 	}
 

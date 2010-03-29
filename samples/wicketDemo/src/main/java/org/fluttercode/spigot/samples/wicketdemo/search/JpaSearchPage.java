@@ -44,6 +44,7 @@ public class JpaSearchPage extends AbstractSearchPage {
         provider.setEntityManager(getWicketApp().createEntityManager());
         provider.getOrderKeyMap().put("id","p.id");
         provider.getOrderKeyMap().put("name","p.lastName,p.firstName");
+        provider.getOrderKeyMap().put("phone","p.phone");
         return new ParameterizedDataset<Person>(provider);
 	}
 

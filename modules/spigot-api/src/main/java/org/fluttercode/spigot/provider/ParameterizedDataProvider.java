@@ -22,7 +22,7 @@ import org.fluttercode.spigot.DataProvider;
 import org.fluttercode.spigot.ParameterResolver;
 
 /**
- * Extends the {@link ObjectDataset} interface to include parameterization of
+ * Extends the {@link DataProvider} interface to include parameterization of
  * the dataset. This introduces methods that allows you to define parameters and
  * also attach {@link ParameterResolver} instances to extend the parameter
  * resolution beyond key-value pairs.

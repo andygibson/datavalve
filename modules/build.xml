@@ -17,13 +17,15 @@
 
 	<property name="doc.dir" value="..\docs\" />
 	<property name="release.dir" value="release\" />
-	<property name="samples.dir" value="..\samples\"/>
+	<property name="samples.dir" value="..\samples\" />
+	<property name="apidocs.dir" value="target\apidocs" />
+	<property name="zip.base.dir" value="${release.dir}\staging\" />
 
-	<property name="staging.dir" value="${release.dir}\staging\" />
+	<property name="staging.dir" value="${release.dir}\staging\Spigot-${version}\" />
 	<property name="staging.dist.dir" value="${staging.dir}\dist\" />
 	<property name="staging.samples.dir" value="${staging.dir}\samples\" />
 	<property name="staging.sources.dir" value="${staging.dist.dir}\sources\" />
-	
+
 	<property name="staging.docs.dir" value="${staging.dir}\docs\" />
 	<property name="staging.docs.api.dir" value="${staging.docs.dir}\api\" />
 	<property name="staging.docs.ref.dir" value="${staging.docs.dir}\reference\" />
@@ -85,6 +87,8 @@
 				<include name="**/*.properties" />
 				<exclude name="**/target/**/*.*" />
 				<exclude name="${release.dir}" />
+				<exclude name="build.xml" />
+
 			</fileset>
 		</copy>
 	</target>
@@ -100,13 +104,18 @@
 	</target>
 
 	<target name="javadoc" depends="prepare">
-		<javadoc destdir="${staging.docs.api.dir}" classpath="">
-			<fileset dir="${basedir}">
-				<include name="**/src/main/java/**/*.java" />
-				<exclude name="${release.dir}" />
+		<exec executable="${maven.dir}\bin\mvn.bat">
+			<arg value="javadoc:aggregate-jar" />
+			<arg value="-q" />
+		</exec>
+
+		<copy todir="${staging.docs.api.dir}">
+			<fileset dir="${apidocs.dir}/">
+				<include name="**\*.*\" />
 			</fileset>
-		</javadoc>
+		</copy>
 	</target>
+
 
 	<target name="moveReferenceDocs" depends="prepare">
 
@@ -138,34 +147,31 @@
 
 	</target>
 
-	<target name="moveSamples" depends="prepare">
+	<target name="moveSamples" >
+		<delete dir="${staging.samples.dir}" />
+		<mkdir dir="${staging.samples.dir}" />
+
 		<copy todir="${staging.samples.dir}">
-			<fileset dir="${samples.dir}">
-				<include name="**\*.java" />
-				<include name="**\*.xml" />
-				<include name="**\*.html" />
-				<include name="**\*.xhtml" />
-				<include name="**\*.css" /> 
-				<include name="**\*.csv" />
-				<include name="**\*.png" />
-				<include name="**\*.properties" />
-				<include name="**\*.txt" />
+			<fileset dir="${samples.dir}">				
+				<exclude name="**/target/**" />
+				<exclude name="**/.*/**" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="zipIt">
 		<zip destfile="${release.dir}\spigot-${version}.zip">
-			<fileset dir="${staging.dir}">
-				<include name="**/*.*" />
+			<fileset dir="${zip.base.dir}">
+				<include name="**\*.*" />
 			</fileset>
 		</zip>
 
 		<tar destfile="${release.dir}\spigot-${version}.tar">
-			<fileset dir="${staging.dir}">
-				<include name="**/*.*" />
+			<fileset dir="${zip.base.dir}">
+				<include name="**\*.*" />
 			</fileset>
 		</tar>
+
 		<gzip destfile="${release.dir}\spigot-${version}.tar.gz" src="${release.dir}\spigot-${version}.tar" />
 		<delete file="${release.dir}\spigot-${version}.tar" />
 
@@ -174,10 +180,11 @@
 	<!-- ================================= 
           target: default              
          ================================= -->
-	<target name="default" depends="buildIt,javadoc,copySource,moveBin,moveReferenceDocs,copyAdditionalFiles,zipIt" description="build it all">
+	<target name="default" depends="clean,buildIt,javadoc,copySource,moveBin,moveReferenceDocs,copyAdditionalFiles,moveSamples, zipIt" description="build it all">
 		<!--<delete dir="${staging.dir}" />-->
 
 	</target>
 
 
 </project>
+

@@ -147,9 +147,7 @@
 
 	</target>
 
-	<target name="moveSamples" >
-		<delete dir="${staging.samples.dir}" />
-		<mkdir dir="${staging.samples.dir}" />
+	<target name="moveSamples" depends="prepare">
 
 		<copy todir="${staging.samples.dir}">
 			<fileset dir="${samples.dir}">				

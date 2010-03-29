@@ -4,32 +4,34 @@ Spigot 0.9 Alpha build
 System requirements
 =======================
 
- All you need to run this project is Java 5.0 (Java SDK 1.5) or greator and
- Maven 2.0.10 or greater. This application is setup to be run on a Servlet
- Container. The embedded Jetty and Tomcat containers get downloaded
- automatically by the Maven commands.
-
-
-
+All you need to use Spigot is Java 5.0 (Java SDK 1.5) or greater and 
+Maven 2.0.10 or greater if you want to run the demos or use Spigot from maven. 
+ 
 Getting Started
 ================
 
-To get started, open a command prompt in the modules directory and execute :
+To install Spigot into maven, open a command prompt in the <install>/src 
+directory and execute :
 
 mvn clean install
 
-This will install all the modules in your maven repository. 
-
+This will install all the modules in your maven repository for use in maven 
+projects. The <install>\dist directory contains compiled jars as well as the 
+source and javadoc in jar files. Documentation is in the docs directory in the 
+form of API javadoc and a reference guide in HTML and PDF. 
 
  
 Running the samples
 ===================
 
-Navigate to the samples\ folder and there are several samples included. Each of 
-the samples builds their own databases using hsql so you don't have to set up 
-a datastore in a server and all the demos are self contained running in embedded
-jetty so there is no configuration needed other than to install the Spigot
-libraries in maven using the above step. 
+Navigate to the <install>\samples folder and there are several samples included. 
+Each of the samples builds their own databases using hsql so you don't have to 
+set up a datastore in a server. All the demos are self contained running in 
+embedded jetty so there is no configuration needed other than to install the 
+Spigot libraries in maven using the above step.
+
+Each of the demos have a readme.txt describing how to run them and also some 
+usually additional notes on the implementation.  
 
 
 cdi Demo
@@ -37,21 +39,22 @@ cdi Demo
 
 Jetty demo using CDI and JSF
 
-to run, type : mvn jetty:run
+to run, go to the cdidemo directory and type : mvn jetty:run
 
            
 wicket Demo
 ============
  
-Mega demo showing the different provider mechanisms with different view mechanisms.
+Mega demo showing the different provider mechanisms with different view 
+mechanisms all based off the same Wicket pages.
 
-to run, type : mvn jetty:run
+to run, go to the wicket demo directory and type : mvn jetty:run
 
 
 swingdemo 
 ==========
 
-Uses the IndexedDataProviderCache to provide random access to the source data in
+Uses the ProviderTableModel to implement random access to the source data in
 a cohesive manner. This lets you browse thousands of rows of data efficiently. Also 
 implements clickable columns for sorting.
 
@@ -64,13 +67,3 @@ examples
 The example classes from the documentation with some code showing how to use them.
 
 
-
-Building the documentation
-===========================
-
-Navigate to the docs folder and type : 
-
-mvn clean package
-
-This will produce the documentation in the folders under docs\target\docbkx\
-            

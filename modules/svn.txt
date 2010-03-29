@@ -1,6 +1,0 @@
-This document tracks important builds and revision numbers.
-
-2010-02-08 : Separating out datasets into separate module completed at  566
-2010-02-08 : Starting to restructure design @ 566
-2010-02-10 : Reverted back tp 566 build -  committed on build 577
-2010-02-11 : Started working on refactoring to extract simple querying - rev 583 

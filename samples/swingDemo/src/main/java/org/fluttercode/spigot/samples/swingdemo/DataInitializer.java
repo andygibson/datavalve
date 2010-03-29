@@ -56,8 +56,9 @@ public class DataInitializer {
 		cfg.addAnnotatedClass(Person.class);
 		sessionFactory = cfg.configure().buildSessionFactory();
 		session = sessionFactory.openSession();
+		log.debug("Generating test data");
 		generateTestData();
-
+		log.debug("Test data generation completed, starting app");
 	}
 
 	private void generateTestData() {

@@ -25,8 +25,8 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import org.hibernate.Session;
+import org.fluttercode.spigot.client.swing.ProviderTableModel;
 import org.fluttercode.spigot.provider.hibernate.HibernateDataProvider;
-import org.fluttercode.spigot.swing.ProviderTableModel;
 import org.fluttercode.spigot.samples.swingdemo.model.Person;
 
 /**

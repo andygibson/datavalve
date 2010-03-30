@@ -65,7 +65,7 @@ public abstract class AbstractSearchPage extends WebPage {
 
 		dataset = createDataset();
 		dataset.setMaxRows(10);
-		dataset.addParameterResolver(new ReflectionParameterResolver(criteria));
+		dataset.getProvider().addParameterResolver(new ReflectionParameterResolver(criteria));
 
 		// create model for form labels
 		add(new DatasetInfoPanel("infoPanel", dataset));

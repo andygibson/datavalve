@@ -100,7 +100,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testUnsetParameters() {
 		dataset.setMaxRows(10);
-		dataset.setSelectStatement("select * from TestValues where id = #{id}");
+		dataset.getProvider().setSelectStatement("select * from TestValues where id = #{id}");
 		List<TableRow> results = dataset.getResultList();
 
 		assertNotNull(results);
@@ -109,8 +109,8 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testSetParameters() {
 		dataset.setMaxRows(10);
-		dataset.setSelectStatement("select * from TestValues where id = :id");
-		dataset.addParameter("id", 4);
+		dataset.getProvider().setSelectStatement("select * from TestValues where id = :id");
+		dataset.getProvider().addParameter("id", 4);
 		List<TableRow> results = dataset.getResultList();		
 
 		assertNotNull(results);
@@ -120,7 +120,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testParamResolver() {
-		dataset.addParameterResolver(new ParameterResolver() {
+		dataset.getProvider().addParameterResolver(new ParameterResolver() {
 
 			public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 				if ("#{myId}".equals(parameter.getName())) {
@@ -134,7 +134,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 				return parameter.startsWith("#{") && parameter.endsWith("}");
 			}
 		});
-		dataset.setSelectStatement("select * from TestValues where id = #{myId}");
+		dataset.getProvider().setSelectStatement("select * from TestValues where id = #{myId}");
 		List<TableRow> results = dataset.getResultList();
 
 		assertNotNull(results);
@@ -143,7 +143,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	}
 
 	public void testParamResolverMissingValue() {
-		dataset.addParameterResolver(new ParameterResolver() {
+		dataset.getProvider().addParameterResolver(new ParameterResolver() {
 
 			public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,Parameter parameter) {
 				if ("myId".equals(parameter.getName())) {
@@ -157,8 +157,7 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 				return true;
 			}
 		});
-		dataset
-				.setSelectStatement("select * from TestValues where id = #{myId_unknown}");
+		dataset.getProvider().setSelectStatement("select * from TestValues where id = #{myId_unknown}");
 		List<TableRow> results = dataset.getResultList();
 
 		assertNotNull(results);
@@ -179,8 +178,8 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 
 	public void testPagingPageSizePlusOne() {
 		// test the paging when the
-		dataset.setSelectStatement("select * from TestValues where id < 21");
-		dataset.setCountStatement("select count(1) from TestValues where id < 21");
+		dataset.getProvider().setSelectStatement("select * from TestValues where id < 21");
+		dataset.getProvider().setCountStatement("select count(1) from TestValues where id < 21");
 
 		assertEquals(21, dataset.getResultCount().intValue());
 
@@ -216,8 +215,8 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 	public void testPagingPageSizeMinusOne() {
 		log.debug("Testing size minus One");
 		// test the paging when the
-		dataset.setSelectStatement("select * from TestValues where id < 19");
-		dataset.setCountStatement("select count(1) from TestValues where id < 19");
+		dataset.getProvider().setSelectStatement("select * from TestValues where id < 19");
+		dataset.getProvider().setCountStatement("select count(1) from TestValues where id < 19");
 
 		assertEquals(19, dataset.getResultCount().intValue());
 		assertEquals(19, dataset.getResultList().size());
@@ -256,8 +255,8 @@ public class StatementDatasetTestCase extends BaseJdbcDatasetTest<TableRow> {
 			}
 		};
 		StatementDataset<TestValue> qry = new StatementDataset<TestValue>(provider);
-		qry.setCountStatement("select count(1) from TestValues");
-		qry.setSelectStatement("select * from TestValues");
+		qry.getProvider().setCountStatement("select count(1) from TestValues");
+		qry.getProvider().setSelectStatement("select * from TestValues");
 		qry.setMaxRows(10);
 		assertEquals(100, qry.getResultCount().intValue());
 		assertEquals(true, qry.isNextAvailable());

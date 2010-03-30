@@ -16,9 +16,6 @@
 
 package org.fluttercode.spigot.dataset;
 
-import java.util.Map;
-
-import org.fluttercode.spigot.ParameterResolver;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 
 
@@ -26,35 +23,11 @@ import org.fluttercode.spigot.provider.ParameterizedDataProvider;
  * @author Andy Gibson
  * 
  */
-public class ParameterizedDataset<T> extends GenericProviderDataset<T,ParameterizedDataProvider<T>>  implements ParameterizedDataProvider<T> {
+public class ParameterizedDataset<T> extends GenericProviderDataset<T,ParameterizedDataProvider<T>>  {
 
 	private static final long serialVersionUID = 1L;
 	
 	public ParameterizedDataset(ParameterizedDataProvider<T> provider) {
 		super(provider);
-	}
-
-	public void addParameter(String name, Object value) {
-		getProvider().addParameter(name, value);
-	}
-
-	public void addParameterResolver(ParameterResolver resolver) {
-		getProvider().addParameterResolver(resolver);		
-	}
-
-	public Map<String, Object> getParameters() {
-		return getProvider().getParameters();
-	}
-
-	public Object resolveParameter(String name) {
-		return getProvider().resolveParameter(name);
-	}
-
-	public void setParameters(Map<String, Object> parameters) {
-		getProvider().setParameters(parameters);
-	}
-
-	public Integer fetchResultCount() {
-		return getProvider().fetchResultCount();
-	}
+	}	
 }

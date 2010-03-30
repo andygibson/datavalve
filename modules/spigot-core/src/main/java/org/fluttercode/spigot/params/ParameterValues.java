@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.fluttercode.spigot.Parameter;
 
 /**
  * Simple class that stores a list of Parameter instances

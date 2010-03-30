@@ -19,7 +19,7 @@ package org.fluttercode.spigot.provider.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.params.Parameter;
 
 /**
  * @author Andy Gibson

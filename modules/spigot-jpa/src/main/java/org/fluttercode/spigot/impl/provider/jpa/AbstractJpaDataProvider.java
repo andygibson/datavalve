@@ -21,7 +21,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.AbstractQueryDataProvider;
 import org.fluttercode.spigot.provider.QueryDataProvider;
 import org.fluttercode.spigot.provider.util.DataQuery;

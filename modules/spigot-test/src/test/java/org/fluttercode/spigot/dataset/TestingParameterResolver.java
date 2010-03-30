@@ -18,8 +18,8 @@ package org.fluttercode.spigot.dataset;
 
 import java.io.Serializable;
 
-import org.fluttercode.spigot.Parameter;
 import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 
 /**

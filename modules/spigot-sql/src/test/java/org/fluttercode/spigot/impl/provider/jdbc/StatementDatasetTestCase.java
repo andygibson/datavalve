@@ -20,10 +20,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.fluttercode.spigot.Parameter;
 import org.fluttercode.spigot.ParameterResolver;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.dataset.StatementDataset;
+import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.fluttercode.spigot.provider.StatementDataProvider;
 import org.slf4j.Logger;

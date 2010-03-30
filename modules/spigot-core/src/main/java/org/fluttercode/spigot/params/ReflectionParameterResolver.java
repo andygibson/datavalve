@@ -19,7 +19,6 @@ package org.fluttercode.spigot.params;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 
-import org.fluttercode.spigot.Parameter;
 import org.fluttercode.spigot.ParameterResolver;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;

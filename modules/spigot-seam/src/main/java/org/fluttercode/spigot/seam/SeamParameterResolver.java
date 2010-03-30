@@ -19,8 +19,8 @@ package org.fluttercode.spigot.seam;
 import java.io.Serializable;
 
 import org.jboss.seam.core.Expressions;
-import org.fluttercode.spigot.Parameter;
 import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

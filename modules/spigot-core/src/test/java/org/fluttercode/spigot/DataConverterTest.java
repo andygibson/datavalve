@@ -16,6 +16,8 @@
 
 package org.fluttercode.spigot;
 
+import org.fluttercode.spigot.util.DataConverter;
+
 import junit.framework.TestCase;
 
 /**

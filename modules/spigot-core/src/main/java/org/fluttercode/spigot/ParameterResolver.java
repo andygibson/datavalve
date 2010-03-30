@@ -16,6 +16,7 @@
 
 package org.fluttercode.spigot;
 
+import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.fluttercode.spigot.provider.QueryDataProvider;
 

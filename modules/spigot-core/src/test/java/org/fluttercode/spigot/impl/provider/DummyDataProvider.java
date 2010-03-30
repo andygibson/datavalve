@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.Parameter;
 import org.fluttercode.spigot.ParameterResolver;
+import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.AbstractQueryDataProvider;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.fluttercode.spigot.provider.util.DataQuery;

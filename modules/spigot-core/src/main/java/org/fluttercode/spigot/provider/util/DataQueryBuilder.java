@@ -19,7 +19,7 @@ package org.fluttercode.spigot.provider.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.fluttercode.spigot.Parameter;
+import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.params.ParameterParser;
 import org.fluttercode.spigot.params.ParameterValues;
 import org.fluttercode.spigot.params.RegexParameterParser;

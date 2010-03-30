@@ -94,11 +94,6 @@
         </dependency>
         <dependency>
             <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
             <artifactId>spigot-core</artifactId>
             <version>${project.version}</version>
         </dependency>

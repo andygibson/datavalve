@@ -30,7 +30,6 @@
         </plugins>
     </build>
     <modules>
-        <module>spigot-api</module>
         <module>spigot-core</module>
         <module>spigot-dataset</module>
         <module>spigot-jpa</module>

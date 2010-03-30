@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>spigot</artifactId>
 		<groupId>org.fluttercode.spigot</groupId>
-		<version>0.1-Alpha</version>
+		<version>0.9-Beta</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.fluttercode.spigot</groupId>

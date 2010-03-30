@@ -22,8 +22,8 @@ import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvid
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.DefaultPaginator;
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.impl.DefaultPaginator;
 
 /**
  * @author Andy Gibson

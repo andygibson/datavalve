@@ -18,7 +18,7 @@ package org.fluttercode.spigot.util;
 
 import java.io.File;
 
-import org.fluttercode.spigot.impl.provider.AbstractDataProvider;
+import org.fluttercode.spigot.provider.AbstractDataProvider;
 
 /**
  * @author Andy Gibson

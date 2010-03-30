@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider;
+package org.fluttercode.spigot.provider;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.provider.QueryDataProvider;
+import org.fluttercode.spigot.impl.provider.DataQuery;
+import org.fluttercode.spigot.impl.provider.DataQueryBuilder;
 
 /**
  * Abstract class for Query driven datasets that implements most of the methods

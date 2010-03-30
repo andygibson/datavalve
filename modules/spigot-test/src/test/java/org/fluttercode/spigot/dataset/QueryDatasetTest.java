@@ -23,8 +23,8 @@ import java.util.List;
 import org.fluttercode.spigot.Paginator;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.dataset.QueryDataset;
-import org.fluttercode.spigot.impl.provider.AbstractQueryDataProvider;
 import org.fluttercode.spigot.impl.provider.DataQuery;
+import org.fluttercode.spigot.provider.AbstractQueryDataProvider;
 import org.fluttercode.spigot.provider.QueryDataProvider;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 

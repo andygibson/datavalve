@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider;
+package org.fluttercode.spigot.provider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,6 @@ import org.fluttercode.spigot.Parameter;
 import org.fluttercode.spigot.ParameterResolver;
 import org.fluttercode.spigot.impl.params.ParameterParser;
 import org.fluttercode.spigot.impl.params.RegexParameterParser;
-import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

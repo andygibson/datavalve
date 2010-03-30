@@ -16,6 +16,8 @@
 
 package org.fluttercode.spigot.impl.params;
 
+import org.fluttercode.spigot.params.RegexParameterParser;
+
 import junit.framework.TestCase;
 
 /**

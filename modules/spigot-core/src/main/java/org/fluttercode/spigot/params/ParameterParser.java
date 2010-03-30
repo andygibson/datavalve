@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.params;
+package org.fluttercode.spigot.params;
 
 /**
  * Simple interface for defining a parameter parser that can take a line of a

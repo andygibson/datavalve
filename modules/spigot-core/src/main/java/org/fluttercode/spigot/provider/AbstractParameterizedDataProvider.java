@@ -24,8 +24,8 @@ import java.util.Map;
 import org.fluttercode.spigot.DatasetEnvironment;
 import org.fluttercode.spigot.Parameter;
 import org.fluttercode.spigot.ParameterResolver;
-import org.fluttercode.spigot.impl.params.ParameterParser;
-import org.fluttercode.spigot.impl.params.RegexParameterParser;
+import org.fluttercode.spigot.params.ParameterParser;
+import org.fluttercode.spigot.params.RegexParameterParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

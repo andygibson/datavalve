@@ -20,9 +20,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.fluttercode.spigot.Parameter;
-import org.fluttercode.spigot.impl.params.ParameterParser;
-import org.fluttercode.spigot.impl.params.ParameterValues;
-import org.fluttercode.spigot.impl.params.RegexParameterParser;
+import org.fluttercode.spigot.params.ParameterParser;
+import org.fluttercode.spigot.params.ParameterValues;
+import org.fluttercode.spigot.params.RegexParameterParser;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.fluttercode.spigot.provider.QueryDataProvider;
 import org.slf4j.Logger;

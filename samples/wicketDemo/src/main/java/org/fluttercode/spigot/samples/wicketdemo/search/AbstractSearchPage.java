@@ -29,7 +29,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.fluttercode.spigot.dataset.ParameterizedDataset;
-import org.fluttercode.spigot.impl.params.ReflectionParameterResolver;
+import org.fluttercode.spigot.params.ReflectionParameterResolver;
 import org.fluttercode.spigot.samples.wicketdemo.DatasetInfoPanel;
 import org.fluttercode.spigot.samples.wicketdemo.HeaderLinkPanel;
 import org.fluttercode.spigot.samples.wicketdemo.WicketApplication;

@@ -19,7 +19,7 @@ package org.fluttercode.spigot;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fluttercode.spigot.impl.params.AbstractParameterResolver;
+import org.fluttercode.spigot.params.AbstractParameterResolver;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 
 /**

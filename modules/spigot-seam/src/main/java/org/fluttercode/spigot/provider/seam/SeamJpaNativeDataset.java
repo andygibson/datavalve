@@ -18,10 +18,10 @@ package org.fluttercode.spigot.provider.seam;
 
 import javax.persistence.EntityManager;
 
-import org.jboss.seam.annotations.In;
 import org.fluttercode.spigot.dataset.QueryDataset;
 import org.fluttercode.spigot.provider.jpa.JpaNativeProvider;
-import org.fluttercode.spigot.provider.seam.util.SeamJpaDatasetAdapter;
+import org.fluttercode.spigot.provider.seam.util.SeamJpaNativeDatasetAdapter;
+import org.jboss.seam.annotations.In;
 
 /**
  * Dataset for use in the Seam environment annotated for Seam Managed

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl;
+package org.fluttercode.spigot.provider.file;
 
 import java.io.File;
 import java.io.FileFilter;

@@ -24,7 +24,7 @@ import java.util.Random;
 
 import org.fluttercode.spigot.dataset.GenericProviderDataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
-import org.fluttercode.spigot.impl.FileDataProvider;
+import org.fluttercode.spigot.provider.file.FileDataProvider;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**

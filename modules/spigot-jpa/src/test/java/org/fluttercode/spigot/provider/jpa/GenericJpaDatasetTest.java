@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider.jpa;
+package org.fluttercode.spigot.provider.jpa;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

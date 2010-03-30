@@ -94,7 +94,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		res.getOrderKeyMap().put("id", "o.id");
 		res.getOrderKeyMap().put("first", "o.firstName");
 
-		res.addParameterResolver(new TestingParameterResolver());
+		res.addParameterResolver(new TestParameterResolver());
 		return res;
 	}
 

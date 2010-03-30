@@ -26,7 +26,7 @@ import org.fluttercode.spigot.provider.ParameterizedDataProvider;
  * @author Andy Gibson
  * 
  */
-public class TestingParameterResolver implements ParameterResolver,Serializable {
+public class TestParameterResolver implements ParameterResolver,Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

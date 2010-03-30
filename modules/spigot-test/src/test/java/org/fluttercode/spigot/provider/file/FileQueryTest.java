@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.io;
+package org.fluttercode.spigot.provider.file;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.text;
+package org.fluttercode.spigot.provider.file;
 
 import org.fluttercode.spigot.provider.file.CommaDelimitedProvider;
 

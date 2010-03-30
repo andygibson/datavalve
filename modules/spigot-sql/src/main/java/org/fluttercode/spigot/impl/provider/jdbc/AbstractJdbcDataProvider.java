@@ -25,9 +25,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fluttercode.spigot.Parameter;
-import org.fluttercode.spigot.impl.provider.DataQuery;
 import org.fluttercode.spigot.provider.AbstractQueryDataProvider;
 import org.fluttercode.spigot.provider.QueryDataProvider;
+import org.fluttercode.spigot.provider.util.DataQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

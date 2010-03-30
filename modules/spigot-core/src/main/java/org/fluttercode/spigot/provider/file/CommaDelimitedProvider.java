@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.util;
+package org.fluttercode.spigot.provider.file;
 
 /**
  * @author Andy Gibson

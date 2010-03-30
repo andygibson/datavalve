@@ -22,9 +22,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.fluttercode.spigot.Parameter;
-import org.fluttercode.spigot.impl.provider.DataQuery;
 import org.fluttercode.spigot.provider.AbstractQueryDataProvider;
 import org.fluttercode.spigot.provider.QueryDataProvider;
+import org.fluttercode.spigot.provider.util.DataQuery;
 
 /**
  * Base class for a JPA based {@link QueryDataProvider}. Override and implement

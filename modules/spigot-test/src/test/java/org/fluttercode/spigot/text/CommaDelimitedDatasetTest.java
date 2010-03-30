@@ -24,9 +24,9 @@ import java.io.OutputStreamWriter;
 
 import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.provider.file.CommaDelimitedProvider;
 import org.fluttercode.spigot.testing.TestDataFactory;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
-import org.fluttercode.spigot.util.CommaDelimitedProvider;
 
 /**
  * @author Andy Gibson

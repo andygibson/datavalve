@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.impl.provider.DataQuery;
-import org.fluttercode.spigot.impl.provider.DataQueryBuilder;
+import org.fluttercode.spigot.provider.util.DataQuery;
+import org.fluttercode.spigot.provider.util.DataQueryBuilder;
 
 /**
  * Abstract class for Query driven datasets that implements most of the methods

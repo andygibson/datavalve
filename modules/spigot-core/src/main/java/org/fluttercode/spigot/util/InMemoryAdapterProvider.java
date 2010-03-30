@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider;
+package org.fluttercode.spigot.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;

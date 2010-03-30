@@ -21,8 +21,8 @@ import java.net.URL;
 import org.apache.wicket.PageParameters;
 import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
+import org.fluttercode.spigot.provider.file.CommaDelimitedProvider;
 import org.fluttercode.spigot.samples.wicketdemo.model.Person;
-import org.fluttercode.spigot.util.CommaDelimitedProvider;
 
 /**
  * @author Andy Gibson

@@ -24,6 +24,7 @@ import org.fluttercode.spigot.Parameter;
 import org.fluttercode.spigot.ParameterResolver;
 import org.fluttercode.spigot.provider.AbstractQueryDataProvider;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.provider.util.DataQuery;
 
 /**
  * @author Andy Gibson

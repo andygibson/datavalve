@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.util;
+package org.fluttercode.spigot.provider.file;
 
 import java.io.BufferedReader;
 import java.io.File;

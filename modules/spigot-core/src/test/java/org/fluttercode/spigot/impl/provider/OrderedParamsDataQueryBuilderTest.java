@@ -16,6 +16,9 @@
 
 package org.fluttercode.spigot.impl.provider;
 
+import org.fluttercode.spigot.provider.util.DataQuery;
+import org.fluttercode.spigot.provider.util.DataQueryBuilder;
+
 import junit.framework.TestCase;
 
 /**

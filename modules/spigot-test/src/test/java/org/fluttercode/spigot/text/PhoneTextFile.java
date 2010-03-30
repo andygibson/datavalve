@@ -16,7 +16,7 @@
 
 package org.fluttercode.spigot.text;
 
-import org.fluttercode.spigot.util.CommaDelimitedProvider;
+import org.fluttercode.spigot.provider.file.CommaDelimitedProvider;
 
 
 /**

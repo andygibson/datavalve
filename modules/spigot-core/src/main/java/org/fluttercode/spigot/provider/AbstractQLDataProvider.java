@@ -19,7 +19,7 @@ package org.fluttercode.spigot.provider;
 import java.util.List;
 
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.impl.provider.DataQuery;
+import org.fluttercode.spigot.provider.util.DataQuery;
 
 /**
  * Base class for any data provider that is driven by a Query Language. This

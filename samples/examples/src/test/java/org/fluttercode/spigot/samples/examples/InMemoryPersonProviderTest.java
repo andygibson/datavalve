@@ -20,8 +20,8 @@ import java.util.List;
 
 import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
-import org.fluttercode.spigot.impl.provider.InMemoryAdapterProvider;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.fluttercode.spigot.util.InMemoryAdapterProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

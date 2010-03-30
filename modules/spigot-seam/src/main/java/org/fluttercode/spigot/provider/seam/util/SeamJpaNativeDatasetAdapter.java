@@ -14,11 +14,11 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.seam.util;
+package org.fluttercode.spigot.provider.seam.util;
 
 import java.util.List;
 
-import org.fluttercode.spigot.seam.SeamJpaNativeDataset;
+import org.fluttercode.spigot.provider.seam.SeamJpaNativeDataset;
 
 /**
  * This is a utility class that subclasses the SeamJpaNativeDataset and adds on

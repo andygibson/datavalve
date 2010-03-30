@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.seam;
+package org.fluttercode.spigot.provider.seam;
 
 import javax.persistence.EntityManager;
 

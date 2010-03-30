@@ -19,6 +19,8 @@ package org.fluttercode.spigot.impl.provider.jdbc;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.dataset.QueryDataset;
 import org.fluttercode.spigot.provider.QueryDataProvider;
+import org.fluttercode.spigot.provider.jdbc.MappedJdbcQueryDataset;
+import org.fluttercode.spigot.provider.jdbc.TableRow;
 
 /**
  * @author Andy Gibson

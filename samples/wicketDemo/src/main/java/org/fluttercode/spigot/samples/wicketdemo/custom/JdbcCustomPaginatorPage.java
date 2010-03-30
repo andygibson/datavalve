@@ -23,8 +23,8 @@ import java.sql.SQLException;
 import org.apache.wicket.PageParameters;
 import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
-import org.fluttercode.spigot.impl.provider.jdbc.AbstractJdbcDataProvider;
 import org.fluttercode.spigot.provider.QueryDataProvider;
+import org.fluttercode.spigot.provider.jdbc.AbstractJdbcDataProvider;
 import org.fluttercode.spigot.samples.wicketdemo.model.Person;
 
 /**

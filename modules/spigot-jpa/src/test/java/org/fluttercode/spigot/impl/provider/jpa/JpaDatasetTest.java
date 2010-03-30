@@ -29,6 +29,8 @@ import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.dataset.QueryDataset;
 import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.provider.jpa.JpaDataProvider;
+import org.fluttercode.spigot.provider.jpa.JpaQueryProvider;
 import org.fluttercode.spigot.testing.TestDataFactory;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 import org.slf4j.Logger;

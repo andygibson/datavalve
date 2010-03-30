@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider.jdbc;
+package org.fluttercode.spigot.provider.jdbc;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

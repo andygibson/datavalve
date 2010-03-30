@@ -18,8 +18,8 @@ package org.fluttercode.spigot.samples.wicketdemo.search;
 
 import org.apache.wicket.PageParameters;
 import org.fluttercode.spigot.dataset.ParameterizedDataset;
-import org.fluttercode.spigot.impl.provider.jpa.JpaDataProvider;
-import org.fluttercode.spigot.impl.provider.jpa.JpaQueryProvider;
+import org.fluttercode.spigot.provider.jpa.JpaDataProvider;
+import org.fluttercode.spigot.provider.jpa.JpaQueryProvider;
 import org.fluttercode.spigot.samples.wicketdemo.model.Person;
 
 /**

@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.dataset.QueryDataset;
 import org.fluttercode.spigot.provider.QueryDataProvider;
+import org.fluttercode.spigot.provider.jdbc.AbstractJdbcDataProvider;
 
 /**
  * @author Andy Gibson

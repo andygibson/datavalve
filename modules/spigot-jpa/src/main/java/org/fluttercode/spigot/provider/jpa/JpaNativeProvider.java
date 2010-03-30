@@ -14,32 +14,33 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider.jpa;
+package org.fluttercode.spigot.provider.jpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 /**
- * JPA based query that uses the Ejbql syntax for querying.
- *  
+ * A JPA based dataset that uses a native query language to generate the
+ * results.
+ * 
  * @author Andy Gibson
- *
- * @param <T>
+ * 
+ * @param <T> Type of object this dataset contains
  */
-public class JpaQueryProvider<T> extends AbstractJpaDataProvider<T> {
+public class JpaNativeProvider<T> extends AbstractJpaDataProvider<T> {
 
-	public JpaQueryProvider() {
-		// TODO Auto-generated constructor stub
+	public JpaNativeProvider() {	
 	}
 	
-	public JpaQueryProvider(EntityManager entityManager) {
+	public JpaNativeProvider(EntityManager entityManager) {
 		super(entityManager);
 	}
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
-	protected Query createJpaQuery(String ql) {		
-		return getEntityManager().createQuery(ql);
+	protected Query createJpaQuery(String ql) {
+		return getEntityManager().createNativeQuery(ql, getEntityClass());
 	}
+
 }

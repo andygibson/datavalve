@@ -18,9 +18,9 @@ package org.fluttercode.spigot.seam;
 
 import javax.persistence.EntityManager;
 
-import org.fluttercode.spigot.impl.provider.jpa.JpaDataProvider;
-import org.fluttercode.spigot.impl.provider.jpa.JpaDataset;
-import org.fluttercode.spigot.impl.provider.jpa.JpaQueryProvider;
+import org.fluttercode.spigot.provider.jpa.JpaDataProvider;
+import org.fluttercode.spigot.provider.jpa.JpaDataset;
+import org.fluttercode.spigot.provider.jpa.JpaQueryProvider;
 import org.jboss.seam.annotations.In;
 
 /**

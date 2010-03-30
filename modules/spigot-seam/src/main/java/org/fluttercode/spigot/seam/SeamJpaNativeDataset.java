@@ -20,7 +20,7 @@ import javax.persistence.EntityManager;
 
 import org.jboss.seam.annotations.In;
 import org.fluttercode.spigot.dataset.QueryDataset;
-import org.fluttercode.spigot.impl.provider.jpa.JpaNativeProvider;
+import org.fluttercode.spigot.provider.jpa.JpaNativeProvider;
 
 
 /**

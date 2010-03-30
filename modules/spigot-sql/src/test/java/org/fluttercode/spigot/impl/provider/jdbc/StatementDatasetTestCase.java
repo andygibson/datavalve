@@ -26,6 +26,9 @@ import org.fluttercode.spigot.dataset.StatementDataset;
 import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
 import org.fluttercode.spigot.provider.StatementDataProvider;
+import org.fluttercode.spigot.provider.jdbc.AbstractJdbcDataProvider;
+import org.fluttercode.spigot.provider.jdbc.MappedJdbcQueryDataset;
+import org.fluttercode.spigot.provider.jdbc.TableRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

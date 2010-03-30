@@ -28,13 +28,13 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.fluttercode.spigot.client.wicket.DatasetDataProvider;
 import org.fluttercode.spigot.dataset.ParameterizedDataset;
 import org.fluttercode.spigot.params.ReflectionParameterResolver;
 import org.fluttercode.spigot.samples.wicketdemo.DatasetInfoPanel;
 import org.fluttercode.spigot.samples.wicketdemo.HeaderLinkPanel;
 import org.fluttercode.spigot.samples.wicketdemo.WicketApplication;
 import org.fluttercode.spigot.samples.wicketdemo.model.Person;
-import org.fluttercode.spigot.wicket.DatasetDataProvider;
 
 /**
  * Homepage

@@ -25,12 +25,12 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.fluttercode.spigot.client.wicket.DatasetModel;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.samples.wicketdemo.DatasetInfoPanel;
 import org.fluttercode.spigot.samples.wicketdemo.HeaderLinkPanel;
 import org.fluttercode.spigot.samples.wicketdemo.WicketApplication;
 import org.fluttercode.spigot.samples.wicketdemo.model.Person;
-import org.fluttercode.spigot.wicket.DatasetModel;
 
 /**
  * This is the abstract page for displaying the custom paginator. 

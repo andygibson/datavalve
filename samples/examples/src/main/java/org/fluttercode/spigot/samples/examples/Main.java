@@ -19,8 +19,8 @@ package org.fluttercode.spigot.samples.examples;
 import java.util.List;
 
 import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.DefaultPaginator;
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.impl.DefaultPaginator;
 
 /**
  * @author Andy Gibson

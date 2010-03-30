@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.DefaultPaginator;
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.impl.DefaultPaginator;
 import org.fluttercode.spigot.provider.InMemoryDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

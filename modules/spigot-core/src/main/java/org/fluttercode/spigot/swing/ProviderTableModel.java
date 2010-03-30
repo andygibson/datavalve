@@ -20,8 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import org.fluttercode.spigot.DataProvider;
+import org.fluttercode.spigot.DefaultPaginator;
 import org.fluttercode.spigot.Paginator;
-import org.fluttercode.spigot.impl.DefaultPaginator;
 import org.fluttercode.spigot.util.IndexedDataProviderCache;
 
 /**

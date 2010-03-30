@@ -14,11 +14,10 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl;
+package org.fluttercode.spigot;
 
 import java.io.Serializable;
 
-import org.fluttercode.spigot.Paginator;
 
 /**
  * Default and complete implementation of the {@link Paginator} interface.

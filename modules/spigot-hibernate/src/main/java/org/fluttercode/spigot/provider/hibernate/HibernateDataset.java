@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider.hibernate;
+package org.fluttercode.spigot.provider.hibernate;
 
 import org.fluttercode.spigot.dataset.GenericProviderDataset;
 import org.fluttercode.spigot.provider.QueryDataProvider;

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider.hibernate;
+package org.fluttercode.spigot.provider.hibernate;
 
 import java.util.List;
 

@@ -20,7 +20,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.hibernate.Session;
-import org.fluttercode.spigot.impl.provider.hibernate.HibernateDataProvider;
+import org.fluttercode.spigot.provider.hibernate.HibernateDataProvider;
 import org.fluttercode.spigot.samples.cdidemo.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

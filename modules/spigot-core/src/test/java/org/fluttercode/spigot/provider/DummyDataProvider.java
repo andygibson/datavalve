@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider;
+package org.fluttercode.spigot.provider;
 
 import java.util.Collections;
 import java.util.List;

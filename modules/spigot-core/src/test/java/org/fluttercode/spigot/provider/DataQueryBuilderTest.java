@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider;
+package org.fluttercode.spigot.provider;
 
 import org.fluttercode.spigot.provider.util.DataQuery;
 import org.fluttercode.spigot.provider.util.DataQueryBuilder;

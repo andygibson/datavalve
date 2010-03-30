@@ -68,7 +68,7 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	}
 
 	public void testParameterQuery() {
-		dataset.getRestrictions().add("FIRST_NAME like 'A%'");
+		dataset.getProvider().getRestrictions().add("FIRST_NAME like 'A%'");
 		int count = 0;
 		for (Person p : dataset) {
 			assertTrue(p.getFirstName().startsWith("A"));
@@ -78,8 +78,8 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	}
 
 	public void testParameterQueryWithValue() {
-		dataset.getRestrictions().add("FIRST_NAME like :param");
-		dataset.getParameters().put("param", "S%");
+		dataset.getProvider().getRestrictions().add("FIRST_NAME like :param");
+		dataset.getProvider().getParameters().put("param", "S%");
 		int count = 0;
 		for (Person p : dataset) {
 			assertTrue(p.getFirstName().startsWith("S"));
@@ -91,13 +91,13 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 
 	public void testParameterQueryWithValueReRead() {
 
-		dataset.getRestrictions().add("FIRST_NAME like :param");
-		dataset.getParameters().put("param", "M%");
+		dataset.getProvider().getRestrictions().add("FIRST_NAME like :param");
+		dataset.getProvider().getParameters().put("param", "M%");
 		for (Person p : dataset) {
 			assertTrue(p.getFirstName().startsWith("M"));
 		}
 
-		dataset.getParameters().put("param", "T%");
+		dataset.getProvider().getParameters().put("param", "T%");
 		dataset.refresh();
 		for (Person p : dataset) {
 			assertTrue(p.getFirstName().startsWith("T"));
@@ -106,15 +106,15 @@ public class SqlQueryDatasetTest extends BaseJdbcDatasetTest<Person> {
 	}
 
 	public void testParameterQueryWithNoValue() {
-		dataset.getRestrictions().add("FIRST_NAME like :param");
+		dataset.getProvider().getRestrictions().add("FIRST_NAME like :param");
 		assertEquals(getDataRowCount(), dataset.getResultCount().intValue());
 		int count = dataset.getResultCount();
 		assertEquals(getDataRowCount(), count);
 	}
 
 	public void testParameterizedQueryCount() {
-		dataset.getRestrictions().add("FIRST_NAME like :param");
-		dataset.getParameters().put("param", "%");
+		dataset.getProvider().getRestrictions().add("FIRST_NAME like :param");
+		dataset.getProvider().getParameters().put("param", "%");
 		assertEquals(getDataRowCount(), dataset.getResultCount().intValue());
 	}
 

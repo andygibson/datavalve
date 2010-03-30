@@ -148,10 +148,10 @@ public class HibernateDatasetTest extends
 
 	public void testSimpleParameter() {		
 
-		dataset.getRestrictions().add("p.id = :personId");
-		dataset.getParameters().put("personId", 4l);
+		dataset.getProvider().getRestrictions().add("p.id = :personId");
+		dataset.getProvider().getParameters().put("personId", 4l);
 		List<Person> result = dataset.getResultList();
-		Long val = (Long) dataset.resolveParameter(":personId");
+		Long val = (Long) dataset.getProvider().resolveParameter(":personId");
 		assertNotNull(val);
 		assertEquals(4, val.intValue());
 
@@ -164,7 +164,7 @@ public class HibernateDatasetTest extends
 	}
 
 	public void testMissingParameter() {
-		dataset.getRestrictions().add("p.id = #{personId}");
+		dataset.getProvider().getRestrictions().add("p.id = #{personId}");
 		List<Person> result = dataset.getResultList();
 
 		assertNotNull(result);
@@ -174,9 +174,9 @@ public class HibernateDatasetTest extends
 	}
 
 	public void testNullParameter() {
-		dataset.getRestrictions().add("p.id = #{personId}");
+		dataset.getProvider().getRestrictions().add("p.id = #{personId}");
 		List<Person> result = dataset.getResultList();
-		dataset.getParameters().put("personId", null);
+		dataset.getProvider().getParameters().put("personId", null);
 
 		assertNotNull(result);
 
@@ -219,10 +219,10 @@ public class HibernateDatasetTest extends
 
 	public void testParameterResolverRepeatsEval() {		
 			
-		dataset.getRestrictions().add("p.id = #{id}");
-		dataset.getRestrictions().add("p.id = #{id}");
+		dataset.getProvider().getRestrictions().add("p.id = #{id}");
+		dataset.getProvider().getRestrictions().add("p.id = #{id}");
 
-		dataset.addParameterResolver(new ParameterResolver() {
+		dataset.getProvider().addParameterResolver(new ParameterResolver() {
 
 			long id = 20;
 

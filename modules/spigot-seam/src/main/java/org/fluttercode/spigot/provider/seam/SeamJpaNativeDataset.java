@@ -58,7 +58,7 @@ public class SeamJpaNativeDataset<T> extends QueryDataset<T> {
 	protected SeamJpaNativeDataset(JpaNativeProvider<T> jpaProvider) {
 		super(jpaProvider);
 		this.jpaProvider = jpaProvider;
-		addParameterResolver(new SeamParameterResolver());
+		jpaProvider.addParameterResolver(new SeamParameterResolver());
 	}
 
 	public SeamJpaNativeDataset() {

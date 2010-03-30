@@ -89,12 +89,12 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 		provider.setSelectStatement("Select o from Object o");
 		QueryDataset<Integer> res = new QueryDataset<Integer>(provider);
 
-		res.addRestriction("id = #{id}");
-		res.addRestriction("firstName = #{person.firstName}");
-		res.getOrderKeyMap().put("id", "o.id");
-		res.getOrderKeyMap().put("first", "o.firstName");
+		res.getProvider().addRestriction("id = #{id}");
+		res.getProvider().addRestriction("firstName = #{person.firstName}");
+		res.getProvider().getOrderKeyMap().put("id", "o.id");
+		res.getProvider().getOrderKeyMap().put("first", "o.firstName");
 
-		res.addParameterResolver(new TestParameterResolver());
+		res.getProvider().addParameterResolver(new TestParameterResolver());
 		return res;
 	}
 

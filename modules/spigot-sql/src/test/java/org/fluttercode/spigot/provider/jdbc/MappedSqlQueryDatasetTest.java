@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.impl.provider.jdbc;
+package org.fluttercode.spigot.provider.jdbc;
 
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.dataset.QueryDataset;

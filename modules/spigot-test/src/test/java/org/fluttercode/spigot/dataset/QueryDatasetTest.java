@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.db;
+package org.fluttercode.spigot.dataset;
 
 import java.io.Serializable;
 import java.util.ArrayList;

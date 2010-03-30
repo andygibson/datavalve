@@ -1,4 +1,4 @@
-package org.fluttercode.spigot.datafactory;
+package org.fluttercode.spigot.testing;
 
 import org.fluttercode.spigot.testing.TestDataFactory;
 

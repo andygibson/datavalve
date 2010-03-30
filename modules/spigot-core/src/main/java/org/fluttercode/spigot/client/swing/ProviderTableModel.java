@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package org.fluttercode.spigot.swing;
+package org.fluttercode.spigot.client.swing;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;

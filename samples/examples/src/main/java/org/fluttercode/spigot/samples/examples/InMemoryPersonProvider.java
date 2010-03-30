@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.fluttercode.spigot.impl.InMemoryDataProvider;
+import org.fluttercode.spigot.provider.InMemoryDataProvider;
 import org.fluttercode.spigot.testing.TestDataFactory;
 
 /**

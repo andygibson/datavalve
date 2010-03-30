@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 import org.fluttercode.spigot.dataset.GenericProviderDataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
-import org.fluttercode.spigot.impl.InMemoryDataProvider;
+import org.fluttercode.spigot.provider.InMemoryDataProvider;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**

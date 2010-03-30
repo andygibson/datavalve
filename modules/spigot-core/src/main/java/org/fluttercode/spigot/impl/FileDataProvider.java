@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.fluttercode.spigot.provider.InMemoryDataProvider;
+
 
 //TODO Need to create more tests for this class (i.e. setting the path and so on)
 /**

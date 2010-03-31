@@ -412,7 +412,7 @@ List<Person> results = qry.resultList();]]>
                     </title>
                     <programlisting role="JAVA" language="java">
 <![CDATA[  DataProvider provider = new CustomDataProvider();
-  Dataset<SomeClass> dataset = new Dataset(provider);
+  ObjectDataset<SomeClass> dataset = new DataProviderDataset(provider);
   dataset.setMaxRows(10);
   dataset.setFirstResult(35);
   List<ResultClass> results = dataset.getResults();
@@ -1724,26 +1724,28 @@ showResults(results2);]]>
                 class takes a
                 <classname>DataProvider</classname>
                 implementation as its data provider. However, this can lead to
-                code requiring a lot of casting if you don't use a basic
+                code requiring a lot of casting for a data provider that extends
                 <classname>DataProvider</classname>
-                implementation.
+                and has custom attributes or methods, including extensions like
+                <classname>QueryDataProviders</classname>
+                .
             </para>
             <example>
                 <title>Poorly typed provider and dataset useage</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-  Dataset<Person> dataset = new Dataset<Person>(provider);
+DataProviderDataset<Person> dataset = new DataProviderDataset<Person>(provider);
 
-  //
-  // Won't work, getProvider returns a DataProvider,
-  // not a query data provider.  DataProvider doesn't
-  // have the query data provider methods on there.
-  //
-  //dataset.getProvider().addRestriction("p.id = :param",300);
+//
+// Won't work, getProvider returns a DataProvider,
+// not a query data provider.  DataProvider doesn't
+// have the query data provider methods on there.
+//
+//dataset.getProvider().addRestriction("p.id = :param",300);
 
-  // Casting required
-  ((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction(
-      "p.id = :param",300);]]>
+// Casting required
+((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction(
+    "p.id = :param",300);]]>
 </programlisting>
             </example>
             <para>
@@ -1758,10 +1760,10 @@ showResults(results2);]]>
                 <title>Strongly typed data provider and dataset usage</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider;
-GenericProviderDataset<Person,QueryDataProvider<Person>> dataset;
+Dataset<Person,QueryDataProvider<Person>> dataset;
 
 provider = new JpaQueryProvider<Person>();
-dataset = new GenericProviderDataset<Person,QueryDataProvider<Person>>(provider);
+dataset = new Dataset<Person,QueryDataProvider<Person>>(provider);
 dataset.getProvider().init(Person.class, "p");
 dataset.getProvider().addRestriction("p.id = #{personSearch.id}");
 dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
@@ -1770,15 +1772,18 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
             <para>
                 This is further extended by creating implementations for the
                 different type of query interfaces we use. In this example,
-                rather than create a
-                <classname>GenericProviderDataset</classname>
-                with the provider class type as a generic parameter to the type,
-                there is a
+                rather than create a generic
+                <classname>Dataset</classname>
+                with the provider class type as a generic type parameter,
+                there
+                is a
                 <classname>QueryDataset</classname>
                 type that extends the
-                <classname>GenericProviderDataset</classname>
-                and sets the provider type parameter in its declaration to
+                <classname>Dataset</classname>
+                and sets the provider type parameter to
                 <classname>QueryDataProvider&lt;T&gt;</classname>
+                . This class also means we don't have to provide the type
+                parameter.
             </para>
             <example>
                 <title>Type safety with the QueryDataProvider</title>
@@ -1796,22 +1801,6 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 <classname>QueryDataProvider</classname>
                 such as the JPA, Hibernate or SQL providers.
             </para>
-            <para>
-                In addition, these specialist dataset impementations also
-                implement the appropriate data provider interfaces so you can
-                save yourself the call to
-                <methodname>getProvider()</methodname>
-            </para>
-            <example>
-                <title>Type safety with the QueryDataProvider</title>
-                <programlisting role="JAVA" language="java">
-<![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
-  QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
-  dataset.init(Person.class, "p");
-  dataset.addRestriction("p.id = #{person.id}");
-  dataset.addParameterResolver(new MyParameterResolver());]]>
-</programlisting>
-            </example>
         </sect1>
         <sect1>
             <title>
@@ -1821,21 +1810,16 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
             <para>
                 You might find yourself using the stateful
                 <classname>ObjectDataset</classname>
-                most of the time. Even in web applications where you
-                might have a
-                stateless page, when rendering the page, the method
-                to return the
-                query results might be called a number of times as it is
-                rendered. If you used a data provider to return the results,
+                most of the time. Even in web applications where you might have
+                a stateless page, when rendering the page, the method to return
+                the query results might be called a number of times as it is
+                rendered. If you used a data provider to obtain the results,
                 they would have to be regenerated on each call (unless you
-                manually held the results somewhere).
-                Using a dataset to hold the
-                results will make the results
-                stateful, at least for the scope of
-                the request. This same
-                feature could be used in other stateless
-                web environments. There
-                is little overhead in using an
+                manually held the results somewhere). Using a dataset to hold
+                the results will make the results stateful, even if only for the
+                duration of the web request. This same feature could be used in
+                other stateless web environments. There is little overhead in
+                using an
                 <classname>ObjectDataset</classname>
                 implementation instead of separate provider and paginator
                 instances.
@@ -1845,7 +1829,207 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 putting it in the session, you can extend the life of the query
                 over multiple requests which will save you having to re-query
                 the data next time it is needed. </para>
+            <sect2>
+                <title>Choosing a Dataset</title>
+                <para>
+                    It may seem a litt confusing at first that there are so many
+                    datasets and providers. The primary thing to remember is
+                    that there is only one dataset interface (
+                    <classname>ObjectDataset</classname>
+                    ) and one concrete implementation (
+                    <classname>Dataset</classname>
+                    which does extend the
+                    <classname>AbstractDataset</classname>
+                    which in turn implements the
+                    <classname>ObjectDataset</classname>
+                    interface. The
+                    <classname>Dataset</classname>
+                    implementation is generic and can be used with any provider
+                    as long as you specify the type as a generic type parameter.
+                    If you want a dataset that can accept any
+                    <classname>DataProvider</classname>
+                    implementation, then you can use the
+                    <classname>DataProviderDataset</classname>
+                    class which just requires the type of object the provider
+                    returns.
+                </para>
+                <para>The following examples are all pretty much identical, the
+                    only difference is the level of polymorphism available in
+                    each of the dataset values. </para>
+                <example>
+                    <title>
+                        Basic
+                        <classname>ObjectDataset</classname>
+                        types
+                    </title>
+                    <programlisting role="JAVA" language="java">
+<![CDATA[  
+
+DataProvider<Widget> provider1 = createJpaDataProvider();
+JpaDataProvider<Widget> provider2 = createOtherJpaDataProvider();
+
+ObjectDataset<Widget> ds1 = new Dataset<Widget,DataProvider<Widget>>(provider1);
+
+DataProviderDataset<Widget> d2 = new DataProviderDataset<Widget>(provider2);
+ObjectDataset<Widget> ds3 = new JpaDataset<Main>(provider2);
+Dataset<Main, QueryDataProvider<Main>> ds4 = new QueryDataset<Main>(provider2);
+]]>
+</programlisting>
+                </example>
+                <para>We extend this to implement Parameterized, Statement and
+                    Query dataset that accept Parameterized, Statement and query
+                    data providers respectively. Again, this has the benefit of
+                    not forcing you to specify the specific type of data
+                    provider you want to use. This has the added benefit of
+                    steering developers into good practices since it coerces
+                    them to use the more general interface types as opposed to
+                    specifying the exact type used.</para>
+                <example>
+                    <title>
+                        Using the
+                        <classname>Dataset</classname>
+                        extensions
+                    </title>
+
+                    <programlisting role="JAVA" language="java">
+<![CDATA[JpaDataProvider<Widget> provider = createQueryDataProvider();
+
+ObjectDataset<Widget> ds1 = new Dataset<Widget, DataProvider<Widget>>(provider);
+DataProviderDataset<Widget> ds2 = new DataProviderDataset<Widget>(provider);        
+Dataset<Widget,QueryDataProvider<Widget>> ds3 = new Dataset<Widget,QueryDataProvider<Widget>>(provider);        
+QueryDataset<Widget> ds4 = new QueryDataset<Widget>(provider);
+JpaDataset<Widget> ds5 = new  JpaDataset<Widget>(provider);
+]]>
+        
+</programlisting>
+                </example>
+                <para>
+                    We created a specific type of data provider, and yet we
+                    can
+                    use it with different types of dataset. The datasets we
+                    have
+                    used here are in order of increasing specificity,
+                    starting
+                    with the least specific
+                    <classname>ObjectDataset</classname>
+                    .
+                </para>
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            The
+                            <classname>ObjectDataset</classname>
+                            is the simplest type of dataset. It will allow
+                            pagination but no access to the underlying data
+                            provider.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            The
+                            <classname>DataProviderDataset</classname>
+                            is a dataset that works off a data provider and it
+                            gives you access to that data provider as a basic
+                            <classname>DataProvider</classname>
+                            type.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            This
+                            <classname>Dataset</classname>
+                            type takes a specific provider type as a parameter
+                            so it will return the right type in the
+                            <methodname>getProvider</methodname>
+                            method. Here is it using the more generic
+                            <classname>QueryDataProvider</classname>
+                            as the provider type so the provider type
+                            accessed
+                            from the
+                            <methodname>getProvider</methodname>
+                            method is typed to the
+                            <classname>QueryDataProvider</classname>
+                            . However, this dataset can accept any provider that
+                            implements the
+                            <classname>QueryDataProvider</classname>
+                            interface and is useful if you want to switch out
+                            the provider implementation later. However, this
+                            class requires a type parameter so it less concise.
+
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            The
+                            <classname>QueryDataset</classname>
+                            version is identical to the previous
+                            <classname>Dataset</classname>
+                            version except that you don't need to specify the
+                            type parameter since it is defined in the
+                            <classname>QueryDataset</classname>
+                            class. The benefit here is polymorphism of
+                            <classname>QueryDataProvider</classname>
+                            instances and concise code. Using this form also
+                            deters
+                            developers from using explicit types in their
+                            client
+                            code which would be easy with the
+                            <classname>Dataset</classname>
+                            versions.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            This second
+                            <classname>Dataset</classname>
+                            type takes the specific provider type as a parameter
+                            so it will return the
+                            <classname>JpaDataProvider</classname>
+                            in the
+                            <methodname>getProvider</methodname>
+                            method. This dataset can be usedful when you want to
+                            access provider specific attributes from the
+                            dataset
+                            that are not available in the more general datasets,
+                            at the expense of a lack of polymorphism since you
+                            are bound to a
+                            <classname>JpaDataProvider</classname>
+                            .
+                        </para>
+                    </listitem>
+                    <listitem>
+                        Lastly, we have an explicit reference to the
+                        <classname>JpaDataProvider</classname>
+                        type which is concise and makes it easy to access
+                        features on that type, but does not help with
+                        interchanging data providers.
+                    </listitem>
+                </itemizedlist>
+            </sect2>
+            <para>
+                In general, the rules for choosing a dataset type is fairly
+                simple. In construction code, where you construct and configure
+                the data
+                provider you can refer to it as specifically as you
+                want. However, it is best to refer to it in the client code as
+                far down the hierarchy as possible. Typically, for things like
+                search forms, you might construct a
+                <classname>JpaDataProvider</classname>
+                and set the
+                <methodname>entityManager</methodname>
+                attribute and return it as a
+                <classname>QueryDataset</classname>
+                . In your client code, you can also refer to it as a
+                <classname>QueryDataset</classname>
+                and still gain access to the general features of the query
+                (restrictions, sorting, pagination, and even select/count
+                statements). If you later decide to switch to hibernate or sql,
+                you just need to change the type specific construction code
+                which is logical since you can't change implementation without
+                changing that no matter how abstracted it is.
+            </para>
         </sect1>
+
         <sect1>
             <title>Extending Datasets for custom providers</title>
             <para>
@@ -1854,7 +2038,7 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 users do not have to implement their own, or keep using the
                 generic versions. Doing so is very simple, just create a new
                 dataset class that extends the
-                <classname>GenericProviderDataset</classname>
+                <classname>Dataset</classname>
                 and uses your own custom provider type as the type parameter.
             </para>
             <example>
@@ -1870,7 +2054,7 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
 }
 
 class MyCustomProviderDataset<T> 
-    extends GenericProviderDataset<T,MyCustomProvider<T>> {
+    extends Dataset<T,MyCustomProvider<T>> {
    
    public MyCustomProviderDataset() {
      super();

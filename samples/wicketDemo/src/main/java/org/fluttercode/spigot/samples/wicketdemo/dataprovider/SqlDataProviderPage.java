@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.wicket.PageParameters;
+import org.fluttercode.spigot.dataset.DataProviderDataset;
 import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.provider.QueryDataProvider;
@@ -63,7 +64,7 @@ public class SqlDataProviderPage extends AbstractDataProviderPage {
 		provider.getOrderKeyMap().put("id", "p.ID");
 		provider.getOrderKeyMap().put("name", "p.LAST_NAME,p.FIRST_NAME");
 		provider.getOrderKeyMap().put("phone", "p.PHONE");
-		return new Dataset<Person>(provider);
+		return new DataProviderDataset<Person>(provider);
 	}
 
 }

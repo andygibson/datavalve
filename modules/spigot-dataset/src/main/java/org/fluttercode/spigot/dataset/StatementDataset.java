@@ -23,7 +23,7 @@ import org.fluttercode.spigot.provider.StatementDataProvider;
  * @author Andy Gibson
  * 
  */
-public class StatementDataset<T> extends GenericProviderDataset<T,StatementDataProvider<T>> {
+public class StatementDataset<T> extends Dataset<T,StatementDataProvider<T>> {
 
 	private static final long serialVersionUID = 1L;
 

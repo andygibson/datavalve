@@ -23,7 +23,7 @@ import org.fluttercode.spigot.provider.QueryDataProvider;
  * 
  */
 public class QueryDataset<T> extends
-		GenericProviderDataset<T, QueryDataProvider<T>> {
+		Dataset<T, QueryDataProvider<T>> {
 
 	private static final long serialVersionUID = 1L;
 	 	

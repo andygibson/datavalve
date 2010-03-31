@@ -16,13 +16,13 @@
 
 package org.fluttercode.spigot.provider.jpa;
 
-import org.fluttercode.spigot.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.dataset.Dataset;
 
 /**
  * @author Andy Gibson
  * 
  */
-public class JpaDataset<T> extends GenericProviderDataset<T, JpaDataProvider<T>> {
+public class JpaDataset<T> extends Dataset<T, JpaDataProvider<T>> {
 
 	private static final long serialVersionUID = 1L;
 

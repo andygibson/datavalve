@@ -95,7 +95,7 @@ public class CommaDelimitedDatasetTest extends
 				return new PhoneEntry(Integer.valueOf(columns[0]),columns[1],columns[2],columns[3]);
 			}			
 		};
-		return new Dataset<PhoneEntry>(provider);
+		return new Dataset<PhoneEntry,CommaDelimitedProvider<PhoneEntry>>(provider);
 	}
 
 	@Override

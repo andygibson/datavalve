@@ -43,18 +43,18 @@ import org.fluttercode.spigot.Paginator;
  * @param <P>
  *            The type of data provider used to fetch the data
  */
-public class GenericProviderDataset<T, P extends DataProvider<T>> extends
+public class Dataset<T, P extends DataProvider<T>> extends
 		AbstractDataset<T> {
 
 	private static final long serialVersionUID = 1L;
 
 	private P provider;
 
-	public GenericProviderDataset() {
+	public Dataset() {
 		super();
 	}
 
-	public GenericProviderDataset(P provider) {
+	public Dataset(P provider) {
 		super();
 		this.provider = provider;
 	}

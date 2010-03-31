@@ -42,7 +42,7 @@ public class JpaDataProviderPage extends AbstractDataProviderPage {
         people.getOrderKeyMap().put("id", "p.id");
         people.getOrderKeyMap().put("name", "p.lastName,p.firstName");
         people.getOrderKeyMap().put("phone", "p.phone");
-        return new Dataset<Person>(people);
+        return new Dataset<Person,JpaDataProvider<Person>>(people);
 	}
 
 }

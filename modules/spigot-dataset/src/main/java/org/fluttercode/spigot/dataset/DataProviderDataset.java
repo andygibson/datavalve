@@ -19,7 +19,7 @@ package org.fluttercode.spigot.dataset;
 import org.fluttercode.spigot.DataProvider;
 
 /**
- * Concrete instance of the {@link GenericProviderDataset} that fixes the
+ * Concrete instance of the {@link Dataset} that fixes the
  * generic provider type to a simple {@link DataProvider} so it can be used with
  * any class that implements the {@link DataProvider} interface.
  * 
@@ -29,7 +29,7 @@ import org.fluttercode.spigot.DataProvider;
  *            type of object returned from the provider
  */
 public class DataProviderDataset<T> extends
-		GenericProviderDataset<T, DataProvider<T>> {
+		Dataset<T, DataProvider<T>> {
 
 	private static final long serialVersionUID = 1L;
 

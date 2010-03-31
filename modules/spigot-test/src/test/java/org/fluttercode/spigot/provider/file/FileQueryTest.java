@@ -22,7 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-import org.fluttercode.spigot.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.provider.file.FileDataProvider;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
@@ -45,7 +45,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	}
 
 	private class FileDataset extends
-			GenericProviderDataset<File, FileDataProvider> {
+			Dataset<File, FileDataProvider> {
 
 		private static final long serialVersionUID = 1L;
 

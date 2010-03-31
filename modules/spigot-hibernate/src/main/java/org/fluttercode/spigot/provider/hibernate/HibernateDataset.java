@@ -16,7 +16,7 @@
 
 package org.fluttercode.spigot.provider.hibernate;
 
-import org.fluttercode.spigot.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.provider.QueryDataProvider;
 
 
@@ -24,7 +24,7 @@ import org.fluttercode.spigot.provider.QueryDataProvider;
  * @author Andy Gibson
  * 
  */
-public class HibernateDataset<T> extends GenericProviderDataset<T, QueryDataProvider<T>> {
+public class HibernateDataset<T> extends Dataset<T, QueryDataProvider<T>> {
 
 	private static final long serialVersionUID = 1L;
 

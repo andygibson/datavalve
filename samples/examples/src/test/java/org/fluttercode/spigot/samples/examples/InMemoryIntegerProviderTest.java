@@ -30,9 +30,8 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 	
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {	
-		DataProvider<Integer> provider = new InMemoryIntegerProvider();		
-		return new Dataset<Integer>(provider);
-
+		InMemoryIntegerProvider provider = new InMemoryIntegerProvider();		
+		return new Dataset<Integer,InMemoryIntegerProvider>(provider);
 	}
 	
 	public void testSortingWithoutKeySet() {

@@ -37,7 +37,7 @@ public class InMemoryPersonProviderTest extends AbstractObjectDatasetJUnitTest<P
 	@Override
 	public ObjectDataset<Person> buildObjectDataset() {
 		InMemoryPersonProvider provider = new InMemoryPersonProvider();
-		return new Dataset<Person>(provider);
+		return new Dataset<Person,InMemoryPersonProvider>(provider);
 	}
 
 	@Override
@@ -111,8 +111,8 @@ public class InMemoryPersonProviderTest extends AbstractObjectDatasetJUnitTest<P
 //		providerAdapter.getOrderKeyMap().put("id", new InMemoryPersonProvider.PersonIdComparator());
 		//providerAdapter.getOrderKeyMap().put("name", new InMemoryPersonProvider.PersonNameComparator());		
 		
-		ObjectDataset<Person> ds = new Dataset<Person>(provider);
-		ObjectDataset<Person> ds2 = new Dataset<Person>(providerAdapter);
+		ObjectDataset<Person> ds = new Dataset<Person,InMemoryPersonProvider>(provider);
+		ObjectDataset<Person> ds2 = new Dataset<Person,InMemoryAdapterProvider<Person>>(providerAdapter);
 		
 		
 		ds.setOrderKey("name");

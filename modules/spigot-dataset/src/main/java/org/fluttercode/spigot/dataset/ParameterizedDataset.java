@@ -23,7 +23,7 @@ import org.fluttercode.spigot.provider.ParameterizedDataProvider;
  * @author Andy Gibson
  * 
  */
-public class ParameterizedDataset<T> extends GenericProviderDataset<T,ParameterizedDataProvider<T>>  {
+public class ParameterizedDataset<T> extends Dataset<T,ParameterizedDataProvider<T>>  {
 
 	private static final long serialVersionUID = 1L;
 	

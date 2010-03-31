@@ -40,7 +40,7 @@ public class JpaCustomPaginatorPage extends AbstractCustomPaginatorPage {
         people.setCountStatement("select count(p) from Person p");
         people.setSelectStatement("select p from Person p");
         people.setEntityManager(getWicketApp().createEntityManager());
-        return new Dataset<Person>(people);
+        return new Dataset<Person,JpaDataProvider<Person>>(people);
 	}
 	
 

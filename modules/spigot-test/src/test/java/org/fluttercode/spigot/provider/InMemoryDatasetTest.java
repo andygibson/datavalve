@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.fluttercode.spigot.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.provider.InMemoryDataProvider;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;
@@ -59,7 +59,7 @@ public class InMemoryDatasetTest extends
 			}
 		};
 
-		return new GenericProviderDataset<Integer, InMemoryDataProvider<Integer>>(
+		return new Dataset<Integer, InMemoryDataProvider<Integer>>(
 				ds);
 	}
 

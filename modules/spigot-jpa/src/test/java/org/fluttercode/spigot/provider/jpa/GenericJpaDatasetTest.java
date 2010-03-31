@@ -25,7 +25,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.fluttercode.spigot.ParameterResolver;
-import org.fluttercode.spigot.dataset.GenericProviderDataset;
+import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.params.Parameter;
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
@@ -44,7 +44,7 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 
 	private JpaDataset<Person> dataset;
 	
-	private class JpaDataset<T> extends GenericProviderDataset<T, JpaDataProvider<T>> {
+	private class JpaDataset<T> extends Dataset<T, JpaDataProvider<T>> {
 
 		private static final long serialVersionUID = 1L;
 

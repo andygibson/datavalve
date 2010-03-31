@@ -53,7 +53,7 @@ public class FileCustomPaginatorPage extends AbstractCustomPaginatorPage {
 			}
 
 		};
-		return new Dataset<Person>(personProvider);
+		return new Dataset<Person,CommaDelimitedProvider<Person>>(personProvider);
 	}
 
 }

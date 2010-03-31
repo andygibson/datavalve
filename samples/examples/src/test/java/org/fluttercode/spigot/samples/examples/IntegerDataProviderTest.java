@@ -36,8 +36,8 @@ public class IntegerDataProviderTest extends
 	
 	@Override
 	public ObjectDataset<Integer> buildObjectDataset() {
-		DataProvider<Integer> provider = new IntegerDataProvider();		
-		return new Dataset<Integer>(provider);
+		IntegerDataProvider provider = new IntegerDataProvider();		
+		return new Dataset<Integer,IntegerDataProvider>(provider);
 	}
 
 	@Override

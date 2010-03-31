@@ -12,8 +12,11 @@
     </description>
 
 	<!-- External Setup -->
-	<property name="maven.dir" value="C:\Dev\Tools\apache-maven-2.2.1\" />
+	<property environment="env"/>
+	<property name="maven.dir" value="${env.M2_HOME}" />
 	<property name="version" value="0.9-Beta" />
+
+
 
 	<property name="doc.dir" value="..\docs\" />
 	<property name="release.dir" value="release\" />

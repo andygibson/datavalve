@@ -8,7 +8,42 @@
     <name>spigot</name>
     <version>0.9-Beta</version>
     <description>Main project for Spigot containing multiple modules.</description>
-    <properties>                
+
+    <organization>
+        <name>fluttercode</name>
+        <url>www.fluttercode.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <email>contact@andygibson.net</email>
+            <id>agibson</id>
+            <name>Andy Gibson</name>
+            <organization>fluttercode</organization>
+            <organizationUrl>www.fluttercode.org</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-5</timezone>
+            <url>www.andygibson.net</url>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>Jira</system>
+        <url>http://kenai.com/jira/browse/SPIGOT/</url>
+    </issueManagement>
+
+    <inceptionYear>2009</inceptionYear>
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
@@ -22,9 +57,9 @@
                 </configuration>
             </plugin>
             <plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-javadoc-plugin</artifactId>
-            	<version>2.6.1</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.6.1</version>
             </plugin>
 
         </plugins>

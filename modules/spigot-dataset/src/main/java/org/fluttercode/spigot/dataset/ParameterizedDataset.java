@@ -17,9 +17,15 @@
 package org.fluttercode.spigot.dataset;
 
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 
 
 /**
+ * Dataset that accepts any implementation of {@link ParameterizedDataProvider} as its
+ * provider. Used as a helper class instead of using a {@link Dataset} with a
+ * generic type parameter for passing in the specific type.
+ * 
+ * 
  * @author Andy Gibson
  * 
  */

@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.fluttercode.spigot.dataset.QueryDataset;
+import org.fluttercode.spigot.provider.QueryDataProvider;
 import org.fluttercode.spigot.samples.cdidemo.model.Person;
 
 /**
@@ -45,7 +46,7 @@ public class PersonSearchDataset extends QueryDataset<Person> {
 	}
 
 	@Inject
-	public PersonSearchDataset(PersonSearchProvider provider) {
+	public PersonSearchDataset(QueryDataProvider<Person> provider) {
 		super(provider);
 		setOrderKey("id");
 		setMaxRows(10);

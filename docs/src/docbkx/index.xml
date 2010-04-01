@@ -19,10 +19,7 @@
         </copyright>
     </bookinfo>
     <preface>
-    <title>Preface</title>
-    </preface>
-    <chapter id="Introduction">
-        <title>Introduction</title>
+        <title>Preface</title>
         <para>
             The purpose of this framework is to let developers use different
             sources of data in a consistent manner that leverages the
@@ -134,46 +131,6 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-
-
-            <para>
-                Spigot is divided into three main interfaces which are used to
-                fetch data. The
-                <classname>Paginator</classname>
-                interface defines the state about our dataset such as the order
-                information, the page size and the result we are up to. The
-                <classname>DataProvider</classname>
-                interface defines two simple methods which are used to fetch the
-                total number of rows in the complete list of data, and the list
-                (or a subset) of items in the dataset. The last interface is the
-                <classname>ObjectDataset</classname>
-                interface which extends the
-                <classname>Paginator</classname>
-                interface and adds methods for managing a set of results one
-                they have been obtained from the
-                <classname>DataProvider</classname>
-            </para>
-            <example>
-                <title>
-                    The
-                    <classname>DataProvider</classname>
-                    interface
-                </title>
-                <programlisting role="JAVA" language="java">
-<![CDATA[public interface DataProvider<T> {
-  Integer fetchResultCount();
-  List<T> fetchResults(Paginator paginator);
-}]]>
-                    </programlisting>
-            </example>
-            <para>
-                When we fetch the results, we pass in the paginator so the
-                <classname>DataProvider</classname>
-                implementation knows how many rows to return, where in the
-                dataset to start returning rows from and it can also set the
-                flag on the paginator indicating whether there are more results
-                or not.
-            </para>
         </sect1>
         <sect1>
             <title>Benefits of Spigot</title>
@@ -217,7 +174,11 @@
                     of the query which can be useful when you are writing search
                     forms where the user may leave out search criteria and you
                     don't want it included in the query. Doing this manually can
-                    lead to messy code that is hard to read, test and maintain.
+                    lead to messy code that is hard to read, test and maintain
+                    as you check parameter values, and include or exclude parts
+                    of the sql where clause depending on whether there is a
+                    value, after which you then have to stitch the query
+                    together.
                 </para>
                 <example>
                     <title>
@@ -225,6 +186,7 @@
                     </title>
                     <programlisting role="JAVA" language="java">
 <![CDATA[String sql = "";
+boolean hasClause = false;
 if (searchCriteria.id != null
   && searchCriteria.id.length() != 0) {
     if (sql.length()!= 0) {
@@ -242,26 +204,20 @@ if (searchCriteria.firstName != null
     sql= sql+ "p.firstName = :firstName";
     paramsMap("firstName",searchCriteria.firstName);
 }
-
-if (searchCriteria.lastName != null
-  && searchCriteria.lastName.length() != 0) {
-    if (sql.length()!= 0) {
-      sql = sql + " AND ";
-    }
-    sql= sql+ "p.lastName = :lastName";
-    paramsMap("lastName",searchCriteria.lastName);
-}
-
+//check we have at least one restriction
 if (sql.length() != 0) {
   sql = " WHERE " + sql;
 }
+//build the select statement
 sql = [select statement] + sql;
 
+//build the query
 qry = createQuery(sql);
+//add the parameters into the query
 for (String key : paramsMap.keySet) {
   qry.setParameter(key,paramsMap.get(key))
 }
-
+//get the results
 List<Person> results = qry.resultList();]]>
                     </programlisting>
 
@@ -276,12 +232,15 @@ List<Person> results = qry.resultList();]]>
                         Coding search queries the easy way.
                     </title>
                     <programlisting role="JAVA" language="java">
-<![CDATA[qry.addRestriction("p.id = :id");
+<![CDATA[//define the parameterized restrictions
+qry.addRestriction("p.id = :id");
 qry.addRestriction("p.firstName = :firstName");
 qry.addRestriction("p.lastName = :lastName");
+//set the parameter resolver
 ParameterResolver resolver =
   new ReflectionParameterResolver(searchCriteria));
 qry.addParameterResolver(resolver);
+//get results
 List<Person> results = qry.resultList();]]>
                     </programlisting>
                 </example>
@@ -312,6 +271,52 @@ List<Person> results = qry.resultList();]]>
             </sect2>
 
         </sect1>
+
+    </preface>
+    <chapter id="Introduction">
+        <title>Introduction</title>
+        <para>We'll start by having a high level </para>
+        <sect1>
+            <title>Overview</title>
+            <para>
+                Spigot is divided into three main interfaces which are used to
+                fetch data. The
+                <classname>Paginator</classname>
+                interface defines the state about our dataset such as the order
+                information, the page size and the result we are up to. The
+                <classname>DataProvider</classname>
+                interface defines two simple methods which are used to fetch the
+                total number of rows in the complete list of data, and the list
+                (or a subset) of items in the dataset. The last interface is the
+                <classname>ObjectDataset</classname>
+                interface which extends the
+                <classname>Paginator</classname>
+                interface and adds methods for managing a set of results one
+                they have been obtained from the
+                <classname>DataProvider</classname>
+            </para>
+            <example>
+                <title>
+                    The
+                    <classname>DataProvider</classname>
+                    interface
+                </title>
+                <programlisting role="JAVA" language="java">
+<![CDATA[public interface DataProvider<T> {
+  Integer fetchResultCount();
+  List<T> fetchResults(Paginator paginator);
+}]]>
+                    </programlisting>
+            </example>
+            <para>
+                When we fetch the results, we pass in the paginator so the
+                <classname>DataProvider</classname>
+                implementation knows how many rows to return, where in the
+                dataset to start returning rows from and it can also set the
+                flag on the paginator indicating whether there are more results
+                or not.
+            </para>
+        </sect1>
         <sect1>
             <title>Architecture</title>
             <para>
@@ -323,18 +328,29 @@ List<Person> results = qry.resultList();]]>
                 <para>
                     The main API consists of the
                     <classname>Paginator</classname>
-                    and
+                    , the
                     <classname>DataProvider</classname>
+                    and the
+                    <classname>ObjectDataset</classname>
                     interfaces. The Paginator is like a bookmark for a dataset
                     and holds the current record index, page size and ordering
                     information as well as flags indicating whether there is a
                     previous or next page available. The
                     <classname>DataProvider</classname>
-                    is the stateless part of the equation. It provides the data
+                    is the stateless part of the equation that provides the data
                     based on the state of the paginator passed in. For each type
                     of data store you want to access, we write a
                     <classname>DataProvider</classname>
-                    implementation for it.
+                    implementation for it. The
+                    <classname>ObjectDataset</classname>
+                    is a higher level wrapper that extends the
+                    <classname>Paginator</classname>
+                    interface and adds functions to manage the results returned
+                    from a provider. The
+                    <classname>ObjectDataset</classname>
+                    has a
+                    <methodname>provider</methodname>
+                    attribute that it uses to fetch the data.
                 </para>
                 <example>
                     <title>Fetching data from a provider</title>
@@ -408,10 +424,10 @@ List<Person> results = qry.resultList();]]>
                     <code>provider</code>
                     attribute that is used to fetch the actual data so we can
                     re-use our dataset implementation for any kind of data
-                    provider. When you change the active page, or the page size
-                    or the first result return, this invalidates the interal
-                    copy of the current data and causes it to be re-fetched from
-                    the provider when it is next requested.
+                    provider. When you change the active page, the page size or
+                    the first result returned the interal copy of the current
+                    data is invalidated and causes it to be re-fetched from the
+                    provider when it is next requested.
                 </para>
                 <example>
                     <title>
@@ -424,6 +440,9 @@ List<Person> results = qry.resultList();]]>
   dataset.setMaxRows(10);
   dataset.setFirstResult(35);
   List<ResultClass> results = dataset.getResults();
+  
+  // we can iterate over the dataset and it will automatically load the results
+  // in pages of 10 results each.
   for (SomeClass item : dataset) {
     ...some code...
   }]]>  
@@ -433,10 +452,8 @@ List<Person> results = qry.resultList();]]>
                     Repeated calls to
                     <methodname>getResults()</methodname>
                     without changing the pagination information will cause the
-                    exact same
-                    results to be returned since the current page of
-                    results is held by the
-                    dataset.
+                    exact same results to be returned since the current page of
+                    results is held onto by the dataset.
                 </para>
             </sect2>
         </sect1>
@@ -450,9 +467,11 @@ List<Person> results = qry.resultList();]]>
             Hibernate or just plain SQL via JDBC. These different providers are
             based off and implement the
             <classname>QueryDataProvider</classname>
-            interface. This interface adds features such as ordering,
-            restrictions and parameters. Since they implement the same
-            interface, they can be interchanges with very little code changes if
+            interface. This interface extends the
+            <classname>DataProvider</classname>
+            interface and adds features such as ordering, restrictions and
+            parameters. Since the different data providers implement the same
+            interface, they can be interchanged with very little code changes if
             any.
         </para>
         <sect1>
@@ -497,16 +516,21 @@ for (Person p : results) {
             <para>We can add restrictions to the query so we only return a set
                 of rows that we want. In this case, we want to return people in
                 a a specific department. The above code to create and initialize
-                the data provider has beem rolled into a method to return the
-                person data provider.</para>
-
+                the data provider has been rolled into a single method that
+                returns the person data provider.</para>
             <example>
                 <title>
                     Restricting the data fetched
                 </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[QueryDataProvider<Person> provider = createPersonProvider();
-provider.addRestriction("p.department.id = 4");  ]]>
+provider.addRestriction("p.department.id = 4");
+
+//alternatively, we could use
+QueryDataset<Person> dataset = new QueryDataset<Person>(createPersonProvider());
+dataset.getProvider().addRestriction("p.department.id = 4");
+]]>
+
                 </programlisting>
             </example>
 
@@ -525,7 +549,7 @@ provider.addRestriction("p.department.id = 4");  ]]>
                 rename the parameter and put the values in the internal
                 parameter map. The last syntax keeps the parameter name you
                 passed in and is useful if you anticpate changing that parameter
-                since you know what name it can be referenced by.
+                since you know by what name it can be set.
             </para>
             <example>
                 <title>
@@ -538,7 +562,7 @@ provider.addRestriction("p.department.id = 4");  ]]>
 provider.addRestriction("p.department.id = :param",4);
 provider.addRestriction("p.firstName = :param","John");
 
-//add parameter manually 
+//add parameter manually  (takes 2 lines of code)
 provider.addRestriction("or p.lastName = :lastNameParam");
 provider.addParameter("lastNameParam","Smith");]]>
                 </programlisting>
@@ -566,10 +590,9 @@ provider.addRestriction("p.lastName = :param",searchCriteria.lastName);]]>
                 These are really just helper methods so you don't have to do
                 your own "
                 <code>if value != null then add parameter</code>
-                " code for each line, although it is certainly possible that you
-                can do that in certain cases. There is also an overloaded
-                version of this function specifically for strings which will
-                check not only for null values but for a length of zero.
+                " code for each line. There is also an overloaded version of
+                this function specifically for strings which will check not only
+                for null values but for a length of zero.
             </para>
             <para>
                 Many times you want to evaluate one value to see if is null
@@ -597,7 +620,7 @@ provider.addRestriction("p.lastName like :param",
                 value.
             </para>
             <para>This may seem a fairly broad set of ways to parameterize the
-                your queries, but is only the first way of two parameter
+                your queries, but is only the first half of Spigot's parameter
                 definition mechanisms with the second being the use of parameter
                 resolvers.</para>
         </sect1>
@@ -611,13 +634,13 @@ provider.addRestriction("p.lastName like :param",
                 query is executed the parameters are evaluated as the query is
                 built so any restrictions with
                 <code>null</code>
-                parameters can be excluded. This mechanism allows us to use
-                different parameter resolvers depending on the environment i.e.
-                using an EL parameter resolver for EL environments.
+                parameters can be excluded. Different parameter resolvers can be
+                used depending on the environment i.e. using an EL parameter
+                resolver for EL environments.
             </para>
-            <para>It also lets use different mechanisms for resolving values
-                such as using reflection onto a an object, or even returning
-                parameter values based on the parameter name.</para>
+            <para>Different mechanisms can be used for resolving values such as
+                reflection on an object or just returning parameter values based
+                on the parameter name.</para>
             <example>
                 <title>
                     Parameter Resolving with Reflection
@@ -643,10 +666,10 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
   //return values with wildcards
   boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
     Parameter parameter) {
-    if ("firstName".equals(parameter.getName())) {
+    if (":firstName".equals(parameter.getName())) {
       return firstName == null ? null : firstName+"%";
     }
-    if ("lastName".equals(parameter.getName())) {
+    if (":lastName".equals(parameter.getName())) {
       return lastName == null ? null : lastName+"%";
     }
     return null;
@@ -666,9 +689,8 @@ provider.addParameterResolver(new ReflectionParameterResolver(searchCriteria));]
                 </programlisting>
             </example>
             <para>
-                The Seam and CDI data provider classes use an EL based parameter
-                resolver so
-                you can use it the same way you would with a Seam
+                The Seam data provider classes use an EL based parameter
+                resolver so you can use it the same way you would with a Seam
                 <classname>EntityQuery</classname>
                 .
             </para>
@@ -689,9 +711,8 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
                 </programlisting>
             </example>
 
-
             <sect2>
-                <title>Using your own parameter marker</title>
+                <title>Using your own parameter prefix</title>
                 <para>
                     You may decide you want to use a custom pattern for
                     parameters
@@ -701,7 +722,7 @@ public class MyPostsQueryBean extends SeamJpaQueryDataset{
                     patterns. If you
                     decide to have a reflection parameter type
                     starting with '$' you
-                    will need to implements you own
+                    will need to implements your own
                     <classname>ParameterParser</classname>
                     or you can extend the
                     <classname>RegExParameterParser</classname>
@@ -740,7 +761,8 @@ public class MyCustomJpaDataProvider<T> extends JpaDataProvider<T> {
             <para>
                 Spigot also features key based ordering so rather than specify
                 ordering as a set of fields on the dataset, you can specify
-                ordering using a key that maps to one or more fields. </para>
+                ordering using a key that indicates how to order the resutls.
+            </para>
             <example>
                 <title>
                     Ordering on the data
@@ -756,11 +778,13 @@ Paginator paginator = new DefaultPaginator();
 paginator.setOrderKey("name");  //order by the persons name
 paginator.setOrderAscending(false);
 
-List<Person> orderedList = provider.fetchResults(paginator):]]>
+List<Person> orderedList = provider.fetchResults(paginator);]]>
                 </programlisting>
             </example>
             <para>
-                The order information consists of the
+                The order information on the
+                <classname>Paginator</classname>
+                consists of the
                 <code>orderKey</code>
                 attribute that indicates the order to use and the
                 <code>orderAscending</code>
@@ -769,12 +793,10 @@ List<Person> orderedList = provider.fetchResults(paginator):]]>
                 <classname>Paginator</classname>
                 interface and are read when it is passed into the
                 <methodname>fetchResults</methodname>
-                method.
-                Note that in this example, the ordering for the key
-                "name" has two fields, last and first name to sort on. If this
-                key is used to order then both these fields will be used to
-                order and the framework takes care of ascending/descending
-                issues.
+                method. Note that in this example, the ordering for the key
+                "name" has two fields (last and first name) to sort on. Both
+                these fields will be used to order and the framework takes care
+                of ascending/descending syntax issues.
             </para>
             <para>
                 By abstracting the ordering mechanism we can use the same idea
@@ -806,7 +828,16 @@ List<Person> orderedList = provider.fetchResults(paginator):]]>
                 <methodname>createPersonProvider</methodname>
                 without having to change any code since the mappings will be the
                 same. At most you might have to change the base select/count
-                statement or any complex where clauses.
+                statement or any complex where clauses. The same benefits apply
+                if you are returning a
+                <classname>QueryDataset</classname>
+                instead of a provider.
+            </para>
+            <para>If you are using some kind of dependency inject then you just
+                need to change which bean is injected into the injection point.
+                The injection point receives the same benefits of polymorphism
+                due to the fact that it is an interface implemented by multiple
+                providers or datasets. 
             </para>
         </sect1>
         <sect1>
@@ -830,7 +861,7 @@ List<Person> orderedList = provider.fetchResults(paginator):]]>
                 and override the
                 <methodname>createObjectFromResultSet</methodname>
                 method. This uses the template pattern to provide the missing
-                functionality needed to convery SQL data into an actual object.
+                functionality needed to convert SQL data into an actual object.
             </para>
             <example>
                 <title>
@@ -881,9 +912,8 @@ public QueryDataProvider<Person> createDataProvider() {
 }]]>
                 </programlisting>
             </example>
-            <para>This kind of construction can be taken care of by any
-                dependency
-                injection framework you are using.</para>
+            <para>This kind of construction can also be taken care of by any
+                dependency injection framework you are using.</para>
         </sect1>
 
     </chapter>
@@ -961,7 +991,7 @@ public QueryDataProvider<Person> createDataProvider() {
                 results, and before returning it, we set the flag for indicating
                 whether there are more results available. This is the
                 responsibility of the data provider because only it knows
-                whether there are more results.
+                whether there are more results or not.
             </para>
             <para>Next, we'll create a client for this provider as a simple
                 class that just fetches the results and lists them.</para>
@@ -1052,14 +1082,8 @@ Value = 9]]>
                 <methodname>buildObjectDataset</methodname>
                 method returns an instance of an
                 <classname>ObjectDataset</classname>
-                An
-                <classname>ObjectDataset</classname>
-                is a class that combines a
-                <classname>Paginator</classname>
-                and a
-                <classname>DataProvider</classname>
-                implementation in one class for convenience. We can easily
-                create one by creating an instance of a
+                for the provider we are testing. We can easily create one by
+                creating an instance of a
                 <classname>org.fluttercode.spigot.impl.Dataset</classname>
                 and pass it an instance of our
                 <classname>IntegerDataProvider</classname>
@@ -1088,9 +1112,10 @@ Value = 9]]>
 }]]>
 </programlisting>
             </example>
-            <para>If you run this test case now, you will see things light up
-                like a Christmas tree. We have a lot of tests failing in some
-                code that not only looked ok, but worked fine when we ran it.
+            <para>If you run this test case now, you will see a lot of tests
+                failing in code that not only looked ok, but worked fine
+                when we
+                ran it.
             </para>
             <para>
                 The problem is subtle but involves on the old gotcha there are
@@ -1098,7 +1123,8 @@ Value = 9]]>
                 simple, we just need to define more closely what our dataset
                 does. We'll make it so that it does return 100 values in the
                 range from 1 to 100, and we'll even add some test cases to
-                ensure that it does. First lets alter the
+                ensure that it returns numbers in that range. First lets alter
+                the
                 <methodname>fetchResults</methodname>
                 method in our
                 <classname>IntegerDataProvider</classname>
@@ -1180,21 +1206,6 @@ public void testResultsPaginated() {
   ObjectDataset<Integer> ds = buildObjectDataset();
   ds.setMaxRows(10);
   Integer expected = 1;
-  while (ds.isNextAvailable()) {
-    List<Integer> results = ds.getResultList();
-    for (Integer i : results) {
-      assertEquals(expected, i);
-      expected = expected + 1;
-    }
-    ds.next();
-  }
-
-}
-
-public void testResultsIterated() {
-  ObjectDataset<Integer> ds = buildObjectDataset();
-  ds.setMaxRows(10);
-  Integer expected = 1;
   for (Integer i : ds) {
     assertEquals(expected, i);
     expected = expected + 1;
@@ -1203,11 +1214,8 @@ public void testResultsIterated() {
 
 public void testResultsNonPaginated() {
   ObjectDataset<Integer> ds = buildObjectDataset();
-  ds.setMaxRows(null);
   Integer expected = 1;
-  List<Integer> results = ds.getResultList();
-  assertEquals(100, results.size()); //check size
-  for (Integer i : results) {
+  for (Integer i : ds) {
     assertEquals(expected, i);
     expected = expected + 1;
   }
@@ -1243,10 +1251,7 @@ public void testResultsNonPaginated() {
                 <classname>Paginator</classname>
                 and
                 <classname>DataProvider</classname>
-                references. The
-                <classname>ObjectDataset</classname>
-                combines these two interfaces and provides some benefits as
-                we'll see.
+                references.
             </para>
             <example>
                 <title>
@@ -1317,9 +1322,9 @@ Value = 5
                 dataset to re-fetch the data on the second call.
             </para>
             <para>
-                This is one of the benefits of using a dataset on a thicker
-                client or a stateful web app. The dataset can hold on to the
-                results for you until you are done with them. Using separate
+                This is one of the benefits of using a dataset, it can hold on
+                to the results for you until you are done with them. Using
+                separate
                 <classname>Paginator</classname>
                 and
                 <classname>DataProvider</classname>
@@ -1448,10 +1453,10 @@ Iterating over value 100
                     and previous which changes the subset of data you are
                     looking at. Generally speaking, using the iterator is the
                     best way to iterate over every item in the dataset since
-                    paging is generally used to move to a specific page as to
-                    iterate through the data. </para>
-                <para>Iterating manually is fraught with corner cases that could
-                    lead to a number of errors.</para>
+                    paging is generally used to move to a specific page as
+                    opposed to iterating through the data. Iterating manually is
+                    fraught with corner cases that could lead to a number of
+                    errors.</para>
 
                 <example>
                     <title>Attempting manual iteration</title>
@@ -1480,7 +1485,7 @@ while (ds.isNextAvailable()) {
                 </para>
                 <para>
                     In general, use the dataset next/previous/first/last methods
-                    to navigate the dataset by moving from page to page and the
+                    to navigate the dataset from page to page and the
                     <classname>Iterator</classname>
                     implementation to go through the dataset item by item
                     <superscript>*</superscript>
@@ -1514,13 +1519,12 @@ while (ds.isNextAvailable()) {
                 <para>
                     The
                     <classname>ObjectDataset</classname>
-                    is a helper construct that manages the two key interfaces of
-                    the
+                    is a helper class that manages the
                     <classname>Paginator</classname>
                     and
                     <classname>DataProvider</classname>
-                    . It is easy to use these two classes separately since there
-                    is no complex glue code implemented by the
+                    interfaces. It is easy to use these two classes separately
+                    since there is no complex glue code implemented by the
                     <classname>ObjectDataset</classname>
                     except where it has provided enhanced features. Using two
                     separately instantiated pagiantors and providers is
@@ -1546,12 +1550,7 @@ showResults(results);           ]]>
                     running a database query or parsing a file. The results are
                     not cached unlike the
                     <classname>ObjectDataset</classname>
-                    . This is because the
-                    <classname>DataProvider</classname>
-                    and
-                    <classname>Paginator</classname>
-                    instances are the raw building blocks that make up the
-                    <classname>ObjectDataset</classname>
+                    .
                 </para>
                 <para>
                     One important thing to bear in mind with using these
@@ -1658,7 +1657,8 @@ showResults(results2);]]>
                     <classname>ParameterizedDataProvider</classname>
                     we can let the user define statements that have parameters
                     within them. This obviously lends itself to easily providing
-                    the bulk of features of a Sql or Ejbql or Hql data provider.
+                    the bulk of features of a Sql or Ejbql or Hql data provider
+                    that does not use ordering or dynamic restrictions.
                 </para>
             </sect2>
             <sect2>
@@ -1673,6 +1673,12 @@ showResults(results2);]]>
                     and adds the ability to define restrictions and ordering.
                     This class is really intended for targeting data stores that
                     have a SQL-like query language which can be parameterized.
+                    Typically, this is how you should reference query based data
+                    providers, and use the corresponding
+                    <classname>QueryDataset</classname>
+                    when referencing the
+                    <classname>Dataset</classname>
+                    .
                 </para>
             </sect2>
 
@@ -1710,10 +1716,7 @@ showResults(results2);]]>
                     <classname>DataQuery</classname>
                     . This query is then executed in the subclasses using the
                     particular data access mechanism specific to that
-                    implementation. This class assumes only that there is a
-                    select and a count statement, and uses that to generate the
-                    query. The restrictions are introduced to the hierarchy and
-                    used in the query building later.
+                    implementation.
                 </para>
             </sect2>
         </sect1>
@@ -1725,11 +1728,9 @@ showResults(results2);]]>
             <para>
                 <classname>ObjectDataset</classname>
                 instances can help when using the data provider in a stateful
-                manner. The dataset holds the current page of results (or the
-                whole result set if there are no limits on the rows returned).
-                The basic
-                <classname>Dataset</classname>
-                class takes a
+                manner by caching the current set of results. The basic
+                <classname>DataProviderDataset</classname>
+                class takes a basic
                 <classname>DataProvider</classname>
                 implementation as its data provider. However, this can lead to
                 code requiring a lot of casting for a data provider that extends
@@ -1749,7 +1750,7 @@ DataProviderDataset<Person> dataset = new DataProviderDataset<Person>(provider);
 // not a query data provider.  DataProvider doesn't
 // have the query data provider methods on there.
 //
-//dataset.getProvider().addRestriction("p.id = :param",300);
+dataset.getProvider().addRestriction("p.id = :param",300);
 
 // Casting required
 ((JpaQueryProvider<Person>) dataset.getProvider()).addRestriction(
@@ -1767,11 +1768,13 @@ DataProviderDataset<Person> dataset = new DataProviderDataset<Person>(provider);
             <example>
                 <title>Strongly typed data provider and dataset usage</title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[QueryDataProvider<Person> provider;
+<![CDATA[//declare variables
+QueryDataProvider<Person> provider;
 Dataset<Person,QueryDataProvider<Person>> dataset;
 
 provider = new JpaQueryProvider<Person>();
 dataset = new Dataset<Person,QueryDataProvider<Person>>(provider);
+//we can access the provider attribute as a QueryDataProvider
 dataset.getProvider().init(Person.class, "p");
 dataset.getProvider().addRestriction("p.id = #{personSearch.id}");
 dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
@@ -1790,8 +1793,7 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 <classname>Dataset</classname>
                 and sets the provider type parameter to
                 <classname>QueryDataProvider&lt;T&gt;</classname>
-                . This class also means we don't have to provide the type
-                parameter.
+                .
             </para>
             <example>
                 <title>Type safety with the QueryDataProvider</title>
@@ -1809,6 +1811,39 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 <classname>QueryDataProvider</classname>
                 such as the JPA, Hibernate or SQL providers.
             </para>
+            <para>This is the preferred way of referencing datasets,
+                using
+                pre-built typed versions since it allows you to change
+                implementations much easier as you are not tied to a specific
+                database access mechanism in the declaration. It also deters
+                developers from using specific types and accidentally locking
+                themselves in</para>
+            <example>
+                <title>Type safety with the QueryDataProvider</title>
+                <programlisting role="JAVA" language="java">
+<![CDATA[QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
+
+//this is verbose, and hard to read
+Dataset<Person,QueryDataProvider<Person>> ds = new 
+  Dataset<Person,QueryDataProvider<Person>>();
+
+
+//this is bad code as you are locked in to the JpaQueryProvider type
+JpaDataset<Person> ds = new JpaDataset<Person>(provider);
+
+//this is double bad as you are locked in to the JpaQueryProvider type and it
+//is verbose 
+Dataset<Person,JpaQueryProvider<Person>> ds = new 
+  Dataset<Person,JpaQueryProvider<Person>>();
+
+//this is usable if you don't want access to features of the QueryDataProvider, 
+//It also allows a large degree of polymorphism since you can use any provider
+ObjectDataset<Person> ds = new Dataset<Person>(provider);
+
+//this is short, type safe, and polymorphic as far as QueryDataProviders go
+QueryDataset<Person> ds = new QueryDataset<Person>(provider);]]></programlisting>
+            </example>
+
         </sect1>
         <sect1>
             <title>
@@ -1837,217 +1872,51 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 putting it in the session, you can extend the life of the query
                 over multiple requests which will save you having to re-query
                 the data next time it is needed. </para>
-            <sect2>
-                <title>Choosing a Dataset</title>
-                <para>
-                    It may seem a litt confusing at first that there are so many
-                    datasets and providers. The primary thing to remember is
-                    that there is only one dataset interface (
-                    <classname>ObjectDataset</classname>
-                    ) and one concrete implementation (
-                    <classname>Dataset</classname>
-                    which does extend the
-                    <classname>AbstractDataset</classname>
-                    which in turn implements the
-                    <classname>ObjectDataset</classname>
-                    interface. The
-                    <classname>Dataset</classname>
-                    implementation is generic and can be used with any provider
-                    as long as you specify the type as a generic type parameter.
-                    If you want a dataset that can accept any
-                    <classname>DataProvider</classname>
-                    implementation, then you can use the
-                    <classname>DataProviderDataset</classname>
-                    class which just requires the type of object the provider
-                    returns.
-                </para>
-                <para>The following examples are all pretty much identical, the
-                    only difference is the level of polymorphism available in
-                    each of the dataset values. </para>
-                <example>
-                    <title>
-                        Basic
-                        <classname>ObjectDataset</classname>
-                        types
-                    </title>
-                    <programlisting role="JAVA" language="java">
-<![CDATA[  
-
-DataProvider<Widget> provider1 = createJpaDataProvider();
-JpaDataProvider<Widget> provider2 = createOtherJpaDataProvider();
-
-ObjectDataset<Widget> ds1 = new Dataset<Widget,DataProvider<Widget>>(provider1);
-
-DataProviderDataset<Widget> d2 = new DataProviderDataset<Widget>(provider2);
-ObjectDataset<Widget> ds3 = new JpaDataset<Main>(provider2);
-Dataset<Main, QueryDataProvider<Main>> ds4 = new QueryDataset<Main>(provider2);
-]]>
-</programlisting>
-                </example>
-                <para>We extend this to implement Parameterized, Statement and
-                    Query dataset that accept Parameterized, Statement and query
-                    data providers respectively. Again, this has the benefit of
-                    not forcing you to specify the specific type of data
-                    provider you want to use. This has the added benefit of
-                    steering developers into good practices since it coerces
-                    them to use the more general interface types as opposed to
-                    specifying the exact type used.</para>
-                <example>
-                    <title>
-                        Using the
-                        <classname>Dataset</classname>
-                        extensions
-                    </title>
-
-                    <programlisting role="JAVA" language="java">
-<![CDATA[JpaDataProvider<Widget> provider = createQueryDataProvider();
-
-ObjectDataset<Widget> ds1 = new Dataset<Widget, DataProvider<Widget>>(provider);
-DataProviderDataset<Widget> ds2 = new DataProviderDataset<Widget>(provider);        
-Dataset<Widget,QueryDataProvider<Widget>> ds3 = new Dataset<Widget,QueryDataProvider<Widget>>(provider);        
-QueryDataset<Widget> ds4 = new QueryDataset<Widget>(provider);
-JpaDataset<Widget> ds5 = new  JpaDataset<Widget>(provider);
-]]>
-        
-</programlisting>
-                </example>
-                <para>
-                    We created a specific type of data provider, and yet we
-                    can
-                    use it with different types of dataset. The datasets we
-                    have
-                    used here are in order of increasing specificity,
-                    starting
-                    with the least specific
-                    <classname>ObjectDataset</classname>
-                    .
-                </para>
-                <itemizedlist>
-                    <listitem>
-                        <para>
-                            The
-                            <classname>ObjectDataset</classname>
-                            is the simplest type of dataset. It will allow
-                            pagination but no access to the underlying data
-                            provider.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            The
-                            <classname>DataProviderDataset</classname>
-                            is a dataset that works off a data provider and it
-                            gives you access to that data provider as a basic
-                            <classname>DataProvider</classname>
-                            type.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            This
-                            <classname>Dataset</classname>
-                            type takes a specific provider type as a parameter
-                            so it will return the right type in the
-                            <methodname>getProvider</methodname>
-                            method. Here is it using the more generic
-                            <classname>QueryDataProvider</classname>
-                            as the provider type so the provider type
-                            accessed
-                            from the
-                            <methodname>getProvider</methodname>
-                            method is typed to the
-                            <classname>QueryDataProvider</classname>
-                            . However, this dataset can accept any provider that
-                            implements the
-                            <classname>QueryDataProvider</classname>
-                            interface and is useful if you want to switch out
-                            the provider implementation later. However, this
-                            class requires a type parameter so it less concise.
-
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            The
-                            <classname>QueryDataset</classname>
-                            version is identical to the previous
-                            <classname>Dataset</classname>
-                            version except that you don't need to specify the
-                            type parameter since it is defined in the
-                            <classname>QueryDataset</classname>
-                            class. The benefit here is polymorphism of
-                            <classname>QueryDataProvider</classname>
-                            instances and concise code. Using this form also
-                            deters
-                            developers from using explicit types in their
-                            client
-                            code which would be easy with the
-                            <classname>Dataset</classname>
-                            versions.
-                        </para>
-                    </listitem>
-                    <listitem>
-                        <para>
-                            This second
-                            <classname>Dataset</classname>
-                            type takes the specific provider type as a parameter
-                            so it will return the
-                            <classname>JpaDataProvider</classname>
-                            in the
-                            <methodname>getProvider</methodname>
-                            method. This dataset can be usedful when you want to
-                            access provider specific attributes from the
-                            dataset
-                            that are not available in the more general datasets,
-                            at the expense of a lack of polymorphism since you
-                            are bound to a
-                            <classname>JpaDataProvider</classname>
-                            .
-                        </para>
-                    </listitem>
-                    <listitem>
-                        Lastly, we have an explicit reference to the
-                        <classname>JpaDataProvider</classname>
-                        type which is concise and makes it easy to access
-                        features on that type, but does not help with
-                        interchanging data providers.
-                    </listitem>
-                </itemizedlist>
-            </sect2>
-            <sect2>
-                <title>Choosing a dataset type</title>
-                <para>
-                    In general, the rules for choosing a dataset type is fairly
-                    simple. In construction code, where you construct and
-                    configure
-                    the data
-                    provider you can refer to it as
-                    specifically as you
-                    want. However, it is best to refer to it
-                    in the client code as
-                    far down the hierarchy as possible.
-                    Typically, for things like
-                    search forms, you might construct
-                    a
-                    <classname>JpaDataProvider</classname>
-                    and set the
-                    <methodname>entityManager</methodname>
-                    attribute and return it as a
-                    <classname>QueryDataset</classname>
-                    . In your client code, you can also refer to it as a
-                    <classname>QueryDataset</classname>
-                    and still gain access to the general features of the query
-                    (restrictions, sorting, pagination, and even select/count
-                    statements). If you later decide to switch to hibernate or
-                    sql,
-                    you just need to change the type specific construction
-                    code
-                    which is logical since you can't change implementation
-                    without
-                    changing that no matter how abstracted it is.
-                </para>
-            </sect2>
         </sect1>
+        <sect1>
+            <title>Guide for choosing a dataset type</title>
+            <para>
+                In general, the rules for choosing a dataset type are fairly
+                simple. In factory or construction code, where you construct and
+                configure the data provider you can refer to it as specifically
+                as you want. However, it is best to refer to it in the client
+                code as far down the hierarchy as possible. Typically, for
+                things like search forms, you might use a factory to construct a
+                <classname>JpaDataProvider</classname>
+                and set the
+                <methodname>entityManager</methodname>
+                attribute and return it as a
+                <classname>QueryDataset</classname>
+                . In your client code, you can also refer to it as a
+                <classname>QueryDataset</classname>
+                and still gain access to the general features of the query
+                (restrictions, sorting, pagination, and even select/count
+                statements). You won't however be able to access the entity
+                manager attributes. If you later decide to switch to hibernate
+                or sql, even for just this one query, you just need to change
+                the type specific construction code in the factory. The client
+                code, as long as it is referencing it as a
+                <classname>QueryDataset</classname>
+                can stay the same.
+            </para>
+            <para>
+                If you are using few features in the client code, you could
+                return the dataset as a basic
+                <classname>DataProviderDataset</classname>
+                which limits the functions you can use on it such as no access
+                to
+                <classname>QueryDataProvider</classname>
+                related features. However, it does make it much more
+                polymorphic, you can swap out a
+                <classname>QueryDataProvider</classname>
+                based data provider for something else,in fact anything that
+                implements the
+                <classname>DataProvider</classname>
+                interface. You could even switch to a provider that gets its
+                data from a text file.
+            </para>
+        </sect1>
+
 
         <sect1>
             <title>Extending Datasets for custom providers</title>
@@ -2106,7 +1975,7 @@ ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 specific classes. To avoid this problem, only use more concrete
                 class types in factory methods and return a more generalized
                 provider or dataset type from the factory to the main
-                application. 
+                application as discussed in the previous section.
             </para>
 
             <example>
@@ -2156,11 +2025,10 @@ ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
         <sect1 id="InMemoryDataProvider">
             <title>In-memory based datastores</title>
             <para>
-                The simplest form of datastore is one which just keeps the
-                objects in memory and the whole set, or subset is returned
-                to the
-                user when requested. An in-memory data store subclasses
-                the
+                The simplest form of non-database datastore is one which just
+                keeps the a list of objects in memory and the whole or partial
+                set is returned to the user when requested. An in-memory data
+                store subclasses the
                 <classname>InMemoryDataProvider</classname>
                 class and implements the abstract method to return the backing
                 data. The backing data is the complete list of in-memory results
@@ -2199,8 +2067,9 @@ ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 result sets can also be sorted by the use of
                 <classname>Comparator</classname>
                 implementations. Like the database driven providers, the in
-                memory providers have an order key map except the key is mapped
-                to a comparator instance which is used to order the data in the
+                memory providers have an order key except the key is mapped
+                to a
+                comparator instance which is used to order the data in the
                 list.
             </para>
             <example>
@@ -2255,11 +2124,10 @@ ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
 </programlisting>
             </example>
             <para>
-                Again, we can subclass the
+                To test this, we can subclass the
                 <classname>AbstractObjectDatasetJUnitTest</classname>
-                to create new test cases for this class. We can also add in
-                additional tests for testing that the ordering is working
-                correctly.
+                to create new test cases for this class. We add in additional
+                tests for testing that the ordering is working correctly.
             </para>
 
             <example>
@@ -2351,16 +2219,16 @@ ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
             <example>
                 <title>Multiple views using an in-memory adapter.</title>
                 <programlisting role="JAVA" language="java">
-<![CDATA[  InMemoryPersonProvider provider = new InMemoryPersonProvider();
-  InMemoryAdapterProvider<Person> providerAdapter =
+<![CDATA[InMemoryPersonProvider provider = new InMemoryPersonProvider();
+InMemoryAdapterProvider<Person> providerAdapter =
     new InMemoryAdapterProvider<Person>(provider);
 
-  ObjectDataset<Person> ds = new Dataset<Person>(provider);
-  ObjectDataset<Person> ds2 = new Dataset<Person>(providerAdapter);
+ObjectDataset<Person> ds = new Dataset<Person>(provider);
+ObjectDataset<Person> ds2 = new Dataset<Person>(providerAdapter);
 
-  //shared data, independent ordering and paging
-  ds.setOrderKey("name");
-  ds2.setOrderKey("id");]]>
+//shared data, independent ordering and paging
+ds.setOrderKey("name");
+ds2.setOrderKey("id");]]>
 </programlisting>
             </example>
             <para>
@@ -2385,7 +2253,7 @@ ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
                 our list of integers from 1 to 100.
             </para>
             <example>
-                <title>in-memory implementation of our Integer provider.</title>
+                <title>In-memory implementation of our Integer provider.</title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[public class InMemoryIntegerProvider
     extends InMemoryDataProvider<Integer> implements Serializable {
@@ -2474,11 +2342,14 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
         <sect1>
             <title>File Based Data Providers</title>
             <para>
-                One common need is to base a set of data of one or more files
-                which can be either text based, comma delimited, xml or some
-                proprietary format. Spigot again provides the same interface to
-                access these data sources. At the root of file based data
-                providers, we have the
+                One common need is to load a set of from one or more files
+                which
+                can be either text based, comma delimited, xml or some
+                proprietary format. Spigot provides the same interface to
+                access
+                these data sources, and therefore use the same client code to
+                access them. At the root of file based data providers, we have
+                the
                 <classname>AbstractFileBasedProvider</classname>
                 which takes a filename in its constructor and creates the
                 <classname>File</classname>
@@ -2570,11 +2441,10 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
                 or a
                 <classname>SeamJpaNativeDataset</classname>
                 so you can use either a Ejbql or Native query for fetching data.
-                Also, there is an adapter class that can be used instead which
-                adds on the additional methods needed to make the class
-                compatible with
+                Also, there are adapter classes that can be used instead which
+                adapts the interface to look more like an
                 <classname>EntityQuery</classname>
-                based classes.
+                so you can just substitute one for the other.
             </para>
         </sect1>
 

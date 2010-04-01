@@ -11,11 +11,16 @@
                 <surname>Gibson</surname>
             </personname>
         </author>
+        <orgname>FlutterCode</orgname>
+        <authorinitials>AMG</authorinitials>
         <copyright>
             <year>2010</year>
             <holder>Andy Gibson</holder>
         </copyright>
     </bookinfo>
+    <preface>
+    <title>Preface</title>
+    </preface>
     <chapter id="Introduction">
         <title>Introduction</title>
         <para>
@@ -111,11 +116,11 @@
             <title>The Solution</title>
             <para>So, I scratched my own itch and created this project which
                 defines a common API for querying diverse data sources with
-                pagination and optionally with ordering, restrictions and
-                parameters. This lets us write common view code that can
-                interface with queries that are interchangeable. The goal of
-                this project is to bridge the gaps between these different view
-                and data access frameworks. 
+                pagination, ordering, restrictions and parameter management.
+                This lets us write common view code that can interface with
+                queries that are interchangeable. The goal of this project is to
+                bridge the gaps between these different view and data access
+                frameworks. 
             </para>
             <figure>
                 <title>Projects using Spigot</title>
@@ -132,18 +137,21 @@
 
 
             <para>
-                Spigot is organized into two main interfaces :
+                Spigot is divided into three main interfaces which are used to
+                fetch data. The
                 <classname>Paginator</classname>
-                and
-                <classname>DataProvider</classname>
-                . The
-                <classname>Paginator</classname>
-                defines the state about our dataset such as the order
+                interface defines the state about our dataset such as the order
                 information, the page size and the result we are up to. The
                 <classname>DataProvider</classname>
                 interface defines two simple methods which are used to fetch the
                 total number of rows in the complete list of data, and the list
-                (or a subset) of items in the dataset.
+                (or a subset) of items in the dataset. The last interface is the
+                <classname>ObjectDataset</classname>
+                interface which extends the
+                <classname>Paginator</classname>
+                interface and adds methods for managing a set of results one
+                they have been obtained from the
+                <classname>DataProvider</classname>
             </para>
             <example>
                 <title>
@@ -2006,28 +2014,39 @@ JpaDataset<Widget> ds5 = new  JpaDataset<Widget>(provider);
                     </listitem>
                 </itemizedlist>
             </sect2>
-            <para>
-                In general, the rules for choosing a dataset type is fairly
-                simple. In construction code, where you construct and configure
-                the data
-                provider you can refer to it as specifically as you
-                want. However, it is best to refer to it in the client code as
-                far down the hierarchy as possible. Typically, for things like
-                search forms, you might construct a
-                <classname>JpaDataProvider</classname>
-                and set the
-                <methodname>entityManager</methodname>
-                attribute and return it as a
-                <classname>QueryDataset</classname>
-                . In your client code, you can also refer to it as a
-                <classname>QueryDataset</classname>
-                and still gain access to the general features of the query
-                (restrictions, sorting, pagination, and even select/count
-                statements). If you later decide to switch to hibernate or sql,
-                you just need to change the type specific construction code
-                which is logical since you can't change implementation without
-                changing that no matter how abstracted it is.
-            </para>
+            <sect2>
+                <title>Choosing a dataset type</title>
+                <para>
+                    In general, the rules for choosing a dataset type is fairly
+                    simple. In construction code, where you construct and
+                    configure
+                    the data
+                    provider you can refer to it as
+                    specifically as you
+                    want. However, it is best to refer to it
+                    in the client code as
+                    far down the hierarchy as possible.
+                    Typically, for things like
+                    search forms, you might construct
+                    a
+                    <classname>JpaDataProvider</classname>
+                    and set the
+                    <methodname>entityManager</methodname>
+                    attribute and return it as a
+                    <classname>QueryDataset</classname>
+                    . In your client code, you can also refer to it as a
+                    <classname>QueryDataset</classname>
+                    and still gain access to the general features of the query
+                    (restrictions, sorting, pagination, and even select/count
+                    statements). If you later decide to switch to hibernate or
+                    sql,
+                    you just need to change the type specific construction
+                    code
+                    which is logical since you can't change implementation
+                    without
+                    changing that no matter how abstracted it is.
+                </para>
+            </sect2>
         </sect1>
 
         <sect1>

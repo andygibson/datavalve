@@ -18,7 +18,6 @@ package org.fluttercode.spigot.provider.seam;
 
 import javax.persistence.EntityManager;
 
-import org.fluttercode.spigot.provider.jpa.JpaDataProvider;
 import org.fluttercode.spigot.provider.jpa.JpaDataset;
 import org.fluttercode.spigot.provider.jpa.JpaQueryProvider;
 import org.fluttercode.spigot.provider.seam.util.SeamJpaDatasetAdapter;
@@ -52,12 +51,9 @@ public class SeamJpaDataset<T> extends JpaDataset<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	private final JpaDataProvider<T> jpaProvider;
-
 	protected SeamJpaDataset(JpaQueryProvider<T> jpaProvider) {
 		super(jpaProvider);
-		this.jpaProvider = jpaProvider;
-		jpaProvider.addParameterResolver(new SeamParameterResolver());
+		getProvider().addParameterResolver(new SeamParameterResolver());
 	}
 
 	public SeamJpaDataset() {
@@ -66,6 +62,6 @@ public class SeamJpaDataset<T> extends JpaDataset<T> {
 
 	@In
 	public void setEntityManager(EntityManager entityManager) {
-		jpaProvider.setEntityManager(entityManager);
+		getProvider().setEntityManager(entityManager);
 	}
 }

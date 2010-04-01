@@ -18,7 +18,7 @@ package org.fluttercode.spigot.provider.seam;
 
 import javax.persistence.EntityManager;
 
-import org.fluttercode.spigot.dataset.QueryDataset;
+import org.fluttercode.spigot.provider.jpa.JpaDataset;
 import org.fluttercode.spigot.provider.jpa.JpaNativeProvider;
 import org.fluttercode.spigot.provider.seam.util.SeamJpaNativeDatasetAdapter;
 import org.jboss.seam.annotations.In;
@@ -49,24 +49,24 @@ import org.jboss.seam.annotations.In;
  * @see SeamJpaNativeDataset
  */
 // TODO is this right that we subclass query dataset?
-public class SeamJpaNativeDataset<T> extends QueryDataset<T> {
+public class SeamJpaNativeDataset<T> extends JpaDataset<T> {
 
 	private static final long serialVersionUID = 1L;
-
-	private final JpaNativeProvider<T> jpaProvider;
+	
 
 	protected SeamJpaNativeDataset(JpaNativeProvider<T> jpaProvider) {
-		super(jpaProvider);
-		this.jpaProvider = jpaProvider;
-		jpaProvider.addParameterResolver(new SeamParameterResolver());
+		super(jpaProvider);		
+		getProvider().addParameterResolver(new SeamParameterResolver());
 	}
 
 	public SeamJpaNativeDataset() {
-		this(new JpaNativeProvider<T>());
+		this(new JpaNativeProvider<T>());		
 	}
 
 	@In
 	public void setEntityManager(EntityManager entityManager) {
-		jpaProvider.setEntityManager(entityManager);
+		getProvider().setEntityManager(entityManager);
 	}
+	
+	
 }

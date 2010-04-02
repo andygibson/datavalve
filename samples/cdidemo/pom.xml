@@ -6,7 +6,7 @@
     <artifactId>cdidemo</artifactId>
     <packaging>war</packaging>
     <name>cdidemo</name>
-    <version>0.9-Beta</version>
+    <version>0.9.0.CR1</version>
     <properties> 
         <!--
             Explicitly declaring the source encoding eliminates the following

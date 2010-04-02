@@ -4,7 +4,7 @@
     <groupId>org.fluttercode.spigot</groupId>
     <artifactId>wicketDemo</artifactId>
     <packaging>war</packaging>
-    <version>0.9-Beta</version>
+    <version>0.9.0.CR1</version>
     <description>Project that demonstrates the re-use of the datasets with either a custom pagination solution, or the built in pagination solutions.</description>	<!-- TODO project name  -->
     <name>wicketDemo</name>
     <licenses>

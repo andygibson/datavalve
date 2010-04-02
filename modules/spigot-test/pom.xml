@@ -1,38 +1,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<artifactId>spigot</artifactId>
-		<groupId>org.fluttercode.spigot</groupId>
-		<version>0.9-Beta</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>	
-	<artifactId>spigot-test</artifactId>
-	<name>spigot-test</name>	
-	<url>http://maven.apache.org</url>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.fluttercode.spigot</groupId>
-			<artifactId>spigot-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.5.8</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.8</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>spigot</artifactId>
+        <groupId>org.fluttercode.spigot</groupId>
+        <version>0.9.0.CR1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>spigot-test</artifactId>
+    <name>spigot-test</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.fluttercode.spigot</groupId>
+            <artifactId>spigot-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.8</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.8</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

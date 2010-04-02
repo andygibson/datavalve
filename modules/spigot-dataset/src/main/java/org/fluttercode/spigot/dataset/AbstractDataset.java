@@ -259,15 +259,6 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 		invalidateResults();
 	}
 
-	public void copyPaginationInfo(Paginator target) {
-		if (target != null) {
-			target.setFirstResult(firstResult);
-			target.setMaxRows(maxRows);
-			target.setOrderKey(orderKey);
-			target.setOrderAscending(orderAscending);
-		}
-	}
-
 	public boolean isNextAvailable() {
 		getResultList();
 		return nextAvailable;

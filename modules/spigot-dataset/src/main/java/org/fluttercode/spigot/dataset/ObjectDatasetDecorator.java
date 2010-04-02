@@ -150,16 +150,6 @@ public class ObjectDatasetDecorator<T> implements ObjectDataset<T>,
 		this.dataset = dataset;
 	}
 
-	public void copyPaginationInfo(Paginator target) {
-
-		if (target != null) {
-			target.setFirstResult(getFirstResult());
-			target.setMaxRows(getMaxRows());
-			target.setOrderKey(getOrderKey());
-			target.setOrderAscending(isOrderAscending());
-		}
-	}
-
 	public void setNextAvailable(boolean nextAvailable) {
 		this.dataset.setNextAvailable(nextAvailable);
 	}

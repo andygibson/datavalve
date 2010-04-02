@@ -34,30 +34,30 @@ public interface Paginator {
 	/**
 	 * @return The index of the first result to return
 	 */
-	int getFirstResult();
+	public int getFirstResult();
 
 	/**
 	 * @param firstResult
 	 *            the index to use for the first result
 	 */
-	void setFirstResult(int firstResult);
+	public void setFirstResult(int firstResult);
 
 	/**
 	 * @return the maximum number of rows to return. Null indicates we are
 	 *         returning all rows from firstResult to the end of the dataset
 	 */
-	Integer getMaxRows();
+	public Integer getMaxRows();
 
 	/**
 	 * @param maxRows
 	 *            the maximum number of rows to return
 	 */
-	void setMaxRows(Integer maxRows);
+	public void setMaxRows(Integer maxRows);
 
 	/**
 	 * @return The key value we are ordering by
 	 */
-	String getOrderKey();
+	public String getOrderKey();
 
 	/**
 	 * Sets the key value used to order the results. The key value can
@@ -68,18 +68,18 @@ public interface Paginator {
 	 * @param orderKey
 	 *            The key value to order by
 	 */
-	void setOrderKey(String orderKey);
+	public void setOrderKey(String orderKey);
 
 	/**
 	 * @return Whether the order is ascending
 	 */
-	boolean isOrderAscending();
+	public boolean isOrderAscending();
 
 	/**
 	 * @param isAscending
 	 *            Set the order for the ordering
 	 */
-	void setOrderAscending(boolean isAscending);
+	public void setOrderAscending(boolean isAscending);
 
 	/**
 	 * This method is used to set the order key, but does so by checking the
@@ -90,19 +90,17 @@ public interface Paginator {
 	 * @param orderKey
 	 *            The new key value to order by
 	 */
-	void changeOrderKey(String orderKey);
+	public void changeOrderKey(String orderKey);
 
-	void copyPaginationInfo(Paginator target);
+	public boolean includeAllResults();
 
-	boolean includeAllResults();
+	public boolean isNextAvailable();
 
-	boolean isNextAvailable();
+	public boolean isPreviousAvailable();
 
-	boolean isPreviousAvailable();
+	public void setNextAvailable(boolean nextAvailable);
 
-	void setNextAvailable(boolean nextAvailable);
+	public void next();
 
-	void next();
-
-	void previous();
+	public void previous();
 }

@@ -37,7 +37,7 @@ public interface DataProvider<T> {
 	 * 
 	 * @return The number of rows in the whole dataset
 	 */
-	Integer fetchResultCount();
+	public Integer fetchResultCount();
 
 	/**
 	 * Fetches the (sub)set of data based on the current provider state and the
@@ -48,6 +48,6 @@ public interface DataProvider<T> {
 	 * @return List of objects of type <T> for the rows of the dataset as
 	 *         defined by the Paginator.
 	 */
-	List<T> fetchResults(Paginator paginator);
+	public List<T> fetchResults(Paginator paginator);
 
 }

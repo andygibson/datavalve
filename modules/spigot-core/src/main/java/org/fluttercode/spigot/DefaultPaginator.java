@@ -92,20 +92,6 @@ public class DefaultPaginator implements Paginator, Serializable {
 
 	}
 
-	public void copyPaginationInfo(Paginator target) {
-		doCopyPaginationInfo(this, target);
-	}
-
-	public static void doCopyPaginationInfo(Paginator source, Paginator target) {
-		if (target != null) {
-			target.setFirstResult(source.getFirstResult());
-			target.setMaxRows(source.getMaxRows());
-			target.setOrderKey(source.getOrderKey());
-			target.setOrderAscending(source.isOrderAscending());
-			target.setNextAvailable(source.isNextAvailable());
-		}
-	}
-
 	public boolean includeAllResults() {
 		return getMaxRows() == null;
 	}

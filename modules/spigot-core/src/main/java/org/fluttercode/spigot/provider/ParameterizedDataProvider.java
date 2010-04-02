@@ -16,6 +16,7 @@
 
 package org.fluttercode.spigot.provider;
 
+import java.util.List;
 import java.util.Map;
 
 import org.fluttercode.spigot.DataProvider;
@@ -83,4 +84,9 @@ public interface ParameterizedDataProvider<T> extends DataProvider<T> {
 	 */
 	public Object resolveParameter(String name);
 
+	
+	public List<ParameterResolver> getParameterResolvers();
+	
+	public void setParameterResolvers(List<ParameterResolver> parameterResolvers);
+	
 }

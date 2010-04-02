@@ -46,7 +46,7 @@ public interface ParameterResolver {
 	 *            Parameter to resolve
 	 * @return true if this resolver was able to resolve the parameter
 	 */
-	boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
+	public boolean resolveParameter(ParameterizedDataProvider<? extends Object> dataset,
 			Parameter parameter);
 
 	/**
@@ -60,5 +60,5 @@ public interface ParameterResolver {
 	 *            name of the parameter we want resolving
 	 * @return true if this resolver wants to try and resolve this parameter
 	 */
-	boolean acceptParameter(String name);
+	public boolean acceptParameter(String name);
 }

@@ -1,15 +1,10 @@
 			<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<artifactId>spigot</artifactId>
-		<groupId>org.fluttercode.spigot</groupId>
-		<version>0.9-Beta</version>
-	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.fluttercode.spigot</groupId>
 	<artifactId>docs</artifactId>
 	<name>spigot-documentation</name>
-	<version>0.1-Alpha</version>
+	<version>0.9.0.CR1</version>
 
 	<properties>
 		<fdf.version>2.1-SNAPSHOT</fdf.version>

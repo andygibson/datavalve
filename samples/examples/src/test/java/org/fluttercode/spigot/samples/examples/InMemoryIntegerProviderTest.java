@@ -16,7 +16,6 @@
 
 package org.fluttercode.spigot.samples.examples;
 
-import org.fluttercode.spigot.DataProvider;
 import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 

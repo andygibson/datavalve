@@ -17,7 +17,6 @@
 package org.fluttercode.spigot.dataset;
 
 import org.fluttercode.spigot.provider.ParameterizedDataProvider;
-import org.fluttercode.spigot.provider.QueryDataProvider;
 
 
 /**

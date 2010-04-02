@@ -16,9 +16,6 @@
 
 package org.fluttercode.spigot.samples.examples;
 
-import java.util.List;
-
-import org.fluttercode.spigot.DataProvider;
 import org.fluttercode.spigot.dataset.Dataset;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 import org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest;

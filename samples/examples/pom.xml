@@ -7,8 +7,8 @@
     <version>0.9-Beta</version>
     <dependencies>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-core</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>spigot-dataset</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

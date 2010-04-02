@@ -22,6 +22,8 @@ package org.fluttercode.spigot.provider.file;
  */
 public abstract class CommaDelimitedProvider<T> extends TextFileProvider<T>{
 
+	private static final long serialVersionUID = 1L;
+
 	public CommaDelimitedProvider(String filename) {
 		super(filename);
 	}

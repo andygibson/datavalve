@@ -16,9 +16,6 @@
 
 package org.fluttercode.spigot.provider.seam.util;
 
-import java.util.List;
-
-import org.fluttercode.spigot.provider.jpa.JpaDataProvider;
 import org.fluttercode.spigot.provider.jpa.JpaQueryProvider;
 import org.fluttercode.spigot.provider.seam.SeamJpaDataset;
 

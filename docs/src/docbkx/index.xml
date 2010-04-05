@@ -97,11 +97,11 @@
                 <title>Projects without using Spigot</title>
                 <mediaobject>
                     <imageobject role="fo">
-                        <imagedata align="center" fileref="../img/app_without_jds.png"
+                        <imagedata align="center" fileref="app_without_jds.png"
                             scalefit="1" />
                     </imageobject>
                     <imageobject role="html">
-                        <imagedata align="center" fileref="../img/app_without_jds.png" />
+                        <imagedata align="center" fileref="app_without_jds.png" />
                     </imageobject>
                 </mediaobject>
             </figure>
@@ -123,11 +123,11 @@
                 <title>Projects using Spigot</title>
                 <mediaobject>
                     <imageobject role="fo">
-                        <imagedata align="center" fileref="../img/app_with_jds.png"
+                        <imagedata align="center" fileref="app_with_jds.png"
                             scalefit="1" />
                     </imageobject>
                     <imageobject role="html">
-                        <imagedata align="center" fileref="../img/app_with_jds.png" />
+                        <imagedata align="center" fileref="app_with_jds.png" />
                     </imageobject>
                 </mediaobject>
             </figure>

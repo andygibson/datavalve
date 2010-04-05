@@ -137,7 +137,9 @@
             <para>
                 Even if you still plan on using a single data access mechanism
                 (i.e. Hibernate or JPA) there are still advantages to using
-                Spigot.
+                Spigot. It's like a screw driver, 99% of the time you use it for
+                one thing only, but when you need it to pry something open or
+                some other function, it works equally well. 
             </para>
 
             <sect2>
@@ -275,7 +277,8 @@ List<Person> results = qry.resultList();]]>
     </preface>
     <chapter id="Introduction">
         <title>Introduction</title>
-        <para>We'll start by having a high level </para>
+        <para>We'll start by having a high level look at Spigot and how it is
+            organized and how it is used.</para>
         <sect1>
             <title>Overview</title>
             <para>
@@ -283,15 +286,16 @@ List<Person> results = qry.resultList();]]>
                 fetch data. The
                 <classname>Paginator</classname>
                 interface defines the state about our dataset such as the order
-                information, the page size and the result we are up to. The
+                information, the page size and the index of the current results.
+                The
                 <classname>DataProvider</classname>
-                interface defines two simple methods which are used to fetch the
-                total number of rows in the complete list of data, and the list
-                (or a subset) of items in the dataset. The last interface is the
+                interface defines two methods which are used to fetch the total
+                number of rows in the complete list of data, and the list (or a
+                subset) of items in the dataset. The final interface is the
                 <classname>ObjectDataset</classname>
                 interface which extends the
                 <classname>Paginator</classname>
-                interface and adds methods for managing a set of results one
+                interface and adds methods for managing a set of results once
                 they have been obtained from the
                 <classname>DataProvider</classname>
             </para>
@@ -311,135 +315,192 @@ List<Person> results = qry.resultList();]]>
             <para>
                 When we fetch the results, we pass in the paginator so the
                 <classname>DataProvider</classname>
-                implementation knows how many rows to return, where in the
-                dataset to start returning rows from and it can also set the
-                flag on the paginator indicating whether there are more results
-                or not.
+                implementation knows which rows to start returning rows from,
+                how many rows to return and it can also set the flag on the
+                paginator indicating whether there are more results or not.
+            </para>
+            <para>
+                This interface is very straightforward and its easy to see how
+                you can implement any kind of data provider using such a simple
+                interface. Once new data providers have been created, for the
+                most part, they can be substituted for any other
+                <classname>DataProvider</classname>
+                .
             </para>
         </sect1>
         <sect1>
             <title>Architecture</title>
             <para>
-                This section covers the architecture of the framework and how
-                they all
-                relate to each other.</para>
-            <sect2>
-                <title>Main API</title>
-                <para>
-                    The main API consists of the
-                    <classname>Paginator</classname>
-                    , the
-                    <classname>DataProvider</classname>
-                    and the
-                    <classname>ObjectDataset</classname>
-                    interfaces. The Paginator is like a bookmark for a dataset
-                    and holds the current record index, page size and ordering
-                    information as well as flags indicating whether there is a
-                    previous or next page available. The
-                    <classname>DataProvider</classname>
-                    is the stateless part of the equation that provides the data
-                    based on the state of the paginator passed in. For each type
-                    of data store you want to access, we write a
-                    <classname>DataProvider</classname>
-                    implementation for it. The
-                    <classname>ObjectDataset</classname>
-                    is a higher level wrapper that extends the
-                    <classname>Paginator</classname>
-                    interface and adds functions to manage the results returned
-                    from a provider. The
-                    <classname>ObjectDataset</classname>
-                    has a
-                    <methodname>provider</methodname>
-                    attribute that it uses to fetch the data.
-                </para>
-                <example>
-                    <title>Fetching data from a provider</title>
-                    <programlisting role="JAVA" language="java">
+                We extend the
+                <classname>DataProvider</classname>
+                to introduce features to interface with more complex data
+                providers. We could use the
+                <classname>DataProvider</classname>
+                type, but then we don't get any access to the extended data
+                provider features without casting which ties our code to that
+                implementation and is messy to boot. Also, by creating an
+                interface hierarchy, we can create an implementation hierarchy
+                to share functionality with subclasses.
+            </para>
+            <para>
+                Simple data providers that are in memory or file based use the
+                basic
+                <classname>DataProvider</classname>
+                interface. Where the real complexity comes in is with query
+                language based data providers. While Spigot has been designed to
+                be expandable, it can support different query language data
+                providers, but the main goal for this concept was accomodating
+                JPA, Hibernate and SQL based data providers. Most of the
+                functionality for a query language based provider is defined in
+                the
+                <classname>QueryDataProvider</classname>
+                interface.
+            </para>
+            <figure>
+                <title>Architecture Overview</title>
+                <mediaobject>
+                    <imageobject role="fo">
+                        <imagedata align="center" fileref="class_diagram.png"
+                            scalefit="1" />
+                    </imageobject>
+                    <imageobject role="html">
+                        <imagedata align="center" fileref="class_diagram.png" />
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>
+                In this diagram you can see that the
+                <classname>DataProvider</classname>
+                subclasses define the interfaces for the multiple provider
+                implementations.
+                <classname>ObjectDataset</classname>
+                and subclasses references a
+                <classname>DataProvider</classname>
+                implementation that is used to provide data to the dataset.
+            </para>
+        </sect1>
+        <sect1>
+            <title>Examples</title>
+            <para>
+                This section covers some basic examples of how each part of the
+                core API is used. The core API consists of the
+                <classname>Paginator</classname>
+                , the
+                <classname>DataProvider</classname>
+                and the
+                <classname>ObjectDataset</classname>
+                interfaces. The Paginator is like a bookmark for a dataset and
+                holds the current record index, page size and ordering
+                information as well as flags indicating whether there is a
+                previous or next page available. The
+                <classname>DataProvider</classname>
+                is the stateless part of the framework that provides the data
+                based on the state of the paginator passed in. For each type of
+                data store you want to access, we write a
+                <classname>DataProvider</classname>
+                implementation for it. The
+                <classname>ObjectDataset</classname>
+                is a higher level wrapper that extends the
+                <classname>Paginator</classname>
+                interface and adds functions to manage the results returned from
+                a provider. The
+                <classname>ObjectDataset</classname>
+                has a
+                <methodname>provider</methodname>
+                attribute that it uses to fetch the data.
+            </para>
+            <example>
+                <title>Fetching data from a provider</title>
+                <programlisting role="JAVA" language="java">
 <![CDATA[  DataProvider prov = new CustomDataProvider();
   Paginator paginator = new DefaultPaginator();
   List<ResultClass> results = prov.fetchResults(paginator);
   Integer count = prov.getResultCount();]]>
                 </programlisting>
-                </example>
-                <para>
-                    This is a simple example where we create an instance of our
-                    custom provider that knows how to fetch the data. We create
-                    an instance of a
-                    <classname>Paginator</classname>
-                    and when we fetch the results we pass that in to the data
-                    provider to tell the provider which set of data to return.
-                    In this case, we returned all the data but by setting
-                    properties on the paginator we can tell the provider just to
-                    return a subset and which row to start from. The provider is
-                    also responsible for setting the
-                    <code>nextAvailable</code>
-                    flag on the paginator to indicate if there are more results
-                    available.
-                </para>
-                <example>
-                    <title>Limiting the data fetched from a data provider
+            </example>
+            <para>
+                This is a simple example where we create an instance of a
+                custom
+                provider that knows how to fetch the data. We create an
+                instance
+                of a
+                <classname>Paginator</classname>
+                and pass that in to the data provider when we fetch the results
+                to tell the provider which set of data to return. In this case,
+                we returned all the data but by setting properties on the
+                paginator we can tell the provider just to return a subset and
+                which row to start from. The provider is also responsible for
+                setting the
+                <code>nextAvailable</code>
+                flag on the paginator to indicate if there are more results
+                available.
+            </para>
+            <example>
+                <title>Limiting the data fetched from a data provider
                     </title>
-                    <programlisting role="JAVA" language="java">
-<![CDATA[  DataProvider prov = new CustomDataProvider();
+                <programlisting role="JAVA" language="java">
+<![CDATA[  DataProvider<SomeClass> prov = new SomeClassDataProvider();
   Paginator paginator = new DefaultPaginator();
   paginator.setMaxRows(10);
   paginator.setFirstResult(35);
-  List<ResultClass> results = prov.fetchResults(paginator);
+  List<SomeClass> results = prov.fetchResults(paginator);
   Integer count = prov.fetchResultCount();]]>
                 </programlisting>
-                </example>
-                <para>
-                    Here we set the maximum number of rows to return to 10 and
-                    we want the first result to start at item number 35. The
-                    implementation of the
-                    <classname>CustomProvider</classname>
-                    is responsible for returning the correct subset of data to
-                    the caller.
-                </para>
-                <para>
-                    If you were to call
-                    <methodname>fetchResults</methodname>
-                    a second time, the provider would go off and re-fetch the
-                    data executing whatever process it does to fetch the data.
-                    It does not cache the data in anyway and should be
-                    implemented statelessly such that one call to the provider
-                    is independent of any other calls to the provider.
-                </para>
-                <para>
-                    The third part of the API is an
+            </example>
+            <para>
+                Here we set the maximum number of rows to return to 10 and we
+                want the first result to start at item number 35. The
+                implementation of the
+                <classname>SomeClassDataProvider</classname>
+                is responsible for returning the correct subset of data to the
+                caller when
+                <methodname>fetchResults</methodname>
+                is called.
+            </para>
+            <para>
+                If you were to call
+                <methodname>fetchResults</methodname>
+                a second time, the provider would go off and re-fetch the data
+                executing whatever process it does to fetch the data. It does
+                not cache the data and should be implemented statelessly such
+                that one call to the provider is independent of any other calls
+                to the provider.
+            </para>
+            <para>
+                The third part of the API is an
+                <classname>ObjectDataset</classname>
+                which combines both the provider and paginator information into
+                one class and can be used to manage the fetched data. This
+                component should be considered stateful as it holds on to the
+                results and caches them. It also implements the
+                <classname>Iterable</classname>
+                interface to let you iterate over the dataset while taking
+                pagination into account, so while you iterate over each item,
+                they are loaded in a batch at a time based on the
+                <code>maxRows</code>
+                attribute. Datasets implement the
+                <classname>Paginator</classname>
+                interface and have the pagination attributes built in. Datasets
+                have a
+                <code>provider</code>
+                attribute that is used to fetch the actual data so we can re-use
+                our dataset implementation for any kind of data provider. When
+                you change the active page, the page size or the first result
+                returned the interal copy of the current data is invalidated and
+                causes it to be re-fetched from the provider when it is next
+                requested.
+            </para>
+            <example>
+                <title>
+                    Using an
                     <classname>ObjectDataset</classname>
-                    which combines both the provider and paginator information
-                    into one class and can be used to manage the fetched data.
-                    This component should be considered stateful as it holds on
-                    to the results and caches them. It also implements the
-                    <classname>Iterable</classname>
-                    interface to let you iterate over the dataset while taking
-                    pagination into account, so while you iterate over each
-                    item, they are loaded in a batch at a time based on the
-                    <code>maxRows</code>
-                    attribute. Datasets implement the
-                    <classname>Paginator</classname>
-                    interface and have the pagination attributes built in.
-                    Datasets have a
-                    <code>provider</code>
-                    attribute that is used to fetch the actual data so we can
-                    re-use our dataset implementation for any kind of data
-                    provider. When you change the active page, the page size or
-                    the first result returned the interal copy of the current
-                    data is invalidated and causes it to be re-fetched from the
-                    provider when it is next requested.
-                </para>
-                <example>
-                    <title>
-                        Using an
-                        <classname>ObjectDataset</classname>
-                    </title>
-                    <programlisting role="JAVA" language="java">
-<![CDATA[  DataProvider provider = new CustomDataProvider();
+                </title>
+                <programlisting role="JAVA" language="java">
+<![CDATA[  DataProvider<SomeClass> provider = new SomeClassDataProvider();
   ObjectDataset<SomeClass> dataset = new DataProviderDataset(provider);
   dataset.setMaxRows(10);
   dataset.setFirstResult(35);
-  List<ResultClass> results = dataset.getResults();
+  List<SomeClass> results = dataset.getResults();
   
   // we can iterate over the dataset and it will automatically load the results
   // in pages of 10 results each.
@@ -447,15 +508,17 @@ List<Person> results = qry.resultList();]]>
     ...some code...
   }]]>  
                 </programlisting>
-                </example>
-                <para>
-                    Repeated calls to
-                    <methodname>getResults()</methodname>
-                    without changing the pagination information will cause the
-                    exact same results to be returned since the current page of
-                    results is held onto by the dataset.
-                </para>
-            </sect2>
+            </example>
+            <para>
+                Repeated calls to
+                <methodname>getResults()</methodname>
+                without changing the pagination information will cause the exact
+                same results to be returned since the current page of results is
+                managed by the
+                <classname>ObjectDataset</classname>
+                .
+            </para>
+
         </sect1>
     </chapter>
     <chapter>

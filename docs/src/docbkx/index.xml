@@ -6,12 +6,15 @@
     <titleabbrev>Spigot Ref</titleabbrev>
     <bookinfo>
         <author>
+            <email>contact@andygibson.net</email>
             <personname>
                 <firstname>Andy</firstname>
                 <surname>Gibson</surname>
             </personname>
         </author>
-        <orgname>FlutterCode</orgname>
+        <orgname>FlutterCode</orgname>        
+        <releaseinfo>0.9.0.CR1</releaseinfo>
+        
         <authorinitials>AMG</authorinitials>
         <copyright>
             <year>2010</year>
@@ -1467,7 +1470,8 @@ Value = 100
 </programlisting>
                 </example>
                 <figure>
-                    <title>Output from iterating over a paginated dataset</title>
+                    <title>Output from iterating over a paginated dataset
+                    </title>
                     <screen>
 Generating results from 1 to 5
 Iterating over value 1
@@ -1859,7 +1863,10 @@ dataset.getProvider().addParameterResolver(new MyParameterResolver());]]>
                 .
             </para>
             <example>
-                <title>Type safety with the <classname>QueryDataProvider</classname></title>
+                <title>
+                    Type safety with the
+                    <classname>QueryDataProvider</classname>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[  QueryDataProvider<Person> provider = new JpaQueryProvider<Person>();
   QueryDataset<Person> dataset = new QueryDataset<Person>(provider);
@@ -2194,7 +2201,10 @@ ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
             </para>
 
             <example>
-                <title>Testing the <classname>InMemoryPersonProvider</classname></title>
+                <title>
+                    Testing the
+                    <classname>InMemoryPersonProvider</classname>
+                </title>
                 <programlisting role="JAVA" language="java">
 <![CDATA[public class InMemoryPersonProviderTest
     extends AbstractObjectDatasetJUnitTest<Person> {

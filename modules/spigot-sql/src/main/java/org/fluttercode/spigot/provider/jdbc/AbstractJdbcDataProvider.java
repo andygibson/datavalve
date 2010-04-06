@@ -95,17 +95,31 @@ public abstract class AbstractJdbcDataProvider<T> extends
 	@Override
 	protected Integer queryForCount(DataQuery query) {
 		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		try {
-			statement = buildPreparedStatement(query);
-			ResultSet rs = statement.executeQuery();
 
-			if (rs.next()) {
-				int value = rs.getInt(1);
-				log.debug("Fetch Result Count SQL returned {}", value);
-				return value;
-			} else {
-				return 0;
+			try {
+				statement = buildPreparedStatement(query);
+				resultSet = statement.executeQuery();
+
+				if (resultSet.next()) {
+					int value = resultSet.getInt(1);
+					log.debug("Fetch Result Count SQL returned {}", value);
+					return value;
+				} else {
+					return 0;
+				}
+			} finally {
+
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+
 			}
+
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -116,16 +130,26 @@ public abstract class AbstractJdbcDataProvider<T> extends
 	protected List<T> queryForResults(DataQuery query, Integer firstResult,
 			Integer count) {
 		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		try {
-			statement = buildPreparedStatement(query);
+			try {
+				statement = buildPreparedStatement(query);
 
-			ResultSet resultSet = statement.executeQuery();
+				resultSet = statement.executeQuery();
 
-			List<T> results = createListFromResultSet(resultSet, firstResult,
-					count);
-			log.debug("Results processor returned {} results", results.size());
-			return results;
-
+				List<T> results = createListFromResultSet(resultSet,
+						firstResult, count);
+				log.debug("Results processor returned {} results", results
+						.size());
+				return results;
+			} finally {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}

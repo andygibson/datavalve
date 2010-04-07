@@ -1,1 +1,3 @@
+2010_04_06 - Spigot 0.9.0.CR1 released
+
 2010_03_10 - Initial 0.9 Alpha build

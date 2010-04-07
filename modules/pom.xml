@@ -11,7 +11,7 @@
 
     <organization>
         <name>fluttercode</name>
-        <url>www.fluttercode.com</url>
+        <url>www.fluttercode.org</url>
     </organization>
 
     <developers>
@@ -37,9 +37,9 @@
     <inceptionYear>2009</inceptionYear>
     <licenses>
         <license>
-            <name>GPL 3</name>
-            <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
-            <distribution>repo</distribution>            
+            <name>LGPL Version 3</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
     <properties>

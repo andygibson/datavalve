@@ -5,6 +5,40 @@
     <artifactId>swingdemo</artifactId>
     <name>swingdemo</name>
     <version>0.9.0.CR1</version>
+    <organization>
+        <name>fluttercode</name>
+        <url>www.fluttercode.org</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <email>contact@andygibson.net</email>
+            <id>agibson</id>
+            <name>Andy Gibson</name>
+            <organization>fluttercode</organization>
+            <organizationUrl>www.fluttercode.org</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-5</timezone>
+            <url>www.andygibson.net</url>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>Jira</system>
+        <url>http://kenai.com/jira/browse/SPIGOT/</url>
+    </issueManagement>
+
+    <inceptionYear>2009</inceptionYear>
+    <licenses>
+        <license>
+            <name>LGPL Version 3</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>

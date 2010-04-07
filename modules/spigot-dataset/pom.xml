@@ -1,43 +1,76 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<artifactId>spigot</artifactId>
-		<groupId>org.fluttercode.spigot</groupId>
-		<version>0.9.0.CR1</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>spigot-dataset</artifactId>
-	<name>spigot-dataset</name>
-	<description>Contains the datasets for the spigot project</description>
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>spigot-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>spigot</artifactId>
+        <groupId>org.fluttercode.spigot</groupId>
+        <version>0.9.0.CR1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>spigot-dataset</artifactId>
+    <name>spigot-dataset</name>
+    <description>Contains the datasets for the spigot project</description>
+    <organization>
+        <name>fluttercode</name>
+        <url>www.fluttercode.org</url>
+    </organization>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.5.8</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.8</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
+    <developers>
+        <developer>
+            <email>contact@andygibson.net</email>
+            <id>agibson</id>
+            <name>Andy Gibson</name>
+            <organization>fluttercode</organization>
+            <organizationUrl>www.fluttercode.org</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-5</timezone>
+            <url>www.andygibson.net</url>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>Jira</system>
+        <url>http://kenai.com/jira/browse/SPIGOT/</url>
+    </issueManagement>
+
+    <inceptionYear>2009</inceptionYear>
+    <licenses>
+        <license>
+            <name>LGPL Version 3</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>spigot-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.8</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.8</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>spigot-test</artifactId>
             <version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

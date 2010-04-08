@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="fluttercode.svg">
+   sodipodi:docname="fluttercode.svg"
+   inkscape:export-filename="C:\Users\Andy\dev\projects\spigot\trunk\docs\src\docbkx\resources\logo\png\fluttercode_75.png"
+   inkscape:export-xdpi="47.767288"
+   inkscape:export-ydpi="47.767288">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -105,7 +108,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

@@ -33,18 +33,6 @@ import java.util.Random;
  * @author Andy Gibson
  * 
  */
-/**
- * @author GIBSOA01
- *
- */
-/**
- * @author GIBSOA01
- *
- */
-/**
- * @author GIBSOA01
- * 
- */
 public final class TestDataFactory {
 
 	private static Random random = new Random();
@@ -131,7 +119,7 @@ public final class TestDataFactory {
 			"TRISTAN", "TROY", "TYLER", "TYRONE", "UNBORN", "VALERIE",
 			"VANESSA", "VERNON", "VERONICA", "VICKI", "VICKIE", "VICKY",
 			"VICTOR", "VICTORIA", "VINCENT", "VIRGINIA", "VIVIAN", "WALTER",
-			"WANDA", "WAYNE", "WENDY", "WESLEY", "WHITNEY", "WILLIAM", "xxxx",
+			"WANDA", "WAYNE", "WENDY", "WESLEY", "WHITNEY", "WILLIAM",
 			"WILLIE", "WYATT", "ZACHARY"
 
 	};
@@ -666,6 +654,12 @@ public final class TestDataFactory {
 			"should", "have", "generated", "this", "text", "automatically",
 			"so", "will", "from", "the", "web" };
 
+	private static String[] emailAccounts = { "gma1l", "hotma1l", "yah00",
+			"somema1l", "everyma1l","ma1lbox","eyec0de","b1zmail","ma1l2u" };
+	
+	private static String[] tlds = { "org", "net", "com","biz", "us","co.uk"};
+	
+
 	private static String getRandomString(String[] values, int chance) {
 		if (random.nextInt(100) < chance) {
 			return values[random.nextInt(values.length)];
@@ -722,6 +716,21 @@ public final class TestDataFactory {
 	public static String getAddress() {
 		int num = 103 + random.nextInt(1400);
 		return num + " " + getStreetName() + " " + getStreetSuffix();
+	}
+	
+	public static String getAddress2() {
+		int test = random.nextInt(100);
+		if (test < 80) {
+			return null;
+		}
+		if (test < 90) {
+			return "Apt #"+100+random.nextInt(1000);			
+		}
+		if (test < 100) {
+			return "Suite #"+100+random.nextInt(1000);
+		}
+		return null;
+		
 	}
 
 	/**
@@ -945,5 +954,24 @@ public final class TestDataFactory {
 	 */
 	public static String getBusinessName() {
 		return getCity() + " " + getRandomString(businesses);
+	}
+	
+	public static String getEmailAddress() {
+		int test = random.nextInt(100);
+		String email = "";
+		if (test < 50) {
+			//name and initial
+			email = getFirstName().charAt(0)+getLastName();
+		} else {
+			//2 words
+			email = getRandomString(words) + getRandomString(words);
+		}
+		if (random.nextInt(100)>80) { 
+			email = email + random.nextInt(100);
+		}
+		email = email + "@"+getRandomString(emailAccounts)+"."+getRandomString(tlds);
+		return email.toLowerCase();
+		
+		
 	}
 }

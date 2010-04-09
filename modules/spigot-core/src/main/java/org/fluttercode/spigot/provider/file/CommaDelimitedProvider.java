@@ -23,24 +23,52 @@
 
 package org.fluttercode.spigot.provider.file;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * @author Andy Gibson
  * 
  */
-public abstract class CommaDelimitedProvider<T> extends TextFileProvider<T>{
+public abstract class CommaDelimitedProvider<T> extends TextFileProvider<T> {
 
 	private static final long serialVersionUID = 1L;
+
+	private int paddingLength = 0;
 
 	public CommaDelimitedProvider(String filename) {
 		super(filename);
 	}
-	
-	
+
 	@Override
 	protected T createObjectFromLine(String line) {
-		String[] columns = line.split(",");
+		String[] columns = padToLength(line.split(","));
+
 		return createObjectFromColumns(columns);
 	}
 
+	/**
+	 * Takes an array of columns and pads it with nulls until it has a certain
+	 * length.
+	 * 
+	 * @param split
+	 *            array of columns
+	 * @return padded array of columns
+	 */
+	private String[] padToLength(String[] split) {
+		if (paddingLength < split.length) {
+			return split;
+		}
+		return Arrays.copyOf(split, paddingLength);
+	}
+
 	protected abstract T createObjectFromColumns(String[] columns);
+
+	public void setPaddingLength(int paddingLength) {
+		this.paddingLength = paddingLength;
+	}
+
+	public int getPaddingLength() {
+		return paddingLength;
+	}
 }

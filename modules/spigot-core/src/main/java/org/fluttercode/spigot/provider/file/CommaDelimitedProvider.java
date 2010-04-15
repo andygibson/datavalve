@@ -27,17 +27,29 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
+ * Provider that returns data from a comma delimited file using a
+ * {@link ColumnarRowMapper} instance to convert an array of string values into
+ * an object.
+ * 
  * @author Andy Gibson
  * 
  */
-public abstract class CommaDelimitedProvider<T> extends TextFileProvider<T> {
+public class CommaDelimitedProvider<T> extends TextFileProvider<T> {
 
 	private static final long serialVersionUID = 1L;
 
 	private int paddingLength = 0;
 
-	public CommaDelimitedProvider(String filename) {
+	private ColumnarRowMapper<T> rowMapper;
+
+	public CommaDelimitedProvider(String filename,
+			ColumnarRowMapper<T> rowMapper) {
 		super(filename);
+		this.rowMapper = rowMapper;
+	}
+
+	public CommaDelimitedProvider(String filename) {
+		this(filename, null);
 	}
 
 	@Override
@@ -45,6 +57,39 @@ public abstract class CommaDelimitedProvider<T> extends TextFileProvider<T> {
 		String[] columns = padToLength(line.split(","));
 
 		return createObjectFromColumns(columns);
+
+	}
+
+	/**
+	 * Creates a new instance of a data object and populates it with the data
+	 * from the columns array.
+	 * 
+	 * @param columns
+	 *            List of column values
+	 * @return new instance of data object built from the columns values
+	 */
+	private T createObjectFromColumns(String[] columns) {
+		T result = doCreateObjectFromColumns(columns);
+		if (rowMapper == null) {
+			throw new NullPointerException(
+					"Rowmapper in comma delimited provider is unassigned");
+		}
+		return rowMapper.mapRow(columns);
+	}
+
+	/**
+	 * Method to create an instance of data from the column array of string.
+	 * Default implementation returns null but this method can be overriden in
+	 * subclasses to allow for extension using inheritance as opposed to
+	 * extendision using the {@link CommaDelimitedProvider#rowMapper} attribute.
+	 * 
+	 * @param columns
+	 *            Array of columns
+	 * @return an instance of T built from the columnar data. If null is
+	 *         returned, then the rowmapper is used to create the entity.
+	 */
+	protected T doCreateObjectFromColumns(String[] columns) {
+		return null;
 	}
 
 	/**
@@ -62,13 +107,18 @@ public abstract class CommaDelimitedProvider<T> extends TextFileProvider<T> {
 		return Arrays.copyOf(split, paddingLength);
 	}
 
-	protected abstract T createObjectFromColumns(String[] columns);
-
 	public void setPaddingLength(int paddingLength) {
 		this.paddingLength = paddingLength;
 	}
 
 	public int getPaddingLength() {
 		return paddingLength;
+	}
+	
+	 public ColumnarRowMapper<T> getRowMapper() {
+		return rowMapper;
+	}
+	 public void setRowMapper(ColumnarRowMapper<T> rowMapper) {
+		this.rowMapper = rowMapper;
 	}
 }

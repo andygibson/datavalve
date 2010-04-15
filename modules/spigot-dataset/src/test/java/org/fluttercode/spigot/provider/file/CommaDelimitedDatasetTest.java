@@ -98,7 +98,7 @@ public class CommaDelimitedDatasetTest extends
 		CommaDelimitedProvider<PhoneEntry> provider = new CommaDelimitedProvider<PhoneEntry>(fileName) {
 			private static final long serialVersionUID = 2L;
 			@Override
-			protected PhoneEntry createObjectFromColumns(String[] columns) {
+			protected PhoneEntry doCreateObjectFromColumns(String[] columns) {
 				return new PhoneEntry(Integer.valueOf(columns[0]),columns[1],columns[2],columns[3]);
 			}			
 		};

@@ -45,22 +45,22 @@ public class FileCustomPaginatorPage extends AbstractCustomPaginatorPage {
 	public ObjectDataset<Person> createDataset() {
 
 		URL url = getWicketApp().getClass().getResource("testData100.csv");
-		
+
 		String filename = url.getPath();
 		CommaDelimitedProvider<Person> personProvider = new CommaDelimitedProvider<Person>(
 				filename) {
 
-
-					private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected Person createObjectFromColumns(String[] columns) {
+			protected Person doCreateObjectFromColumns(String[] columns) {
 				return new Person(Long.valueOf(columns[0]), columns[1],
 						columns[2], columns[3]);
 			}
 
 		};
-		return new Dataset<Person,CommaDelimitedProvider<Person>>(personProvider);
+		return new Dataset<Person, CommaDelimitedProvider<Person>>(
+				personProvider);
 	}
 
 }

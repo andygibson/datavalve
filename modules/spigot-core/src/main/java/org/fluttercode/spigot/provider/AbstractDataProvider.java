@@ -31,15 +31,25 @@ import org.fluttercode.spigot.DataProvider;
 import org.fluttercode.spigot.Paginator;
 
 /**
+ * Abstract class that implements the {@link DataProvider} interface. The fetch
+ * methods from this interface are implemented and in turn call other methods
+ * that can be override.
+ * <p/>
+ * This class also introduces the {@link AbstractDataProvider#doPreFetch()}
+ * method that is called before either the results or the result count is
+ * fetched. This lets you prep any state on the provider prior to execution (for
+ * example, setting up restrictions).
+ * 
  * @author Andy Gibson
  * 
  */
-public abstract class AbstractDataProvider<T> implements DataProvider<T>,Serializable {
+public abstract class AbstractDataProvider<T> implements DataProvider<T>,
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Class<?> entityClass;
-	
+
 	public Class<?> getEntityClass() {
 		if (entityClass == null) {
 
@@ -49,24 +59,23 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T>,Seriali
 		}
 		return entityClass;
 	}
-	
-	
+
 	public final Integer fetchResultCount() {
 		doPreFetch();
-		return doFetchResultCount();				
-		
+		return doFetchResultCount();
+
 	}
-	
+
 	public final List<T> fetchResults(Paginator paginator) {
 		doPreFetch();
-		return doFetchResults(paginator);		
+		return doFetchResults(paginator);
 	}
-
 
 	protected void doPreFetch() {
-		
+
 	}
-	
+
 	protected abstract List<T> doFetchResults(Paginator paginator);
+
 	protected abstract Integer doFetchResultCount();
 }

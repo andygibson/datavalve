@@ -36,25 +36,10 @@ import junit.framework.TestCase;
 import org.fluttercode.spigot.dataset.ObjectDataset;
 
 /**
- * This class appears in two different places. First, it appears in the test
- * code for the main spigot-core module. It also appears in the main source in
- * the spigot-test module where it can be subclassed to create a spigot test
- * case with the basic tests for object datasets already built in. However,
- * because of cyclic dependencies, the spigot-test module couldn't use the
- * spigot-core module if the core module depended on the test module to get
- * the <code>AbstractObjectDatasetTest</code> class for its unit tests.
- * <p>
- * While this is ugly, there is only one published
- * <code>AbstractObjectDatasetTest</code> class and that is in the spigot-test
- * module where other developers can subclass the test case to test their own
- * dataset implementations. The only other alternative would be to put the test
- * cases for the spigot-core into their own module which would then also
- * depend on the test module which we may do later.
- * </p>
- * <p>
+ * 
  * This class is an abstract class that implements a set of tests against an
  * {@link ObjectDataset} interface. You just need to subclass this and provide
- * an implemenation and a count of the number of records and this will test the
+ * an implementation and the number of records in the dataset and this will test the
  * pagination handling and other features of the dataset.
  * </p>
  * 

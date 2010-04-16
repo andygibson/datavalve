@@ -107,7 +107,7 @@ public interface QueryDataProvider<T> extends StatementDataProvider<T> {
 	 * @return true if the restriction was added
 	 */
 
-	boolean addRestriction(String restriction, String testValue,
+	boolean addRestrictionStr(String restriction, String testValue,
 			String paramValue);
 
 	/**

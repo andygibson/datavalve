@@ -70,10 +70,13 @@ public class CommaDelimitedProvider<T> extends TextFileProvider<T> {
 	 */
 	private T createObjectFromColumns(String[] columns) {
 		T result = doCreateObjectFromColumns(columns);
+		if (result != null) {
+			return result;
+		}
 		if (rowMapper == null) {
 			throw new NullPointerException(
 					"Rowmapper in comma delimited provider is unassigned");
-		}
+		} 
 		return rowMapper.mapRow(columns);
 	}
 

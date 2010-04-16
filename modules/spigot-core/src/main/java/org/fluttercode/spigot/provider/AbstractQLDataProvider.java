@@ -66,13 +66,13 @@ public abstract class AbstractQLDataProvider<T> extends
 	}
 
 	@Override
-	public Integer fetchResultCount() {
+	protected Integer doFetchResultCount() {
 		DataQuery query = buildDataQuery(getCountStatement(), false, null);
 		return queryForCount(query);
 	}
 
 	@Override
-	public List<T> fetchResults(Paginator paginator) {
+	protected List<T> doFetchResults(Paginator paginator) {
 		// fetch the results by building the data query and handing it off to a
 		// query execution method.
 		DataQuery query = buildDataQuery(getSelectStatement(), true, paginator);

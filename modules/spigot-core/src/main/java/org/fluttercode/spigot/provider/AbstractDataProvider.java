@@ -40,11 +40,6 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T>,Seriali
 	
 	private Class<?> entityClass;
 	
-	public abstract Integer fetchResultCount();
-
-	public abstract List<T> fetchResults(Paginator paginator);
-
-
 	public Class<?> getEntityClass() {
 		if (entityClass == null) {
 
@@ -54,4 +49,24 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T>,Seriali
 		}
 		return entityClass;
 	}
+	
+	
+	public final Integer fetchResultCount() {
+		doPreFetch();
+		return doFetchResultCount();				
+		
+	}
+	
+	public final List<T> fetchResults(Paginator paginator) {
+		doPreFetch();
+		return doFetchResults(paginator);		
+	}
+
+
+	protected void doPreFetch() {
+		
+	}
+	
+	protected abstract List<T> doFetchResults(Paginator paginator);
+	protected abstract Integer doFetchResultCount();
 }

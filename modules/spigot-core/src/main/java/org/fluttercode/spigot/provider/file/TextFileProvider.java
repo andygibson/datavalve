@@ -69,13 +69,13 @@ public abstract class TextFileProvider<T> extends AbstractFileBasedProvider<T> {
 	}
 
 	@Override
-	public Integer fetchResultCount() {
+	protected Integer doFetchResultCount() {
 		return countNumberOfLines(getFile());
 	}
 
 	// TODO change this implementation so it doesn't need to get the row count
 	@Override
-	public List<T> fetchResults(Paginator paginator) {
+	protected List<T> doFetchResults(Paginator paginator) {
 		Integer rowCount = paginator.getMaxRows() == null ? null : paginator
 				.getMaxRows();
 		int firstResult = paginator.getFirstResult();

@@ -76,7 +76,7 @@ public class QueryDatasetTest extends AbstractObjectDatasetJUnitTest<Integer>
 				return result;
 			}
 
-			public Integer fetchResultCount() {
+			protected Integer doFetchResultCount() {
 				return objectCount;
 			}
 

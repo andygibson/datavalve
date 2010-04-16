@@ -88,7 +88,7 @@ public interface QueryDataProvider<T> extends StatementDataProvider<T> {
 	 * i.e.
 	 * 
 	 * <pre>
-	 * dp.addRestriction(&quot;p.firstName like :param&quot;, firstName, firstName + &quot;%&quot;);
+	 * dp.addRestriction(&quot;p.firstName like :param&quot;, firstName + &quot;%&quot;,firstName);
 	 * </pre>
 	 * 
 	 * If the value of <code>firstName</code> is null then the restriction is

@@ -109,16 +109,14 @@ public abstract class AbstractQueryDataProvider<T> extends
 		return addRestriction(syntax, value, value);
 	}
 
-	public boolean addRestriction(String syntax, String testValue,
-			String paramValue) {
+	public boolean addRestriction(String syntax, String paramValue,String testValue) {
 		if (testValue != null && testValue.length() != 0) {
-			return addRestriction(syntax, testValue, paramValue);
+			return addRestriction(syntax, paramValue,testValue);
 		}
 		return false;
 	}
 
-	public boolean addRestriction(String syntax, Object testValue,
-			Object paramValue) {
+	public boolean addRestriction(String syntax,Object paramValue, Object testValue) {
 		if (testValue != null) {
 			String name = getNextParamName();
 			syntax = syntax.replace(":param", ":" + name);

@@ -60,13 +60,13 @@ public abstract class AbstractDataProvider<T> implements DataProvider<T>,
 		return entityClass;
 	}
 
-	public final Integer fetchResultCount() {
+	public Integer fetchResultCount() {
 		doPreFetch();
 		return doFetchResultCount();
 
 	}
 
-	public final List<T> fetchResults(Paginator paginator) {
+	public List<T> fetchResults(Paginator paginator) {
 		doPreFetch();
 		return doFetchResults(paginator);
 	}

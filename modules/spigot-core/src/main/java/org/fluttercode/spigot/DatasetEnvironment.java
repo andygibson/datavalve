@@ -36,6 +36,9 @@ import org.fluttercode.spigot.provider.ParameterizedDataProvider;
  * {@link ParameterResolver} instances and can be used as a global parameter
  * resolver to allow you to specify application wide parameters once.
  * 
+ * You can also define common resolvers here that are shared among all the data
+ * provider instances, for example, adding an EL parameter resolver.
+ * 
  * @author Andy Gibson
  * 
  */
@@ -60,7 +63,7 @@ public class DatasetEnvironment implements ParameterResolver {
 		addParameterResolver(new AbstractParameterResolver() {
 
 			private static final long serialVersionUID = 1L;
-			
+
 			public boolean resolveParameter(
 					ParameterizedDataProvider<? extends Object> dataset,
 					Parameter parameter) {
@@ -88,7 +91,8 @@ public class DatasetEnvironment implements ParameterResolver {
 	}
 
 	public boolean resolveParameter(
-			ParameterizedDataProvider<? extends Object> dataset, Parameter parameter) {
+			ParameterizedDataProvider<? extends Object> dataset,
+			Parameter parameter) {
 		for (ParameterResolver resolver : parameterResolvers) {
 			if (resolver.acceptParameter(parameter.getName())) {
 				if (resolver.resolveParameter(dataset, parameter)) {

@@ -27,6 +27,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.hibernate.Session;
+import org.fluttercode.spigot.el.ExpressionParameterResolver;
 import org.fluttercode.spigot.provider.hibernate.HibernateDataProvider;
 import org.fluttercode.spigot.samples.cdidemo.model.Person;
 import org.slf4j.Logger;

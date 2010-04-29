@@ -1923,11 +1923,82 @@ showResults(results2);]]>
 		<title>The Spigot architecture</title>
 		<para>
 			Now we've covered these fundamentals of using Spigot we can look at
-			the different subclasses of the
+			the different modules that Spigot includes. We will then look at the
+			different subclasses of the
 			<classname>DataProvider</classname>
 			interface and implementations so we create datasets that can attach
-			to different datasources in a useful way.
+			to different datasources.
 		</para>
+		<sect1>
+			<title>List of Module</title>
+			<para>Spigot contains a number of modules, and is split into the main
+				core and dataset modules and the more framework specific modules.
+			</para>
+			<table>
+				<title>List of Modules</title>
+				<tgroup cols="2">
+					<colspec colname="name" colwidth="35%" />
+					<colspec colname="description" colwidth="65%" />
+					<tbody>
+						<row>
+							<entry>Spigot-Core</entry>
+							<entry>Core module with the API interfaces and also includes
+								in-memory and file based data providers. In general this
+								contains providers and classes that are not dependent on
+								external frameworks and also utility classes.</entry>
+						</row>
+						<row>
+							<entry>Spigot-Dataset</entry>
+							<entry>Contains the core classes for datasets as well as datasets
+								for the 
+							</entry>
+						</row>
+						<row>
+							<entry>Spigot-Hibernate</entry>
+							<entry>Query data providers and datasets for the Hibernate
+								framework</entry>
+						</row>
+						<row>
+							<entry>Spigot-JPA</entry>
+							<entry>Query data providers and datasets for JPA</entry>
+						</row>
+
+						<row>
+							<entry>Spigot-SQL</entry>
+							<entry>Query data providers and datasets for using SQL</entry>
+						</row>
+
+						<row>
+							<entry>Spigot-Faces</entry>
+							<entry>Provides features for use with Java Server Faces. This
+								includes an EL parameter resolver, and JSF components for
+								Pagination and column ordering links.</entry>
+						</row>
+						<row>
+							<entry>Spigot-Seam</entry>
+							<entry>Extensions for use with Seam, includes a Seam Jpa and
+								Native datasets as well as a Seam parameter resolver that uses
+								the EL resolvers included as part of Seam. It also includes an
+								adapter for substituting a Spigot dataset for a Seam EntityQuery
+								dataset. It implements most features except for sorting.</entry>
+						</row>
+						<row>
+							<entry>Spigot-Test</entry>
+							<entry>
+								Includes classes for base test cases for testing data provider
+								implementations. You should only need this if you are writing
+								your own Data provider implementations. At the moment, it also
+								includes the
+								<classname>TestDataFactory</classname>
+								class that is used to generated data. For that reason, this
+								module is also used in most of the demo applications for
+								generating data.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</sect1>
 		<sect1>
 			<title>Data provider types</title>
 			<para>
@@ -2889,73 +2960,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 				so you can just substitute one for the other.
 			</para>
 		</sect1>
-		<sect1>
-			<title>List of Module</title>
-			<table>
-				<title>List of Modules</title>
-				<tgroup cols="2">
-					<colspec colname="name" colwidth="35%" />
-					<colspec colname="description" colwidth="65%" />
-					<tbody>
-						<row>
-							<entry>Spigot-Core</entry>
-							<entry>Core module with the API interfaces and also includes
-								in-memory and file based data providers. In general this
-								contains providers and classes that are not dependent on
-								external frameworks and also utility classes.</entry>
-						</row>
-						<row>
-							<entry>Spigot-Dataset</entry>
-							<entry>Contains the core classes for datasets as well as datasets
-								for the 
-							</entry>
-						</row>
-						<row>
-							<entry>Spigot-Hibernate</entry>
-							<entry>Query data providers and datasets for the Hibernate
-								framework</entry>
-						</row>
-						<row>
-							<entry>Spigot-JPA</entry>
-							<entry>Query data providers and datasets for JPA</entry>
-						</row>
 
-						<row>
-							<entry>Spigot-SQL</entry>
-							<entry>Query data providers and datasets for using SQL</entry>
-						</row>
-
-						<row>
-							<entry>Spigot-Faces</entry>
-							<entry>Provides features for use with Java Server Faces. This
-								includes an EL parameter resolver, and JSF components for
-								Pagination and column ordering links.</entry>
-						</row>
-						<row>
-							<entry>Spigot-Seam</entry>
-							<entry>Extensions for use with Seam, includes a Seam Jpa and
-								Native datasets as well as a Seam parameter resolver that uses
-								the EL resolvers included as part of Seam. It also includes an
-								adapter for substituting a Spigot dataset for a Seam EntityQuery
-								dataset. It implements most features except for sorting.</entry>
-						</row>
-						<row>
-							<entry>Spigot-Test</entry>
-							<entry>
-								Includes classes for base test cases for testing data provider
-								implementations. You should only need this if you are writing
-								your own Data provider implementations. At the moment, it also
-								includes the
-								<classname>TestDataFactory</classname>
-								class that is used to generated data. For that reason, this
-								module is also used in most of the demo applications for
-								generating data.
-							</entry>
-						</row>
-					</tbody>
-				</tgroup>
-			</table>
-		</sect1>
 		<sect1>
 			<title>Spigot and JSF</title>
 			<para>Spigot-Faces is a module for working with Spigot in JSF. It
@@ -2996,7 +3001,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 }]]>
 </programlisting>
 			</example>
-			
+
 		</sect1>
 
 	</chapter>

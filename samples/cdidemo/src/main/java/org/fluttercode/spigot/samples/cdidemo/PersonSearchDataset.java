@@ -35,8 +35,8 @@ import org.fluttercode.spigot.provider.QueryDataProvider;
 import org.fluttercode.spigot.samples.cdidemo.model.Person;
 
 /**
- * Request scoped dataset that holds the info regarding the first result and
- * page size for the demo data. Values are popped into here using  
+ * Request scoped dataset for the demo. The page holds the state of the first
+ * results, page size and ordering info and they are put back here on postback.
  * 
  * @author Andy Gibson
  * 

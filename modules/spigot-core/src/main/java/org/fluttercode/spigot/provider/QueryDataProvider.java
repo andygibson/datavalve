@@ -65,7 +65,7 @@ public interface QueryDataProvider<T> extends StatementDataProvider<T> {
 	 * <p>
 	 * i.e.
 	 * <pre>
-	 * dp.addRestriction(&quot;c.type = :param&quot;, selectedType);
+	 * dp.addRestriction(&quot;c.type = :param&quot;, someValue);
 	 * </pre>
 	 * 
 	 * This will only be added if <code>selectedType</code> is not null.
@@ -88,7 +88,7 @@ public interface QueryDataProvider<T> extends StatementDataProvider<T> {
 	 * i.e.
 	 * 
 	 * <pre>
-	 * dp.addRestriction(&quot;p.firstName like :param&quot;, firstName + &quot;%&quot;,firstName);
+	 * dp.addRestriction(&quot;p.firstName like :param&quot;, firstName,firstName + &quot;%&quot;);
 	 * </pre>
 	 * 
 	 * If the value of <code>firstName</code> is null then the restriction is
@@ -99,16 +99,16 @@ public interface QueryDataProvider<T> extends StatementDataProvider<T> {
 	 * 
 	 * @param restriction
 	 *            restriction to add
-	 * @param testValue
-	 *            value to check for null. If null, the restriction is not added
 	 * @param paramValue
 	 *            value to set the parameter to if <code>testValue</code> is not
 	 *            null.
+	 * @param testValue
+	 *            value to check for null. If null, the restriction is not added
 	 * @return true if the restriction was added
 	 */
 
-	boolean addRestrictionStr(String restriction, String testValue,
-			String paramValue);
+	boolean addRestrictionStr(String restriction, String paramValue,
+			String testValue);
 
 	/**
 	 * Adds the restriction substituting <code>paramValue</code> for the
@@ -117,14 +117,13 @@ public interface QueryDataProvider<T> extends StatementDataProvider<T> {
 	 * 
 	 * @param restriction
 	 *            restriction to add
-	 * @param testValue
-	 *            value to check for null. If null, the restriction is not added
 	 * @param paramValue
 	 *            value to set the parameter to if <code>testValue</code> is not
 	 *            null.
+	 * @param testValue
+	 *            value to check for null. If null, the restriction is not added
 	 * @return true if the restriction was added
 	 */
-	boolean addRestriction(String restriction, Object testValue,
-			Object paramValue);
+	boolean addRestriction(String restriction, Object paramValue,Object testValue);
 
 }

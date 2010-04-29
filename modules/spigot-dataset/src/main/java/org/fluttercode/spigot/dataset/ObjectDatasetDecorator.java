@@ -27,8 +27,6 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.fluttercode.spigot.Paginator;
-
 /**
  * Decorator class that can be used to decorate an existing
  * {@link ObjectDataset}.

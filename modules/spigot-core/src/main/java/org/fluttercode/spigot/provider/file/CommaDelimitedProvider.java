@@ -24,7 +24,6 @@
 package org.fluttercode.spigot.provider.file;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Provider that returns data from a comma delimited file using a

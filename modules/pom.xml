@@ -72,5 +72,6 @@
         <module>spigot-wicket</module>
         <module>spigot-seam</module>
         <module>spigot-hibernate</module>
+        <module>spigot-faces</module>
     </modules>
 </project>

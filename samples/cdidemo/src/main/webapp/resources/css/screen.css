@@ -3,7 +3,6 @@ body {
 	padding: 0;
 	background-color: #EAECEE;
 	font-family: Verdana, sans-serif;
-	font-size: 0.9em;
 }
 
 #container {
@@ -46,13 +45,21 @@ span.invalid {
 
 .dataTable {
 	width: 100%;
-	background: #606060;
+	background: #c0c0c0;
+	border-spacing: 1px;
 }
 
 .dataTable td {
-	padding: 4px;
-	border-collapse: collapse;
-	background: #f0f0f0;
+	padding: 2px;
+	border-collapse: collapse;	
+}
+
+.evenRow {
+	background: #f6f6f6;
+}
+
+.oddRow {
+	background: #fefefe;
 }
 
 .dataTable th {
@@ -84,14 +91,15 @@ span.invalid {
 .linkStyle {
 	text-decoration: none;
 	color: #000000;
+	font-size: 0.9em;
 }
 
 .activeLinkStyle {
 	text-decoration: underline;
-	font-weight: bold;
+	font-size: 0.9em;
 	color: #404040;
 }
 
 .paginator {
-	padding :4px;	
+	padding: 4px;
 }

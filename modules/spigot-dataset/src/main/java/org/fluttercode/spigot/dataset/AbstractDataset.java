@@ -69,6 +69,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	private boolean orderAscending = true;
 	private Class<?> entityClass;
 	private boolean nextAvailable;
+	private boolean resetFirstResultOnRefresh = true;
 
 	public int getFirstResult() {
 		return firstResult;
@@ -246,6 +247,7 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 	}
 
 	public void setOrderAscending(boolean isAscending) {
+		// check the value is different before we invalidate the results
 		if (this.orderAscending != isAscending) {
 			this.orderAscending = isAscending;
 			invalidateResults();
@@ -264,6 +266,9 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	public void refresh() {
 		invalidateResults();
+		if (getResetFirstResultOnRefresh()) {
+			firstResult = 0;
+		}
 	}
 
 	public boolean isNextAvailable() {
@@ -273,5 +278,13 @@ public abstract class AbstractDataset<T> implements ObjectDataset<T>,
 
 	public void setNextAvailable(boolean nextAvailable) {
 		this.nextAvailable = nextAvailable;
+	}
+
+	public void setResetFirstResultOnRefresh(boolean resetFirstResultOnRefresh) {
+		this.resetFirstResultOnRefresh = resetFirstResultOnRefresh;
+	}
+
+	public boolean getResetFirstResultOnRefresh() {
+		return resetFirstResultOnRefresh;
 	}
 }

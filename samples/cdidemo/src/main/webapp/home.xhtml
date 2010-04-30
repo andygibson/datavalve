@@ -2,16 +2,18 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"	
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:sf="http://java.sun.com/jsf/composite/spigot"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h:form id="form">
 
-			<h:panelGrid columns="2"
-				style="border : 2px solid #000000;background : #f0f0f0;padding : 16px;margin : 8px">
-				<h:outputText value="First Name : " />
+
+			<h3>Search For People</h3>
+			<h:panelGrid columns="2">
+
+				<h:outputText value="First Name : " style="label" />
 				<h:inputText value="#{searchCriteria.firstName}" />
 				<h:outputText value="Last Name : " />
 				<h:inputText value="#{searchCriteria.lastName}" />
@@ -22,19 +24,20 @@
 					<f:ajax execute="form" render="form" />
 				</h:commandButton>
 			</h:panelGrid>
-
-
-
+			<br />
 			<h:dataTable value="#{personResults}" var="v_person"
-				styleClass="dataTable" columnClasses="smallCol,medCol,medCol">
-				<h:column>
+				id="searchResults" styleClass="dataTable"
+				columnClasses="smallCol,medCol,medCol" rowClasses="evenRow,oddRow">
+				<h:column
+					headerClass="#{personSearch.orderKey == 'id' ? 'sortedHeaderClass' : 'headerClass'}">
 					<f:facet name="header">
 						<sf:sortLink paginator="#{personSearch}" key="id"
-							caption="Person Id" />
+							ajaxEnabled="true" caption="Person Id" />
 					</f:facet>
 					#{v_person.id}
 				</h:column>
-				<h:column>
+				<h:column
+					headerClass="#{personSearch.orderKey == 'name' ? 'sortedHeaderClass' : 'headerClass'}">
 					<f:facet name="header">
 						<sf:sortLink paginator="#{personSearch}" key="name" caption="Name"
 							ascImageUrl="#{resources['/gfx/weld.png']}" />
@@ -42,7 +45,8 @@
 					#{v_person.name}							
 			    </h:column>
 
-				<h:column>
+				<h:column
+					headerClass="#{personSearch.orderKey == 'phone' ? 'sortedHeaderClass' : 'headerClass'}">
 					<f:facet name="header">
 						<sf:sortLink paginator="#{personSearch}" key="phone"
 							caption="Phone Number" />
@@ -52,8 +56,10 @@
 
 			</h:dataTable>
 
-			<sf:simplePaginator dataset="#{personSearch}"/>
-
+			<sf:simplePaginator paginator="#{personSearch}" ajaxEnabled="true" />
 		</h:form>
+		<small>Note - only the paginator and the person Id column
+		sorting uses ajax</small>
+
 	</ui:define>
 </ui:composition>

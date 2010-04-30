@@ -1139,9 +1139,23 @@ public QueryDataProvider<Person> createDataProvider() {
 	</chapter>
 	<chapter>
 		<title>Implementing and testing a data provider</title>
-		<para>This chapter looks at creating a simple data provider, testing
-			it
-			and seeing the different ways we can access the data in it.</para>
+		<para>
+			This chapter looks at creating a simple data provider, testing
+			it and
+			seeing the different ways we can access the data in it. Note that we
+			implement our provider by subclassing
+			<classname>Object</classname>
+			and implementing the
+			<classname>DataProvider</classname>
+			interface directly. This was for the purpose of demonstration and
+			while you can create data providers this way, a better option would
+			be to subclass the
+			<classname>AbstractDataProvider</classname>
+			which implements these methods and also adds points for subclasses to
+			extend the class for both the data provider implementor and the
+			application developer using a subclass of the implementation.
+		</para>
+
 		<sect1>
 			<title>
 				Our first
@@ -1803,6 +1817,7 @@ while (ds.isNextAvailable()) {
 					.
 				</para>
 				<note>
+					<title>Note</title>
 					<para>
 						<superscript>*</superscript>
 						We do use this kind of incorrect paging through data in
@@ -2293,19 +2308,14 @@ QueryDataset<Person> ds = new QueryDataset<Person>(provider);]]></programlisting
 				is needed. </para>
 		</sect1>
 		<sect1>
-			<title>Guide for choosing a dataset type</title>
+			<title>Choosing a dataset type</title>
 			<para>
-				In general, the rules for choosing a dataset type are fairly
-				simple.
-				In factory or construction code, where you construct and
-				configure
-				the data provider you can refer to it as specifically
-				as you want.
-				However, it is best to refer to it in the client
-				code as far down the
-				hierarchy as possible. Typically, for
-				things like search forms, you
-				might use a factory to construct a
+				In general, the rules for choosing a dataset type are fairly simple.
+				In factory or construction code, where you construct and configure
+				the data provider you can be as specific in the class type as you
+				want. However, it is best to refer to it in the client code as far
+				down the hierarchy as possible. Typically, for things like search
+				forms, you might use a factory to construct a
 				<classname>JpaDataProvider</classname>
 				and set the
 				<methodname>entityManager</methodname>
@@ -2348,7 +2358,96 @@ QueryDataset<Person> ds = new QueryDataset<Person>(provider);]]></programlisting
 			</para>
 		</sect1>
 
+		<sect1>
+			<title>
+				Extending
+				<code>DataProvider</code>
+				implementations
+			</title>
+			<para>
+				When creating a new data provider implementation, you are most
+				likely to want to subclass from the
+				<classname>AbstractDataProvider</classname>
+				class rather than start from scatch implementing the
+				<classname>DataProvider</classname>
+				interface. To implement your own data provider you can override the
+				following methods.
+			</para>
+			<sect2>
+				<title>
+					<methodname>void doPreFetch()</methodname>
+				</title>
+				<para>This method lets you alter the state of the provide prior to
+					fetching either the result count or the actual results.</para>
+			</sect2>
 
+			<sect2>
+				<title>
+					<methodname>Integer doFetchResultCount()</methodname>
+				</title>
+				<para>Returns the actual number of rows in the dataset available to
+					the user. This takes into account any filtering or restrictions
+					that might be applicable.</para>
+			</sect2>
+
+			<sect2>
+				<title>
+					<methodname>List&lt;T&gt; doFetchResultCount()</methodname>
+				</title>
+				<para>Returns the actual results from the source dataset to the
+					user. This takes into account any filtering or restrictions that
+					might be applicable.</para>
+			</sect2>
+
+			<sect2>
+				<title>
+					<methodname>Integer doPostFetchResultCount(Integer resultCount)
+					</methodname>
+				</title>
+				<para>This method is called after the result count has been fetched
+					and the result from this method is the value returned to the user.
+					By default this method just returns the count value passed in.
+				</para>
+			</sect2>
+
+			<sect2>
+				<title>
+					<methodname>List&lt;T&gt; doPostFetchResultCount(List&lt;T&gt;
+						results,Paginator paginator)</methodname>
+				</title>
+				<para>This method is called after the results have been fetched and
+					they are passed into this method along with the pagination info
+					used to fetch the results. This method allows for any
+					post-processing if the results. This method returns the results
+					that are then passed back to the user. By default this method just
+					returns the list of results passed in with no changes.</para>
+			</sect2>
+			<sect2>
+				<title>Extending data providers</title>
+				<para>
+					You would normally only need to override the
+					<methodname>doFetchResults</methodname>
+					and the
+					<methodname>doFetchResultCount</methodname>
+					methods to implement the provider adequately.
+				</para>
+				<para>
+					Application developers will find more use in the pre and possibly
+					the post fetch methods. In most cases, developers will use the
+					<methodname>doPreFetch()</methodname>
+					to perform any last minute configuration of the provider before
+					fetching the results. This may mean altering restrictions based on
+					application state, or even altering parameter values.
+				</para>
+				<para>Beyond that, there shouldn't be many more ways developers need
+					to extend the provider classes between the use of composition and
+					extension points that can be overridden. The goal is to make it
+					open for extension, closed for modification. If you feel there are
+					other ways we can improve this, or other extension points need
+					adding, get in touch and we'll see what can be done.</para>
+			</sect2>
+
+		</sect1>
 		<sect1>
 			<title>Extending datasets for custom providers</title>
 			<para>
@@ -2971,6 +3070,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 			<para>For an example of using the spigot-faces module in a servlet
 				environment using CDI and JSF, take a look at the cdi demo
 				application in the samples directory. </para>
+				
 		</sect1>
 		<sect1>
 			<title>Executing code before a fetch</title>

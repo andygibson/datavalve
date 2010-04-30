@@ -20,22 +20,23 @@
 			type="org.fluttercode.spigot.Paginator"
 			shortDescription="The paginator that is used to provide data and pagination state for this component." />
 
-		<composite:attribute required="false" name="ajax"
-			type="java.lang.Boolean" default="False"
-			shortDescription="Indicates if ajax should be used to update the page when the user navigates the data." />
 
 		<composite:attribute required="false" name="pageTextClass"
 			shortDescription="Style class for the page x of y message" />
 
 		<composite:attribute required="false" name="buttonClass"
 			shortDescription="Style class for the navigation buttons" />
+			
+		<composite:attribute required="false" name="ajaxEnabled"
+			type="java.lang.Boolean" default="False"
+			shortDescription="Indicates if ajax should be used to update the page when the user navigates the data." />
 
 		<composite:attribute required="false" name="ajaxRender" default="@all"
-			shortDescription="Value used for the render parameter in the ajax processing. Only needed it ajax=true" />
+			shortDescription="Value used for the render parameter in the ajax processing. Only needed it if ajaxEnabled=true" />
 
 		<composite:attribute required="false" name="ajaxExecute"
 			default="@form"
-			shortDescriptio="Value used for the execute parameter in the ajax processing. Only needed it ajax=true" />
+			shortDescriptio="Value used for the execute parameter in the ajax processing. Only needed it ajaxEnabled=true" />
 
 		<composite:attribute required="false" name="holdState"
 			type="java.lang.Boolean" default="True"
@@ -71,7 +72,9 @@
 
 		<h:panelGrid styleClass="paginator" columns="5">
 			<f:ajax execute="#{cc.attrs.ajaxExecute}"
-				render="#{cc.attrs.ajaxRender}" rendered="#{cc.attrs.ajax}">
+				render="#{cc.attrs.ajaxRender}" rendered="#{cc.attrs.ajaxEnabled}"
+				disabled="#{not cc.attrs.ajaxEnabled}">
+				
 
 				<h:commandButton value="#{cc.attrs.captionFirst}"
 					class="#{cc.attrs.buttonClass}"

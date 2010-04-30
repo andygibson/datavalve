@@ -27,14 +27,37 @@
 			shortDescription="Style class for the sort link container" />
 		<composite:attribute name="linkStyle"
 			shortDescription="Style for the actual sort link" />
-		<composite:attribute name="linkStyleClass"
+		<composite:attribute name="activeLinkStyle"
+			shortDescription="Style for the sort link when it is active" />
+
+		<composite:attribute name="linkStyleClass" default="linkStyle"
 			shortDescription="Style class for the actual sort link" />
+		<composite:attribute name="activeLinkStyleClass"
+			default="activeLinkStyle"
+			shortDescription="Style class for the sort link when we are sorting by that link" />
+
 		<composite:attribute name="ascImageUrl"
-			shortDescription="URL of image to use for ascending ordering" 
-			default="#{resource['spigot/sort_asc.png']}"/>
+			shortDescription="URL of image to use for ascending ordering"
+			default="#{resource['spigot/sort_asc.png']}" />
 		<composite:attribute name="descImageUrl"
-			shortDescription="URL of image to use for descending ordering" 
-			default="#{resource['spigot/sort_desc.png']}"/>
+			shortDescription="URL of image to use for descending ordering"
+			default="#{resource['spigot/sort_desc.png']}" />
+
+		<composite:attribute name="showImages" type="java.lang.Boolean"
+			shortDescription="Whether the images for the asc/desc ordering are shown."
+			default="True" />
+
+		<composite:attribute name="ajaxEnabled"
+			type="java.lang.Boolean" default="False"
+			shortDescription="Indicates if ajax should be used to update the page when the user navigates the data." />
+
+		<composite:attribute required="false" name="ajaxRender" default="@all"
+			shortDescription="Value used for the render parameter in the ajax processing. Only needed it if ajaxEnabled=true" />
+
+		<composite:attribute required="false" name="ajaxExecute"
+			default="@form"
+			shortDescriptio="Value used for the execute parameter in the ajax processing. Only needed it ajaxEnabled=true" />
+
 
 	</composite:interface>
 
@@ -43,11 +66,16 @@
 
 		<h:panelGroup style="#{cc.attrs.style}"
 			styleClass="#{cc.attrs.styleClass}">
-			
+
 			<h:commandLink
 				action="#{cc.attrs.paginator.changeOrderKey(cc.attrs['key'])}"
-				value="#{cc.attrs.caption}" styleClass="#{cc.attrs.linkStyleClass}"
-				style="#{cc.attrs.linkStyle}" />
+				value="#{cc.attrs.caption}"
+				styleClass="#{(cc.attrs.paginator.orderKey == cc.attrs.key) ? cc.attrs.activeLinkStyleClass : cc.attrs.linkStyleClass}"
+				style="#{(cc.attrs.paginator.orderKey == cc.attrs.key) ? cc.attrs.activeLinkStyle : cc.attrs.linkStyle}">
+				<f:ajax render="#{cc.attrs.ajaxRender}" execute="#{cc.attrs.ajaxExecute}" disabled="#{not cc.attrs.ajaxEnabled}"/>
+					 
+					
+			</h:commandLink>
 			<h:graphicImage value="#{cc.attrs.ascImageUrl}"
 				rendered="#{(cc.attrs.paginator.orderAscending) and (cc.attrs.paginator.orderKey == cc.attrs.key)}" />
 			<h:graphicImage value="#{cc.attrs.descImageUrl}"

@@ -25,11 +25,19 @@ package org.fluttercode.spigot;
 
 import java.util.List;
 
+import org.fluttercode.spigot.provider.AbstractDataProvider;
+
 /**
  * Interface for accessing data based on the current state of the provider and
  * {@link Paginator}. Both the result count and data fetch are based on the
  * current state of the provider indicating what data the user wants. This is
  * particularly important in subclasses which may have SQL restrictions.
+ * <p/>
+ * Typically, for implementing new data providers you should subclass the
+ * {@link AbstractDataProvider}. This class implements the fetch actions, and
+ * provides methods for overriding to alter the behavior in data provider
+ * implementations and also in subclasses of those providers for customization
+ * at the application development level.
  * 
  * @author Andy Gibson
  * 
@@ -41,6 +49,7 @@ public interface DataProvider<T> {
 	/**
 	 * Returns the number of rows that are in the complete dataset once the
 	 * state of the provider has been taken into account.
+	 * <p/>
 	 * 
 	 * @return The number of rows in the whole dataset
 	 */

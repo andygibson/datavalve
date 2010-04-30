@@ -16,13 +16,13 @@
 	<composite:interface name="simplePaginator"
 		displayName="Simple Spigot Paginator">
 
-		<composite:attribute required="true" name="dataset"
+		<composite:attribute required="true" name="paginator"
 			type="org.fluttercode.spigot.Paginator"
-			shortDescription="The dataset that is used to provide data and pagination state for this component." />
+			shortDescription="The paginator that is used to provide data and pagination state for this component." />
 
 		<composite:attribute required="false" name="ajax"
 			type="java.lang.Boolean" default="False"
-			shortDescription="Indicates if ajax should be used to update the page when the user navigates the dataset." />
+			shortDescription="Indicates if ajax should be used to update the page when the user navigates the data." />
 
 		<composite:attribute required="false" name="pageTextClass"
 			shortDescription="Style class for the page x of y message" />
@@ -39,7 +39,7 @@
 
 		<composite:attribute required="false" name="holdState"
 			type="java.lang.Boolean" default="True"
-			shortDescription="If true, the paginator will hold the state of the dataset pagination and send it back to the paginator when a postback occurs. Can be used for stateless pagination without using page parameters if the source dataset has a stateless scope." />
+			shortDescription="If true, the paginator will hold the pagination state and send it back to the paginator when a postback occurs. Can be used for stateless pagination without using page parameters if the source paginator has a stateless scope." />
 
 		<composite:attribute required="false" name="showPageNumbers"
 			default="True"
@@ -62,11 +62,11 @@
 
 	<composite:implementation>
 		<h:panelGroup rendered="#{cc.attrs.holdState}">
-			<h:inputHidden value="#{cc.attrs.dataset.firstResult}" />
-			<h:inputHidden value="#{cc.attrs.dataset.maxRows}" />
-			<h:inputHidden value="#{cc.attrs.dataset.firstResult}" />
-			<h:inputHidden value="#{cc.attrs.dataset.orderKey}" />
-			<h:inputHidden value="#{cc.attrs.dataset.orderAscending}" />
+			<h:inputHidden value="#{cc.attrs.paginator.firstResult}" />
+			<h:inputHidden value="#{cc.attrs.paginator.maxRows}" />
+			<h:inputHidden value="#{cc.attrs.paginator.firstResult}" />
+			<h:inputHidden value="#{cc.attrs.paginator.orderKey}" />
+			<h:inputHidden value="#{cc.attrs.paginator.orderAscending}" />
 		</h:panelGroup>
 
 		<h:panelGrid styleClass="paginator" columns="5">
@@ -74,25 +74,26 @@
 				render="#{cc.attrs.ajaxRender}" rendered="#{cc.attrs.ajax}">
 
 				<h:commandButton value="#{cc.attrs.captionFirst}"
-					class="#{cc.attrs.buttonClass}" action="#{cc.attrs.dataset.first}" />
+					class="#{cc.attrs.buttonClass}"
+					action="#{cc.attrs.paginator.first}" />
 
 				<h:commandButton value="#{cc.attrs.captionPrevious}"
 					class="#{cc.attrs.buttonClass}"
-					action="#{cc.attrs.dataset.previous}" />
+					action="#{cc.attrs.paginator.previous}" />
 
 
 				<h:outputText
-					value="Page #{cc.attrs.dataset.page} of #{cc.attrs.dataset.pageCount}"
+					value="Page #{cc.attrs.paginator.page} of #{cc.attrs.paginator.pageCount}"
 					styleClass="#{cc.attrs.pageTextClass}" style="margin-right : 28px"
 					rendered="#{cc.attrs.showPageNumbers}" />
-					<h:panelGroup rendered="#{not cc.attrs.showPageNumbers}"/>
+				<h:panelGroup rendered="#{not cc.attrs.showPageNumbers}" />
 
 				<h:commandButton value="#{cc.attrs.captionNext}"
-					action="#{cc.attrs.dataset.next}" class="#{cc.attrs.buttonClass}" />
+					action="#{cc.attrs.paginator.next}" class="#{cc.attrs.buttonClass}" />
 
 
 				<h:commandButton value="#{cc.attrs.captionLast}"
-					action="#{cc.attrs.dataset.last}" class="#{cc.attrs.buttonClass}" />
+					action="#{cc.attrs.paginator.last}" class="#{cc.attrs.buttonClass}" />
 			</f:ajax>
 		</h:panelGrid>
 	</composite:implementation>

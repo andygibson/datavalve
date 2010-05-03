@@ -30,6 +30,9 @@ import org.fluttercode.spigot.DefaultPaginator;
 import org.fluttercode.spigot.Paginator;
 
 /**
+ * Main class with the main() method. Use this class to play around with the
+ * demos that appear in the documentation.
+ * 
  * @author Andy Gibson
  * 
  */
@@ -44,11 +47,12 @@ public class Main {
 	 */
 	public static void demoIntegerDataProvider() {
 		Paginator paginator = new DefaultPaginator(10);
-		DataProvider<Integer> provider = new IntegerDataProvider();		
+		DataProvider<Integer> provider = new IntegerDataProvider();
 
 		List<Integer> results = provider.fetchResults(paginator);
 		showResults(results);
 	}
+
 	public static void showResults(List<Integer> results) {
 		System.out.println("Result Size = " + results.size());
 

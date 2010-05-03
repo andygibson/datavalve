@@ -21,9 +21,18 @@
 				<h:inputText value="#{searchCriteria.phone}" />
 
 				<h:commandButton value="Refresh" action="#{personSearch.refresh}">
-					<f:ajax execute="form" render="form" />
+					<f:ajax execute="form" render="form"
+						disabled="#{not searchCriteria.ajaxEnabled}" />
 				</h:commandButton>
+
+
 			</h:panelGrid>
+
+			<small style="float: right">Use Ajax : <h:selectBooleanCheckbox
+				value="#{searchCriteria.ajaxEnabled}">
+				<f:ajax render="form" execute="form" />
+			</h:selectBooleanCheckbox> </small>
+			<br />
 			<br />
 			<h:dataTable value="#{personResults}" var="v_person"
 				id="searchResults" styleClass="dataTable"
@@ -32,7 +41,7 @@
 					headerClass="#{personSearch.orderKey == 'id' ? 'sortedHeaderClass' : 'headerClass'}">
 					<f:facet name="header">
 						<sf:sortLink paginator="#{personSearch}" key="id"
-							ajaxEnabled="true" caption="Person Id" />
+							ajaxEnabled="#{searchCriteria.ajaxEnabled}" caption="Person Id" />
 					</f:facet>
 					#{v_person.id}
 				</h:column>
@@ -40,7 +49,8 @@
 					headerClass="#{personSearch.orderKey == 'name' ? 'sortedHeaderClass' : 'headerClass'}">
 					<f:facet name="header">
 						<sf:sortLink paginator="#{personSearch}" key="name" caption="Name"
-							ascImageUrl="#{resources['/gfx/weld.png']}" />
+							ascImageUrl="#{resources['/gfx/weld.png']}"
+							ajaxEnabled="#{searchCriteria.ajaxEnabled}" />
 					</f:facet>
 					#{v_person.name}							
 			    </h:column>
@@ -49,6 +59,7 @@
 					headerClass="#{personSearch.orderKey == 'phone' ? 'sortedHeaderClass' : 'headerClass'}">
 					<f:facet name="header">
 						<sf:sortLink paginator="#{personSearch}" key="phone"
+							ajaxEnabled="#{searchCriteria.ajaxEnabled}"
 							caption="Phone Number" />
 					</f:facet>
 					<h:outputText value="#{v_person.phone}" converter="personPhone" />
@@ -56,10 +67,9 @@
 
 			</h:dataTable>
 
-			<sf:simplePaginator paginator="#{personSearch}" ajaxEnabled="true" />
+			<sf:simplePaginator paginator="#{personSearch}"
+				ajaxEnabled="#{searchCriteria.ajaxEnabled}" />
 		</h:form>
-		<small>Note - only the paginator and the person Id column
-		sorting uses ajax</small>
 
 	</ui:define>
 </ui:composition>

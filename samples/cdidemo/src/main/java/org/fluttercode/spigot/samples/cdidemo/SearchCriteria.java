@@ -37,6 +37,7 @@ public class SearchCriteria {
 	private String firstName;
 	private String lastName;
 	private String phone;
+	private boolean ajaxEnabled = false;
 
 	public String getFirstName() {
 		return firstName;
@@ -82,5 +83,11 @@ public class SearchCriteria {
 	public String getPhoneWildcard() {		
 		return addWildcard(phone);
 	}
-	
+
+	public boolean isAjaxEnabled() {
+		return ajaxEnabled;
+	}
+	public void setAjaxEnabled(boolean ajaxEnabled) {
+		this.ajaxEnabled = ajaxEnabled;
+	}
 }

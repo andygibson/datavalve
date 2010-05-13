@@ -5,7 +5,7 @@
     <groupId>org.fluttercode.spigot</groupId>
     <artifactId>docs</artifactId>
     <name>spigot-documentation</name>
-    <version>0.9.0.CR1</version>
+    <version>0.9.0.CR2</version>
 
     <properties>
         <fdf.version>2.1-SNAPSHOT</fdf.version>

@@ -14,7 +14,7 @@
 	<!-- External Setup -->
 	<property environment="env"/>
 	<property name="maven.dir" value="${env.M2_HOME}" />
-	<property name="version" value="0.9.0.CR1" />
+	<property name="version" value="0.9.0.CR2" />
 
 
 

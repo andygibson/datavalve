@@ -31,7 +31,8 @@ import org.fluttercode.spigot.Paginator;
 
 /**
  * Main class with the main() method. Use this class to play around with the
- * demos that appear in the documentation.
+ * demos that appear in the documentation, many of which are also included in
+ * this project.
  * 
  * @author Andy Gibson
  * 

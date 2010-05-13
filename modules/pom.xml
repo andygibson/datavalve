@@ -6,7 +6,7 @@
     <artifactId>spigot</artifactId>
     <packaging>pom</packaging>
     <name>spigot</name>
-    <version>0.9.0.CR1</version>
+    <version>0.9.0.CR2</version>
     <description>Main project for Spigot containing multiple modules.</description>
 
     <organization>

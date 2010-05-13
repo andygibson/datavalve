@@ -1,0 +1,1 @@
+This project just contains the handful of demo providers and other classes defined in the documentation. While it doesn't do anything useful in itself, you can alter the code and play with the different test providers and see how they function.

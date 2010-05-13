@@ -57,21 +57,20 @@
   		<artifactId>slf4j-api</artifactId>
   		<version>1.6.0-RC0</version>
   		<type>jar</type>
-  		<scope>compile</scope>
   	</dependency>
   	<dependency>
   		<groupId>javax.el</groupId>
   		<artifactId>el-api</artifactId>
   		<version>1.0</version>
   		<type>jar</type>
-  		<scope>compile</scope>
+  		<scope>provided</scope>
   	</dependency>
   	<dependency>
   		<groupId>javax.faces</groupId>
   		<artifactId>jsf-api</artifactId>
   		<version>1.2_02</version>
   		<type>jar</type>
-  		<scope>compile</scope>
+  		<scope>provided</scope>
   	</dependency>
   </dependencies>
 </project>

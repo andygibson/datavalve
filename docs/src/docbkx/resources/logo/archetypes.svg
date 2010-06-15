@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="744.09448819"
@@ -14,9 +15,20 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="archetypes.svg">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient3624">
+      <stop
+         style="stop-color:#b24700;stop-opacity:1;"
+         offset="0"
+         id="stop3626" />
+      <stop
+         style="stop-color:#b24700;stop-opacity:0;"
+         offset="1"
+         id="stop3628" />
+    </linearGradient>
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="244.24463 : 789.32723 : 1"
@@ -31,6 +43,15 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3624"
+       id="linearGradient3630"
+       x1="264.8602"
+       y1="236.61699"
+       x2="313.23648"
+       y2="201.54417"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -39,9 +60,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.7868076"
-     inkscape:cx="394.31419"
-     inkscape:cy="787.18041"
+     inkscape:zoom="1.4676328"
+     inkscape:cx="418.69049"
+     inkscape:cy="840.62663"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -58,7 +79,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -129,6 +150,11 @@
        style="fill:#b24700;fill-opacity:1;fill-rule:nonzero;stroke:none"
        d="m 164.34688,302.54025 c 82.66998,-2.67676 82.42326,-3.00674 167.93084,-13.71502 l -5.72555,-17.13234 c -62.14609,10.38966 -96.20994,15.73999 -163.40415,29.85387 l 1.19886,0.99349 z"
        id="rect2854-1"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:url(#linearGradient3630);fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="m 302.95652,166.47137 58.65626,55.02803 -58.65626,15.11759 -38.09633,-53.21392 38.09633,-16.9317 z"
+       id="rect2849"
        sodipodi:nodetypes="ccccc" />
   </g>
 </svg>

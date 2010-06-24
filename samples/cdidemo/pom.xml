@@ -201,6 +201,12 @@
         	<type>jar</type>
         	<scope>compile</scope>
         </dependency>
+        <dependency>
+        	<groupId>jta</groupId>
+        	<artifactId>jta</artifactId>
+        	<version>1.0.1b</version>
+        	<scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>cdidemo</finalName>

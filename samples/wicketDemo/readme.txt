@@ -1,14 +1,14 @@
 Wicket Mega Demo
 ================
 
-This application demonstrates using Spigot to interface with different pieces
+This application demonstrates using DataValve to interface with different pieces
  of the wicket application. 
 
 To Run 
 ================
 
 1) First type 'mvn install' in the <install>/modules directory to install 
-Spigot into maven.
+DataValve into maven.
 
 2) in the wicketDemo folder, to start the server type :
 
@@ -42,7 +42,7 @@ well as common components such as the header link panel and the dataset info
 panel.
 
 The source code is organized into different sections under the main 
-org.fluttercode.spigot.samples.wicketdemo package for the different types of pages.
+org.fluttercode.datavalve.samples.wicketdemo package for the different types of pages.
 In each package, we typically have one abstract web page for the type of provider 
 we are demonstrating with an abstract method to get the dataset from the subclass.
 The subclasses just extend this abstract page and create the provider for that 
@@ -59,7 +59,7 @@ dataprovider - package containing the code for pagination using the built in
 wicket components or extensions DefaultDataTable and the ISortableDataProvider. 
 
 search - package for code implementing a search form and wicket data table which
-then is subclassed to use different spigot data provider components.
+then is subclassed to use different datavalve data provider components.
 
   
 

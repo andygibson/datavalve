@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.fluttercode.spigot</groupId>
+    <groupId>org.fluttercode.datavalve</groupId>
     <artifactId>wicketDemo</artifactId>
     <packaging>war</packaging>
     <version>0.9.0.CR2</version>
@@ -30,7 +30,7 @@
     </developers>
     <issueManagement>
         <system>Jira</system>
-        <url>http://kenai.com/jira/browse/SPIGOT/</url>
+        <url>http://kenai.com/jira/browse/DATAVALVE/</url>
     </issueManagement>
 
     <inceptionYear>2009</inceptionYear>
@@ -106,23 +106,23 @@
             <version>3.2.6.ga</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-test</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-test</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-jpa</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-sql</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-sql</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-core</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -131,13 +131,13 @@
             <version>${wicket.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-wicket</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-wicket</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-dataset</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-dataset</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

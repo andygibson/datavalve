@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.fluttercode.spigot</groupId>
+    <groupId>org.fluttercode.datavalve</groupId>
     <artifactId>cdidemo</artifactId>
     <packaging>war</packaging>
     <name>cdidemo</name>
@@ -29,7 +29,7 @@
     </developers>
     <issueManagement>
         <system>Jira</system>
-        <url>http://kenai.com/jira/browse/SPIGOT/</url>
+        <url>http://kenai.com/jira/browse/DATAVALVE/</url>
     </issueManagement>
 
     <inceptionYear>2009</inceptionYear>
@@ -93,8 +93,8 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-test</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-test</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -118,13 +118,13 @@
             <version>3.8.0.GA</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-dataset</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-dataset</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-hibernate</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-hibernate</artifactId>
             <version>${project.version}</version>
         </dependency>		<!-- Common to JEE and Servlet containers -->
         <dependency>
@@ -172,8 +172,8 @@
             <version>4.0.0.GA</version>
         </dependency>
         <dependency>
-            <groupId>org.fluttercode.spigot</groupId>
-            <artifactId>spigot-hibernate</artifactId>
+            <groupId>org.fluttercode.datavalve</groupId>
+            <artifactId>datavalve-hibernate</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -195,8 +195,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-        	<groupId>org.fluttercode.spigot</groupId>
-        	<artifactId>spigot-faces</artifactId>
+        	<groupId>org.fluttercode.datavalve</groupId>
+        	<artifactId>datavalve-faces</artifactId>
         	<version>0.9.0.CR2</version>
         	<type>jar</type>
         	<scope>compile</scope>

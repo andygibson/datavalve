@@ -2,8 +2,8 @@
 "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 
 <book>
-	<title>Spigot Reference Guide</title>
-	<titleabbrev>Spigot Ref</titleabbrev>
+	<title>DataValve Reference Guide</title>
+	<titleabbrev>DataValve Ref</titleabbrev>
 	<bookinfo>
 		<author>
 			<email>contact@andygibson.net</email>
@@ -121,7 +121,7 @@
 				frameworks to provide a cross framework solution.
             </para>
 			<figure>
-				<title>Projects without using Spigot</title>
+				<title>Projects without using DataValve</title>
 				<mediaobject>
 					<imageobject role="fo">
 						<imagedata align="center" fileref="app_without_jds.png"
@@ -150,7 +150,7 @@
 				frameworks. 
             </para>
 			<figure>
-				<title>Projects using Spigot</title>
+				<title>Projects using DataValve</title>
 				<mediaobject>
 					<imageobject role="fo">
 						<imagedata align="center" fileref="app_with_jds.png"
@@ -163,11 +163,11 @@
 			</figure>
 		</sect1>
 		<sect1>
-			<title>Benefits of Spigot</title>
+			<title>Benefits of DataValve</title>
 			<para>
 				Even if you still plan on using a single data access mechanism
 				(i.e. Hibernate or JPA) there are still advantages to using
-				Spigot.
+				DataValve.
 				It's like a screw driver, 99% of the time you use it for
 				one thing
 				only, but when you need it to pry something open or
@@ -179,7 +179,7 @@
 				<title>Interchangable query mechanisms</title>
 				<para>Most projects plan on using only one data access mechanism
 					but
-					by coding to the Spigot API, you can switch
+					by coding to the DataValve API, you can switch
 					implementations later.
 					You might move from JPA to Hibernate
 					or even to plain JDBC queries
@@ -194,7 +194,7 @@
 					paginating and
 					displaying.</para>
 				<para>Regardless of where the different types of datastores come
-					from, with Spigot you will be able to access them and
+					from, with DataValve you will be able to access them and
 					control
 					the
 					results using your existing view code to paginate
@@ -213,7 +213,7 @@
 
 			<sect2>
 				<title>Easy querying</title>
-				<para>Spigot makes it easier to query for the data you need. It
+				<para>DataValve makes it easier to query for the data you need. It
 					features flexible parameter definition by setting the value
 					manually, using EL expressions, extracting the values using
 					reflection or your own custom parameter resolver. Parameters
@@ -276,7 +276,7 @@ List<Person> results = qry.resultList();]]>
                     </programlisting>
 
 				</example>
-				<para>With Spigot, you can define the query, specify how the
+				<para>With DataValve, you can define the query, specify how the
 					parameters are resolved and the data provider will take care
 					of
 					generating the right request so that the only
@@ -306,7 +306,7 @@ List<Person> results = qry.resultList();]]>
 			<sect2>
 				<title>Flexible and secure ordering abstraction</title>
 				<para>
-					Spigot lets you order your data based on order key values as
+					DataValve lets you order your data based on order key values as
 					opposed to explicit table column values which could be prone
 					to SQL
 					injection attacks. By using an
@@ -321,7 +321,7 @@ List<Person> results = qry.resultList();]]>
 			</sect2>
 			<sect2>
 				<title>Convert anything into a dataset</title>
-				<para>At the heart of Spigot is a simple API which allows you to
+				<para>At the heart of DataValve is a simple API which allows you to
 					turn anything into a source of data that can be accessed and
 					paginated from existing view code. This can range from
 					custom
@@ -337,12 +337,12 @@ List<Person> results = qry.resultList();]]>
 	</preface>
 	<chapter id="Introduction">
 		<title>Introduction</title>
-		<para>We'll start by having a high level look at Spigot and how it is
+		<para>We'll start by having a high level look at DataValve and how it is
 			organized and how it is used.</para>
 		<sect1>
 			<title>Overview</title>
 			<para>
-				Spigot is divided into three main interfaces which are used to
+				DataValve is divided into three main interfaces which are used to
 				fetch
 				data. The
 				<classname>Paginator</classname>
@@ -419,7 +419,7 @@ List<Person> results = qry.resultList();]]>
 				<classname>DataProvider</classname>
 				interface. Where the real complexity comes in is with query
 				language
-				based data providers. While Spigot has been designed to
+				based data providers. While DataValve has been designed to
 				be
 				expandable, it can support different query language data
 				providers,
@@ -625,9 +625,9 @@ List<Person> results = qry.resultList();]]>
 	<chapter>
 		<title>Database driven providers</title>
 		<para>
-			While Spigot offers a way to access many different types of data
+			While DataValve offers a way to access many different types of data
 			stores, in most cases, you will want to fetch data from a database.
-			Spigot comes with data providers for fetching data using JPA,
+			DataValve comes with data providers for fetching data using JPA,
 			Hibernate or just plain SQL via JDBC. These different providers are
 			based off and implement the
 			<classname>QueryDataProvider</classname>
@@ -711,7 +711,7 @@ dataset.getProvider().addRestriction("p.department.id = 4");
 			<para>
 				It is often more convenient to specify limitations using
 				parameters
-				and Spigot has a number of different mechanisms with
+				and DataValve has a number of different mechanisms with
 				which to specify
 				parameterized restrictions. First we'll look at
 				adding constant
@@ -812,7 +812,7 @@ provider.addRestriction("p.lastName like :param",
 				value.
             </para>
 			<para>This may seem a fairly broad set of ways to parameterize the
-				your queries, but is only the first half of Spigot's parameter
+				your queries, but is only the first half of DataValve's parameter
 				definition mechanisms with the second being the use of parameter
 				resolvers.</para>
 		</sect1>
@@ -960,7 +960,7 @@ public class MyCustomJpaDataProvider<T> extends JpaDataProvider<T> {
 		<sect1>
 			<title>Order in the house</title>
 			<para>
-				Spigot also features key based ordering so rather than specify
+				DataValve also features key based ordering so rather than specify
 				ordering as a set of fields on the dataset, you can specify
 				ordering
 				using a key that indicates how to order the resutls.
@@ -1328,7 +1328,7 @@ Value = 9]]>
 				Create a new class (in the test packages if applicable) and
 				create it
 				as a subclass of
-				<classname>org.fluttercode.spigot.testing.junit.AbstractObjectDatasetJUnitTest
+				<classname>org.fluttercode.datavalve.testing.junit.AbstractObjectDatasetJUnitTest
 				</classname>
 				This class defines two methods which needs to be implemented in
 				subclasses. The
@@ -1339,7 +1339,7 @@ Value = 9]]>
 				<classname>ObjectDataset</classname>
 				for the provider we are testing. We can easily create one by
 				creating an instance of a
-				<classname>org.fluttercode.spigot.impl.Dataset</classname>
+				<classname>org.fluttercode.datavalve.impl.Dataset</classname>
 				and pass it an instance of our
 				<classname>IntegerDataProvider</classname>
 				which the dataset will use to obtain data.
@@ -1935,10 +1935,10 @@ showResults(results2);]]>
 	</chapter>
 
 	<chapter>
-		<title>The Spigot architecture</title>
+		<title>The DataValve architecture</title>
 		<para>
-			Now we've covered these fundamentals of using Spigot we can look at
-			the different modules that Spigot includes. We will then look at the
+			Now we've covered these fundamentals of using DataValve we can look at
+			the different modules that DataValve includes. We will then look at the
 			different subclasses of the
 			<classname>DataProvider</classname>
 			interface and implementations so we create datasets that can attach
@@ -1946,7 +1946,7 @@ showResults(results2);]]>
 		</para>
 		<sect1>
 			<title>List of Module</title>
-			<para>Spigot contains a number of modules, and is split into the main
+			<para>DataValve contains a number of modules, and is split into the main
 				core and dataset modules and the more framework specific modules.
 			</para>
 			<table>
@@ -1956,49 +1956,49 @@ showResults(results2);]]>
 					<colspec colname="description" colwidth="65%" />
 					<tbody>
 						<row>
-							<entry>Spigot-Core</entry>
+							<entry>DataValve-Core</entry>
 							<entry>Core module with the API interfaces and also includes
 								in-memory and file based data providers. In general this
 								contains providers and classes that are not dependent on
 								external frameworks and also utility classes.</entry>
 						</row>
 						<row>
-							<entry>Spigot-Dataset</entry>
+							<entry>DataValve-Dataset</entry>
 							<entry>Contains the core classes for datasets as well as datasets
 								for the 
 							</entry>
 						</row>
 						<row>
-							<entry>Spigot-Hibernate</entry>
+							<entry>DataValve-Hibernate</entry>
 							<entry>Query data providers and datasets for the Hibernate
 								framework</entry>
 						</row>
 						<row>
-							<entry>Spigot-JPA</entry>
+							<entry>DataValve-JPA</entry>
 							<entry>Query data providers and datasets for JPA</entry>
 						</row>
 
 						<row>
-							<entry>Spigot-SQL</entry>
+							<entry>DataValve-SQL</entry>
 							<entry>Query data providers and datasets for using SQL</entry>
 						</row>
 
 						<row>
-							<entry>Spigot-Faces</entry>
+							<entry>DataValve-Faces</entry>
 							<entry>Provides features for use with Java Server Faces. This
 								includes an EL parameter resolver, and JSF components for
 								Pagination and column ordering links.</entry>
 						</row>
 						<row>
-							<entry>Spigot-Seam</entry>
+							<entry>DataValve-Seam</entry>
 							<entry>Extensions for use with Seam, includes a Seam Jpa and
 								Native datasets as well as a Seam parameter resolver that uses
 								the EL resolvers included as part of Seam. It also includes an
-								adapter for substituting a Spigot dataset for a Seam EntityQuery
+								adapter for substituting a DataValve dataset for a Seam EntityQuery
 								dataset. It implements most features except for sorting.</entry>
 						</row>
 						<row>
-							<entry>Spigot-Test</entry>
+							<entry>DataValve-Test</entry>
 							<entry>
 								Includes classes for base test cases for testing data provider
 								implementations. You should only need this if you are writing
@@ -2559,7 +2559,7 @@ ds.getProvider().setWidgetConnection(ConnectionFactory.createConnection());]]>
 		<title>Non-database providers</title>
 		<para>There are a number different non-database sources you can choose
 			to fetch data from and usually you have no common way to get that
-			data into your application. Spigot provides the ability to fetch
+			data into your application. DataValve provides the ability to fetch
 			contents from these sources and transform them to pojos. It does
 			this
 			by abstracting the concepts of fetching data to a level that is
@@ -2927,7 +2927,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 				can
 				be either text based, comma delimited, xml or some
 				proprietary
-				format. Spigot provides the same interface to
+				format. DataValve provides the same interface to
 				access
 				these data
 				sources, and therefore use the same client code to
@@ -3048,7 +3048,7 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 		<sect1>
 			<title>Seam Usage</title>
 			<para>
-				With Spigot you can subclass either a
+				With DataValve you can subclass either a
 				<classname>SeamJPaQueryDataset</classname>
 				or a
 				<classname>SeamJpaNativeDataset</classname>
@@ -3061,13 +3061,13 @@ public class InMemoryIntegerProviderTest extends IntegerDataProviderTest {
 		</sect1>
 
 		<sect1>
-			<title>Spigot and JSF</title>
-			<para>Spigot-Faces is a module for working with Spigot in JSF. It
+			<title>DataValve and JSF</title>
+			<para>DataValve-Faces is a module for working with DataValve in JSF. It
 				provides a Expression Language (EL) parameter resolver so you can
 				use EL expressions directly in your queries. It also provides visual
 				components for creating a sort link for clickable sortable columns
 				and a simple paginator class. </para>
-			<para>For an example of using the spigot-faces module in a servlet
+			<para>For an example of using the datavalve-faces module in a servlet
 				environment using CDI and JSF, take a look at the cdi demo
 				application in the samples directory. </para>
 				

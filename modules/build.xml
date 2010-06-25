@@ -2,13 +2,13 @@
 <!-- ====================================================================== 
      Jul 28, 2009 9:08:25 PM                                                        
 
-	Spigot Build file for creating the distribution.
+	DataValve Build file for creating the distribution.
                    
      Andy Gibson
      ====================================================================== -->
-<project name="spigot-builder" default="default">
+<project name="datavalve-builder" default="default">
 	<description>
-            Build file to clean and build the spigot projects and create the distribution  
+            Build file to clean and build the datavalve projects and create the distribution  
     </description>
 
 	<!-- External Setup -->
@@ -24,7 +24,7 @@
 	<property name="apidocs.dir" value="target\apidocs" />
 	<property name="zip.base.dir" value="${release.dir}\staging\" />
 
-	<property name="staging.dir" value="${release.dir}\staging\Spigot-${version}\" />
+	<property name="staging.dir" value="${release.dir}\staging\DataValve-${version}\" />
 	<property name="staging.dist.dir" value="${staging.dir}\dist\" />
 	<property name="staging.samples.dir" value="${staging.dir}\samples\" />
 	<property name="staging.sources.dir" value="${staging.dist.dir}\sources\" />
@@ -161,20 +161,20 @@
 	</target>
 
 	<target name="zipIt">
-		<zip destfile="${release.dir}\spigot-${version}.zip">
+		<zip destfile="${release.dir}\datavalve-${version}.zip">
 			<fileset dir="${zip.base.dir}">
 				<include name="**\*.*" />
 			</fileset>
 		</zip>
 
-		<tar destfile="${release.dir}\spigot-${version}.tar">
+		<tar destfile="${release.dir}\datavalve-${version}.tar">
 			<fileset dir="${zip.base.dir}">
 				<include name="**\*.*" />
 			</fileset>
 		</tar>
 
-		<gzip destfile="${release.dir}\spigot-${version}.tar.gz" src="${release.dir}\spigot-${version}.tar" />
-		<delete file="${release.dir}\spigot-${version}.tar" />
+		<gzip destfile="${release.dir}\datavalve-${version}.tar.gz" src="${release.dir}\datavalve-${version}.tar" />
+		<delete file="${release.dir}\datavalve-${version}.tar" />
 
 	</target>
 

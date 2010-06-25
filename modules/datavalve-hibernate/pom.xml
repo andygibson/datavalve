@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <artifactId>spigot</artifactId>
-        <groupId>org.fluttercode.spigot</groupId>
+        <artifactId>datavalve</artifactId>
+        <groupId>org.fluttercode.datavalve</groupId>
         <version>0.9.0.CR2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>spigot-hibernate</artifactId>
-    <name>spigot-hibernate</name>
+    <artifactId>datavalve-hibernate</artifactId>
+    <name>datavalve-hibernate</name>
     <organization>
         <name>fluttercode</name>
         <url>www.fluttercode.org</url>
@@ -30,7 +30,7 @@
     </developers>
     <issueManagement>
         <system>Jira</system>
-        <url>http://kenai.com/jira/browse/SPIGOT/</url>
+        <url>http://kenai.com/jira/browse/DATAVALVE/</url>
     </issueManagement>
 
     <inceptionYear>2009</inceptionYear>
@@ -51,7 +51,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>spigot-core</artifactId>
+            <artifactId>datavalve-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -73,7 +73,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>spigot-test</artifactId>
+            <artifactId>datavalve-test</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
@@ -102,7 +102,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>spigot-dataset</artifactId>
+            <artifactId>datavalve-dataset</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

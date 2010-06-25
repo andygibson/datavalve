@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>spigot</artifactId>
-    <groupId>org.fluttercode.spigot</groupId>
+    <artifactId>datavalve</artifactId>
+    <groupId>org.fluttercode.datavalve</groupId>
     <version>0.9.0.CR2</version>
   </parent>
-  <groupId>org.fluttercode.spigot</groupId>
-  <artifactId>spigot-faces</artifactId>
+  <groupId>org.fluttercode.datavalve</groupId>
+  <artifactId>datavalve-faces</artifactId>
   <version>0.9.0.CR2</version>
-  <name>spigot-faces</name>
+  <name>datavalve-faces</name>
   <description>Provides additional support for JSF including an EL expression parameter resolver.</description>
     <organization>
         <name>fluttercode</name>
@@ -32,7 +32,7 @@
     </developers>
     <issueManagement>
         <system>Jira</system>
-        <url>http://kenai.com/jira/browse/SPIGOT/</url>
+        <url>http://kenai.com/jira/browse/DATAVALVE/</url>
     </issueManagement>
 
     <inceptionYear>2009</inceptionYear>
@@ -46,8 +46,8 @@
   
   <dependencies>
   	<dependency>
-  		<groupId>org.fluttercode.spigot</groupId>
-  		<artifactId>spigot-core</artifactId>
+  		<groupId>org.fluttercode.datavalve</groupId>
+  		<artifactId>datavalve-core</artifactId>
   		<version>0.9.0.CR2</version>
   		<type>jar</type>
   		<scope>compile</scope>

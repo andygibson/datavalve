@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.fluttercode.spigot</groupId>
-    <artifactId>spigot</artifactId>
+    <groupId>org.fluttercode.datavalve</groupId>
+    <artifactId>datavalve</artifactId>
     <packaging>pom</packaging>
-    <name>spigot</name>
+    <name>datavalve</name>
     <version>0.9.0.CR2</version>
-    <description>Main project for Spigot containing multiple modules.</description>
+    <description>Main project for DataValve containing multiple modules.</description>
 
     <organization>
         <name>fluttercode</name>
@@ -31,7 +31,7 @@
     </developers>
     <issueManagement>
         <system>Jira</system>
-        <url>http://kenai.com/jira/browse/SPIGOT/</url>
+        <url>http://kenai.com/jira/browse/DATAVALVE/</url>
     </issueManagement>
 
     <inceptionYear>2009</inceptionYear>
@@ -64,14 +64,14 @@
         </plugins>
     </build>
     <modules>
-        <module>spigot-core</module>
-        <module>spigot-dataset</module>
-        <module>spigot-jpa</module>
-        <module>spigot-test</module>
-        <module>spigot-sql</module>
-        <module>spigot-wicket</module>
-        <module>spigot-seam</module>
-        <module>spigot-hibernate</module>
-        <module>spigot-faces</module>
+        <module>datavalve-core</module>
+        <module>datavalve-dataset</module>
+        <module>datavalve-jpa</module>
+        <module>datavalve-test</module>
+        <module>datavalve-sql</module>
+        <module>datavalve-wicket</module>
+        <module>datavalve-seam</module>
+        <module>datavalve-hibernate</module>
+        <module>datavalve-faces</module>
     </modules>
 </project>

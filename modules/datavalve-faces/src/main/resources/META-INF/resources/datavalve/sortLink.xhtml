@@ -1,0 +1,97 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<h:body>
+
+	<composite:interface name="sortLink"
+		displayName="Link to change the sorting on a DataValve paginator">
+		<composite:attribute name="paginator"
+			type="org.fluttercode.datavalve.Paginator"
+			shortDescription="The Paginator that we will be setting the order key value on with this link" />
+		<composite:attribute name="key"
+			shortDescription="The orderKey value to use when this link is clicked" />
+		<composite:attribute name="caption"
+			shortDescription="Caption to display on the link" />
+		<composite:attribute name="holdState" type="java.lang.Boolean"
+			shortDescription="If true, this link also holds the state of the current index for use with stateless pagination. If you are using a paginator or own state management, you can ignore this. If you are not using your own state management or the JSF paginator, you will need to set hold state to true on at least one sort link" />
+		<composite:attribute name="style"
+			shortDescription="Style for the sort link container" />
+		<composite:attribute name="styleClass"
+			shortDescription="Style class for the sort link container" />
+		<composite:attribute name="linkStyle"
+			shortDescription="Style for the actual sort link" />
+		<composite:attribute name="activeLinkStyle"
+			shortDescription="Style for the sort link when it is active" />
+
+		<composite:attribute name="linkStyleClass" default="linkStyle"
+			shortDescription="Style class for the actual sort link" />
+		<composite:attribute name="activeLinkStyleClass"
+			default="activeLinkStyle"
+			shortDescription="Style class for the sort link when we are sorting by that link" />
+
+		<composite:attribute name="ascImageUrl"
+			shortDescription="URL of image to use for ascending ordering"
+			default="#{resource['datavalve/sort_asc.png']}" />
+		<composite:attribute name="descImageUrl"
+			shortDescription="URL of image to use for descending ordering"
+			default="#{resource['datavalve/sort_desc.png']}" />
+
+		<composite:attribute name="showImages" type="java.lang.Boolean"
+			shortDescription="Whether the images for the asc/desc ordering are shown."
+			default="True" />
+
+		<composite:attribute name="ajaxEnabled"
+			type="java.lang.Boolean" default="False"
+			shortDescription="Indicates if ajax should be used to update the page when the user navigates the data." />
+
+		<composite:attribute required="false" name="ajaxRender" default="@all"
+			shortDescription="Value used for the render parameter in the ajax processing. Only needed it if ajaxEnabled=true" />
+
+		<composite:attribute required="false" name="ajaxExecute"
+			default="@form"
+			shortDescriptio="Value used for the execute parameter in the ajax processing. Only needed it ajaxEnabled=true" />
+
+
+	</composite:interface>
+
+
+	<composite:implementation>
+
+		<h:panelGroup style="#{cc.attrs.style}" id="sortLinkContainer"
+			styleClass="#{cc.attrs.styleClass}">
+
+			<h:commandLink
+				action="#{cc.attrs.paginator.changeOrderKey(cc.attrs['key'])}"
+				value="#{cc.attrs.caption}"
+				styleClass="#{(cc.attrs.paginator.orderKey == cc.attrs.key) ? cc.attrs.activeLinkStyleClass : cc.attrs.linkStyleClass}"
+				style="#{(cc.attrs.paginator.orderKey == cc.attrs.key) ? cc.attrs.activeLinkStyle : cc.attrs.linkStyle}">
+				<f:ajax render="#{cc.attrs.ajaxRender}" execute="#{cc.attrs.ajaxExecute}" disabled="#{not cc.attrs.ajaxEnabled}"/>
+					 
+					
+			</h:commandLink>
+			<h:graphicImage value="#{cc.attrs.ascImageUrl}"
+				rendered="#{(cc.attrs.paginator.orderAscending) and (cc.attrs.paginator.orderKey == cc.attrs.key)}" />
+			<h:graphicImage value="#{cc.attrs.descImageUrl}"
+				rendered="#{(!cc.attrs.paginator.orderAscending) and (cc.attrs.paginator.orderKey == cc.attrs.key)}" />
+			<h:panelGroup rendered="#{cc.attrs.holdState}">
+				<h:inputHidden value="#{cc.attrs.paginator.orderKey}" />
+				<h:inputHidden value="#{cc.attrs.paginator.orderAscending}" />
+			</h:panelGroup>
+		</h:panelGroup>
+	</composite:implementation>
+
+
+</h:body>
+
+</html>
+
+
+
+

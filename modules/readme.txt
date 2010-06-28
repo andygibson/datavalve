@@ -1,6 +1,15 @@
 DataValve 0.9 Alpha build
 =========================
 
+DataValve project page : 
+
+http://www.fluttercode.com/projects/datavalve/
+
+For more information on DataValve including articles, tutorials and help go to : 
+
+http://www.fluttercode.com/tag/datavalve/
+
+
 System requirements
 =======================
 

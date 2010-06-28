@@ -1,0 +1,1405 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="640.22809"
+   height="419.44153"
+   id="svg3285"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="class_diagram.svg">
+  <defs
+     id="defs3287">
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         id="path4589"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotL"
+       style="overflow:visible">
+      <path
+         id="path4630"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.8,0,0,0.8,5.92,0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="DiamondL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DiamondL"
+       style="overflow:visible">
+      <path
+         id="path4648"
+         d="M 0,-7.0710768 -7.0710894,0 0,7.0710589 7.0710462,0 0,-7.0710768 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.8,0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="DiamondM"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DiamondM"
+       style="overflow:visible">
+      <path
+         id="path4651"
+         d="M 0,-7.0710768 -7.0710894,0 0,7.0710589 7.0710462,0 0,-7.0710768 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.4,0.4)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective3293" />
+    <inkscape:perspective
+       id="perspective3266"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,-17.684459,228.5537)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient5609"
+       xlink:href="#linearGradient5547"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,-17.684459,228.5537)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient5611"
+       xlink:href="#linearGradient5555-7"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,39.835133,-5.3821212)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3281"
+       xlink:href="#linearGradient5547"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,39.835133,-5.3821212)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3283"
+       xlink:href="#linearGradient5555-7"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3336"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,12.171643,-9.1876632)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3281-1"
+       xlink:href="#linearGradient5547-7"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,12.171643,-9.1876632)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3283-9"
+       xlink:href="#linearGradient5555-7-4"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,39.835135,154.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351"
+       xlink:href="#linearGradient5547-7"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,39.835135,154.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353"
+       xlink:href="#linearGradient5555-7-4"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-5"
+       xlink:href="#linearGradient5547-7-1"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-1">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-7" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-1" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-1"
+       xlink:href="#linearGradient5555-7-4-5"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-5">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-2" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-7" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,39.835137,334.61787)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411"
+       xlink:href="#linearGradient5547-7-1"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,39.835137,334.61787)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413"
+       xlink:href="#linearGradient5555-7-4-5"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-2"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-3"
+       xlink:href="#linearGradient5547-7-2"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-2">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-2" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-16" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-8"
+       xlink:href="#linearGradient5555-7-4-57"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-57">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-6" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-1" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,279.83515,-5.3821145)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-8"
+       xlink:href="#linearGradient5547-7-2"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,279.83515,-5.3821145)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-9"
+       xlink:href="#linearGradient5555-7-4-57"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-5"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-4"
+       xlink:href="#linearGradient5547-7-3"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-3">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-1" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-2" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-3"
+       xlink:href="#linearGradient5555-7-4-3"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-3">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-4" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-11" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,279.83513,114.61787)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-3"
+       xlink:href="#linearGradient5547-7-3"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,279.83513,114.61787)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-8"
+       xlink:href="#linearGradient5555-7-4-3"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-7"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-7"
+       xlink:href="#linearGradient5547-7-9"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-9">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-3" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-19" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-86"
+       xlink:href="#linearGradient5555-7-4-50"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-50">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-28" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-6" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,279.83515,214.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-0"
+       xlink:href="#linearGradient5547-7-9"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,279.83515,214.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-2"
+       xlink:href="#linearGradient5555-7-4-50"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-50"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-9"
+       xlink:href="#linearGradient5547-7-0"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-0">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-0" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-6" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-13"
+       xlink:href="#linearGradient5555-7-4-8"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-8">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-9" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-3" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,279.83511,334.61787)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-4"
+       xlink:href="#linearGradient5547-7-0"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,279.83511,334.61787)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-4"
+       xlink:href="#linearGradient5555-7-4-8"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-8"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-49"
+       xlink:href="#linearGradient5547-7-6"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-6">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-37" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-8" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-82"
+       xlink:href="#linearGradient5555-7-4-9"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-9">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-1" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-35" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.83509,-25.382123)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-9"
+       xlink:href="#linearGradient5547-7-6"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.83509,-25.382123)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-84"
+       xlink:href="#linearGradient5555-7-4-9"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-6"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-1"
+       xlink:href="#linearGradient5547-7-5"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-5">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-4" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-20" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-9"
+       xlink:href="#linearGradient5555-7-4-7"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-7">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-3" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-72" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.83511,74.617881)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-6"
+       xlink:href="#linearGradient5547-7-5"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.83511,74.617881)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-0"
+       xlink:href="#linearGradient5555-7-4-7"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-54"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-12"
+       xlink:href="#linearGradient5547-7-00"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-00">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-14" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-60" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-7"
+       xlink:href="#linearGradient5555-7-4-1"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-1">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-7" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-77" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.8351,174.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-7"
+       xlink:href="#linearGradient5547-7-00"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.8351,174.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-3"
+       xlink:href="#linearGradient5555-7-4-1"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-81"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-8"
+       xlink:href="#linearGradient5547-7-26"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-26">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-6" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-0" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-38"
+       xlink:href="#linearGradient5555-7-4-0"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-0">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-12" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-5" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.83509,254.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-09"
+       xlink:href="#linearGradient5547-7-26"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.83509,254.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-47"
+       xlink:href="#linearGradient5555-7-4-0"
+       inkscape:collect="always" />
+    <inkscape:perspective
+       id="perspective3396-1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3351-2"
+       xlink:href="#linearGradient5547-7-01"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5547-7-01">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop5549-4-64" />
+      <stop
+         style="stop-color:#dbe4f6;stop-opacity:1;"
+         offset="1"
+         id="stop5551-0-06" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,17.838778,115.08391)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3353-18"
+       xlink:href="#linearGradient5555-7-4-98"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient5555-7-4-98">
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="0"
+         id="stop5557-7-8-41" />
+      <stop
+         style="stop-color:#929292;stop-opacity:1;"
+         offset="1"
+         id="stop5559-0-8-4" />
+    </linearGradient>
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.8351,334.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3411-39"
+       xlink:href="#linearGradient5547-7-01"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="143.99625"
+       x2="163.1814"
+       y1="62.304878"
+       x1="26.030231"
+       gradientTransform="matrix(0.95399953,0,0,0.6446434,539.8351,334.61788)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3413-88"
+       xlink:href="#linearGradient5555-7-4-98"
+       inkscape:collect="always" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.79141791"
+     inkscape:cx="345.96832"
+     inkscape:cy="118.66539"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1032"
+     inkscape:window-height="851"
+     inkscape:window-x="22"
+     inkscape:window-y="29"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3765"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3290">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-60.548027,-11.586052)">
+    <rect
+       style="fill:url(#linearGradient3281);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3283);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2"
+       width="138.67584"
+       height="57.889256"
+       x="61.324158"
+       y="32.362183"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="73.247528"
+       y="65.969406"
+       id="text5642"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644"
+         x="73.247528"
+         y="65.969406">ObjectDataset</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3351);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3353);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2"
+       width="138.67584"
+       height="57.889256"
+       x="61.324158"
+       y="192.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="99.003876"
+       y="227.64372"
+       id="text5642-4"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5"
+         x="99.003876"
+         y="227.64372">Dataset</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-6"
+       width="138.67584"
+       height="57.889256"
+       x="61.324158"
+       y="372.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="74.790009"
+       y="405.96942"
+       id="text5642-4-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-4"
+         x="74.790009"
+         y="405.96942">QueryDataset</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-8);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-9);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-2"
+       width="138.67584"
+       height="57.889256"
+       x="301.32416"
+       y="32.362183"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="314.78122"
+       y="67.643723"
+       id="text5642-4-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-9"
+         x="314.78122"
+         y="67.643723">Data Provider</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-3);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-8);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-7"
+       width="138.67584"
+       height="57.889256"
+       x="301.32416"
+       y="152.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="369.96774"
+       y="176.39372"
+       id="text5642-4-4"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-2"
+         x="372.46384"
+         y="176.39372">Parameterized </tspan><tspan
+         sodipodi:role="line"
+         x="369.96774"
+         y="198.89372"
+         id="tspan3745">Data Provider</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-0);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-2);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-4"
+       width="138.67584"
+       height="57.889256"
+       x="301.32416"
+       y="252.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="369.85349"
+       y="276.5036"
+       id="text5642-4-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-6"
+         x="372.34958"
+         y="276.5036">Statement </tspan><tspan
+         sodipodi:role="line"
+         x="369.85349"
+         y="299.0036"
+         id="tspan3749">Data Provider</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-4);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-4);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-60"
+       width="138.67584"
+       height="57.889256"
+       x="301.32416"
+       y="372.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="369.85349"
+       y="396.508"
+       id="text5642-4-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-61"
+         x="372.34958"
+         y="396.508">Query </tspan><tspan
+         sodipodi:role="line"
+         x="369.85349"
+         y="419.008"
+         id="tspan3753">Data Provider</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-9);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-84);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-0"
+       width="138.67584"
+       height="57.889256"
+       x="561.32416"
+       y="12.362183"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="629.85352"
+       y="36.393726"
+       id="text5642-4-76"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-3"
+         x="632.34961"
+         y="36.393726">File </tspan><tspan
+         sodipodi:role="line"
+         x="629.85352"
+         y="58.893726"
+         id="tspan3755">Data Provider</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-6);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-0);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-1"
+       width="138.67584"
+       height="57.889256"
+       x="561.32416"
+       y="112.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="629.85345"
+       y="136.39374"
+       id="text5642-4-65"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-7"
+         x="632.34955"
+         y="136.39374">In Memory </tspan><tspan
+         sodipodi:role="line"
+         x="629.85345"
+         y="158.89374"
+         id="tspan3757">Data Provider</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-7);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-3);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-3"
+       width="138.67584"
+       height="57.889256"
+       x="561.32416"
+       y="212.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="629.85345"
+       y="236.39374"
+       id="text5642-4-5"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-99"
+         x="632.34955"
+         y="236.39374">Hibernate </tspan><tspan
+         sodipodi:role="line"
+         x="629.85345"
+         y="258.89374"
+         id="tspan3759">Data Provider</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-09);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-47);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-8"
+       width="138.67584"
+       height="57.889256"
+       x="561.32416"
+       y="292.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="629.85352"
+       y="316.5036"
+       id="text5642-4-3"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-5"
+         x="632.34961"
+         y="316.5036">JDBC </tspan><tspan
+         sodipodi:role="line"
+         x="629.85352"
+         y="339.0036"
+         id="tspan3761">Data Provider</tspan></text>
+    <rect
+       style="fill:url(#linearGradient3411-39);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3413-88);stroke-width:1.55226183;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       id="rect5537-2-2-08"
+       width="138.67584"
+       height="57.889256"
+       x="561.32416"
+       y="372.36218"
+       ry="10.051038"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       x="629.85345"
+       y="396.39374"
+       id="text5642-4-77"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996"><tspan
+         sodipodi:role="line"
+         id="tspan5644-5-8"
+         x="632.34955"
+         y="396.39374">JPA </tspan><tspan
+         sodipodi:role="line"
+         x="629.85345"
+         y="418.89374"
+         id="tspan3763">Data Provider</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotL)"
+       d="M 417.6971,372.36218 583.62706,270.25144"
+       id="path3767"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-60"
+       inkscape:connection-end="#rect5537-2-2-3"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotL)"
+       d="M 439.72451,380.05683 561.59965,342.55679"
+       id="path3769"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-60"
+       inkscape:connection-end="#rect5537-2-2-8"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotL)"
+       d="m 440,401.30681 121.32416,0"
+       id="path3771"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-60"
+       inkscape:connection-end="#rect5537-2-2-08"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotL)"
+       d="M 440,55.973124 561.32416,46.640497"
+       id="path3773"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-2"
+       inkscape:connection-end="#rect5537-2-2-0"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotL)"
+       d="m 439.72451,82.55679 121.87514,37.50004"
+       id="path3775"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-2"
+       inkscape:connection-end="#rect5537-2-2-1"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DiamondL)"
+       d="m 200,61.30681 101.32416,0"
+       id="path3777"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2"
+       inkscape:connection-end="#rect5537-2-2-2"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+       d="m 370.66208,372.36218 0,-62.11074"
+       id="path3781"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-60"
+       inkscape:connection-end="#rect5537-2-2-4"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+       d="m 370.66208,252.36218 0,-42.11074"
+       id="path3783"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-4"
+       inkscape:connection-end="#rect5537-2-2-7"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+       d="m 370.66208,152.36218 0,-62.110742"
+       id="path3785"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-7"
+       inkscape:connection-end="#rect5537-2-2-2"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 200,401.30681 101.32416,0"
+       id="path3787"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-6"
+       inkscape:connection-end="#rect5537-2-2-60"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+       d="m 130.66208,372.36218 0,-122.11074"
+       id="path3789"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2-6"
+       inkscape:connection-end="#rect5537-2-2"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-mid:none;marker-end:url(#DotL)"
+       d="m 130.66208,192.36218 0,-102.110742"
+       id="path3791"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#rect5537-2-2"
+       inkscape:connection-end="#rect5537-2"
+       inkscape:export-filename="C:\Andy\Dev\Projects\DataValve\docs\src\docbkx\resources\img\class_diagram.png"
+       inkscape:export-xdpi="84.339996"
+       inkscape:export-ydpi="84.339996" />
+  </g>
+</svg>

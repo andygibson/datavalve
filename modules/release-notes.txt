@@ -1,3 +1,7 @@
-2010_04_06 - DataValve 0.9.0.CR2 released
+2010_06_28 - DataValve 0.9.0.CR2 released
+
+Renamed to DataValve
+Added the datavalve-faces module
+Modified the handling for file based data providers (strategy vs. template)
 
 2010_03_10 - Initial 0.9 Alpha build

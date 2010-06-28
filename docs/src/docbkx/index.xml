@@ -124,11 +124,11 @@
 				<title>Projects without using DataValve</title>
 				<mediaobject>
 					<imageobject role="fo">
-						<imagedata align="center" fileref="app_without_jds.png"
-							scalefit="1" />
+						<imagedata align="center" fileref="apps_without_dv.svg"
+							scalefit="1" width="6in" depth="5.5in"/>
 					</imageobject>
 					<imageobject role="html">
-						<imagedata align="center" fileref="app_without_jds.png" />
+						<imagedata align="center" fileref="apps_without_dv.png" />
 					</imageobject>
 				</mediaobject>
 			</figure>
@@ -153,11 +153,11 @@
 				<title>Projects using DataValve</title>
 				<mediaobject>
 					<imageobject role="fo">
-						<imagedata align="center" fileref="app_with_jds.png"
-							scalefit="1" />
+						<imagedata align="center" fileref="apps_with_dv.svg"
+							scalefit="1" width="6in" depth="5.5in"/>
 					</imageobject>
 					<imageobject role="html">
-						<imagedata align="center" fileref="app_with_jds.png" />
+						<imagedata align="center" fileref="apps_with_dv.png" />
 					</imageobject>
 				</mediaobject>
 			</figure>
@@ -436,8 +436,8 @@ List<Person> results = qry.resultList();]]>
 				<title>Architecture overview</title>
 				<mediaobject>
 					<imageobject role="fo">
-						<imagedata align="center" fileref="class_diagram.png"
-							scalefit="1" />
+						<imagedata align="center" fileref="class_diagram.svg"
+							scalefit="1" width="6in" depth="5.5in"/>
 					</imageobject>
 					<imageobject role="html">
 						<imagedata align="center" fileref="class_diagram.png" />

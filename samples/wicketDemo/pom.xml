@@ -4,7 +4,7 @@
     <groupId>org.fluttercode.datavalve</groupId>
     <artifactId>wicketDemo</artifactId>
     <packaging>war</packaging>
-    <version>0.9.0.CR2</version>
+    <version>1.0.0.final</version>
     <description>Project that demonstrates the re-use of the datasets with either a custom pagination solution, or the built in pagination solutions.</description>	<!-- TODO project name  -->
     <name>wicketDemo</name>
 

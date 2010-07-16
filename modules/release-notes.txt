@@ -1,3 +1,9 @@
+2010_07_19 - DataValve 1.0.0.final released
+
+Fixed issues with datavalve-dataset depending on test
+Fixed issue with some pom.xml files pulling in slf4j implementations (they should all be provided)
+Documentation updates
+
 2010_06_28 - DataValve 0.9.0.CR2 released
 
 Renamed to DataValve

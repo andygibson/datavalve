@@ -6,14 +6,14 @@
 	<titleabbrev>DataValve Ref</titleabbrev>
 	<bookinfo>
 		<author>
-			<email>contact@andygibson.net</email>
+			<email>andy@fluttercode.com</email>
 			<personname>
 				<firstname>Andy</firstname>
 				<surname>Gibson</surname>
 			</personname>
 		</author>
 		<orgname>FlutterCode</orgname>
-		<releaseinfo>0.9.0.CR2</releaseinfo>
+		<releaseinfo>1.0.0.final</releaseinfo>
 
 		<authorinitials>AMG</authorinitials>
 		<copyright>

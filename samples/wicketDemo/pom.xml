@@ -8,39 +8,6 @@
     <description>Project that demonstrates the re-use of the datasets with either a custom pagination solution, or the built in pagination solutions.</description>	<!-- TODO project name  -->
     <name>wicketDemo</name>
 
-    <organization>
-        <name>fluttercode</name>
-        <url>www.fluttercode.org</url>
-    </organization>
-
-    <developers>
-        <developer>
-            <email>andy@fluttercode.com</email>
-            <id>agibson</id>
-            <name>Andy Gibson</name>
-            <organization>fluttercode</organization>
-            <organizationUrl>www.fluttercode.org</organizationUrl>
-            <roles>
-                <role>architect</role>
-                <role>developer</role>
-            </roles>
-            <timezone>-5</timezone>
-            <url>www.andygibson.net</url>
-        </developer>
-    </developers>
-    <issueManagement>
-        <system>Jira</system>
-        <url>http://kenai.com/jira/browse/DATAVALVE/</url>
-    </issueManagement>
-
-    <inceptionYear>2009</inceptionYear>
-    <licenses>
-        <license>
-            <name>LGPL Version 3</name>
-            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
 
     <properties>
         <wicket.version>1.4.0</wicket.version>

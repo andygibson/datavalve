@@ -7,28 +7,24 @@
     <packaging>pom</packaging>
     <name>datavalve</name>
     <version>1.0.0.final</version>
-    <description>Main project for DataValve containing multiple modules.</description>
+    <description>Datavalve parent project.</description>
 
     <organization>
         <name>fluttercode</name>
         <url>www.fluttercode.org</url>
     </organization>
 
-    <developers>
-        <developer>
-            <email>andy@fluttercode.com</email>
-            <id>agibson</id>
-            <name>Andy Gibson</name>
-            <organization>fluttercode</organization>
-            <organizationUrl>www.fluttercode.org</organizationUrl>
-            <roles>
-                <role>architect</role>
-                <role>developer</role>
-            </roles>
-            <timezone>-5</timezone>
-            <url>www.andygibson.net</url>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Andy Gibson</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<email>contact@andygibson.net</email>
+			<url>www.andygibson.net</url>
+		</developer>
+	</developers>
+
     <issueManagement>
         <system>Jira</system>
         <url>http://kenai.com/jira/browse/DATAVALVE/</url>
@@ -42,6 +38,12 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <url>http://www.andygibson.net/blog/projects/datavalve/</url>
+    <scm>
+	<connection>scm:svn:https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</connection>
+	<developerConnection>scm:svn:https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</developerConnection>
+	<url>https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</url>
+    </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -50,6 +52,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
@@ -62,6 +65,8 @@
             </plugin>
 
         </plugins>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+
     </build>
     <modules>
         <module>datavalve-core</module>

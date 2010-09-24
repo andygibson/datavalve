@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.fluttercode.datavalve</groupId>
-    <artifactId>datavalve</artifactId>
-    <packaging>pom</packaging>
-    <name>datavalve</name>
-    <version>1.0.0.final</version>
-    <description>Datavalve parent project.</description>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <organization>
-        <name>fluttercode</name>
-        <url>www.fluttercode.org</url>
-    </organization>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>5</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.fluttercode.datavalve</groupId>
+	<artifactId>datavalve</artifactId>
+	<packaging>pom</packaging>
+	<name>datavalve</name>
+	<version>1.0.0.final</version>
+	<description>Datavalve parent project.</description>
+
+	<organization>
+		<name>fluttercode</name>
+		<url>www.fluttercode.org</url>
+	</organization>
 
 	<developers>
 		<developer>
@@ -25,58 +32,58 @@
 		</developer>
 	</developers>
 
-    <issueManagement>
-        <system>Jira</system>
-        <url>http://kenai.com/jira/browse/DATAVALVE/</url>
-    </issueManagement>
+	<issueManagement>
+		<system>Jira</system>
+		<url>http://kenai.com/jira/browse/DATAVALVE/</url>
+	</issueManagement>
 
-    <inceptionYear>2009</inceptionYear>
-    <licenses>
-        <license>
-            <name>LGPL Version 3</name>
-            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <url>http://www.andygibson.net/blog/projects/datavalve/</url>
-    <scm>
-	<connection>scm:svn:https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</connection>
-	<developerConnection>scm:svn:https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</developerConnection>
-	<url>https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</url>
-    </scm>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.6.1</version>
-            </plugin>
+	<inceptionYear>2009</inceptionYear>
+	<licenses>
+		<license>
+			<name>LGPL Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<url>http://www.andygibson.net/blog/projects/datavalve/</url>
+	<scm>
+		<connection>scm:svn:https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</connection>
+		<developerConnection>scm:svn:https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</developerConnection>
+		<url>https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</url>
+	</scm>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.6.1</version>
+			</plugin>
 
-        </plugins>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+		</plugins>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 
-    </build>
-    <modules>
-        <module>datavalve-core</module>
-        <module>datavalve-dataset</module>
-        <module>datavalve-jpa</module>
-        <module>datavalve-test</module>
-        <module>datavalve-sql</module>
-        <module>datavalve-wicket</module>
-        <module>datavalve-seam</module>
-        <module>datavalve-hibernate</module>
-        <module>datavalve-faces</module>
-    </modules>
+	</build>
+	<modules>
+		<module>datavalve-core</module>
+		<module>datavalve-dataset</module>
+		<module>datavalve-jpa</module>
+		<module>datavalve-test</module>
+		<module>datavalve-sql</module>
+		<module>datavalve-wicket</module>
+		<module>datavalve-seam</module>
+		<module>datavalve-hibernate</module>
+		<module>datavalve-faces</module>
+	</modules>
 </project>

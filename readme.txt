@@ -1,13 +1,10 @@
-DataValve 0.9 Alpha build
-=========================
+DataValve - Java querying and pagination framework
 
-DataValve project page : 
-
-http://www.fluttercode.com/projects/datavalve/
+Project page : http://www.andygibson.net/blog/projects/datavalve/
 
 For more information on DataValve including articles, tutorials and help go to : 
 
-http://www.fluttercode.com/tag/datavalve/
+http://www.andygibson.net/blog/tag/datavalve/
 
 
 System requirements
@@ -43,7 +40,7 @@ Each of the demos have a readme.txt describing how to run them and also some
 usually additional notes on the implementation.  
 
 
-cdi Demo
+CDI Demo
 =========
 
 Jetty demo using CDI and JSF
@@ -51,7 +48,7 @@ Jetty demo using CDI and JSF
 to run, go to the cdidemo directory and type : mvn jetty:run
 
            
-wicket Demo
+Wicket Demo
 ============
  
 Mega demo showing the different provider mechanisms with different view 
@@ -60,7 +57,7 @@ mechanisms all based off the same Wicket pages.
 to run, go to the wicket demo directory and type : mvn jetty:run
 
 
-swingdemo 
+Swing Demo
 ==========
 
 Uses the ProviderTableModel to implement random access to the source data in
@@ -70,7 +67,7 @@ implements clickable columns for sorting.
 to run, type : mvn exec:java -Dexec.mainClass="org.fluttercode.datavalve.samples.swingdemo.Main"
 
 
-examples 
+Examples 
 ========
 
 The example classes from the documentation with some code showing how to use them.

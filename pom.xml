@@ -13,13 +13,8 @@
 	<artifactId>datavalve</artifactId>
 	<packaging>pom</packaging>
 	<name>datavalve</name>
-	<version>1.0.0.final</version>
-	<description>Datavalve parent project.</description>
-
-	<organization>
-		<name>fluttercode</name>
-		<url>www.fluttercode.org</url>
-	</organization>
+	<version>0.9-SNAPSHOT</version>
+	<description>DataValve parent project.</description>
 
 	<developers>
 		<developer>
@@ -47,10 +42,11 @@
 	</licenses>
 	<url>http://www.andygibson.net/blog/projects/datavalve/</url>
 	<scm>
-		<connection>scm:svn:https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</connection>
-		<developerConnection>scm:svn:https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</developerConnection>
-		<url>https://myprojects.sourcerepo.com/myprojects/datavalve/trunk/</url>
+		<connection>scm:git:git://github.com/andygibson/${project.artifactId}.git</connection>
+		<url>http://github.com/andygibson/${project.artifactId}</url>
+		<developerConnection>scm:git:git@github.com:andygibson/${project.artifactId}.git</developerConnection>
 	</scm>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

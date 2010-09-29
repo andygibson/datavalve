@@ -6,7 +6,7 @@
     <artifactId>cdidemo</artifactId>
     <packaging>war</packaging>
     <name>cdidemo</name>
-    <version>1.0.0.final</version>
+    <version>0.9-SNAPSHOT</version>
     <organization>
         <name>fluttercode</name>
         <url>www.fluttercode.org</url>
@@ -155,7 +155,7 @@
         <dependency>
         	<groupId>org.fluttercode.datavalve</groupId>
         	<artifactId>datavalve-faces</artifactId>
-        	<version>1.0.0.final</version>
+        	<version>${project.version}</version>
         	<type>jar</type>
         	<scope>compile</scope>
         </dependency>

@@ -3,7 +3,7 @@
     <parent>
         <artifactId>datavalve</artifactId>
         <groupId>org.fluttercode.datavalve</groupId>
-        <version>1.0.0.final</version>
+        <version>0.9-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>datavalve-jpa</artifactId>
@@ -51,12 +51,6 @@
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>1.8.0.7</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0</version>
             <scope>test</scope>
         </dependency>
 

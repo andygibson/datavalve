@@ -4,7 +4,7 @@
 	<groupId>org.fluttercode.datavalve</groupId>
 	<artifactId>swingdemo</artifactId>
 	<name>swingdemo</name>
-	<version>1.0.0.final</version>
+	<version>0.9-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate</groupId>

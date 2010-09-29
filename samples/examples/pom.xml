@@ -4,7 +4,7 @@
     <groupId>org.fluttercode.datavalve</groupId>
     <artifactId>examples</artifactId>
     <name>examples</name>
-    <version>1.0.0.final</version>
+    <version>0.9-SNAPSHOT</version>
 
     <dependencies>
         <dependency>

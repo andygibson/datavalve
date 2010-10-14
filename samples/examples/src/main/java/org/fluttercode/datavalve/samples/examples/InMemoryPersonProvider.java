@@ -28,8 +28,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.fluttercode.datafactory.impl.DataFactory;
 import org.fluttercode.datavalve.provider.InMemoryDataProvider;
-import org.fluttercode.datavalve.testing.TestDataFactory;
 
 /**
  * @author Andy Gibson
@@ -38,6 +38,7 @@ import org.fluttercode.datavalve.testing.TestDataFactory;
 public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 
 	private static final long serialVersionUID = 1L;
+	private static final DataFactory dataFactory = new DataFactory();
 	
 	private List<Person> backingList;
 	public static final int PERSON_COUNT = 30;
@@ -88,8 +89,8 @@ public class InMemoryPersonProvider extends InMemoryDataProvider<Person> {
 		if (backingList == null) {
 			backingList = new ArrayList<Person>(PERSON_COUNT);
 			for (int i = 0; i < PERSON_COUNT; i++) {
-				Person p = new Person(new Long(i + 1), TestDataFactory
-						.getFirstName(), TestDataFactory.getLastName());
+				Person p = new Person(new Long(i + 1), dataFactory
+						.getFirstName(), dataFactory.getLastName());
 				backingList.add(p);
 			}
 		}		

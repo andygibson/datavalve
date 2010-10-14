@@ -29,10 +29,10 @@ import java.sql.DriverManager;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
+import org.fluttercode.datafactory.impl.DataFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.fluttercode.datavalve.testing.TestDataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +47,7 @@ public class DataInitializer {
 	private SessionFactory sessionFactory;
 	private Session session;
 	private Connection connection;
+	private static final DataFactory dataFactory = new DataFactory();
 	public static final int RECORD_COUNT = 150;
 
 	public void init() {
@@ -72,9 +73,8 @@ public class DataInitializer {
 		log.debug("Generating Test Data");
 		session.getTransaction().begin();
 		for (int i = 0; i < RECORD_COUNT; i++) {
-			Person p = new Person(TestDataFactory.getFirstName(),
-					TestDataFactory.getLastName(), TestDataFactory
-							.getNumberText(10));
+			Person p = new Person(dataFactory.getFirstName(),
+					dataFactory.getLastName(), dataFactory.getNumberText(10));
 
 			//generate orders per person
 			for (int or = 0; or < 10; or++) {

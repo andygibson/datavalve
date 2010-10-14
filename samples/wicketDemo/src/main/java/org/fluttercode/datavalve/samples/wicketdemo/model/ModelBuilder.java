@@ -25,7 +25,7 @@ package org.fluttercode.datavalve.samples.wicketdemo.model;
 
 import javax.persistence.EntityManager;
 
-import org.fluttercode.datavalve.testing.TestDataFactory;
+import org.fluttercode.datafactory.impl.DataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 public class ModelBuilder {
 
 	private static Logger log = LoggerFactory.getLogger(ModelBuilder.class);
+	private final static DataFactory dataFactory = new DataFactory();
 
 	public static void execute(EntityManager em, int count) {
 
@@ -46,9 +47,9 @@ public class ModelBuilder {
 		try {
 			for (int i = 0; i < count; i++) {
 				Person person = new Person();
-				person.setFirstName(TestDataFactory.getFirstName());
-				person.setLastName(TestDataFactory.getLastName());
-				person.setPhone(TestDataFactory.getNumberText(10));
+				person.setFirstName(dataFactory.getFirstName());
+				person.setLastName(dataFactory.getLastName());
+				person.setPhone(dataFactory.getNumberText(10));
 				em.persist(person);
 				// commit every 20 rows
 				if (i % 20 == 0) {

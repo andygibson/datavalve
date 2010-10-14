@@ -26,9 +26,9 @@ package org.fluttercode.datavalve.samples.swingdemo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.fluttercode.datafactory.impl.DataFactory;
 import org.fluttercode.datavalve.samples.swingdemo.model.Order;
 import org.fluttercode.datavalve.samples.swingdemo.model.Person;
-import org.fluttercode.datavalve.testing.TestDataFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 public class DataInitializer {
 
 	private static Logger log = LoggerFactory.getLogger(DataInitializer.class);
+	private static DataFactory dataFactory = new DataFactory();
 	private SessionFactory sessionFactory;
 	private Session session;
 	private Connection connection;
@@ -73,8 +74,8 @@ public class DataInitializer {
 		session.getTransaction().begin();
 		
 		for (int i = 0; i < RECORD_COUNT; i++) {
-			Person p = new Person(TestDataFactory.getFirstName(),
-					TestDataFactory.getLastName(),TestDataFactory.getNumberText(10));
+			Person p = new Person(dataFactory.getFirstName(),
+					dataFactory.getLastName(),dataFactory.getNumberText(10));
 		   
 			session.persist(p);
 		}

@@ -33,6 +33,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.fluttercode.datafactory.impl.DataFactory;
 import org.fluttercode.datavalve.dataset.ObjectDataset;
 
 /**
@@ -51,11 +52,16 @@ public abstract class AbstractObjectDatasetJUnitTest<T> extends TestCase
 		implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static DataFactory dataFactory = new DataFactory();
 
 	public abstract ObjectDataset<T> buildObjectDataset();
 
 	public abstract int getDataRowCount();
 
+	public static DataFactory getDataFactory() {
+		return dataFactory;
+	}
+	
 	/**
 	 * Test that the data row count is at least 30 (3 pages * 10);
 	 */

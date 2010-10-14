@@ -27,17 +27,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.fluttercode.datavalve.ParameterResolver;
 import org.fluttercode.datavalve.dataset.ObjectDataset;
 import org.fluttercode.datavalve.dataset.QueryDataset;
 import org.fluttercode.datavalve.params.Parameter;
 import org.fluttercode.datavalve.provider.ParameterizedDataProvider;
-import org.fluttercode.datavalve.provider.hibernate.HibernateDataProvider;
-import org.fluttercode.datavalve.testing.TestDataFactory;
 import org.fluttercode.datavalve.testing.junit.AbstractObjectDatasetJUnitTest;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
  * @author Andy Gibson
@@ -111,8 +109,8 @@ public class HibernateDatasetTest extends
 	public void generateTestData() {
 		session.getTransaction().begin();
 		for (int i = 0; i < 30; i++) {
-			Person p = new Person(TestDataFactory.getFirstName(),
-					TestDataFactory.getLastName());
+			Person p = new Person(getDataFactory().getFirstName(),
+					getDataFactory().getLastName());
 			for (int or = 0; or < 10; or++) {
 				Order order = new Order(i * 10 + or, p);
 				session.persist(order);

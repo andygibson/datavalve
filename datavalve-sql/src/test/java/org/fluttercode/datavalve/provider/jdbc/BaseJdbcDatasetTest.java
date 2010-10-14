@@ -29,7 +29,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.fluttercode.datavalve.testing.TestDataFactory;
 import org.fluttercode.datavalve.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**
@@ -49,6 +48,7 @@ import org.fluttercode.datavalve.testing.junit.AbstractObjectDatasetJUnitTest;
 public abstract class BaseJdbcDatasetTest<T> extends AbstractObjectDatasetJUnitTest<T> {
 
 	private static final long serialVersionUID = 1L;
+	
 	
 	public class TestValue {
 		int id;
@@ -101,10 +101,9 @@ public abstract class BaseJdbcDatasetTest<T> extends AbstractObjectDatasetJUnitT
 			prepStatement = getConnection().prepareStatement(sql);
 
 			for (int i = 0; i < 100; i++) {
-				prepStatement.setInt(1, i);
-				
-				prepStatement.setString(2, TestDataFactory.getFirstName());
-				prepStatement.setString(3, TestDataFactory.getFirstName());
+				prepStatement.setInt(1, i);				
+				prepStatement.setString(2, getDataFactory().getFirstName());
+				prepStatement.setString(3, getDataFactory().getFirstName());
 				prepStatement.execute();
 			}
 

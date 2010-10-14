@@ -31,8 +31,6 @@ import java.io.OutputStreamWriter;
 
 import org.fluttercode.datavalve.dataset.Dataset;
 import org.fluttercode.datavalve.dataset.ObjectDataset;
-import org.fluttercode.datavalve.provider.file.CommaDelimitedProvider;
-import org.fluttercode.datavalve.testing.TestDataFactory;
 import org.fluttercode.datavalve.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**
@@ -69,11 +67,11 @@ public class CommaDelimitedDatasetTest extends
 			for (int i = 0; i < 100; i++) {
 				writer.write(Integer.toString(i + 1));
 				writer.write(",");
-				writer.write(TestDataFactory.getFirstName());
+				writer.write(getDataFactory().getFirstName());
 				writer.write(",");
-				writer.write(TestDataFactory.getLastName());
+				writer.write(getDataFactory().getLastName());
 				writer.write(",");
-				writer.write(TestDataFactory.getNumberText(10));
+				writer.write(getDataFactory().getNumberText(10));
 				writer.newLine();
 			}
 			writer.close();

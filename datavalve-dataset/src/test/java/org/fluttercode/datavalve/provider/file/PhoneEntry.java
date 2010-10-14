@@ -25,7 +25,8 @@ package org.fluttercode.datavalve.provider.file;
 
 import java.io.Serializable;
 
-import org.fluttercode.datavalve.testing.TestDataFactory;
+import org.fluttercode.datafactory.impl.DataFactory;
+import org.fluttercode.datavalve.testing.junit.AbstractObjectDatasetJUnitTest;
 
 /**
  * @author Andy Gibson
@@ -34,6 +35,7 @@ import org.fluttercode.datavalve.testing.TestDataFactory;
 public class PhoneEntry implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static DataFactory dataFactory = AbstractObjectDatasetJUnitTest.getDataFactory();
 	
 	private int id;
 	private String firstName;
@@ -41,8 +43,8 @@ public class PhoneEntry implements Serializable {
 	private String phone;
 
 	public PhoneEntry(int id) {
-		this(id, TestDataFactory.getFirstName(), TestDataFactory.getLastName(),
-				TestDataFactory.getNumberText(10));
+		this(id, dataFactory.getFirstName(), dataFactory.getLastName(),
+				dataFactory.getNumberText(10));
 	}
 
 	public PhoneEntry(int id, String firstName, String lastName, String phone) {

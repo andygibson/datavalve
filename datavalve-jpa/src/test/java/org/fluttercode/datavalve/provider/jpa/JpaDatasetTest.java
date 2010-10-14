@@ -36,9 +36,6 @@ import org.fluttercode.datavalve.dataset.ObjectDataset;
 import org.fluttercode.datavalve.dataset.QueryDataset;
 import org.fluttercode.datavalve.params.Parameter;
 import org.fluttercode.datavalve.provider.ParameterizedDataProvider;
-import org.fluttercode.datavalve.provider.jpa.JpaDataProvider;
-import org.fluttercode.datavalve.provider.jpa.JpaQueryProvider;
-import org.fluttercode.datavalve.testing.TestDataFactory;
 import org.fluttercode.datavalve.testing.junit.AbstractObjectDatasetJUnitTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,8 +98,8 @@ public class JpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person> {
 	public void generateTestData() {
 		em.getTransaction().begin();
 		for (int i = 0; i < 30; i++) {
-			Person p = new Person(TestDataFactory.getFirstName(),
-					TestDataFactory.getLastName());
+			Person p = new Person(getDataFactory().getFirstName(),
+					getDataFactory().getLastName());
 			for (int or = 0; or < 10; or++) {
 				Order order = new Order(i * 10 + or, p);
 				em.persist(order);

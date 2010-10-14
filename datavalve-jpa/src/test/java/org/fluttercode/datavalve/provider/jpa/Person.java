@@ -52,6 +52,9 @@ public class Person implements Serializable{
 	@Column(name = "LAST_NAME", length = 16)
 	private String lastName;
 
+	public Person() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Person(String firstName, String lastName) {
 		super();

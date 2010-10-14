@@ -49,7 +49,9 @@ public class Order implements Serializable {
 	public static String ORDER_STATUS_SHIPPED = "SHIPPED";
 	public static String ORDER_STATUS_DELIVERED = "DELIVERED";
 
-	
+	public Order() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Order(Integer value, Person person,String orderStatus) {
 		super();

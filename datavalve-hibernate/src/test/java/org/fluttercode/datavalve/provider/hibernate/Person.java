@@ -53,6 +53,9 @@ public class Person implements Serializable{
 	private String lastName;
 
 	
+	public Person() {
+	
+	}
 	public Person(String firstName, String lastName) {
 		super();
 		this.firstName = firstName;

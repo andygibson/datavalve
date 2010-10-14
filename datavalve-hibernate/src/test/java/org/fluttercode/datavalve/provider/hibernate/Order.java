@@ -50,6 +50,9 @@ public class Order implements Serializable {
 	public static String ORDER_STATUS_DELIVERED = "DELIVERED";
 
 	
+	public Order() {
+	
+	}
 	
 	public Order(Integer value, Person person,String orderStatus) {
 		super();

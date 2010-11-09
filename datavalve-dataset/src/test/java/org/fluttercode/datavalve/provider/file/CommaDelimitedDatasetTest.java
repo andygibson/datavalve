@@ -53,10 +53,15 @@ public class CommaDelimitedDatasetTest extends
 
 	private void generateFile() {
 		
-		baseDir = System.getProperty("java.io.tmpdir") + "CsvDsTest\\";
+		baseDir = System.getProperty("java.io.tmpdir") + "/CsvDsTest/";
 		fileName = baseDir+"csvFile.csv";
+		
 		File base = new File(baseDir);
 		base.mkdir();
+		if (base.exists()) {
+		
+			System.out.println("Base directory exists");
+		}
 
 		FileOutputStream fs = null;
 
@@ -85,6 +90,7 @@ public class CommaDelimitedDatasetTest extends
 		super.tearDown();
 		deleteFiles();
 	}
+	
 
 	private void deleteFiles() {
 		new File(fileName).delete();

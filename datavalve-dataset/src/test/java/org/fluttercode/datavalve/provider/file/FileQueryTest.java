@@ -70,7 +70,7 @@ public class FileQueryTest extends AbstractObjectDatasetJUnitTest<File> {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		baseDir = System.getProperty("java.io.tmpdir") + "FileDsTest\\";
+		baseDir = System.getProperty("java.io.tmpdir") + "/FileDsTest/";
 
 		File base = new File(baseDir);
 		base.mkdir();

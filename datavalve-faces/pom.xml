@@ -41,13 +41,13 @@
 			<version>1.5.8</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.8</version>
-			<scope>test</scope>
-		</dependency>
-
 
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>JBoss Repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+		</repository>
+	</repositories>
 </project>

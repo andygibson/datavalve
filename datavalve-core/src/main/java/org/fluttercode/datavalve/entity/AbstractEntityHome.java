@@ -98,7 +98,6 @@ public abstract class AbstractEntityHome<T> implements EntityHome<T> {
 		Class<T> type = getEntityClass();
 		T entity = null;
 		try {
-			System.out.println("Creating entity of type "+type);
 			entity = type.newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();

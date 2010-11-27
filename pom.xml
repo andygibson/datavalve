@@ -10,7 +10,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.fluttercode.datavalve</groupId>
-	<artifactId>datavalve</artifactId>
+	<artifactId>datavalve-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>datavalve</name>
 	<version>0.9-SNAPSHOT</version>

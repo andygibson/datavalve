@@ -58,10 +58,6 @@ public class CommaDelimitedDatasetTest extends
 		
 		File base = new File(baseDir);
 		base.mkdir();
-		if (base.exists()) {
-		
-			System.out.println("Base directory exists");
-		}
 
 		FileOutputStream fs = null;
 

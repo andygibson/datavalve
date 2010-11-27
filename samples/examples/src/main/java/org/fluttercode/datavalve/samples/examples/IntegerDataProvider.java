@@ -50,7 +50,7 @@ public class IntegerDataProvider implements DataProvider<Integer>,Serializable {
 		  Math.min(100, start+paginator.getMaxRows().intValue()-1);
 		
 		List<Integer> results = new ArrayList<Integer>();
-		System.out.println("Generating results from "+start+" to "+(end));
+
 		while (start <= end) {
 			results.add(start++);			
 		}

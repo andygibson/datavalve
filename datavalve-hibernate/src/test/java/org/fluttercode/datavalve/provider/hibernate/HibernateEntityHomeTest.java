@@ -124,8 +124,5 @@ public class HibernateEntityHomeTest extends TestCase {
 		
 		Person modPerson = doCleanLoad(p.getId());
 		assertEquals("Jones", modPerson.getLastName());
-		
-		
-		
 	}
 }

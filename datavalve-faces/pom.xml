@@ -3,11 +3,11 @@
 	<parent>
 		<artifactId>datavalve-parent</artifactId>
 		<groupId>org.fluttercode.datavalve</groupId>
-		<version>0.9-SNAPSHOT</version>
+		<version>0.9</version>
 	</parent>
 	<groupId>org.fluttercode.datavalve</groupId>
 	<artifactId>datavalve-faces</artifactId>
-	<version>0.9-SNAPSHOT</version>
+	<version>0.9</version>
 	<name>datavalve-faces</name>
 	<description>Provides additional support for JSF including an EL expression parameter resolver.</description>
 
@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>org.fluttercode.datavalve</groupId>
 			<artifactId>datavalve-core</artifactId>
-			<version>0.9-SNAPSHOT</version>
+			<version>0.9</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

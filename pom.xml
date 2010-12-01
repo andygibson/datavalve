@@ -12,7 +12,7 @@
 	<artifactId>datavalve-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>datavalve</name>
-	<version>0.9</version>
+	<version>0.9-SNAPSHOT</version>
 	<description>DataValve parent project.</description>
 
 	<developers>

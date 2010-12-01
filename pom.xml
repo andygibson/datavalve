@@ -41,9 +41,9 @@
 	</licenses>
 	<url>http://www.andygibson.net/blog/projects/datavalve/</url>
 	<scm>
-		<connection>scm:git:git://github.com/andygibson/${project.artifactId}.git</connection>
-		<url>http://github.com/andygibson/${project.artifactId}</url>
-		<developerConnection>scm:git:git@github.com:andygibson/${project.artifactId}.git</developerConnection>
+		<connection>scm:git:git://github.com/andygibson/datavalve.git</connection>
+		<url>http://github.com/andygibson/datavalve</url>
+		<developerConnection>scm:git:git@github.com:andygibson/datavalve.git</developerConnection>
 	</scm>
 
 	<properties>

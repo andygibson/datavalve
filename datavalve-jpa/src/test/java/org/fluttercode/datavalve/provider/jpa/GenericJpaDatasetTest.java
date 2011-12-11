@@ -25,6 +25,7 @@ package org.fluttercode.datavalve.provider.jpa;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -145,7 +146,6 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 		dataset.invalidateResultInfo();
 		result = dataset.getResultCount();
 		assertEquals(1, result);
-
 	}
 
 	public void testSimpleParameter() {				
@@ -283,6 +283,23 @@ public class GenericJpaDatasetTest extends AbstractObjectDatasetJUnitTest<Person
 		qry.setOrderKey("id");
 		performOrderChecks(qry,false);
 	}
+	
+	public void testListParameter() {						
+		List<Long> values = new ArrayList<Long>();
+		values.add(6l);
+		values.add(8l);
+		dataset.getProvider().addRestriction("p.id in (:param)",values);		
+		
+		List<Person> result = dataset.getResultList();
+		assertEquals(2, result.size());
+		assertEquals(1, dataset.getPage());
+		Person person = result.get(0);
+		assertEquals(new Long(6), person.getId());
+		person = result.get(1);
+		assertEquals(new Long(8), person.getId());
+		
+	}
+	
 
 	protected void performOrderChecks(ObjectDataset<Person> qry, boolean isAsc) {
 		Long lastValue = null;

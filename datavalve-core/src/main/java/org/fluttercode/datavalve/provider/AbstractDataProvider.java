@@ -52,7 +52,7 @@ import org.fluttercode.datavalve.Paginator;
  * 
  */
 /**
- * @author GIBSOA01
+ * @author Andy Gibson
  *
  * @param <T>
  */

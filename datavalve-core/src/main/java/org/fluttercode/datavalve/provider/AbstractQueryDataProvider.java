@@ -25,6 +25,7 @@ package org.fluttercode.datavalve.provider;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ import org.fluttercode.datavalve.provider.util.DataQueryBuilder;
  * select/count statements, and translating orderKey values into other
  * representations. It also defines common methods for defining an order clause
  * and building statements based on the Sql/Ejbql structure.
- *<p>
+ * <p>
  * Typically, the orderKey translates to an order value through the OrderKeyMap.
  * However, we wrap this behaviour in the {@link #translateOrderKey(String)}
  * method. This can be overridden if you want to change how we translate
@@ -79,8 +80,8 @@ public abstract class AbstractQueryDataProvider<T> extends
 	public void init(Class<? extends Object> clazz, String prefix) {
 		setCountStatement(String.format("select count(%s) from %s %s ", prefix,
 				clazz.getSimpleName(), prefix));
-		setSelectStatement(String.format("select %s from %s %s ", prefix, clazz
-				.getSimpleName(), prefix));
+		setSelectStatement(String.format("select %s from %s %s ", prefix,
+				clazz.getSimpleName(), prefix));
 	}
 
 	/**
@@ -115,22 +116,97 @@ public abstract class AbstractQueryDataProvider<T> extends
 
 	public boolean addRestrictionStr(String syntax, String paramValue,
 			String testValue) {
-		if (testValue != null && testValue.length() != 0) {
+		if (isValidTestValue(testValue, true)) {
 			return addRestriction(syntax, paramValue, testValue);
 		}
 		return false;
 	}
-	
+
 	public boolean addRestriction(String syntax, Object paramValue,
 			Object testValue) {
-		if (testValue != null) {
-			String name = getNextParamName();
-			syntax = syntax.replace(":param", ":" + name);
-			addRestriction(syntax);
-			getParameters().put(name, paramValue);
+		if (isValidTestValue(testValue, false)) {
+			if (paramValue instanceof Collection<?>) {
+				
+				addCollectionRestriction(syntax,(Collection<?>) paramValue);
+			} else {
+				addRestrictionForDefault(syntax, paramValue);
+			}
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Adds a restriction based on a collection. It is assumed that the syntax
+	 * used is acceptable for a collection, for example, using
+	 * <code> field in (:param)</code> and passing in a collection.
+	 * <p/>
+	 * For each item in the collection, see if it is valid and if so, add it to
+	 * the list of parameters to be used in the statement.
+	 * 
+	 * @param syntax
+	 *            syntax to use in the restriction
+	 * @param paramValue
+	 */
+	private void addCollectionRestriction(String syntax,
+			Collection<?> paramValues) {
+		String paramList = "";
+		for (Object o : paramValues) {
+			if (isValidTestValue(o, false)) {
+				//prefix with comma if its not the first
+				if (paramList.length() != 0) {
+					paramList = paramList + ",";
+				}
+				String name = getNextParamName();
+				paramList = paramList + ":" + name;
+				getParameters().put(name, o);
+			}
+		}		
+		syntax = syntax.replace(":param", paramList);
+		addRestriction(syntax);
+	}
+
+	/**
+	 * Adds a restriction based on a parameter value that is expected to be a
+	 * typical value (String, Long, int, boolean, etc) instead of a more exotic
+	 * parameter type such as as collection. This method assumes any pre-add
+	 * checks have been done for null params or test params etc,
+	 * 
+	 * @param syntax
+	 *            Syntax of the restriction
+	 * @param paramValue
+	 *            Value to use,
+	 */
+	private void addRestrictionForDefault(String syntax, Object paramValue) {
+		String name = getNextParamName();
+		syntax = syntax.replace(":param", ":" + name);
+		addRestriction(syntax);
+		getParameters().put(name, paramValue);
+	}
+
+	protected boolean isValidTestValue(Object obj, boolean testStrings) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj instanceof String && testStrings) {
+			String s = (String) obj;
+			return s.length() != 0;
+		}
+		if (obj instanceof Collection<?>) {
+			if (((Collection<?>) obj).size() == 0) {
+				return false;
+			}
+			// check it contains a valid test value
+			for (Object o : (Collection<?>) obj) {
+				// avoid recursion by checking for self
+				if (o != obj) {
+					if (isValidTestValue(o, testStrings)) {
+						return true;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	/**

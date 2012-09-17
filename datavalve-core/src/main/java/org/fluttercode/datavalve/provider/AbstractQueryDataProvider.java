@@ -222,7 +222,7 @@ public abstract class AbstractQueryDataProvider<T> extends
 
 	protected DataQuery buildDataQuery(String baseStatement,
 			boolean includeOrdering, Paginator paginator) {
-		DataQueryBuilder builder = new DataQueryBuilder();
+		DataQueryBuilder builder = createDataQueryBuilder();
 		builder.setProvider(this);
 		builder.setBaseStatement(baseStatement);
 		if (includeOrdering) {

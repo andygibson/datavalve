@@ -23,7 +23,6 @@
 
 package org.fluttercode.datavalve.provider.file;
 
-
 /**
  * Provider that returns data from a comma delimited file using a
  * {@link ColumnarRowMapper} instance to convert an array of string values into
@@ -74,7 +73,7 @@ public class CommaDelimitedProvider<T> extends TextFileProvider<T> {
 		if (rowMapper == null) {
 			throw new NullPointerException(
 					"Rowmapper in comma delimited provider is unassigned");
-		} 
+		}
 		return rowMapper.mapRow(columns);
 	}
 
@@ -102,12 +101,12 @@ public class CommaDelimitedProvider<T> extends TextFileProvider<T> {
 	 * @return padded array of columns
 	 */
 	private String[] padToLength(String[] split) {
-                if (paddingLength < split.length) {
-                    return split;
-                }
-                String[] copy = new String[paddingLength];
-                System.arraycopy(split, 0, copy, 0, split.length);
-                return copy;
+		if (paddingLength < split.length) {
+			return split;
+		}
+		String[] copy = new String[paddingLength];
+		System.arraycopy(split, 0, copy, 0, split.length);
+		return copy;
 	}
 
 	public void setPaddingLength(int paddingLength) {
@@ -117,11 +116,12 @@ public class CommaDelimitedProvider<T> extends TextFileProvider<T> {
 	public int getPaddingLength() {
 		return paddingLength;
 	}
-	
-	 public ColumnarRowMapper<T> getRowMapper() {
+
+	public ColumnarRowMapper<T> getRowMapper() {
 		return rowMapper;
 	}
-	 public void setRowMapper(ColumnarRowMapper<T> rowMapper) {
+
+	public void setRowMapper(ColumnarRowMapper<T> rowMapper) {
 		this.rowMapper = rowMapper;
 	}
 }
